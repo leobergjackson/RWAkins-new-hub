@@ -109,6 +109,8 @@ export async function buildServer(options: BuildServerOptions = {}) {
     await registerWebsocketRoutes(app);
   }
 
+  app.get('/health', async () => ({ status: 'healthy', service: 'TrustMesh API', version: '1.0.0' }));
+
   return app;
 }
 

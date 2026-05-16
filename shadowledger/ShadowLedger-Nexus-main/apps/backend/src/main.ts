@@ -9,8 +9,7 @@ import * as compression from 'compression';
 
 async function bootstrap() {
   if (!process.env.OPENAI_API_KEY) {
-    console.error('❌ FATAL: OPENAI_API_KEY is not defined. AI orchestration will fail.');
-    process.exit(1);
+    console.warn('⚠️  OPENAI_API_KEY not set — AI orchestration features will be degraded.');
   }
 
   const app = await NestFactory.create(AppModule, {

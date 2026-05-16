@@ -346,6 +346,10 @@ app.use('/api', filesRouter);
 // Tokenization profile routes
 app.use('/api/profile', profileRouter);
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy', service: 'EternaVault API', version: '1.0.0' });
+});
+
 const port = process.env.BACKEND_PORT || 4000;
 app.listen(port, () => {
   console.log(`EternaVault backend listening on http://localhost:${port}`);
