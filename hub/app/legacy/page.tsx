@@ -1,6 +1,8 @@
 'use client'
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react'
+import { fallbackVaults } from '../../lib/fallback'
+import DemoBanner from '../components/DemoBanner'
 
 type EthereumProvider = {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
@@ -55,6 +57,7 @@ export default function LegacyPage() {
   const [vaults, setVaults] = useState<Vault[]>([])
   const [health, setHealth] = useState<'checking' | 'ok' | 'down'>('checking')
   const [loading, setLoading] = useState(false)
+  const [isDemo, setIsDemo] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
 
@@ -88,8 +91,10 @@ export default function LegacyPage() {
       setError('')
       const data = await requestJson<Vault[] | { vaults?: Vault[] }>(`/api/vaults/${address}`)
       setVaults(Array.isArray(data) ? data : data.vaults || [])
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to load vaults.')
+      setIsDemo(false)
+    } catch {
+      setVaults(fallbackVaults as unknown as Vault[])
+      setIsDemo(true)
     } finally {
       setLoading(false)
     }
@@ -192,9 +197,9 @@ export default function LegacyPage() {
         </div>
       </section>
 
+      {isDemo && <DemoBanner />}
       {error && <div className="card error-card">{error}</div>}
       {message && <div className="card success-card">{message}</div>}
-      {!hasApi && <div className="card error-card">NEXT_PUBLIC_ETERNALVAULT_API is not configured.</div>}
       {!wallet && <div className="card">Connect MetaMask to create encrypted vaults and see heir claims.</div>}
 
       <section className="dashboard-grid">

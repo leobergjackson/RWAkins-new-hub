@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
+import ErrorBoundary from '../components/ErrorBoundary'
 
 type EthereumProvider = {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
@@ -217,6 +218,8 @@ export default function DashboardPage() {
 
   useEffect(() => {
     loadHealth()
+    const i = setInterval(() => loadHealth(), 60000)
+    return () => clearInterval(i)
   }, [])
 
   useEffect(() => {
@@ -251,16 +254,19 @@ export default function DashboardPage() {
         {error && <div className="card error-card">{error}</div>}
         {!primaryWallet && <div className="card">Connect at least one wallet to populate personalized stats and activity.</div>}
 
-        <section className="stats-grid">
-          <div className="card"><p>Credit Score</p><strong className="gold-text">{creditScore}</strong></div>
-          <div className="card"><p>Active Vaults</p><strong className="gold-text">{activeVaults}</strong></div>
-          <div className="card"><p>Active Agents</p><strong className="gold-text">{activeAgents}</strong></div>
-          <div className="card"><p>Treasury Balance</p><strong className="gold-text">{treasuryBalance}</strong></div>
-        </section>
+        <ErrorBoundary label="stats">
+          <section className="stats-grid">
+            <div className="card"><p>Credit Score</p><strong className="gold-text">{creditScore}</strong></div>
+            <div className="card"><p>Active Vaults</p><strong className="gold-text">{activeVaults}</strong></div>
+            <div className="card"><p>Active Agents</p><strong className="gold-text">{activeAgents}</strong></div>
+            <div className="card"><p>Treasury Balance</p><strong className="gold-text">{treasuryBalance}</strong></div>
+          </section>
+        </ErrorBoundary>
 
         <section className="tool-grid">
           {tools.map((tool) => (
-            <article className="card" key={tool.name}>
+            <ErrorBoundary key={tool.name} label={tool.name}>
+            <article className="card">
               <div className="metric-row">
                 <h2>{tool.name}</h2>
                 <span className={`health-badge ${health[tool.name] === 'ok' ? 'is-live' : health[tool.name] === 'checking' ? 'is-checking' : 'is-down'}`}>
@@ -274,6 +280,7 @@ export default function DashboardPage() {
                 <button className="btn-outline" onClick={() => retryOne(tool)} aria-label={`Retry ${tool.name}`}>↻</button>
               </div>
             </article>
+            </ErrorBoundary>
           ))}
         </section>
 

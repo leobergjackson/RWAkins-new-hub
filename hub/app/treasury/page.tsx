@@ -1,6 +1,8 @@
 'use client'
 
 import { FormEvent, useEffect, useState } from 'react'
+import { fallbackTreasury } from '../../lib/fallback'
+import DemoBanner from '../components/DemoBanner'
 
 type PhantomProvider = {
   connect: () => Promise<{ publicKey: { toString: () => string } }>
@@ -58,6 +60,7 @@ export default function TreasuryPage() {
   const [advisor, setAdvisor] = useState<string[]>([])
   const [health, setHealth] = useState<'checking' | 'ok' | 'down'>('checking')
   const [loading, setLoading] = useState(false)
+  const [isDemo, setIsDemo] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
 
@@ -92,8 +95,11 @@ export default function TreasuryPage() {
       ])
       setTreasury(treasuryData)
       setStreams(Array.isArray(payrollData) ? payrollData : payrollData.streams || [])
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to load treasury.')
+      setIsDemo(false)
+    } catch {
+      setTreasury(fallbackTreasury as unknown as TreasuryData)
+      setStreams(fallbackTreasury.streams as unknown as PayrollStream[])
+      setIsDemo(true)
     } finally {
       setLoading(false)
     }
@@ -187,9 +193,9 @@ export default function TreasuryPage() {
         </div>
       </section>
 
+      {isDemo && <DemoBanner />}
       {error && <div className="card error-card">{error}</div>}
       {message && <div className="card success-card">{message}</div>}
-      {!apiBase && <div className="card error-card">NEXT_PUBLIC_PALMFLOW_API is not configured.</div>}
       {!wallet && <div className="card">Connect Phantom to load treasury balances and streams.</div>}
 
       <section className="stats-grid">

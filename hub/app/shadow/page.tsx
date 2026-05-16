@@ -1,6 +1,8 @@
 'use client'
 
 import { FormEvent, useEffect, useState } from 'react'
+import { fallbackShadowAgents } from '../../lib/fallback'
+import DemoBanner from '../components/DemoBanner'
 
 type PhantomProvider = {
   connect: () => Promise<{ publicKey: { toString: () => string } }>
@@ -60,6 +62,7 @@ export default function ShadowPage() {
   const [activity, setActivity] = useState<FeedItem[]>([])
   const [health, setHealth] = useState<'checking' | 'ok' | 'down'>('checking')
   const [loading, setLoading] = useState(false)
+  const [isDemo, setIsDemo] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
 
@@ -97,8 +100,10 @@ export default function ShadowPage() {
       ])
       setAgents(Array.isArray(statusData) ? statusData : statusData.agents || [])
       setActivity(Array.isArray(activityData) ? activityData : activityData.activity || [])
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to load Shadow OS data.')
+      setIsDemo(false)
+    } catch {
+      setAgents(fallbackShadowAgents as unknown as ShadowAgent[])
+      setIsDemo(true)
     } finally {
       setLoading(false)
     }
@@ -170,9 +175,9 @@ export default function ShadowPage() {
         </div>
       </section>
 
+      {isDemo && <DemoBanner />}
       {error && <div className="card error-card">{error}</div>}
       {message && <div className="card success-card">{message}</div>}
-      {!apiBase && <div className="card error-card">NEXT_PUBLIC_SHADOW_API is not configured.</div>}
       {!wallet && <div className="card">Connect Phantom to administer Shadow OS.</div>}
 
       <section className="dashboard-grid">

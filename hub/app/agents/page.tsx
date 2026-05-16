@@ -1,6 +1,8 @@
 'use client'
 
 import { FormEvent, useEffect, useState } from 'react'
+import { fallbackAgents } from '../../lib/fallback'
+import DemoBanner from '../components/DemoBanner'
 
 type PhantomProvider = {
   connect: () => Promise<{ publicKey: { toString: () => string } }>
@@ -56,6 +58,7 @@ export default function AgentsPage() {
   const [activity, setActivity] = useState<Activity[]>([])
   const [health, setHealth] = useState<'checking' | 'ok' | 'down'>('checking')
   const [loading, setLoading] = useState(false)
+  const [isDemo, setIsDemo] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
 
@@ -90,8 +93,10 @@ export default function AgentsPage() {
       ])
       setAgents(Array.isArray(agentData) ? agentData : agentData.agents || [])
       setActivity(Array.isArray(activityData) ? activityData : activityData.activity || [])
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to load agents.')
+      setIsDemo(false)
+    } catch {
+      setAgents(fallbackAgents as unknown as Agent[])
+      setIsDemo(true)
     } finally {
       setLoading(false)
     }
@@ -186,9 +191,9 @@ export default function AgentsPage() {
         </div>
       </section>
 
+      {isDemo && <DemoBanner />}
       {error && <div className="card error-card">{error}</div>}
       {message && <div className="card success-card">{message}</div>}
-      {!apiBase && <div className="card error-card">NEXT_PUBLIC_TRUSTMESH_API is not configured.</div>}
       {!wallet && <div className="card">Connect Phantom to deploy and manage Solana agents.</div>}
 
       <section className="dashboard-grid">

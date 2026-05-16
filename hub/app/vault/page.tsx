@@ -1,6 +1,8 @@
 'use client'
 
 import { FormEvent, useEffect, useState } from 'react'
+import { fallbackVaultTrades } from '../../lib/fallback'
+import DemoBanner from '../components/DemoBanner'
 
 type PhantomProvider = {
   connect: () => Promise<{ publicKey: { toString: () => string } }>
@@ -55,6 +57,7 @@ export default function VaultPage() {
   const [privacy, setPrivacy] = useState<PrivacyScore>({})
   const [health, setHealth] = useState<'checking' | 'ok' | 'down'>('checking')
   const [loading, setLoading] = useState(false)
+  const [isDemo, setIsDemo] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
 
@@ -89,8 +92,10 @@ export default function VaultPage() {
       ])
       setTrades(Array.isArray(tradeData) ? tradeData : tradeData.trades || [])
       setPrivacy(scoreData)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to load private vault.')
+      setIsDemo(false)
+    } catch {
+      setTrades(fallbackVaultTrades as unknown as Trade[])
+      setIsDemo(true)
     } finally {
       setLoading(false)
     }
@@ -146,9 +151,9 @@ export default function VaultPage() {
         </div>
       </section>
 
+      {isDemo && <DemoBanner />}
       {error && <div className="card error-card">{error}</div>}
       {message && <div className="card success-card">{message}</div>}
-      {!apiBase && <div className="card error-card">NEXT_PUBLIC_CIPHER_API is not configured.</div>}
       {!wallet && <div className="card">Connect Phantom to open private trading controls.</div>}
 
       <section className="dashboard-grid">

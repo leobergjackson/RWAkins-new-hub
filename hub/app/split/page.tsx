@@ -1,6 +1,9 @@
 'use client'
 
-import { FormEvent, useMemo, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
+import { fallbackSplits } from '../../lib/fallback'
+import DemoBanner from '../components/DemoBanner'
+import { isFreighterInstalled } from '../../lib/wallet-utils'
 
 type FreighterProvider = {
   isConnected?: () => Promise<boolean>
@@ -46,8 +49,16 @@ export default function SplitPage() {
   const [splits, setSplits] = useState<SplitRecord[]>([])
   const [history, setHistory] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
+  const [isDemo, setIsDemo] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    if (!isFreighterInstalled()) {
+      setSplits(fallbackSplits as unknown as SplitRecord[])
+      setIsDemo(true)
+    }
+  }, [])
 
   const participantList = useMemo(() => {
     const values = participants.split(/[\n,]/).map((item) => item.trim()).filter(Boolean)
@@ -145,9 +156,9 @@ export default function SplitPage() {
         </div>
       </section>
 
+      {isDemo && <DemoBanner />}
       {error && <div className="card error-card">{error}</div>}
       {message && <div className="card success-card">{message}</div>}
-      {!rpcUrl && <div className="card error-card">NEXT_PUBLIC_STELLAR_RPC is not configured.</div>}
       {!wallet && <div className="card">Connect Freighter to create and pay Stellar splits.</div>}
 
       <section className="dashboard-grid">
