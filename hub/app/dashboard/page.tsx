@@ -9,6 +9,9 @@ import { loadWallet, persistWallet } from '../../lib/wallet-utils'
 import { toast } from '../../lib/toast'
 import { logTelemetryError, getTelemetryErrors, clearTelemetryErrors, TelemetryError } from '../../lib/telemetry'
 import OnboardingTour from '../components/OnboardingTour'
+import { useCrossToolIntelligence, updateIntelligenceState, getRecommendedActions, recordOSEvent } from '../../lib/cross-tool-intelligence'
+import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
+import CommandPalette from '../components/CommandPalette'
 
 type EthereumProvider = {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
@@ -95,6 +98,7 @@ async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
 
 export default function DashboardPage() {
   const pathname = usePathname()
+  const intelligenceState = useCrossToolIntelligence()
   const [ethWallet, setEthWallet] = useState('')
   const [solWallet, setSolWallet] = useState('')
   const [stellarWallet, setStellarWallet] = useState('')
@@ -299,6 +303,25 @@ export default function DashboardPage() {
       }))
 
       setActivity(feed.sort((a, b) => String(b.timestamp || '').localeCompare(String(a.timestamp || ''))))
+
+      // Sync cross-tool global profile dynamically
+      updateIntelligenceState((prev) => ({
+        profile: {
+          ...prev.profile,
+          creditScore: creditScore || prev.profile.creditScore,
+          activeVaults: typeof activeVaults === 'number' ? activeVaults : prev.profile.activeVaults,
+          activeAgents: typeof activeAgents === 'number' ? activeAgents : prev.profile.activeAgents,
+          treasuryBalance: treasuryBalance || prev.profile.treasuryBalance,
+        },
+        activityFeed: feed.map(item => ({
+          id: item.id || `evt-${Date.now()}-${Math.random()}`,
+          tool: item.tool,
+          action: item.action,
+          wallet: item.wallet || '',
+          timestamp: item.timestamp || new Date().toISOString(),
+          chain: item.tool === 'Credit Passport' || item.tool === 'Legacy Vault' ? 'QIE Mainnet' : item.tool === 'SyncSplit' ? 'Stellar' : 'Solana',
+        }))
+      }))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to load dashboard stats.')
     } finally {
@@ -497,21 +520,114 @@ export default function DashboardPage() {
           })}
         </section>
 
-        <section className="card">
-          <h2>Unified activity</h2>
-          {loading && <span className="spinner" />}
-          {!loading && activity.length === 0 && (
-            <EmptyState icon="📊" title="No activity yet" subtitle="Recent backend activity appears here after wallets connect." />
-          )}
-          {activity.map((item, index) => (
-            <article className="mini-card" key={item.id || index}>
-              <div>
-                <p className="gold-text">{item.tool}</p>
-                <p>{item.action}</p>
+        {/* Phase 4 — AI Insights Engine / Recommended Actions */}
+        <section className="card" style={{ border: '1px solid rgba(245,197,24,0.3)', background: 'linear-gradient(180deg, rgba(245,197,24,0.03) 0%, rgba(0,0,0,0) 100%)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <div>
+              <p className="eyebrow" style={{ color: '#F5C518', fontSize: 10 }}>AI Command Center</p>
+              <h2 style={{ fontSize: 20, margin: 0, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span>🧠</span> Cross-Tool Recommendations
+              </h2>
+            </div>
+            <span style={{ fontSize: 10, background: 'rgba(245, 197, 24, 0.1)', color: '#F5C518', border: '1px solid rgba(245, 197, 24, 0.3)', padding: '4px 10px', borderRadius: 20 }}>
+              AI Context Synchronized
+            </span>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+            {getRecommendedActions(intelligenceState).map((rec) => (
+              <div 
+                key={rec.id} 
+                className="mini-card"
+                style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  justifyContent: 'space-between', 
+                  alignItems: 'flex-start',
+                  padding: 16,
+                  background: rec.type === 'warning' ? 'rgba(239, 68, 68, 0.03)' : 'rgba(255,255,255,0.01)',
+                  borderColor: rec.type === 'warning' ? 'rgba(239, 68, 68, 0.3)' : rec.type === 'opportunity' ? 'rgba(245, 197, 24, 0.25)' : 'rgba(255,255,255,0.08)',
+                  borderWidth: 1,
+                  borderStyle: 'solid',
+                  borderRadius: 8,
+                  gap: 12
+                }}
+              >
+                <div>
+                  <span 
+                    style={{ 
+                      fontSize: 9, 
+                      fontWeight: 800, 
+                      textTransform: 'uppercase', 
+                      letterSpacing: '0.05em',
+                      color: rec.type === 'warning' ? '#EF4444' : rec.type === 'opportunity' ? '#F5C518' : '#3B82F6',
+                      background: rec.type === 'warning' ? 'rgba(239, 68, 68, 0.1)' : rec.type === 'opportunity' ? 'rgba(245, 197, 24, 0.1)' : 'rgba(59, 130, 246, 0.1)',
+                      padding: '2px 6px',
+                      borderRadius: 4,
+                      marginBottom: 8,
+                      display: 'inline-block'
+                    }}
+                  >
+                    {rec.type}
+                  </span>
+                  <h3 style={{ fontSize: 14, margin: 0, fontWeight: 700, color: '#fff' }}>{rec.title}</h3>
+                  <p style={{ margin: '6px 0 0', fontSize: 12, color: '#ccc', lineHeight: 1.4 }}>{rec.description}</p>
+                </div>
+                <Link 
+                  href={rec.actionHref}
+                  className="btn-outline"
+                  style={{ 
+                    alignSelf: 'stretch', 
+                    textAlign: 'center', 
+                    fontSize: 11, 
+                    padding: '6px 12px',
+                    borderColor: rec.type === 'warning' ? '#EF4444' : rec.type === 'opportunity' ? '#F5C518' : 'rgba(255,255,255,0.15)',
+                    color: rec.type === 'warning' ? '#EF4444' : rec.type === 'opportunity' ? '#F5C518' : '#fff'
+                  }}
+                  aria-label={rec.actionText}
+                >
+                  {rec.actionText}
+                </Link>
               </div>
-              <div className="item-actions">
-                <span className="silver-text">{item.wallet ? shortAddress(item.wallet) : 'system'}</span>
-                <span className="silver-text">{item.timestamp || 'recent'}</span>
+            ))}
+          </div>
+        </section>
+
+        {/* Phase 5 — Unified Activity Timeline */}
+        <section className="card">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <h2>Unified Activity Timeline</h2>
+            <button className="btn-outline" onClick={loadStats} style={{ padding: '4px 8px', fontSize: 10, height: 'auto' }} aria-label="Refresh activity feed">
+              ↻ Refresh
+            </button>
+          </div>
+          {loading && <span className="spinner" />}
+          {!loading && intelligenceState.activityFeed.length === 0 && (
+            <EmptyState icon="📊" title="No activity yet" subtitle="Recent cross-chain events appear here dynamically as operations complete." />
+          )}
+          {intelligenceState.activityFeed.map((item) => (
+            <article key={item.id} className="mini-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', gap: 12 }}>
+              <div>
+                <p className="gold-text" style={{ fontSize: 12, fontWeight: 700, margin: 0 }}>{item.tool}</p>
+                <p style={{ margin: '2px 0 0', fontSize: 13, color: '#fff' }}>{item.action}</p>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
+                <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                  <ChainBadge chain={item.chain} />
+                  {item.wallet && <span style={{ fontSize: 11, color: '#888' }}>{shortAddress(item.wallet)}</span>}
+                </div>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center', fontSize: 10, color: '#aaa' }}>
+                  <span>{new Date(item.timestamp).toLocaleTimeString()}</span>
+                  {item.chain === 'QIE Mainnet' && item.wallet && (
+                    <a href={`https://mainnet.qie.info/address/${item.wallet}`} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 10 }}>↗ Explorer</a>
+                  )}
+                  {item.chain === 'Solana' && item.wallet && (
+                    <a href={`https://explorer.solana.com/address/${item.wallet}?cluster=devnet`} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 10 }}>↗ Explorer</a>
+                  )}
+                  {item.chain === 'Stellar' && item.wallet && (
+                    <a href={`https://stellar.expert/explorer/testnet/account/${item.wallet}`} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 10 }}>↗ Explorer</a>
+                  )}
+                </div>
               </div>
             </article>
           ))}
@@ -554,6 +670,8 @@ export default function DashboardPage() {
         </section>
         
         <OnboardingTour />
+        <ExecutiveWalkthrough />
+        <CommandPalette />
       </section>
     </main>
   )

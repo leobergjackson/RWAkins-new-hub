@@ -7,6 +7,8 @@ import { loadWallet, persistWallet } from '../../lib/wallet-utils'
 import DemoBanner from '../components/DemoBanner'
 import { SkeletonRow } from '../components/Skeleton'
 import EmptyState from '../components/EmptyState'
+import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
+import CommandPalette from '../components/CommandPalette'
 
 type PhantomProvider = {
   connect: () => Promise<{ publicKey: { toString: () => string } }>
@@ -252,6 +254,8 @@ export default function VaultPage() {
           </article>
         ))}
       </section>
+      <ExecutiveWalkthrough />
+      <CommandPalette />
     </main>
   )
 }

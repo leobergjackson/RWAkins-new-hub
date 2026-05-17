@@ -20,6 +20,8 @@ import { getExplorerUrl } from '../../lib/explorer'
 import DemoBanner from '../components/DemoBanner'
 import { SkeletonCard } from '../components/Skeleton'
 import CopyButton from '../components/CopyButton'
+import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
+import CommandPalette from '../components/CommandPalette'
 
 const NCRD_STAKING_CONTRACT = '0x08DA91C81cebD27d181cA732615379f185FbFb51'
 const NCRD_APY = 12
@@ -506,6 +508,8 @@ export default function CreditPage() {
           </section>
         </>
       )}
+      <ExecutiveWalkthrough />
+      <CommandPalette />
     </main>
   )
 }

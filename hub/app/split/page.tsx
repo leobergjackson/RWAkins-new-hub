@@ -9,6 +9,8 @@ import DemoBanner from '../components/DemoBanner'
 import { SkeletonRow } from '../components/Skeleton'
 import EmptyState from '../components/EmptyState'
 import CopyButton from '../components/CopyButton'
+import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
+import CommandPalette from '../components/CommandPalette'
 import { resilientRequest } from '../../lib/api-resilience'
 
 type FreighterModule = {
@@ -304,6 +306,8 @@ export default function SplitPage() {
           </div>
         )}
       </section>
+      <ExecutiveWalkthrough />
+      <CommandPalette />
     </main>
   )
 }

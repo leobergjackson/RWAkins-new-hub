@@ -7,6 +7,8 @@ import { loadWallet, persistWallet } from '../../lib/wallet-utils'
 import DemoBanner from '../components/DemoBanner'
 import { SkeletonRow } from '../components/Skeleton'
 import EmptyState from '../components/EmptyState'
+import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
+import CommandPalette from '../components/CommandPalette'
 
 const SUGGESTED_PROMPTS = [
   'Request AI-Negotiated Term Loan of 1,500 USDC for 6 Months',
@@ -406,6 +408,8 @@ export default function LendPage() {
           <button className="btn-gold" disabled={loading || !wallet}>{loading ? <span className="spinner" /> : 'Repay'}</button>
         </form>
       </section>
+      <ExecutiveWalkthrough />
+      <CommandPalette />
     </main>
   )
 }

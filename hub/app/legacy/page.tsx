@@ -9,6 +9,8 @@ import DemoBanner from '../components/DemoBanner'
 import { SkeletonRow } from '../components/Skeleton'
 import EmptyState from '../components/EmptyState'
 import CopyButton from '../components/CopyButton'
+import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
+import CommandPalette from '../components/CommandPalette'
 
 type EthereumProvider = {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
@@ -284,6 +286,8 @@ export default function LegacyPage() {
           </div>
         </div>
       </section>
+      <ExecutiveWalkthrough />
+      <CommandPalette />
     </main>
   )
 }

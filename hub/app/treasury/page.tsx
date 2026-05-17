@@ -7,6 +7,8 @@ import { loadWallet, persistWallet } from '../../lib/wallet-utils'
 import DemoBanner from '../components/DemoBanner'
 import { SkeletonCard, SkeletonRow } from '../components/Skeleton'
 import EmptyState from '../components/EmptyState'
+import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
+import CommandPalette from '../components/CommandPalette'
 
 type PhantomProvider = {
   connect: () => Promise<{ publicKey: { toString: () => string } }>
@@ -308,6 +310,8 @@ export default function TreasuryPage() {
           {advisor.map((item, index) => <p key={index} style={{ marginTop: 8, fontSize: 14 }}>{item}</p>)}
         </form>
       </section>
+      <ExecutiveWalkthrough />
+      <CommandPalette />
     </main>
   )
 }
