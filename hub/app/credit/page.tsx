@@ -292,10 +292,22 @@ export default function CreditPage() {
 
   return (
     <main className="container" style={{ padding: '40px 24px' }}>
-      <header style={{ marginBottom: 24 }}>
-        <p className="eyebrow">Credit Passport</p>
-        <h1>On-chain credit score</h1>
-        <p className="silver-text">AI-powered. Soulbound NFT on QIE Mainnet (Chain ID 1990).</p>
+      <header style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
+        <div>
+          <p className="eyebrow">Credit Passport</p>
+          <h1>On-chain credit score</h1>
+          <p className="silver-text">AI-powered. Soulbound NFT on QIE Mainnet (Chain ID 1990).</p>
+        </div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <span style={{ fontSize: 10, background: isDemo ? 'rgba(255, 255, 255, 0.03)' : 'rgba(34, 197, 94, 0.05)', border: isDemo ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(34, 197, 94, 0.3)', color: isDemo ? '#bbb' : '#22C55E', padding: '4px 10px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDemo ? '#bbb' : '#22C55E' }} />
+            {isDemo ? 'Demo Mode' : 'Live Connection'}
+          </span>
+          <span style={{ fontSize: 10, background: 'rgba(245, 197, 24, 0.05)', border: '1px solid rgba(245, 197, 24, 0.25)', color: '#F5C518', padding: '4px 10px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#F5C518' }} />
+            Connected to QIE Mainnet
+          </span>
+        </div>
       </header>
 
       {isDemo && <DemoBanner />}

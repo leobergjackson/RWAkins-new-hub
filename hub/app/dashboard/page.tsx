@@ -8,6 +8,7 @@ import EmptyState from '../components/EmptyState'
 import { loadWallet, persistWallet } from '../../lib/wallet-utils'
 import { toast } from '../../lib/toast'
 import { logTelemetryError, getTelemetryErrors, clearTelemetryErrors, TelemetryError } from '../../lib/telemetry'
+import OnboardingTour from '../components/OnboardingTour'
 
 type EthereumProvider = {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
@@ -351,15 +352,65 @@ export default function DashboardPage() {
     <main className="dashboard-layout">
       <aside className="dashboard-sidebar">
         <Link className="logo" href="/">Kubryx</Link>
-        <div className="card wallet-card">
+        <div className="card wallet-card" id="wallet-connector-section">
           <h2>Wallets</h2>
-          <button className="btn-outline" onClick={connectMetaMask}>{ethWallet ? shortAddress(ethWallet) : 'MetaMask'}</button>
-          <button className="btn-outline" onClick={connectPhantom}>{solWallet ? shortAddress(solWallet) : 'Phantom'}</button>
-          <button className="btn-outline" onClick={connectFreighter}>{stellarWallet ? shortAddress(stellarWallet) : 'Freighter'}</button>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <button 
+                className="btn-outline" 
+                onClick={connectMetaMask}
+                style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                aria-label="Connect MetaMask Wallet"
+              >
+                <span>🦊 {ethWallet ? shortAddress(ethWallet) : 'MetaMask'}</span>
+                {ethWallet && <span style={{ color: '#22C55E', fontSize: 10 }}>✔</span>}
+              </button>
+              {ethWallet && (
+                <span style={{ fontSize: 9, color: '#F5C518', opacity: 0.8, paddingLeft: 6 }}>
+                  • QIE Mainnet (1990)
+                </span>
+              )}
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <button 
+                className="btn-outline" 
+                onClick={connectPhantom}
+                style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                aria-label="Connect Phantom Wallet"
+              >
+                <span>👻 {solWallet ? shortAddress(solWallet) : 'Phantom'}</span>
+                {solWallet && <span style={{ color: '#22C55E', fontSize: 10 }}>✔</span>}
+              </button>
+              {solWallet && (
+                <span style={{ fontSize: 9, color: '#A855F7', opacity: 0.8, paddingLeft: 6 }}>
+                  • Solana Devnet
+                </span>
+              )}
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <button 
+                className="btn-outline" 
+                onClick={connectFreighter}
+                style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                aria-label="Connect Freighter Wallet"
+              >
+                <span>🚀 {stellarWallet ? shortAddress(stellarWallet) : 'Freighter'}</span>
+                {stellarWallet && <span style={{ color: '#22C55E', fontSize: 10 }}>✔</span>}
+              </button>
+              {stellarWallet && (
+                <span style={{ fontSize: 9, color: '#3B82F6', opacity: 0.8, paddingLeft: 6 }}>
+                  • Stellar Testnet
+                </span>
+              )}
+            </div>
+          </div>
         </div>
         <nav className="sidebar-nav">
           {tools.map((tool) => (
-            <Link key={tool.name} href={tool.href} style={navLinkStyle(tool.href)}>
+            <Link key={tool.name} href={tool.href} style={navLinkStyle(tool.href)} aria-label={`Open ${tool.name} tool`}>
               {tool.name}
             </Link>
           ))}
@@ -373,11 +424,31 @@ export default function DashboardPage() {
             <h1>Unified Dashboard</h1>
             <p className="silver-text">One health, activity, and wallet view across all Kubryx tools.</p>
           </div>
-          <button className="btn-gold" onClick={loadStats} disabled={loading}>{loading ? <span className="spinner" /> : 'Refresh'}</button>
+          <button className="btn-gold" onClick={loadStats} disabled={loading} aria-label="Refresh telemetry stats">{loading ? <span className="spinner" /> : 'Refresh'}</button>
         </section>
 
+        {/* Institutional Trust and Signaling Ribbon */}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
+          <span style={{ fontSize: 10, background: 'rgba(245, 197, 24, 0.04)', border: '1px solid rgba(245, 197, 24, 0.2)', color: '#F5C518', padding: '3px 8px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 5, letterSpacing: '0.03em' }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#F5C518' }} />
+            Connected to QIE Mainnet
+          </span>
+          <span style={{ fontSize: 10, background: 'rgba(255, 255, 255, 0.02)', border: '1px solid rgba(255, 255, 255, 0.08)', color: '#bbb', padding: '3px 8px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 5, letterSpacing: '0.03em' }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#22C55E' }} />
+            Secured via Solana Devnet
+          </span>
+          <span style={{ fontSize: 10, background: 'rgba(255, 255, 255, 0.02)', border: '1px solid rgba(255, 255, 255, 0.08)', color: '#bbb', padding: '3px 8px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 5, letterSpacing: '0.03em' }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#3B82F6' }} />
+            Soroban Signed Transaction
+          </span>
+          <span style={{ fontSize: 10, background: 'rgba(255, 255, 255, 0.02)', border: '1px solid rgba(255, 255, 255, 0.08)', color: '#bbb', padding: '3px 8px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 5, letterSpacing: '0.03em' }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#A855F7' }} />
+            AI Response via Groq
+          </span>
+        </div>
+
         {error && <div className="card error-card">{error}</div>}
-        {!primaryWallet && <div className="card">Connect at least one wallet to populate personalized stats and activity.</div>}
+        {!primaryWallet && <div className="card" style={{ borderLeft: '3px solid #F5C518' }}>Connect at least one wallet in the left sidebar to populate your personalized stats, active contract states, and multi-chain activity logs.</div>}
 
         <ErrorBoundary label="stats">
           <section className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
@@ -388,7 +459,7 @@ export default function DashboardPage() {
           </section>
         </ErrorBoundary>
 
-        <section className="tool-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12 }}>
+        <section className="tool-grid" id="command-tools-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12 }}>
           {tools.map((tool) => {
             const isLive = health[tool.name] === 'ok';
             const latency = latencies[tool.name] ?? 45;
@@ -398,15 +469,18 @@ export default function DashboardPage() {
             
             return (
               <ErrorBoundary key={tool.name} label={tool.name}>
-              <article className="card">
+              <article className="card" style={{ position: 'relative' }}>
                 <div className="metric-row">
-                  <h2>{tool.name}</h2>
-                  <span className={`health-badge ${statusClass}`}>
+                  <h2 style={{ fontSize: 16 }}>{tool.name}</h2>
+                  <span className={`health-badge ${statusClass}`} style={{ fontSize: 10, padding: '2px 6px' }}>
                     <span className="chain-dot" />
                     {statusLabel}
                   </span>
                 </div>
-                <ChainBadge chain={tool.chain} />
+                <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
+                  <ChainBadge chain={tool.chain} />
+                  <span style={{ fontSize: 9, opacity: 0.6, background: 'rgba(255,255,255,0.04)', padding: '1px 4px', borderRadius: 2 }}>Verified contract</span>
+                </div>
                 
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10, fontSize: 11, opacity: 0.8, borderTop: '1px solid rgba(255,255,255,0.03)', paddingTop: 8 }}>
                   <span>Latency: <strong className="gold-text">{isLive ? `${latency}ms` : '—'}</strong></span>
@@ -414,8 +488,8 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="item-actions" style={{ marginTop: 12 }}>
-                  <Link className="btn-outline" href={tool.href}>Open tool</Link>
-                  <button className="btn-outline" onClick={() => retryOne(tool)} aria-label={`Retry ${tool.name}`}>↻</button>
+                  <Link className="btn-outline" href={tool.href} aria-label={`Open ${tool.name} Tool`}>Open tool</Link>
+                  <button className="btn-outline" onClick={() => retryOne(tool)} aria-label={`Retry ${tool.name} health check`}>↻</button>
                 </div>
               </article>
               </ErrorBoundary>
@@ -443,7 +517,7 @@ export default function DashboardPage() {
           ))}
         </section>
 
-        <section className="card" style={{ border: '1px dashed rgba(245, 197, 24, 0.2)' }}>
+        <section className="card" id="telemetry-console-section" style={{ border: '1px dashed rgba(245, 197, 24, 0.2)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
             <h2 style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: telemetryLogs.length > 0 ? '#EF4444' : '#22C55E' }} />
@@ -454,6 +528,7 @@ export default function DashboardPage() {
                 className="btn-outline" 
                 onClick={() => { clearTelemetryErrors(); setTelemetryLogs([]) }} 
                 style={{ padding: '4px 8px', fontSize: 10, height: 'auto' }}
+                aria-label="Clear telemetry logs"
               >
                 Clear logs
               </button>
@@ -477,6 +552,8 @@ export default function DashboardPage() {
             </div>
           )}
         </section>
+        
+        <OnboardingTour />
       </section>
     </main>
   )

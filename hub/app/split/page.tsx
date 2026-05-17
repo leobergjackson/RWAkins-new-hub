@@ -210,15 +210,26 @@ export default function SplitPage() {
 
   return (
     <main className="dashboard-page">
-      <section className="dashboard-hero">
+      <section className="dashboard-hero" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
         <div>
           <p className="eyebrow">SyncSplit</p>
           <h1>Stellar split payments</h1>
           <p className="silver-text">Create equal Soroban splits, sign participant payments, and track settlement history.</p>
+          
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 12 }}>
+            <span style={{ fontSize: 10, background: isDemo ? 'rgba(255, 255, 255, 0.03)' : 'rgba(34, 197, 94, 0.05)', border: isDemo ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(34, 197, 94, 0.3)', color: isDemo ? '#bbb' : '#22C55E', padding: '4px 10px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDemo ? '#bbb' : '#22C55E' }} />
+              {isDemo ? 'Demo Mode' : 'Live Connection'}
+            </span>
+            <span style={{ fontSize: 10, background: 'rgba(59, 130, 246, 0.05)', border: '1px solid rgba(59, 130, 246, 0.25)', color: '#60A5FA', padding: '4px 10px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3B82F6' }} />
+              Stellar Testnet (Soroban)
+            </span>
+          </div>
         </div>
-        <div className="hero-actions">
+        <div className="hero-actions" style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <ChainBadge />
-          <button className="btn-gold" onClick={connectWallet}>{wallet ? shortAddress(wallet) : 'Connect Freighter'}</button>
+          <button className="btn-gold" onClick={connectWallet} aria-label={wallet ? `Connected as ${shortAddress(wallet)}` : 'Connect Freighter Wallet'}>{wallet ? shortAddress(wallet) : 'Connect Freighter'}</button>
         </div>
       </section>
 
