@@ -6,7 +6,7 @@ import { AllExceptionsFilter } from './common/filters/http-exception.filter';
 import { NexusLogger } from './common/logging/nexus.logger';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import helmet from 'helmet';
-import * as compression from 'compression';
+import compression from 'compression';
 
 async function bootstrap() {
   if (!process.env.OPENAI_API_KEY) {

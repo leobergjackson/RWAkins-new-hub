@@ -11,7 +11,7 @@ import { NexusGateway } from '../trpc/nexus.gateway';
 @Injectable()
 export class AgentService {
   private logger = new Logger(AgentService.name);
-  private openai: OpenAI;
+  private _openai: OpenAI | null = null;
 
   private agentTypes = ['TREASURY', 'PAYROLL', 'COMPLIANCE', 'RISK', 'STRATEGY', 'EXECUTION', 'MARKET'];
 
@@ -24,11 +24,20 @@ export class AgentService {
     private safetyService: SafetyService,
     private nexusGateway: NexusGateway,
   ) {
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
-      this.logger.error('OPENAI_API_KEY not found in environment variables');
+    if (!process.env.OPENAI_API_KEY) {
+      this.logger.warn('OPENAI_API_KEY not set — AgentService will reject orchestration calls at runtime.');
     }
-    this.openai = new OpenAI({ apiKey });
+  }
+
+  private get openai(): OpenAI {
+    if (!this._openai) {
+      const apiKey = process.env.OPENAI_API_KEY;
+      if (!apiKey) {
+        throw new Error('OPENAI_API_KEY is required for AI orchestration but is not set.');
+      }
+      this._openai = new OpenAI({ apiKey });
+    }
+    return this._openai;
   }
 
   async orchestrate(orgId: string, instruction: string) {
