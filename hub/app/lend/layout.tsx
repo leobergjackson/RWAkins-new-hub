@@ -5,6 +5,7 @@ const description = 'DeFi loan negotiation on Ethereum L2 Arbitrum'
 const url = 'https://kubryx.vercel.app/lend'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kubryx.vercel.app'),
   title,
   description,
   openGraph: {

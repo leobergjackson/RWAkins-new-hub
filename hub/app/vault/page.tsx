@@ -2,7 +2,11 @@
 
 import { FormEvent, useEffect, useState } from 'react'
 import { fallbackVaultTrades } from '../../lib/fallback'
+import { toast } from '../../lib/toast'
+import { loadWallet, persistWallet } from '../../lib/wallet-utils'
 import DemoBanner from '../components/DemoBanner'
+import { SkeletonRow } from '../components/Skeleton'
+import EmptyState from '../components/EmptyState'
 
 type PhantomProvider = {
   connect: () => Promise<{ publicKey: { toString: () => string } }>
@@ -61,6 +65,11 @@ export default function VaultPage() {
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
 
+  useEffect(() => {
+    const saved = loadWallet('solana')
+    if (saved) setWallet(saved)
+  }, [])
+
   async function requestJson<T>(path: string, options?: RequestInit): Promise<T> {
     if (!apiBase) throw new Error('NEXT_PUBLIC_CIPHER_API is not configured.')
     const response = await fetch(`${apiBase}${path}`, {
@@ -76,9 +85,14 @@ export default function VaultPage() {
       setError('')
       if (!window.solana?.isPhantom) throw new Error('Phantom is not installed.')
       const result = await window.solana.connect()
-      setWallet(result.publicKey.toString())
+      const address = result.publicKey.toString()
+      setWallet(address)
+      persistWallet('solana', address)
+      toast.success('Phantom connected')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to connect Phantom.')
+      const msg = err instanceof Error ? err.message : 'Unable to connect Phantom.'
+      setError(msg)
+      toast.error(msg)
     }
   }
 
@@ -112,9 +126,12 @@ export default function VaultPage() {
         body: JSON.stringify({ asset, amount, fromChain: zeroMetadata ? 'zero-metadata' : fromChain, toChain }),
       })
       setMessage('Private trade submitted.')
+      toast.success(`Private trade: ${amount} ${asset} → ${toChain}`)
       await loadVault(wallet)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to submit private trade.')
+      const msg = err instanceof Error ? err.message : 'Unable to submit private trade.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -186,7 +203,7 @@ export default function VaultPage() {
 
         <div className="card">
           <h2>Privacy score</h2>
-          <strong className="gold-text">{privacy.score ?? 0}</strong>
+          <strong className="gold-text" style={{ fontSize: 48 }}>{privacy.score ?? 0}</strong>
           <p className="silver-text">Score updates from CipherVault privacy analysis.</p>
           {privacy.breakdown && Object.entries(privacy.breakdown).map(([key, value]) => (
             <div className="metric-row" key={key}>
@@ -199,13 +216,15 @@ export default function VaultPage() {
 
       <section className="card">
         <h2>Pending trades and bridge status</h2>
-        {loading && <span className="spinner" />}
-        {!loading && trades.length === 0 && <p className="silver-text">No private trades found.</p>}
-        {trades.map((trade, index) => (
+        {loading ? (
+          <><SkeletonRow /><SkeletonRow /><SkeletonRow /></>
+        ) : trades.length === 0 ? (
+          <EmptyState icon="🔀" title="No private trades" subtitle="Submit a trade above to see bridge status here." />
+        ) : trades.map((trade, index) => (
           <article className="mini-card" key={trade.id || index}>
             <div>
               <p className="gold-text">{trade.amount || '0'} {trade.asset || asset}</p>
-              <p className="silver-text">{trade.fromChain || fromChain} to {trade.toChain || toChain}</p>
+              <p className="silver-text">{trade.fromChain || fromChain} → {trade.toChain || toChain}</p>
               <p className="silver-text">{trade.createdAt || 'Queued now'}</p>
             </div>
             <div className="item-actions">

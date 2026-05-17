@@ -2,7 +2,11 @@
 
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { fallbackLoans } from '../../lib/fallback'
+import { toast } from '../../lib/toast'
+import { loadWallet, persistWallet } from '../../lib/wallet-utils'
 import DemoBanner from '../components/DemoBanner'
+import { SkeletonRow } from '../components/Skeleton'
+import EmptyState from '../components/EmptyState'
 
 const SUGGESTED_PROMPTS = [
   'I need $500 for 3 months to cover inventory',
@@ -19,9 +23,7 @@ const STATIC_AI_REPLY =
   "I'm currently offline. Based on your request, I'd suggest a 90-day loan at 4.2% APR with weekly repayments. Connect your backend for a personalized negotiation."
 
 async function groqFallback(message: string): Promise<string> {
-  if (!GROQ_KEY) {
-    return STATIC_AI_REPLY
-  }
+  if (!GROQ_KEY) return STATIC_AI_REPLY
   try {
     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -105,6 +107,11 @@ export default function LendPage() {
     chatScrollRef.current?.scrollTo({ top: chatScrollRef.current.scrollHeight, behavior: 'smooth' })
   }, [chat, aiTyping])
 
+  useEffect(() => {
+    const saved = loadWallet('evm')
+    if (saved) setWallet(saved)
+  }, [])
+
   async function requestJson<T>(path: string, options?: RequestInit): Promise<T> {
     if (!apiBase) throw new Error('NEXT_PUBLIC_LENDORA_API is not configured.')
     const response = await fetch(`${apiBase}${path}`, {
@@ -120,9 +127,14 @@ export default function LendPage() {
       setError('')
       if (!window.ethereum) throw new Error('MetaMask is not installed.')
       const accounts = (await window.ethereum.request({ method: 'eth_requestAccounts' })) as string[]
-      setWallet(accounts[0] || '')
+      const address = accounts[0] || ''
+      setWallet(address)
+      persistWallet('evm', address)
+      toast.success('MetaMask connected')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to connect MetaMask.')
+      const msg = err instanceof Error ? err.message : 'Unable to connect MetaMask.'
+      setError(msg)
+      toast.error(msg)
     }
   }
 
@@ -182,9 +194,12 @@ export default function LendPage() {
         body: JSON.stringify({ borrower: wallet, amount, duration, terms }),
       })
       setMessage('Loan created from accepted terms.')
+      toast.success('Loan created on Arbitrum')
       await loadLoans(wallet)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to create loan.')
+      const msg = err instanceof Error ? err.message : 'Unable to create loan.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -200,9 +215,12 @@ export default function LendPage() {
         body: JSON.stringify({ loanId: repayLoanId, amount: repayAmount }),
       })
       setMessage('Repayment submitted.')
+      toast.success('Repayment submitted')
       if (wallet) await loadLoans(wallet)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to repay loan.')
+      const msg = err instanceof Error ? err.message : 'Unable to repay loan.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -306,9 +324,11 @@ export default function LendPage() {
       <section className="dashboard-grid">
         <div className="card">
           <h2>Active loans</h2>
-          {loading && <span className="spinner" />}
-          {!loading && loans.length === 0 && <p className="silver-text">No active loans found.</p>}
-          {loans.map((loan, index) => (
+          {loading ? (
+            <><SkeletonRow /><SkeletonRow /></>
+          ) : loans.length === 0 ? (
+            <EmptyState icon="💰" title="No active loans" subtitle="Negotiate terms above to create a loan." />
+          ) : loans.map((loan, index) => (
             <article className="mini-card" key={loan.id || loan.loanId || index}>
               <p className="gold-text">{loan.amount || 'Loan'} · {loan.rate || 'AI priced'}</p>
               <p className="silver-text">{loan.duration || loan.dueDate || 'Duration pending'}</p>

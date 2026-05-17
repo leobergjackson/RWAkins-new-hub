@@ -5,6 +5,7 @@ const description = 'Unified command center across all 8 tools'
 const url = 'https://kubryx.vercel.app/dashboard'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kubryx.vercel.app'),
   title,
   description,
   openGraph: {

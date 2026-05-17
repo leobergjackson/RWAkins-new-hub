@@ -2,7 +2,13 @@
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react'
 import { fallbackVaults } from '../../lib/fallback'
+import { toast } from '../../lib/toast'
+import { loadWallet, persistWallet } from '../../lib/wallet-utils'
+import { getExplorerUrl } from '../../lib/explorer'
 import DemoBanner from '../components/DemoBanner'
+import { SkeletonRow } from '../components/Skeleton'
+import EmptyState from '../components/EmptyState'
+import CopyButton from '../components/CopyButton'
 
 type EthereumProvider = {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
@@ -63,6 +69,11 @@ export default function LegacyPage() {
 
   const hasApi = useMemo(() => Boolean(apiBase), [])
 
+  useEffect(() => {
+    const saved = loadWallet('evm')
+    if (saved) setWallet(saved)
+  }, [])
+
   async function requestJson<T>(path: string, options?: RequestInit): Promise<T> {
     if (!apiBase) throw new Error('NEXT_PUBLIC_ETERNALVAULT_API is not configured.')
     const response = await fetch(`${apiBase}${path}`, {
@@ -79,9 +90,14 @@ export default function LegacyPage() {
       if (!window.ethereum) throw new Error('MetaMask is not installed.')
       await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [QIE_MAINNET] })
       const accounts = (await window.ethereum.request({ method: 'eth_requestAccounts' })) as string[]
-      setWallet(accounts[0] || '')
+      const address = accounts[0] || ''
+      setWallet(address)
+      persistWallet('evm', address)
+      toast.success('MetaMask connected')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to connect MetaMask.')
+      const msg = err instanceof Error ? err.message : 'Unable to connect MetaMask.'
+      setError(msg)
+      toast.error(msg)
     }
   }
 
@@ -106,7 +122,6 @@ export default function LegacyPage() {
     const iv = crypto.getRandomValues(new Uint8Array(12))
     const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, bytes)
     const rawKey = await crypto.subtle.exportKey('raw', key)
-
     return {
       name: selected.name,
       type: selected.type,
@@ -132,10 +147,13 @@ export default function LegacyPage() {
         body: JSON.stringify({ owner: wallet, heir, file: encryptedFile, unlockDate, unlockCondition }),
       })
       setMessage('Encrypted vault created.')
+      toast.success('Vault created on QIE Mainnet')
       setFile(null)
       await loadVaults(wallet)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to create vault.')
+      const msg = err instanceof Error ? err.message : 'Unable to create vault.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -150,9 +168,12 @@ export default function LegacyPage() {
         body: JSON.stringify({ vaultId: vault.id || vault.vaultId, heir: wallet }),
       })
       setMessage('Claim submitted.')
+      toast.success('Vault claim submitted')
       await loadVaults(wallet)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to claim vault.')
+      const msg = err instanceof Error ? err.message : 'Unable to claim vault.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -221,14 +242,22 @@ export default function LegacyPage() {
 
         <div className="card">
           <h2>Your vaults</h2>
-          {loading && <span className="spinner" />}
-          {!loading && vaults.length === 0 && <p className="silver-text">No vaults found for this wallet.</p>}
           <div className="stack-list">
-            {vaults.map((vault, index) => (
+            {loading ? (
+              <><SkeletonRow /><SkeletonRow /><SkeletonRow /></>
+            ) : vaults.length === 0 ? (
+              <EmptyState icon="🔒" title="No vaults yet" subtitle="Create your first encrypted vault above." />
+            ) : vaults.map((vault, index) => (
               <article className="mini-card" key={vault.id || vault.vaultId || index}>
                 <div>
                   <p className="gold-text">{vault.fileName || `Vault ${index + 1}`}</p>
-                  <p className="silver-text">Heir: {vault.heir ? shortAddress(vault.heir) : 'Not assigned'}</p>
+                  <p className="silver-text" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    Heir: {vault.heir ? shortAddress(vault.heir) : 'Not assigned'}
+                    {vault.heir && <CopyButton text={vault.heir} />}
+                    {vault.heir && (
+                      <a href={getExplorerUrl('qie', 'address', vault.heir)} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 11 }}>↗</a>
+                    )}
+                  </p>
                   <p className="silver-text">Unlock: {vault.unlockDate || 'Validator attestation'}</p>
                 </div>
                 <div className="item-actions">

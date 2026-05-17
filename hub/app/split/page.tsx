@@ -2,8 +2,13 @@
 
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 import { fallbackSplits } from '../../lib/fallback'
+import { toast } from '../../lib/toast'
+import { loadWallet, persistWallet, isFreighterInstalled } from '../../lib/wallet-utils'
+import { getExplorerUrl } from '../../lib/explorer'
 import DemoBanner from '../components/DemoBanner'
-import { isFreighterInstalled } from '../../lib/wallet-utils'
+import { SkeletonRow } from '../components/Skeleton'
+import EmptyState from '../components/EmptyState'
+import CopyButton from '../components/CopyButton'
 
 type FreighterModule = {
   isConnected?: () => Promise<boolean | { isConnected: boolean }>
@@ -12,7 +17,6 @@ type FreighterModule = {
   signTransaction?: (xdr: string, opts?: { network?: string; networkPassphrase?: string }) => Promise<string | { signedTxXdr: string }>
 }
 
-// Bypass bundler static analysis with Function-wrapped dynamic import.
 const dynamicImport: (url: string) => Promise<any> =
   new Function('u', 'return import(u)') as any
 
@@ -69,6 +73,8 @@ export default function SplitPage() {
       setSplits(fallbackSplits as unknown as SplitRecord[])
       setIsDemo(true)
     }
+    const saved = loadWallet('stellar')
+    if (saved) setWallet(saved)
   }, [])
 
   const participantList = useMemo(() => {
@@ -102,9 +108,13 @@ export default function SplitPage() {
       const address = await extractAddress(api)
       if (!address) throw new Error('No Stellar address returned by Freighter.')
       setWallet(address)
+      persistWallet('stellar', address)
       setIsDemo(false)
+      toast.success('Freighter connected')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to connect Freighter.')
+      const msg = err instanceof Error ? err.message : 'Unable to connect Freighter.'
+      setError(msg)
+      toast.error(msg)
       setIsDemo(true)
     }
   }
@@ -127,8 +137,11 @@ export default function SplitPage() {
       setSplits((current) => [split, ...current])
       setHistory((current) => [`Created split against ${CONTRACT_ID}`, ...current])
       setMessage('Split prepared on Stellar Testnet.')
+      toast.success(`Split created: ${amount} XLM among ${participantList.length} participants`)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to create split.')
+      const msg = err instanceof Error ? err.message : 'Unable to create split.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -153,8 +166,11 @@ export default function SplitPage() {
       setSplits((current) => current.map((item) => item.id === split.id ? { ...item, paid: Array.from(new Set([...item.paid, wallet])) } : item))
       setHistory((current) => [`Paid ${split.amount / split.participants.length} via ${signedSummary.slice(0, 18)}`, ...current])
       setMessage('Share payment signed for SyncSplit.')
+      toast.success(`Paid ${(split.amount / split.participants.length).toFixed(2)} XLM`)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to pay share.')
+      const msg = err instanceof Error ? err.message : 'Unable to pay share.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -200,14 +216,22 @@ export default function SplitPage() {
             <span>Equal share</span>
             <strong className="gold-text">{share.toFixed(2)}</strong>
           </div>
+          <p className="silver-text" style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
+            Contract: {CONTRACT_ID.slice(0, 8)}…
+            <CopyButton text={CONTRACT_ID} />
+            <a href={getExplorerUrl('stellar', 'address', CONTRACT_ID)} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 11 }}>↗</a>
+          </p>
           <button className="btn-gold" disabled={loading || !wallet}>{loading ? <span className="spinner" /> : 'Create split'}</button>
         </form>
 
         <div className="card">
           <h2>Split status</h2>
-          {splits.length === 0 && <p className="silver-text">No splits created in this session.</p>}
           <div className="stack-list">
-            {splits.map((split) => (
+            {loading ? (
+              <><SkeletonRow /><SkeletonRow /></>
+            ) : splits.length === 0 ? (
+              <EmptyState icon="⚖️" title="No splits yet" subtitle="Create your first split above." />
+            ) : splits.map((split) => (
               <article className="mini-card" key={split.id}>
                 <div>
                   <p className="gold-text">{split.amount.toFixed(2)} total</p>
@@ -226,7 +250,9 @@ export default function SplitPage() {
 
       <section className="card">
         <h2>Transaction history</h2>
-        {history.length === 0 ? <p className="silver-text">Wallet activity appears here after split actions.</p> : history.map((item) => <p key={item}>{item}</p>)}
+        {history.length === 0 ? (
+          <EmptyState icon="📜" title="No history" subtitle="Wallet activity appears here after split actions." />
+        ) : history.map((item) => <p key={item}>{item}</p>)}
       </section>
     </main>
   )

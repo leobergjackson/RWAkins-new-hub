@@ -5,6 +5,7 @@ const description = 'On-chain AI credit scoring on QIE Mainnet'
 const url = 'https://kubryx.vercel.app/credit'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kubryx.vercel.app'),
   title,
   description,
   openGraph: {

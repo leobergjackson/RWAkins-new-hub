@@ -2,7 +2,11 @@
 
 import { FormEvent, useEffect, useState } from 'react'
 import { fallbackShadowAgents } from '../../lib/fallback'
+import { toast } from '../../lib/toast'
+import { loadWallet, persistWallet } from '../../lib/wallet-utils'
 import DemoBanner from '../components/DemoBanner'
+import { SkeletonCard } from '../components/Skeleton'
+import EmptyState from '../components/EmptyState'
 
 type PhantomProvider = {
   connect: () => Promise<{ publicKey: { toString: () => string } }>
@@ -66,6 +70,11 @@ export default function ShadowPage() {
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
 
+  useEffect(() => {
+    const saved = loadWallet('solana')
+    if (saved) { setWallet(saved); setAdmin(saved) }
+  }, [])
+
   async function requestJson<T>(path: string, options?: RequestInit): Promise<T> {
     if (!apiBase) throw new Error('NEXT_PUBLIC_SHADOW_API is not configured.')
     const response = await fetch(`${apiBase}${path}`, {
@@ -84,8 +93,12 @@ export default function ShadowPage() {
       const pubkey = result.publicKey.toString()
       setWallet(pubkey)
       setAdmin(pubkey)
+      persistWallet('solana', pubkey)
+      toast.success('Phantom connected')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to connect Phantom.')
+      const msg = err instanceof Error ? err.message : 'Unable to connect Phantom.'
+      setError(msg)
+      toast.error(msg)
     }
   }
 
@@ -120,9 +133,12 @@ export default function ShadowPage() {
         body: JSON.stringify({ name: orgName, admin }),
       })
       setMessage('Organization configured.')
+      toast.success('Organization saved')
       await loadShadowData(wallet)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to set up organization.')
+      const msg = err instanceof Error ? err.message : 'Unable to set up organization.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -137,9 +153,12 @@ export default function ShadowPage() {
         body: JSON.stringify({ agentType, action, params: { admin: wallet } }),
       })
       setMessage(`${action} triggered.`)
+      toast.success(`${agentType.toUpperCase()} triggered`)
       await loadShadowData(wallet)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to trigger agent.')
+      const msg = err instanceof Error ? err.message : 'Unable to trigger agent.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -191,8 +210,9 @@ export default function ShadowPage() {
         </form>
         <div className="card">
           <h2>Global activity</h2>
-          {activity.length === 0 && <p className="silver-text">All agent actions appear in this feed.</p>}
-          {activity.map((item, index) => (
+          {activity.length === 0 ? (
+            <EmptyState icon="📡" title="No activity yet" subtitle="All agent actions appear in this feed." />
+          ) : activity.map((item, index) => (
             <article className="mini-card" key={item.id || index}>
               <p className="gold-text">{item.agentType || 'Shadow agent'}</p>
               <p>{item.action || 'Action recorded'}</p>
@@ -203,7 +223,9 @@ export default function ShadowPage() {
       </section>
 
       <section className="agent-grid">
-        {departments.map(([agentType, name, action]) => {
+        {loading ? (
+          departments.map(([agentType]) => <SkeletonCard key={agentType} />)
+        ) : departments.map(([agentType, name, action]) => {
           const agent = statusByType.get(agentType) || statusByType.get(name)
           return (
             <article className="card" key={agentType}>

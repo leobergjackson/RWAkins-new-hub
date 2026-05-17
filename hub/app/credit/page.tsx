@@ -7,10 +7,20 @@ import {
   isMetaMaskInstalled,
   truncateAddress,
   switchToQIE,
+  loadWallet,
+  persistWallet,
+  clearWallet,
   WALLET_INSTALL_LINKS,
   QIE_MAINNET,
 } from '../../lib/wallet-utils'
+import { toast } from '../../lib/toast'
+import { getExplorerUrl } from '../../lib/explorer'
 import DemoBanner from '../components/DemoBanner'
+import { SkeletonCard } from '../components/Skeleton'
+import CopyButton from '../components/CopyButton'
+
+const NCRD_STAKING_CONTRACT = '0x08DA91C81cebD27d181cA732615379f185FbFb51'
+const NCRD_APY = 12
 
 type ScoreData = {
   score: number
@@ -27,6 +37,12 @@ type ScoreData = {
 }
 
 type ChatMsg = { role: 'user' | 'ai'; content: string; timestamp: Date }
+
+type StakeData = {
+  ncrdBalance: number
+  stakedAmount: number
+  pendingRewards: number
+}
 
 const EXPLORER = 'https://mainnet.qie.digital'
 
@@ -85,8 +101,17 @@ export default function CreditPage() {
   const [chat, setChat] = useState<ChatMsg[]>([])
   const [input, setInput] = useState('')
   const [chatLoading, setChatLoading] = useState(false)
+  const [stakeData, setStakeData] = useState<StakeData | null>(null)
+  const [stakeAmount, setStakeAmount] = useState('')
+  const [unstakeAmount, setUnstakeAmount] = useState('')
+  const [stakeLoading, setStakeLoading] = useState(false)
 
   const installed = useMemo(() => (typeof window === 'undefined' ? true : isMetaMaskInstalled()), [])
+
+  useEffect(() => {
+    const saved = loadWallet('evm')
+    if (saved) setWallet(saved)
+  }, [])
 
   async function connect() {
     setError('')
@@ -94,10 +119,22 @@ export default function CreditPage() {
       if (!isMetaMaskInstalled()) throw new Error('MetaMask is not installed.')
       await switchToQIE()
       const accounts = (await (window as any).ethereum.request({ method: 'eth_requestAccounts' })) as string[]
-      setWallet(accounts[0] || '')
+      const address = accounts[0] || ''
+      setWallet(address)
+      persistWallet('evm', address)
+      toast.success('Connected to QIE Mainnet')
     } catch (err: any) {
-      setError(err?.message || 'Unable to connect wallet.')
+      const msg = err?.message || 'Unable to connect wallet.'
+      setError(msg)
+      toast.error(msg)
     }
+  }
+
+  function disconnect() {
+    setWallet('')
+    setData(null)
+    clearWallet('evm')
+    toast.success('Wallet disconnected')
   }
 
   async function loadScore(addr: string) {
@@ -132,9 +169,11 @@ export default function CreditPage() {
       const json = await res.json()
       setData({ ...json, wallet })
       setIsDemo(false)
+      toast.success('Credit score regenerated')
     } catch {
       setData({ ...fallbackCreditScore, wallet })
       setIsDemo(true)
+      toast.error('Backend offline — showing demo score')
     } finally {
       setLoading(false)
     }
@@ -153,8 +192,11 @@ export default function CreditPage() {
       if (!res.ok) throw new Error('Mint failed')
       const json = await res.json()
       setData((prev) => (prev ? { ...prev, nftMinted: true, ...json } : prev))
+      toast.success('Credit Passport NFT minted on QIE')
     } catch (err: any) {
-      setError(err?.message || 'Mint failed — backend offline.')
+      const msg = err?.message || 'Mint failed — backend offline.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setMinting(false)
     }
@@ -186,7 +228,63 @@ export default function CreditPage() {
     }
   }
 
-  useEffect(() => { if (wallet) loadScore(wallet) }, [wallet])
+  async function loadStakeData(addr: string) {
+    setStakeLoading(true)
+    try {
+      const res = await fetch(`${CREDITBLOCKS_API}/api/staking/${addr}`)
+      if (!res.ok) throw new Error('offline')
+      const json = await res.json()
+      setStakeData(json)
+    } catch {
+      setStakeData({ ncrdBalance: 1000, stakedAmount: 500, pendingRewards: 5 })
+    } finally {
+      setStakeLoading(false)
+    }
+  }
+
+  async function stake() {
+    if (!wallet || !stakeAmount) return
+    setStakeLoading(true)
+    try {
+      const res = await fetch(`${CREDITBLOCKS_API}/api/staking/stake`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ walletAddress: wallet, amount: Number(stakeAmount) }),
+      })
+      if (!res.ok) throw new Error('Stake failed')
+      toast.success(`Staked ${stakeAmount} NCRD`)
+      setStakeAmount('')
+      await loadStakeData(wallet)
+    } catch (err: any) {
+      toast.error(err?.message || 'Stake failed — backend offline')
+      setStakeData((prev) => prev ? { ...prev, ncrdBalance: prev.ncrdBalance - Number(stakeAmount), stakedAmount: prev.stakedAmount + Number(stakeAmount) } : prev)
+    } finally {
+      setStakeLoading(false)
+    }
+  }
+
+  async function unstake() {
+    if (!wallet || !unstakeAmount) return
+    setStakeLoading(true)
+    try {
+      const res = await fetch(`${CREDITBLOCKS_API}/api/staking/unstake`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ walletAddress: wallet, amount: Number(unstakeAmount) }),
+      })
+      if (!res.ok) throw new Error('Unstake failed')
+      toast.success(`Unstaked ${unstakeAmount} NCRD`)
+      setUnstakeAmount('')
+      await loadStakeData(wallet)
+    } catch (err: any) {
+      toast.error(err?.message || 'Unstake failed — backend offline')
+      setStakeData((prev) => prev ? { ...prev, ncrdBalance: prev.ncrdBalance + Number(unstakeAmount), stakedAmount: prev.stakedAmount - Number(unstakeAmount) } : prev)
+    } finally {
+      setStakeLoading(false)
+    }
+  }
+
+  useEffect(() => { if (wallet) { loadScore(wallet); loadStakeData(wallet) } }, [wallet])
 
   return (
     <main className="container" style={{ padding: '40px 24px' }}>
@@ -219,10 +317,14 @@ export default function CreditPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
               <div>
                 <p className="silver-text" style={{ fontSize: 12 }}>WALLET</p>
-                <p style={{ fontFamily: 'monospace' }}>{truncateAddress(wallet)}</p>
+                <p style={{ fontFamily: 'monospace', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  {truncateAddress(wallet)}
+                  <CopyButton text={wallet} />
+                  <a href={getExplorerUrl('qie', 'address', wallet)} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 11 }}>↗</a>
+                </p>
               </div>
               <span className="chain-badge"><span className="chain-dot" /> {QIE_MAINNET.chainName}</span>
-              <button className="btn-outline" onClick={() => setWallet('')}>Disconnect</button>
+              <button className="btn-outline" onClick={disconnect}>Disconnect</button>
             </div>
           </section>
 
@@ -271,6 +373,74 @@ export default function CreditPage() {
                 </>
               )
             })()}
+          </section>
+
+          <section className="card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
+              <div>
+                <h3 style={{ margin: 0 }}>NCRD Staking</h3>
+                <p className="silver-text" style={{ fontSize: 12, marginTop: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
+                  Contract: {NCRD_STAKING_CONTRACT.slice(0, 10)}…
+                  <CopyButton text={NCRD_STAKING_CONTRACT} />
+                  <a href={getExplorerUrl('qie', 'address', NCRD_STAKING_CONTRACT)} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 11 }}>↗</a>
+                </p>
+              </div>
+              <span className="chain-badge" style={{ background: 'rgba(245,197,24,0.1)', border: '1px solid rgba(245,197,24,0.3)' }}>
+                {NCRD_APY}% APY
+              </span>
+            </div>
+
+            {stakeLoading ? (
+              <SkeletonCard />
+            ) : stakeData && (
+              <>
+                <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 16 }}>
+                  <div className="card" style={{ textAlign: 'center', padding: '12px' }}>
+                    <p className="silver-text" style={{ fontSize: 11 }}>BALANCE</p>
+                    <strong className="gold-text">{stakeData.ncrdBalance} NCRD</strong>
+                  </div>
+                  <div className="card" style={{ textAlign: 'center', padding: '12px' }}>
+                    <p className="silver-text" style={{ fontSize: 11 }}>STAKED</p>
+                    <strong className="gold-text">{stakeData.stakedAmount} NCRD</strong>
+                  </div>
+                  <div className="card" style={{ textAlign: 'center', padding: '12px' }}>
+                    <p className="silver-text" style={{ fontSize: 11 }}>REWARDS</p>
+                    <strong className="gold-text">{stakeData.pendingRewards} NCRD</strong>
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                  <div>
+                    <label style={{ fontSize: 13, marginBottom: 4, display: 'block' }}>Stake amount</label>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <input
+                        value={stakeAmount}
+                        onChange={(e) => setStakeAmount(e.target.value)}
+                        placeholder="100"
+                        style={{ flex: 1, padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: '#0C0C0C', color: '#fff' }}
+                      />
+                      <button className="btn-gold" onClick={stake} disabled={stakeLoading || !stakeAmount}>
+                        {stakeLoading ? <span className="spinner" /> : 'Stake'}
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 13, marginBottom: 4, display: 'block' }}>Unstake amount</label>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <input
+                        value={unstakeAmount}
+                        onChange={(e) => setUnstakeAmount(e.target.value)}
+                        placeholder="100"
+                        style={{ flex: 1, padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: '#0C0C0C', color: '#fff' }}
+                      />
+                      <button className="btn-outline" onClick={unstake} disabled={stakeLoading || !unstakeAmount}>
+                        {stakeLoading ? <span className="spinner" /> : 'Unstake'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </section>
 
           <section className="card">

@@ -5,6 +5,7 @@ const description = 'On-chain bill splitting on Stellar Testnet'
 const url = 'https://kubryx.vercel.app/split'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kubryx.vercel.app'),
   title,
   description,
   openGraph: {

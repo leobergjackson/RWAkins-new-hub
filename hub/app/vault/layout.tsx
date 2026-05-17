@@ -5,6 +5,7 @@ const description = 'Cross-chain privacy trading on Solana'
 const url = 'https://kubryx.vercel.app/vault'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kubryx.vercel.app'),
   title,
   description,
   openGraph: {

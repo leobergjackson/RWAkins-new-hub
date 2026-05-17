@@ -5,6 +5,7 @@ const description = 'Invisible financial operations on Solana'
 const url = 'https://kubryx.vercel.app/shadow'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kubryx.vercel.app'),
   title,
   description,
   openGraph: {

@@ -2,7 +2,11 @@
 
 import { FormEvent, useEffect, useState } from 'react'
 import { fallbackTreasury } from '../../lib/fallback'
+import { toast } from '../../lib/toast'
+import { loadWallet, persistWallet } from '../../lib/wallet-utils'
 import DemoBanner from '../components/DemoBanner'
+import { SkeletonCard, SkeletonRow } from '../components/Skeleton'
+import EmptyState from '../components/EmptyState'
 
 type PhantomProvider = {
   connect: () => Promise<{ publicKey: { toString: () => string } }>
@@ -64,6 +68,11 @@ export default function TreasuryPage() {
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
 
+  useEffect(() => {
+    const saved = loadWallet('solana')
+    if (saved) setWallet(saved)
+  }, [])
+
   async function requestJson<T>(path: string, options?: RequestInit): Promise<T> {
     if (!apiBase) throw new Error('NEXT_PUBLIC_PALMFLOW_API is not configured.')
     const response = await fetch(`${apiBase}${path}`, {
@@ -79,9 +88,14 @@ export default function TreasuryPage() {
       setError('')
       if (!window.solana?.isPhantom) throw new Error('Phantom is not installed.')
       const result = await window.solana.connect()
-      setWallet(result.publicKey.toString())
+      const address = result.publicKey.toString()
+      setWallet(address)
+      persistWallet('solana', address)
+      toast.success('Phantom connected')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to connect Phantom.')
+      const msg = err instanceof Error ? err.message : 'Unable to connect Phantom.'
+      setError(msg)
+      toast.error(msg)
     }
   }
 
@@ -115,9 +129,12 @@ export default function TreasuryPage() {
         body: JSON.stringify({ recipient, ratePerSecond, token }),
       })
       setMessage('Payroll stream added.')
+      toast.success('Payroll stream created')
       if (wallet) await loadTreasury(wallet)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to add payroll stream.')
+      const msg = err instanceof Error ? err.message : 'Unable to add payroll stream.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -133,8 +150,11 @@ export default function TreasuryPage() {
         body: JSON.stringify({ title: proposalTitle, description: proposalDescription, vote }),
       })
       setMessage('Governance proposal submitted.')
+      toast.success('Proposal submitted')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to submit proposal.')
+      const msg = err instanceof Error ? err.message : 'Unable to submit proposal.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -151,8 +171,11 @@ export default function TreasuryPage() {
       })
       setAdvisor((current) => [data.response || data.advice || 'Advisor response received.', ...current])
       setAdvisorInput('')
+      toast.success('AI advisor responded')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to get AI advice.')
+      const msg = err instanceof Error ? err.message : 'Unable to get AI advice.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -160,6 +183,7 @@ export default function TreasuryPage() {
 
   async function rebalance() {
     setMessage('Yield optimizer rebalance queued.')
+    toast.success('Rebalance queued')
   }
 
   useEffect(() => {
@@ -199,10 +223,16 @@ export default function TreasuryPage() {
       {!wallet && <div className="card">Connect Phantom to load treasury balances and streams.</div>}
 
       <section className="stats-grid">
-        <div className="card"><p>Total balance</p><strong className="gold-text">{treasury.totalBalance || treasury.balance || '0 SOL'}</strong></div>
-        <div className="card"><p>Inflows</p><strong className="gold-text">{treasury.inflows || '0'}</strong></div>
-        <div className="card"><p>Outflows</p><strong className="gold-text">{treasury.outflows || '0'}</strong></div>
-        <div className="card"><p>Current APY</p><strong className="gold-text">{treasury.apy || '0%'}</strong></div>
+        {loading ? (
+          <><SkeletonCard /><SkeletonCard /><SkeletonCard /><SkeletonCard /></>
+        ) : (
+          <>
+            <div className="card"><p>Total balance</p><strong className="gold-text">{treasury.totalBalance || treasury.balance || '0 SOL'}</strong></div>
+            <div className="card"><p>Inflows</p><strong className="gold-text">{treasury.inflows || '0'}</strong></div>
+            <div className="card"><p>Outflows</p><strong className="gold-text">{treasury.outflows || '0'}</strong></div>
+            <div className="card"><p>Current APY</p><strong className="gold-text">{treasury.apy || '0%'}</strong></div>
+          </>
+        )}
       </section>
 
       <section className="dashboard-grid">
@@ -238,8 +268,11 @@ export default function TreasuryPage() {
       <section className="dashboard-grid">
         <div className="card">
           <h2>Active streams</h2>
-          {streams.length === 0 && <p className="silver-text">No active payroll streams.</p>}
-          {streams.map((stream, index) => (
+          {loading ? (
+            <><SkeletonRow /><SkeletonRow /><SkeletonRow /></>
+          ) : streams.length === 0 ? (
+            <EmptyState icon="💸" title="No active streams" subtitle="Add a payroll stream to start real-time payments." />
+          ) : streams.map((stream, index) => (
             <article className="mini-card" key={stream.id || index}>
               <p className="gold-text">{stream.ratePerSecond || '0'} {stream.token || 'SOL'} / sec</p>
               <p className="silver-text">{stream.recipient ? shortAddress(stream.recipient) : 'Recipient pending'}</p>
@@ -254,7 +287,7 @@ export default function TreasuryPage() {
             <button className="btn-gold" disabled={loading || !wallet}>Ask advisor</button>
             <button type="button" className="btn-outline" onClick={rebalance}>Rebalance</button>
           </div>
-          {advisor.map((item, index) => <p key={index}>{item}</p>)}
+          {advisor.map((item, index) => <p key={index} style={{ marginTop: 8, fontSize: 14 }}>{item}</p>)}
         </form>
       </section>
     </main>

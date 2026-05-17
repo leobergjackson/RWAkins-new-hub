@@ -1,8 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import ErrorBoundary from '../components/ErrorBoundary'
+import EmptyState from '../components/EmptyState'
+import { loadWallet, persistWallet } from '../../lib/wallet-utils'
+import { toast } from '../../lib/toast'
 
 type EthereumProvider = {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
@@ -88,6 +92,7 @@ async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
 }
 
 export default function DashboardPage() {
+  const pathname = usePathname()
   const [ethWallet, setEthWallet] = useState('')
   const [solWallet, setSolWallet] = useState('')
   const [stellarWallet, setStellarWallet] = useState('')
@@ -103,14 +108,25 @@ export default function DashboardPage() {
 
   const primaryWallet = useMemo(() => ethWallet || solWallet || stellarWallet, [ethWallet, solWallet, stellarWallet])
 
+  useEffect(() => {
+    setEthWallet(loadWallet('evm'))
+    setSolWallet(loadWallet('solana'))
+    setStellarWallet(loadWallet('stellar'))
+  }, [])
+
   async function connectMetaMask() {
     try {
       setError('')
       if (!window.ethereum) throw new Error('MetaMask is not installed.')
       const accounts = (await window.ethereum.request({ method: 'eth_requestAccounts' })) as string[]
-      setEthWallet(accounts[0] || '')
+      const address = accounts[0] || ''
+      setEthWallet(address)
+      persistWallet('evm', address)
+      toast.success('MetaMask connected')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to connect MetaMask.')
+      const msg = err instanceof Error ? err.message : 'Unable to connect MetaMask.'
+      setError(msg)
+      toast.error(msg)
     }
   }
 
@@ -119,9 +135,14 @@ export default function DashboardPage() {
       setError('')
       if (!window.solana?.isPhantom) throw new Error('Phantom is not installed.')
       const result = await window.solana.connect()
-      setSolWallet(result.publicKey.toString())
+      const address = result.publicKey.toString()
+      setSolWallet(address)
+      persistWallet('solana', address)
+      toast.success('Phantom connected')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to connect Phantom.')
+      const msg = err instanceof Error ? err.message : 'Unable to connect Phantom.'
+      setError(msg)
+      toast.error(msg)
     }
   }
 
@@ -133,8 +154,12 @@ export default function DashboardPage() {
       if (!connected) throw new Error('Freighter is locked or not connected.')
       const address = window.freighter.getAddress ? await window.freighter.getAddress() : await window.freighter.getPublicKey?.()
       setStellarWallet(address || '')
+      persistWallet('stellar', address || '')
+      toast.success('Freighter connected')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to connect Freighter.')
+      const msg = err instanceof Error ? err.message : 'Unable to connect Freighter.'
+      setError(msg)
+      toast.error(msg)
     }
   }
 
@@ -260,6 +285,13 @@ export default function DashboardPage() {
     loadStats()
   }, [ethWallet, solWallet, stellarWallet])
 
+  const navLinkStyle = (href: string) => ({
+    color: pathname === href ? '#F5C518' : undefined,
+    borderLeft: pathname === href ? '2px solid #F5C518' : '2px solid transparent',
+    paddingLeft: 10,
+    transition: 'all 0.15s',
+  })
+
   return (
     <main className="dashboard-layout">
       <aside className="dashboard-sidebar">
@@ -271,7 +303,11 @@ export default function DashboardPage() {
           <button className="btn-outline" onClick={connectFreighter}>{stellarWallet ? shortAddress(stellarWallet) : 'Freighter'}</button>
         </div>
         <nav className="sidebar-nav">
-          {tools.map((tool) => <Link key={tool.name} href={tool.href}>{tool.name}</Link>)}
+          {tools.map((tool) => (
+            <Link key={tool.name} href={tool.href} style={navLinkStyle(tool.href)}>
+              {tool.name}
+            </Link>
+          ))}
         </nav>
       </aside>
 
@@ -321,7 +357,9 @@ export default function DashboardPage() {
         <section className="card">
           <h2>Unified activity</h2>
           {loading && <span className="spinner" />}
-          {!loading && activity.length === 0 && <p className="silver-text">Recent backend activity appears here after wallets connect.</p>}
+          {!loading && activity.length === 0 && (
+            <EmptyState icon="📊" title="No activity yet" subtitle="Recent backend activity appears here after wallets connect." />
+          )}
           {activity.map((item, index) => (
             <article className="mini-card" key={item.id || index}>
               <div>

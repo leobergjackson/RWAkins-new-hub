@@ -5,6 +5,7 @@ const description = 'Autonomous treasury management on Solana'
 const url = 'https://kubryx.vercel.app/treasury'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kubryx.vercel.app'),
   title,
   description,
   openGraph: {

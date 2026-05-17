@@ -5,6 +5,7 @@ const description = 'AI agent coordination on Solana Devnet'
 const url = 'https://kubryx.vercel.app/agents'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kubryx.vercel.app'),
   title,
   description,
   openGraph: {

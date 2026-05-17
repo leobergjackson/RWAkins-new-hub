@@ -5,6 +5,7 @@ const description = 'Encrypted on-chain inheritance on QIE Mainnet'
 const url = 'https://kubryx.vercel.app/legacy'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kubryx.vercel.app'),
   title,
   description,
   openGraph: {
