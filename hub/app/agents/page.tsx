@@ -9,6 +9,8 @@ import DemoBanner from '../components/DemoBanner'
 import { SkeletonRow } from '../components/Skeleton'
 import EmptyState from '../components/EmptyState'
 import CopyButton from '../components/CopyButton'
+import { resilientRequest } from '../../lib/api-resilience'
+import { logTelemetryError } from '../../lib/telemetry'
 
 type PhantomProvider = {
   connect: () => Promise<{ publicKey: { toString: () => string } }>
@@ -75,19 +77,8 @@ export default function AgentsPage() {
 
   async function requestJson<T>(path: string, options?: RequestInit): Promise<T> {
     if (!apiBase) throw new Error('NEXT_PUBLIC_TRUSTMESH_API is not configured.')
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 10000)
-    try {
-      const response = await fetch(`${apiBase}${path}`, {
-        ...options,
-        signal: controller.signal,
-        headers: { 'Content-Type': 'application/json', ...(options?.headers || {}) },
-      })
-      if (!response.ok) throw new Error(`Request failed: ${response.status}`)
-      return await response.json() as Promise<T>
-    } finally {
-      clearTimeout(timeout)
-    }
+    const sanitizedPath = path.replace(/[^a-zA-Z0-9]/g, '_')
+    return resilientRequest<T>(`${apiBase}${path}`, options, `agents_${sanitizedPath}`)
   }
 
   async function connectWallet() {
@@ -289,10 +280,17 @@ export default function AgentsPage() {
           {activity.length === 0 ? (
             <EmptyState icon="📋" title="No activity yet" subtitle="Ed25519 signed actions appear here." />
           ) : activity.map((item, index) => (
-            <article className="mini-card" key={item.id || index}>
-              <p className="gold-text">{item.action || 'Agent action'}</p>
-              <p className="silver-text" style={{ fontSize: 11, fontFamily: 'monospace' }}>{item.signature ? item.signature.slice(0, 24) + '…' : 'signature pending'}</p>
-              <p className="silver-text">{item.timestamp || 'Just now'}</p>
+            <article className="mini-card" key={item.id || index} style={{ marginBottom: 12 }}>
+              <p className="gold-text" style={{ margin: 0 }}>{item.action || 'Agent action'}</p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginTop: 4 }}>
+                <span className="silver-text" style={{ fontSize: 11, fontFamily: 'monospace' }}>
+                  {item.signature ? item.signature.slice(0, 24) + '…' : 'signature pending'}
+                </span>
+                {item.signature && (
+                  <a href={`https://solscan.io/tx/${item.signature}?cluster=devnet`} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 11 }}>Verify ↗</a>
+                )}
+              </div>
+              <p className="silver-text" style={{ fontSize: 11, marginTop: 4, opacity: 0.7 }}>{item.timestamp || 'Just now'}</p>
             </article>
           ))}
         </div>

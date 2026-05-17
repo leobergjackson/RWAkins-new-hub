@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { CREDITBLOCKS_API } from '../../lib/api'
 import { fallbackCreditScore } from '../../lib/fallback'
+import { resilientRequest } from '../../lib/api-resilience'
+import { logTelemetryError } from '../../lib/telemetry'
 import {
   isMetaMaskInstalled,
   truncateAddress,
@@ -106,6 +108,9 @@ export default function CreditPage() {
   const [unstakeAmount, setUnstakeAmount] = useState('')
   const [stakeLoading, setStakeLoading] = useState(false)
 
+  const [mintTxHash, setMintTxHash] = useState('')
+  const [stakeTxHash, setStakeTxHash] = useState('')
+
   const installed = useMemo(() => (typeof window === 'undefined' ? true : isMetaMaskInstalled()), [])
 
   useEffect(() => {
@@ -142,14 +147,13 @@ export default function CreditPage() {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch(`${CREDITBLOCKS_API}/api/score/${addr}`)
-      if (!res.ok) throw new Error('offline')
-      const json = await res.json()
+      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/score/${addr}`, {}, `credit_score_${addr}`)
       setData({ ...json, wallet: addr })
       setIsDemo(false)
-    } catch {
+    } catch (err: any) {
       setData({ ...fallbackCreditScore, wallet: addr })
       setIsDemo(true)
+      logTelemetryError('FETCH_ERROR', 'CreditPassport LoadScore', err?.message || 'Offline', err)
     } finally {
       setLoading(false)
     }
@@ -160,20 +164,18 @@ export default function CreditPage() {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch(`${CREDITBLOCKS_API}/api/score`, {
+      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/score`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ walletAddress: wallet, chainId: 1990 }),
-      })
-      if (!res.ok) throw new Error('offline')
-      const json = await res.json()
+      }, `credit_score_${wallet}`)
       setData({ ...json, wallet })
       setIsDemo(false)
       toast.success('Credit score regenerated')
-    } catch {
+    } catch (err: any) {
       setData({ ...fallbackCreditScore, wallet })
       setIsDemo(true)
       toast.error('Backend offline — showing demo score')
+      logTelemetryError('FETCH_ERROR', 'CreditPassport GenerateScore', err?.message || 'Offline', err)
     } finally {
       setLoading(false)
     }
@@ -184,19 +186,20 @@ export default function CreditPage() {
     setMinting(true)
     setError('')
     try {
-      const res = await fetch(`${CREDITBLOCKS_API}/api/score/mint`, {
+      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/score/mint`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ walletAddress: wallet }),
       })
-      if (!res.ok) throw new Error('Mint failed')
-      const json = await res.json()
       setData((prev) => (prev ? { ...prev, nftMinted: true, ...json } : prev))
+      if (json.transactionHash) {
+        setMintTxHash(json.transactionHash)
+      }
       toast.success('Credit Passport NFT minted on QIE')
     } catch (err: any) {
       const msg = err?.message || 'Mint failed — backend offline.'
       setError(msg)
       toast.error(msg)
+      logTelemetryError('FETCH_ERROR', 'CreditPassport MintNFT', msg, err)
     } finally {
       setMinting(false)
     }
@@ -210,19 +213,17 @@ export default function CreditPage() {
     setInput('')
     setChatLoading(true)
     try {
-      const res = await fetch(`${CREDITBLOCKS_API}/api/chat`, {
+      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/chat`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, wallet }),
       })
-      if (!res.ok) throw new Error('offline')
-      const json = await res.json()
       setChat((prev) => [...prev, { role: 'ai', content: json.reply || json.message || '(no reply)', timestamp: new Date() }])
-    } catch {
+    } catch (err: any) {
       setChat((prev) => [
         ...prev,
         { role: 'ai', content: 'Backend is offline. Connect a wallet on QIE Mainnet (chain ID 1990) and ensure CREDITBLOCKS_API is reachable.', timestamp: new Date() },
       ])
+      logTelemetryError('AI_ERROR', 'CreditPassport Chat', err?.message || 'Offline', err)
     } finally {
       setChatLoading(false)
     }
@@ -231,12 +232,11 @@ export default function CreditPage() {
   async function loadStakeData(addr: string) {
     setStakeLoading(true)
     try {
-      const res = await fetch(`${CREDITBLOCKS_API}/api/staking/${addr}`)
-      if (!res.ok) throw new Error('offline')
-      const json = await res.json()
+      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/staking/${addr}`, {}, `credit_staking_${addr}`)
       setStakeData(json)
-    } catch {
+    } catch (err: any) {
       setStakeData({ ncrdBalance: 1000, stakedAmount: 500, pendingRewards: 5 })
+      logTelemetryError('FETCH_ERROR', 'CreditPassport LoadStakeData', err?.message || 'Offline', err)
     } finally {
       setStakeLoading(false)
     }
@@ -246,18 +246,20 @@ export default function CreditPage() {
     if (!wallet || !stakeAmount) return
     setStakeLoading(true)
     try {
-      const res = await fetch(`${CREDITBLOCKS_API}/api/staking/stake`, {
+      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/staking/stake`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ walletAddress: wallet, amount: Number(stakeAmount) }),
       })
-      if (!res.ok) throw new Error('Stake failed')
+      if (json.transactionHash) {
+        setStakeTxHash(json.transactionHash)
+      }
       toast.success(`Staked ${stakeAmount} NCRD`)
       setStakeAmount('')
       await loadStakeData(wallet)
     } catch (err: any) {
       toast.error(err?.message || 'Stake failed — backend offline')
       setStakeData((prev) => prev ? { ...prev, ncrdBalance: prev.ncrdBalance - Number(stakeAmount), stakedAmount: prev.stakedAmount + Number(stakeAmount) } : prev)
+      logTelemetryError('FETCH_ERROR', 'CreditPassport Stake', err?.message || 'Offline', err)
     } finally {
       setStakeLoading(false)
     }
@@ -267,18 +269,20 @@ export default function CreditPage() {
     if (!wallet || !unstakeAmount) return
     setStakeLoading(true)
     try {
-      const res = await fetch(`${CREDITBLOCKS_API}/api/staking/unstake`, {
+      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/staking/unstake`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ walletAddress: wallet, amount: Number(unstakeAmount) }),
       })
-      if (!res.ok) throw new Error('Unstake failed')
+      if (json.transactionHash) {
+        setStakeTxHash(json.transactionHash)
+      }
       toast.success(`Unstaked ${unstakeAmount} NCRD`)
       setUnstakeAmount('')
       await loadStakeData(wallet)
     } catch (err: any) {
       toast.error(err?.message || 'Unstake failed — backend offline')
       setStakeData((prev) => prev ? { ...prev, ncrdBalance: prev.ncrdBalance + Number(unstakeAmount), stakedAmount: prev.stakedAmount - Number(unstakeAmount) } : prev)
+      logTelemetryError('FETCH_ERROR', 'CreditPassport Unstake', err?.message || 'Offline', err)
     } finally {
       setStakeLoading(false)
     }
@@ -335,10 +339,15 @@ export default function CreditPage() {
                 <h2 className="gold-text" style={{ fontSize: 64, lineHeight: 1, margin: '4px 0' }}>{data?.score ?? '—'}</h2>
                 <p>Grade: <strong className="gold-text">{data?.grade ?? '—'}</strong></p>
                 {data?.nftMinted ? (
-                  <p style={{ marginTop: 8 }}>
-                    Score on-chain ✅ &middot;{' '}
-                    <a href={`${EXPLORER}/address/${wallet}`} target="_blank" rel="noopener noreferrer" className="gold-text">View on Explorer</a>
-                  </p>
+                  <div style={{ marginTop: 8 }}>
+                    <p style={{ margin: 0 }}>Score on-chain ✅</p>
+                    {mintTxHash && (
+                      <p style={{ fontSize: 12, marginTop: 4, fontFamily: 'monospace', margin: '4px 0 0' }}>
+                        Tx: <a href={`${EXPLORER}/tx/${mintTxHash}`} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ textDecoration: 'underline' }}>{mintTxHash.slice(0, 10)}…{mintTxHash.slice(-8)} ↗</a>
+                      </p>
+                    )}
+                    <a href={`${EXPLORER}/address/${wallet}`} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 12, display: 'inline-block', marginTop: 4 }}>View on Explorer</a>
+                  </div>
                 ) : data && (
                   <button className="btn-gold" style={{ marginTop: 12 }} onClick={mintNFT} disabled={minting}>
                     {minting ? <span className="spinner" /> : 'Mint as NFT'}
@@ -439,6 +448,15 @@ export default function CreditPage() {
                     </div>
                   </div>
                 </div>
+
+                {stakeTxHash && (
+                  <div className="card" style={{ marginTop: 12, padding: '10px 14px', background: 'rgba(245,197,24,0.04)', border: '1px solid rgba(245,197,24,0.2)' }}>
+                    <p style={{ fontSize: 13, margin: 0, color: '#F5C518' }}>Transaction Confirmed</p>
+                    <p style={{ fontSize: 11, margin: '4px 0 0', fontFamily: 'monospace', opacity: 0.8 }}>
+                      Hash: <a href={`${EXPLORER}/tx/${stakeTxHash}`} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ textDecoration: 'underline' }}>{stakeTxHash} ↗</a>
+                    </p>
+                  </div>
+                )}
               </>
             )}
           </section>

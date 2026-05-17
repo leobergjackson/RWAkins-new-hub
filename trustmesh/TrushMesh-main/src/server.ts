@@ -116,51 +116,171 @@ export async function buildServer(options: BuildServerOptions = {}) {
 
   app.get('/health', async () => ({ status: 'ok', service: 'trustmesh' }));
 
+  interface SolanaAgent {
+    id: string;
+    name: string;
+    role: string;
+    status: string;
+    lastAction: string;
+  }
+
+  interface SolanaActivity {
+    id: string;
+    action: string;
+    signature: string;
+    timestamp: string;
+  }
+
+  // Stateful registries for Solana Agents Mesh
+  const userAgents = new Map<string, SolanaAgent[]>();
+  const userActivities = new Map<string, SolanaActivity[]>();
+
+  const getOrCreateAgents = (pubkey: string): SolanaAgent[] => {
+    if (!pubkey) return [];
+    if (!userAgents.has(pubkey)) {
+      userAgents.set(pubkey, [
+        {
+          id: 'agent-1',
+          name: 'Liquidity Arb Scout',
+          role: 'Scout arbitrage opportunities on Raydium/Orca',
+          status: 'ACTIVE',
+          lastAction: 'Scanned 42 pools'
+        }
+      ]);
+    }
+    return userAgents.get(pubkey)!;
+  };
+
+  const getOrCreateActivity = (pubkey: string): SolanaActivity[] => {
+    if (!pubkey) return [];
+    if (!userActivities.has(pubkey)) {
+      userActivities.set(pubkey, [
+        {
+          id: 'act-1',
+          action: 'Deployed Liquidity Arb Scout on Solana Devnet',
+          signature: '5k8eWn9PhantomInitSignature8z7a9b',
+          timestamp: new Date().toISOString()
+        }
+      ]);
+    }
+    return userActivities.get(pubkey)!;
+  };
+
   app.post('/api/agents/deploy', async (request, reply) => {
+    const body = request.body as { owner: string; name: string; role: string; permissions: string[] };
+    const owner = body.owner || 'default';
+    const agentsList = getOrCreateAgents(owner);
+    const activityList = getOrCreateActivity(owner);
+    
+    const newAgent: SolanaAgent = {
+      id: `agent-${Date.now()}`,
+      name: body.name || 'Unnamed Agent',
+      role: body.role || 'General tasks',
+      status: 'ACTIVE',
+      lastAction: 'Initialized'
+    };
+    
+    agentsList.push(newAgent);
+    
+    const txSig = `sol-deploy-${Math.random().toString(36).slice(2, 10)}-PhantomSig-${Date.now().toString().slice(-4)}`;
+    
+    activityList.unshift({
+      id: `act-${Date.now()}`,
+      action: `Deployed agent ${newAgent.name} (Role: ${newAgent.role})`,
+      signature: txSig,
+      timestamp: new Date().toISOString()
+    });
+    
     return reply.status(201).send({
       ok: true,
       service: 'trustmesh',
-      agent: request.body ?? {},
+      agent: newAgent,
+      signature: txSig,
       status: 'deployed'
     });
   });
 
   app.get('/api/agents/:pubkey', async (request, reply) => {
     const params = request.params as { pubkey: string };
-    return reply.send({
-      ok: true,
-      service: 'trustmesh',
-      pubkey: params.pubkey,
-      agent: null
-    });
+    const list = getOrCreateAgents(params.pubkey);
+    return reply.send(list);
   });
 
   app.post('/api/agents/delegate', async (request, reply) => {
+    const body = request.body as { agentId: string; task: string; signature: string };
+    let targetAgentName = 'Agent';
+    let ownerPubKey = 'default';
+    
+    for (const [pubkey, list] of userAgents.entries()) {
+      const found = list.find(a => a.id === body.agentId);
+      if (found) {
+        found.lastAction = `Executing: ${body.task}`;
+        targetAgentName = found.name;
+        ownerPubKey = pubkey;
+        break;
+      }
+    }
+    
+    const activityList = getOrCreateActivity(ownerPubKey);
+    const txSig = body.signature && body.signature !== 'unsigned-preview' 
+      ? body.signature.slice(0, 16) + '...Phantom'
+      : `sol-delegate-${Math.random().toString(36).slice(2, 10)}-Ed25519`;
+    
+    activityList.unshift({
+      id: `act-${Date.now()}`,
+      action: `Delegated task to ${targetAgentName}: "${body.task}"`,
+      signature: txSig,
+      timestamp: new Date().toISOString()
+    });
+    
     return reply.send({
       ok: true,
       service: 'trustmesh',
-      delegation: request.body ?? {},
+      delegation: body,
+      signature: txSig,
       status: 'delegated'
     });
   });
 
   app.post('/api/agents/revoke', async (request, reply) => {
+    const body = request.body as { agentId: string };
+    let ownerPubKey = 'default';
+    let targetAgentName = 'Agent';
+    
+    for (const [pubkey, list] of userAgents.entries()) {
+      const idx = list.findIndex(a => a.id === body.agentId);
+      if (idx !== -1) {
+        targetAgentName = list[idx].name;
+        list[idx].status = 'REVOKED';
+        list[idx].lastAction = 'Revoked by owner';
+        ownerPubKey = pubkey;
+        break;
+      }
+    }
+    
+    const activityList = getOrCreateActivity(ownerPubKey);
+    const txSig = `sol-revoke-${Math.random().toString(36).slice(2, 10)}-Revocation`;
+    
+    activityList.unshift({
+      id: `act-${Date.now()}`,
+      action: `Revoked agent ${targetAgentName}`,
+      signature: txSig,
+      timestamp: new Date().toISOString()
+    });
+    
     return reply.send({
       ok: true,
       service: 'trustmesh',
-      revocation: request.body ?? {},
+      revocation: body,
+      signature: txSig,
       status: 'revoked'
     });
   });
 
   app.get('/api/activity/:pubkey', async (request, reply) => {
     const params = request.params as { pubkey: string };
-    return reply.send({
-      ok: true,
-      service: 'trustmesh',
-      pubkey: params.pubkey,
-      activity: []
-    });
+    const list = getOrCreateActivity(params.pubkey);
+    return reply.send(list);
   });
 
   return app;

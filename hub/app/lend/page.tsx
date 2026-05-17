@@ -9,9 +9,9 @@ import { SkeletonRow } from '../components/Skeleton'
 import EmptyState from '../components/EmptyState'
 
 const SUGGESTED_PROMPTS = [
-  'I need $500 for 3 months to cover inventory',
-  "What's the lowest rate available for my credit score?",
-  'Can I repay early without penalty?',
+  'Request AI-Negotiated Term Loan of 1,500 USDC for 6 Months',
+  'Optimize my Borrowing Capacity and Interest Rate based on my Credit Passport Staking Boost',
+  'Simulate collateralized Arbitrum debt yield structures with instant repayment paths',
 ]
 
 // NOTE: NEXT_PUBLIC_GROQ_API_KEY is intentionally public-facing
@@ -42,6 +42,9 @@ async function groqFallback(message: string): Promise<string> {
     return STATIC_AI_REPLY
   }
 }
+
+import { resilientRequest } from '../../lib/api-resilience'
+import { logTelemetryError } from '../../lib/telemetry'
 
 type EthereumProvider = {
   request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
@@ -114,19 +117,8 @@ export default function LendPage() {
 
   async function requestJson<T>(path: string, options?: RequestInit): Promise<T> {
     if (!apiBase) throw new Error('NEXT_PUBLIC_LENDORA_API is not configured.')
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 10000)
-    try {
-      const response = await fetch(`${apiBase}${path}`, {
-        ...options,
-        signal: controller.signal,
-        headers: { 'Content-Type': 'application/json', ...(options?.headers || {}) },
-      })
-      if (!response.ok) throw new Error(`Request failed: ${response.status}`)
-      return await response.json() as Promise<T>
-    } finally {
-      clearTimeout(timeout)
-    }
+    const sanitizedPath = path.replace(/[^a-zA-Z0-9]/g, '_')
+    return resilientRequest<T>(`${apiBase}${path}`, options, `lend_${sanitizedPath}`)
   }
 
   async function connectWallet() {
@@ -160,6 +152,36 @@ export default function LendPage() {
     }
   }
 
+  function streamAiResponse(fullText: string) {
+    setAiTyping(true)
+    let currentText = ''
+    const words = fullText.split(' ')
+    let i = 0
+    
+    // Add empty message to be filled
+    setChat((current) => [...current, { role: 'ai', text: '', timestamp: new Date() }])
+    
+    const interval = setInterval(() => {
+      if (i < words.length) {
+        currentText += (i === 0 ? '' : ' ') + words[i]
+        setChat((current) => {
+          const next = [...current]
+          if (next.length > 0) {
+            next[next.length - 1] = {
+              ...next[next.length - 1],
+              text: currentText
+            }
+          }
+          return next
+        })
+        i++
+      } else {
+        clearInterval(interval)
+        setAiTyping(false)
+      }
+    }, 45)
+  }
+
   async function negotiate(event?: FormEvent<HTMLFormElement>) {
     if (event) event.preventDefault()
     const userText = chatInput || `I need $${amount} for ${duration} months for ${purpose}.`
@@ -175,20 +197,41 @@ export default function LendPage() {
       })
       const aiText = data.response || data.terms || 'Terms generated. Review and accept when ready.'
       setTerms(data.terms || aiText)
-      setChat((current) => [...current, { role: 'ai', text: aiText, timestamp: new Date() }])
+      streamAiResponse(aiText)
       setIsDemo(false)
     } catch {
       const aiText = await groqFallback(userText)
-      setChat((current) => [...current, { role: 'ai', text: aiText, timestamp: new Date() }])
+      streamAiResponse(aiText)
       setIsDemo(true)
-    } finally {
-      setAiTyping(false)
     }
   }
 
   function sendSuggested(text: string) {
     setChatInput(text)
-    setTimeout(() => negotiate(), 0)
+    setTimeout(() => {
+      // Direct call negotiate using simulated chatInput value
+      const userText = text
+      setError('')
+      setChat((current) => [...current, { role: 'user', text: userText, timestamp: new Date() }])
+      setChatInput('')
+      setAiTyping(true)
+      
+      // Perform negotiation directly
+      requestJson<{ response?: string; terms?: string }>('/api/negotiate', {
+        method: 'POST',
+        body: JSON.stringify({ message: userText, walletAddress: wallet, loanParams: { amount, duration, purpose } }),
+      }).then(data => {
+        const aiText = data.response || data.terms || 'Terms generated. Review and accept when ready.'
+        setTerms(data.terms || aiText)
+        streamAiResponse(aiText)
+        setIsDemo(false)
+      }).catch(() => {
+        groqFallback(userText).then(aiText => {
+          streamAiResponse(aiText)
+          setIsDemo(true)
+        })
+      })
+    }, 0)
   }
 
   async function createLoan() {
