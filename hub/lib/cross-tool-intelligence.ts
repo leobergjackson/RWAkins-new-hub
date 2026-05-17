@@ -288,7 +288,13 @@ export const SHOWCASE_FLOW: WalkthroughStep[] = [
     tip: '💡 Ultimate Executive Control: Integrates telemetry, quorums, economics, and memory in a premium interface.',
   },
   {
-    title: '12. Telemetry Console & Diagnostics Logs',
+    title: '12. Developer Ecosystem Portal',
+    route: '/ecosystem',
+    instructions: 'Explore the webhook playground, dispatch simulated payload traces, and review SDK integration models.',
+    tip: '💡 Platform Maturity: Provides a unified environment playground that makes the platform deployable at scale.',
+  },
+  {
+    title: '13. Telemetry Console & Diagnostics Logs',
     route: '/dashboard#telemetry',
     instructions: 'Inspect the system console at the bottom of your command panel to view real-time RPC failures, gateway classifications, or backoffs.',
     tip: '💡 SLA Proof: Proves complete architectural reliability under real server environments.',

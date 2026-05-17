@@ -130,6 +130,48 @@ export default function StoryPage() {
         { label: 'Equilibrium Index', value: '94.6%' },
         { label: 'Rewards Pool', value: 'NCRD Incentives' }
       ]
+    },
+    {
+      id: 'infra-coordination',
+      title: 'The Infrastructure Coordination Era',
+      subtitle: 'Moving past isolated cloud boxes towards synchronized global ledgers.',
+      paragraphs: [
+        'Static hosting model setups are vulnerable to network fragmentation, DNS blocking, and localized routing outages.',
+        'Kubryx heralds a new operational standard by establishing an independent, self-governing consensus mesh. Nodes continuously verify transaction quorums, calibrate latency targets, and maintain localized state databases.',
+        'This guarantees absolute permanence and multi-cloud resilience, allowing organizations to run digital twin payroll systems with complete operational isolation.'
+      ],
+      metrics: [
+        { label: 'Coordination Weight', value: 'Validator Mesh' },
+        { label: 'Nominal Sync', value: '45ms target' }
+      ]
+    },
+    {
+      id: 'ai-native-fabric',
+      title: 'AI-Native Operational Fabric',
+      subtitle: 'Orchestrating multi-chain state routes with rigorous zero-knowledge policies.',
+      paragraphs: [
+        'Traditional automation rules are rigid, fragile, and fail to adapt during extreme volatility. LLMs, conversely, lack cryptographic safeguards.',
+        'Our Infrastructure Policy Engine resolves this by binding autonomous agent allocations within deterministic boundaries (such as a 50k USDC sweep limit). Every routing recommendation leaves a ZK decision trace in our governance registry.',
+        'This allows operators to review machine-speed mitigations with complete logical explainability and absolute defense confidence.'
+      ],
+      metrics: [
+        { label: 'Policy Gating', value: 'ZK Decision Lineage' },
+        { label: 'Escalation Rules', value: 'USDC Thresholds' }
+      ]
+    },
+    {
+      id: 'beyond-saas',
+      title: 'Beyond SaaS Operations',
+      subtitle: 'A decentralized, independent network governing autonomous digital resources.',
+      paragraphs: [
+        'Conventional SaaS dashboards are passive observers, capturing retrospective data without the power to execute self-correcting transactions.',
+        'Kubryx balances resources proactively through the Autonomous Economic Coordination engine. The engine models liquidity pools dynamically and adjust reward levels to correct multi-chain yield imbalances.',
+        'By matching machine-speed adjustments with mathematical equilibrium scores, we present a resilient operational layer capable of serving global DAOs and protocols.'
+      ],
+      metrics: [
+        { label: 'Ecosystem APY', value: 'Dynamic Rewards' },
+        { label: 'Maturity Score', value: '98.4%' }
+      ]
     }
   ]
 

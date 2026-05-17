@@ -8,6 +8,7 @@ import { useGlobalMemory } from '../../lib/global-memory'
 import { usePlatformState } from '../../lib/platform-engine'
 import { useAutonomousOps } from '../../lib/autonomous-ops'
 import { useCognition } from '../../lib/cognition-engine'
+import { useFabric } from '../../lib/fabric-engine'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
 
@@ -20,6 +21,9 @@ export default function ExecutivePage() {
 
   // Cognition Engine integrations
   const { livingTelemetry, clusters, chronicle, ecosystemScore, orchestrationPressure, healingSimulationActive, archiveMaturityEpoch, triggerSelfHealing } = useCognition()
+
+  // Fabric Engine integrations
+  const { regions, compatibility, maturityScore, ecosystemTrustForecast, failoverInProgress, toggleOutage } = useFabric()
 
   const [selectedSnapshotId, setSelectedSnapshotId] = useState<string | null>(null)
   
@@ -125,14 +129,78 @@ export default function ExecutivePage() {
 
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Self-Healing Factor</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: livingTelemetry.healingScore > 90 ? '#10B981' : '#F5C518' }}>
-              {livingTelemetry.healingScore}%
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Maturity & Trust Forecast</span>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
+              {maturityScore}% / {ecosystemTrustForecast}%
             </strong>
           </div>
-          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Active Threats: <strong style={{ color: activeThreatsCount > 0 ? '#EF4444' : '#10B981' }}>{activeThreatsCount} Simulated</strong></span>
+          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Active Failovers: <strong style={{ color: failoverInProgress ? '#EF4444' : '#10B981' }}>{failoverInProgress ? 'YES (Rerouting)' : 'None'}</strong></span>
         </article>
 
+      </section>
+
+      {/* Deployment Realism Zone Mapping Map */}
+      <section className="card" style={{ padding: 18, marginBottom: 24 }}>
+        <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🌍 Active Deployment Zones & Infrastructure Regions</h3>
+        <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+          Real-time RPC latency mapping, geo-balancing resilience scores, and simulated regional outage controllers.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+          {regions.map((region) => (
+            <div 
+              key={region.name}
+              style={{
+                padding: 14,
+                background: region.status === 'outage' ? 'rgba(239,68,68,0.03)' : 'rgba(255,255,255,0.01)',
+                border: region.status === 'outage' ? '1px solid #EF4444' : '1px solid rgba(255,255,255,0.03)',
+                borderRadius: 6,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                gap: 8
+              }}
+            >
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <strong style={{ fontSize: 13, color: '#fff' }}>{region.name}</strong>
+                  <span style={{ fontSize: 9, color: '#888', fontFamily: 'monospace' }}>{region.zone}</span>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginTop: 8 }}>
+                  <span style={{ color: '#888' }}>Latency:</span>
+                  <strong style={{ color: region.status === 'outage' ? '#EF4444' : '#10B981' }}>
+                    {region.status === 'outage' ? 'OFFLINE' : `${region.latency}ms`}
+                  </strong>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginTop: 4 }}>
+                  <span style={{ color: '#888' }}>Resilience:</span>
+                  <strong style={{ color: '#aaa' }}>{region.resilienceScore}%</strong>
+                </div>
+
+                <div style={{ fontSize: 10, color: '#666', marginTop: 4, fontFamily: 'monospace' }}>
+                  Failover Target: {region.failoverTarget}
+                </div>
+              </div>
+
+              <button
+                onClick={() => toggleOutage(region.name)}
+                className="btn-outline"
+                style={{
+                  padding: '4px',
+                  fontSize: 10,
+                  width: '100%',
+                  borderColor: region.status === 'outage' ? '#10B981' : 'rgba(239,68,68,0.25)',
+                  color: region.status === 'outage' ? '#10B981' : '#EF4444',
+                  marginTop: 6
+                }}
+              >
+                {region.status === 'outage' ? '🔌 Power On Region' : '💥 Simulate Outage'}
+              </button>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Main Panel Grid */}
@@ -248,9 +316,56 @@ export default function ExecutivePage() {
 
         </div>
 
-        {/* Right Side: Threat forecasting, snapshot restore */}
+        {/* Right Side: Threat forecasting, compatibility registry */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           
+          {/* Protocol Compatibility Registry */}
+          <article className="card" style={{ padding: 18 }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🔗 Ecosystem Trust Compatibility Matrix</h3>
+            <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+              Institutional readiness certification weights and auditing matrix.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {compatibility.map((item) => (
+                <div 
+                  key={item.protocolName}
+                  style={{
+                    padding: 12,
+                    background: 'rgba(255,255,255,0.01)',
+                    border: '1px solid rgba(255,255,255,0.03)',
+                    borderRadius: 6
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                    <strong style={{ fontSize: 12, color: '#fff' }}>{item.protocolName}</strong>
+                    <span 
+                      style={{ 
+                        fontSize: 9, 
+                        background: item.readinessState === 'certified' ? 'rgba(16,185,129,0.06)' : 'rgba(245,197,24,0.06)', 
+                        color: item.readinessState === 'certified' ? '#10B981' : '#F5C518', 
+                        padding: '2px 6px', 
+                        borderRadius: 4,
+                        textTransform: 'uppercase'
+                      }}
+                    >
+                      {item.readinessState}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#888', marginTop: 6 }}>
+                    <span>Ecosystem Trust Score:</span>
+                    <strong style={{ color: '#fff' }}>{item.trustWeight}%</strong>
+                  </div>
+
+                  <div style={{ fontSize: 9, color: '#666', marginTop: 4, fontFamily: 'monospace' }}>
+                    Last Security Audit: {item.lastAudited}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+
           {/* Active threat matrix */}
           <article className="card" style={{ padding: 18 }}>
             <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🛡️ Advanced Threat Forecast Matrix</h3>
