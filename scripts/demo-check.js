@@ -9,7 +9,7 @@ const checks = [
   {
     name: 'CreditBlocks',
     url: 'https://creditblock-rs-backend.onrender.com/health',
-    expect: { status: 'ok' },
+    expect: { status: 'healthy' },
   },
   {
     name: 'EternalVault',
@@ -43,7 +43,7 @@ const checks = [
   },
   {
     name: 'QIE Mainnet RPC',
-    url: 'https://rpc.qie.digital',
+    url: 'https://rpc.qie.space',
     method: 'POST',
     body: { jsonrpc: '2.0', id: 1, method: 'eth_blockNumber', params: [] },
     expectField: 'result',
