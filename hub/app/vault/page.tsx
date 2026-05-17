@@ -118,6 +118,7 @@ export default function VaultPage() {
       setIsDemo(false)
     } catch {
       setTrades(fallbackVaultTrades as unknown as Trade[])
+      setPrivacy({ score: 85, breakdown: { 'Mixer Isolation': 'Excellent', 'Metadata Leakage': 'None', 'Bridge Exposure': 'Low' } })
       setIsDemo(true)
     } finally {
       setLoading(false)

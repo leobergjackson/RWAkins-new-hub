@@ -100,9 +100,12 @@ export function useRealtimeSync() {
   }
 }
 
+let isWSStreamStarted = false
+
 // 3. Simulated persistent WebSockets that feed live transactions into the telemetry pool
 export function simulateWebSocketStream() {
-  if (typeof window === 'undefined') return
+  if (isWSStreamStarted || typeof window === 'undefined') return
+  isWSStreamStarted = true
 
   // Every 12 seconds, push a live transaction event
   setInterval(() => {

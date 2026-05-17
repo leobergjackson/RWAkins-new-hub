@@ -51,14 +51,14 @@ type ActivityItem = {
 }
 
 const tools = [
-  { name: 'CreditBlocks', href: '/credit', chain: 'QIE Mainnet', env: process.env.NEXT_PUBLIC_CREDITBLOCKS_API },
-  { name: 'Legacy Vault', href: '/legacy', chain: 'QIE Mainnet', env: process.env.NEXT_PUBLIC_ETERNALVAULT_API },
-  { name: 'SyncSplit', href: '/split', chain: 'Stellar Testnet', env: process.env.NEXT_PUBLIC_STELLAR_RPC, rpc: true },
-  { name: 'AI Lending', href: '/lend', chain: 'Arbitrum', env: process.env.NEXT_PUBLIC_LENDORA_API },
-  { name: 'Agent Mesh', href: '/agents', chain: 'Solana Devnet', env: process.env.NEXT_PUBLIC_TRUSTMESH_API },
-  { name: 'Shadow OS', href: '/shadow', chain: 'Solana Devnet', env: process.env.NEXT_PUBLIC_SHADOW_API },
-  { name: 'Treasury AI', href: '/treasury', chain: 'Solana Devnet', env: process.env.NEXT_PUBLIC_PALMFLOW_API },
-  { name: 'Private Vault', href: '/vault', chain: 'Multi-chain', env: process.env.NEXT_PUBLIC_CIPHER_API },
+  { name: 'CreditBlocks', href: '/credit', chain: 'QIE Mainnet', env: process.env.NEXT_PUBLIC_CREDITBLOCKS_API || '' },
+  { name: 'Legacy Vault', href: '/legacy', chain: 'QIE Mainnet', env: process.env.NEXT_PUBLIC_ETERNALVAULT_API || '' },
+  { name: 'SyncSplit', href: '/split', chain: 'Stellar Testnet', env: process.env.NEXT_PUBLIC_STELLAR_RPC || '', rpc: true },
+  { name: 'AI Lending', href: '/lend', chain: 'Arbitrum', env: process.env.NEXT_PUBLIC_LENDORA_API || '' },
+  { name: 'Agent Mesh', href: '/agents', chain: 'Solana Devnet', env: process.env.NEXT_PUBLIC_TRUSTMESH_API || '' },
+  { name: 'Shadow OS', href: '/shadow', chain: 'Solana Devnet', env: process.env.NEXT_PUBLIC_SHADOW_API || '' },
+  { name: 'Treasury AI', href: '/treasury', chain: 'Solana Devnet', env: process.env.NEXT_PUBLIC_PALMFLOW_API || '' },
+  { name: 'Private Vault', href: '/vault', chain: 'Multi-chain', env: process.env.NEXT_PUBLIC_CIPHER_API || '' },
 ]
 
 function shortAddress(address: string) {
@@ -267,10 +267,10 @@ export default function DashboardPage() {
       const feed: ActivityItem[] = []
       const live: Record<string, boolean> = { credit: false, vaults: false, agents: false, treasury: false }
 
-      const C = process.env.NEXT_PUBLIC_CREDITBLOCKS_API
-      const V = process.env.NEXT_PUBLIC_ETERNALVAULT_API
-      const A = process.env.NEXT_PUBLIC_TRUSTMESH_API
-      const P = process.env.NEXT_PUBLIC_PALMFLOW_API
+      const C = process.env.NEXT_PUBLIC_CREDITBLOCKS_API || ''
+      const V = process.env.NEXT_PUBLIC_ETERNALVAULT_API || ''
+      const A = process.env.NEXT_PUBLIC_TRUSTMESH_API || ''
+      const P = process.env.NEXT_PUBLIC_PALMFLOW_API || ''
 
       const [creditR, vaultR, agentR, treasuryR] = await Promise.allSettled([
         C && ethWallet ? fetch(`${C}/api/score/${ethWallet}`)   : Promise.reject(new Error('no env/wallet')),
@@ -300,16 +300,17 @@ export default function DashboardPage() {
       }
       setLiveSources(live)
 
-      if (process.env.NEXT_PUBLIC_TRUSTMESH_API && solWallet) {
-        const agentFeed = await fetchJson<unknown>(`${process.env.NEXT_PUBLIC_TRUSTMESH_API}/api/activity/${solWallet}`).catch(() => null)
+      const T_MESH_API = process.env.NEXT_PUBLIC_TRUSTMESH_API || ''
+      if (T_MESH_API && solWallet) {
+        const agentFeed = await fetchJson<unknown>(`${T_MESH_API}/api/activity/${solWallet}`).catch(() => null)
         const items = Array.isArray(agentFeed) ? agentFeed : (agentFeed as { activity?: unknown[] } | null)?.activity || []
         items.slice(0, 4).forEach((item, index) => feed.push({ tool: 'Agent Mesh', action: (item as { action?: string }).action || 'Agent action', wallet: solWallet, timestamp: (item as { timestamp?: string }).timestamp, id: `agent-${index}` }))
       }
 
       const activitySources = [
         { tool: 'Shadow OS', url: process.env.NEXT_PUBLIC_SHADOW_API ? `${process.env.NEXT_PUBLIC_SHADOW_API}/api/activity` : '', wallet: solWallet },
-        { tool: 'Treasury AI', url: process.env.NEXT_PUBLIC_PALMFLOW_API && solWallet ? `${process.env.NEXT_PUBLIC_PALMFLOW_API}/api/payroll/${solWallet}` : '', wallet: solWallet },
-        { tool: 'Private Vault', url: process.env.NEXT_PUBLIC_CIPHER_API && solWallet ? `${process.env.NEXT_PUBLIC_CIPHER_API}/api/trades/${solWallet}` : '', wallet: solWallet },
+        { tool: 'Treasury AI', url: (process.env.NEXT_PUBLIC_PALMFLOW_API || '') && solWallet ? `${process.env.NEXT_PUBLIC_PALMFLOW_API}/api/payroll/${solWallet}` : '', wallet: solWallet },
+        { tool: 'Private Vault', url: (process.env.NEXT_PUBLIC_CIPHER_API || '') && solWallet ? `${process.env.NEXT_PUBLIC_CIPHER_API}/api/trades/${solWallet}` : '', wallet: solWallet },
       ]
 
       await Promise.all(activitySources.map(async (source) => {

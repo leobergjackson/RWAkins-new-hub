@@ -125,6 +125,11 @@ export default function ShadowPage() {
       setIsDemo(false)
     } catch {
       setAgents(fallbackShadowAgents as unknown as ShadowAgent[])
+      setActivity([
+        { id: '1', agentType: 'CFO Agent', action: 'Triggered CFO bot allocation review', timestamp: '14:38:12' },
+        { id: '2', agentType: 'Audit Agent', action: 'Transaction audit complete', timestamp: '14:36:20' },
+        { id: '3', agentType: 'Compliance Agent', action: 'Regulatory parameter sweep complete', timestamp: '14:32:05' }
+      ])
       setIsDemo(true)
     } finally {
       setLoading(false)

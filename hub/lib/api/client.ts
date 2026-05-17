@@ -12,13 +12,13 @@ export interface RPCNode {
 
 // 1. Env-safe URLs & Fallbacks
 export const API_ENDPOINTS = {
-  ETERNALVAULT: process.env.NEXT_PUBLIC_ETERNALVAULT_API || 'http://localhost:3000/api/eternalvault',
-  LENDORA: process.env.NEXT_PUBLIC_LENDORA_API || 'http://localhost:3000/api/lendora',
-  TRUSTMESH: process.env.NEXT_PUBLIC_TRUSTMESH_API || 'http://localhost:3000/api/trustmesh',
-  SHADOW: process.env.NEXT_PUBLIC_SHADOW_API || 'http://localhost:3000/api/shadow',
-  PALMFLOW: process.env.NEXT_PUBLIC_PALMFLOW_API || 'http://localhost:3000/api/palmflow',
-  CIPHER: process.env.NEXT_PUBLIC_CIPHER_API || 'http://localhost:3000/api/cipher',
-  CREDITBLOCKS: process.env.NEXT_PUBLIC_CREDITBLOCKS_API || 'https://creditblock-rs-backend.onrender.com'
+  ETERNALVAULT: process.env.NEXT_PUBLIC_ETERNALVAULT_URL || process.env.NEXT_PUBLIC_ETERNALVAULT_API || 'http://localhost:3000/api/eternalvault',
+  LENDORA: process.env.NEXT_PUBLIC_LENDORA_URL || process.env.NEXT_PUBLIC_LENDORA_API || 'http://localhost:3000/api/lendora',
+  TRUSTMESH: process.env.NEXT_PUBLIC_TRUSTMESH_URL || process.env.NEXT_PUBLIC_TRUSTMESH_API || 'http://localhost:3000/api/trustmesh',
+  SHADOW: process.env.NEXT_PUBLIC_SHADOW_URL || process.env.NEXT_PUBLIC_SHADOW_API || 'http://localhost:3000/api/shadow',
+  PALMFLOW: process.env.NEXT_PUBLIC_PALMFLOW_URL || process.env.NEXT_PUBLIC_PALMFLOW_API || 'http://localhost:3000/api/palmflow',
+  CIPHER: process.env.NEXT_PUBLIC_CIPHER_URL || process.env.NEXT_PUBLIC_CIPHER_API || 'http://localhost:3000/api/cipher',
+  CREDITBLOCKS: process.env.NEXT_PUBLIC_CREDITBLOCKS_URL || process.env.NEXT_PUBLIC_CREDITBLOCKS_API || 'https://creditblock-rs-backend.onrender.com'
 }
 
 // 2. RPC Nodes with Native Failovers

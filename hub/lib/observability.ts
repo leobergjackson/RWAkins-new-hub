@@ -37,6 +37,15 @@ export function trackStaleSync(gapMs: number) {
   logEvent('STALE_SYNC', 'Sync Engine', `Synchronization drift detected. Current lag: ${gapMs}ms`)
 }
 
+function maskSensitiveInfo(str: string): string {
+  if (typeof str !== 'string') return str
+  // Mask EVM addresses
+  let res = str.replace(/0x[a-fA-F0-9]{40}/g, (m) => `${m.slice(0, 6)}...${m.slice(-4)}`)
+  // Mask Solana/Stellar addresses
+  res = res.replace(/\b[1-9A-HJ-NP-Za-km-z]{32,44}\b/g, (m) => `${m.slice(0, 6)}...${m.slice(-4)}`)
+  return res
+}
+
 // 2. Local storage logging wrapper
 function logEvent(
   type: ObservabilityLog['type'],
@@ -49,12 +58,13 @@ function logEvent(
   try {
     const logsStr = localStorage.getItem(STORAGE_KEY) || '[]'
     const logs: ObservabilityLog[] = JSON.parse(logsStr)
+    const sanitizedMsg = maskSensitiveInfo(message)
     const newLog: ObservabilityLog = {
       id: `obs-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
       timestamp: new Date().toISOString(),
       type,
       source,
-      message,
+      message: sanitizedMsg,
       details
     }
 
