@@ -10,6 +10,7 @@ import { useAutonomousOps } from '../../lib/autonomous-ops'
 import { useCognition } from '../../lib/cognition-engine'
 import { useFabric } from '../../lib/fabric-engine'
 import { useGlobalOperations } from '../../lib/global-operations-engine'
+import { useStrategicIntelligence } from '../../lib/strategic-intelligence-engine'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
 
@@ -37,6 +38,16 @@ export default function ExecutivePage() {
     restoreSnapshot: globalRestoreSnapshot,
     snapshots: globalCheckpoints 
   } = useGlobalOperations()
+
+  // Strategic Intelligence Hook
+  const {
+    recommendations,
+    forecasts,
+    activeMitigationPlan,
+    memoryEpochs,
+    strategicConfidence,
+    archiveEpoch
+  } = useStrategicIntelligence()
 
   const [selectedSnapshotId, setSelectedSnapshotId] = useState<string | null>(null)
   
@@ -117,6 +128,90 @@ export default function ExecutivePage() {
         </div>
       </header>
 
+      {/* Strategic Intelligence Console Panel */}
+      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(245,197,24,0.25)', background: 'rgba(245,197,24,0.01)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 14 }}>
+          <div>
+            <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#F5C518', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span>🧠</span> Autonomous Strategic Intelligence Console
+            </h2>
+            <p style={{ margin: '2px 0 0', fontSize: 12, color: '#aaa' }}>
+              Operates predictive scenario forecasts, AI strategic recommendations, and multi-step sovereign mitigation plans.
+            </p>
+          </div>
+          <div style={{ padding: '6px 14px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 6 }}>
+            <span style={{ fontSize: 10, color: '#888', display: 'block' }}>Strategic Confidence</span>
+            <strong style={{ fontSize: 16, color: '#F5C518' }}>{strategicConfidence}%</strong>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+          
+          {/* AI Recommendation Feed */}
+          <div style={{ background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6, padding: 14 }}>
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>AI Recommendation Feed</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 8, maxHeight: 180, overflowY: 'auto' }}>
+              {recommendations.map((rec) => (
+                <div key={rec.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: 8 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 2 }}>
+                    <strong style={{ color: '#fff' }}>{rec.title}</strong>
+                    <span style={{ color: '#F5C518' }}>+{rec.estimatedGain}% Gain</span>
+                  </div>
+                  <span style={{ display: 'block', fontSize: 10, color: '#888' }}>{rec.description}</span>
+                  <div style={{ display: 'flex', gap: 6, fontSize: 8, color: '#666', marginTop: 4, fontFamily: 'monospace' }}>
+                    <span>Severity: <strong style={{ color: rec.severity === 'critical' ? '#EF4444' : '#aaa' }}>{rec.severity}</strong></span>
+                    <span>Confidence: {rec.confidenceScore}%</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Autonomous Mitigation Timeline */}
+          <div style={{ background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6, padding: 14 }}>
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mitigation Planner</span>
+            {activeMitigationPlan ? (
+              <div style={{ marginTop: 8 }}>
+                <strong style={{ display: 'block', fontSize: 12, color: '#EF4444', marginBottom: 6 }}>{activeMitigationPlan.title}</strong>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  {activeMitigationPlan.steps.map((step, idx) => (
+                    <div key={idx} style={{ fontSize: 10, color: '#ccc', display: 'flex', gap: 6 }}>
+                      <span style={{ color: '#F5C518' }}>✔</span>
+                      <span>{step}</span>
+                    </div>
+                  ))}
+                </div>
+                <span style={{ display: 'block', fontSize: 9, color: '#666', marginTop: 8 }}>Restoration Curve: 4s Autonomous Healing Target</span>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', opacity: 0.6, paddingTop: 20 }}>
+                <span style={{ fontSize: 24 }}>🛡️</span>
+                <span style={{ fontSize: 11, marginTop: 4 }}>Nominal: zero regional outages active.</span>
+              </div>
+            )}
+          </div>
+
+          {/* Strategic Risk Heatmap & Projections */}
+          <div style={{ background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6, padding: 14 }}>
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Consensus Forecast Matrix</span>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginTop: 8 }}>
+              {forecasts.map((f) => (
+                <div key={f.timeframe} style={{ padding: 8, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 4, textAlign: 'center' }}>
+                  <strong style={{ display: 'block', fontSize: 10, color: '#F5C518' }}>{f.timeframe}</strong>
+                  <strong style={{ display: 'block', fontSize: 14, color: '#fff', margin: '4px 0' }}>{f.consensusTrajectory}%</strong>
+                  <span style={{ fontSize: 8, color: '#666' }}>Consensus</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: '#666', marginTop: 12 }}>
+              <span>resilience: <strong style={{ color: '#aaa' }}>{forecasts[0]?.regionalResilience}%</strong></span>
+              <span>ecosystem trust: <strong style={{ color: '#aaa' }}>{forecasts[0]?.ecosystemTrust}%</strong></span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       {/* Global Consensus Monitor & Stability Meter Dashboard */}
       <section style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 16, marginBottom: 24 }}>
         
@@ -145,7 +240,7 @@ export default function ExecutivePage() {
               <span style={{ fontSize: 9, background: 'rgba(239,68,68,0.08)', color: '#EF4444', padding: '2px 6px', borderRadius: 4 }}>ACTIVE WAVE</span>
             </div>
             <strong style={{ display: 'block', fontSize: 26, fontWeight: 800, marginTop: 6, color: '#fff' }}>
-              ±{driftIndex}% drift rate
+              ...{driftIndex}% drift rate
             </strong>
           </div>
           <span style={{ fontSize: 10, color: '#888' }}>Sinusoidal fluctuation targeting APY sweep boundaries.</span>

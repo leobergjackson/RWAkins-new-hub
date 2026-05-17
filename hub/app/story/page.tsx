@@ -242,6 +242,76 @@ export default function StoryPage() {
         { label: 'Scale Target', value: 'Enterprise Permanent' },
         { label: 'Product Status', value: 'Accelerator Ready' }
       ]
+    },
+    {
+      id: 'strategic-infra',
+      title: 'The Strategic Infrastructure Era',
+      subtitle: 'Transitioning from active monitoring to predictive planning and autonomous control.',
+      paragraphs: [
+        'Passive telemetry matrices are no longer sufficient to govern global scale organizational systems.',
+        'Our newly integrated Strategic Intelligence Layer continuously runs simulations, audits volatility, and outputs immediate high-integrity rerouting strategies.',
+        'By linking monitoring with predictive planning engines, we create an immune system for decentralized digital assets.'
+      ],
+      metrics: [
+        { label: 'Strategic Layer', value: 'Active Realtime' },
+        { label: 'Simulation Target', value: 'Zero Latency' }
+      ]
+    },
+    {
+      id: 'autonomous-sovereign',
+      title: 'Autonomous Sovereign Coordination',
+      subtitle: 'Unifying multi-region quorums under permanent event bus protocols.',
+      paragraphs: [
+        'Decentralized quorums are highly vulnerable during regional latency spikes or consensus partition attacks.',
+        'Kubryx resolves this by coordinating the Global Event Bus statefully, triggering deterministic, multi-step mitigation sequences across secondary validator zones.',
+        'This guarantees that transaction sweeps and payroll distributions continue executing with absolute mathematical safety.'
+      ],
+      metrics: [
+        { label: 'Coordination Model', value: 'Event-Driven' },
+        { label: 'Outage Tolerance', value: 'Failover Active' }
+      ]
+    },
+    {
+      id: 'ai-native-decision',
+      title: 'AI-Native Decision Systems',
+      subtitle: 'Enforcing zero-knowledge policies across parallelized agent mesh networks.',
+      paragraphs: [
+        'Machine intelligence must be gated inside secure boundaries to prevent collateral state corruption.',
+        'Our AI Recommendation Feed checks active policies dynamically, producing deterministic, replay-safe reasoning trails for all proposed balance sweeps.',
+        'This presents a perfect synergy where operators maintain high-level supervision while algorithms operate at machine speed.'
+      ],
+      metrics: [
+        { label: 'Gating Standard', value: 'ZK Rationale' },
+        { label: 'Assessment Speed', value: 'Sub-second' }
+      ]
+    },
+    {
+      id: 'predictive-civilization',
+      title: 'Predictive Operational Civilizations',
+      subtitle: 'Forecasting consensus trajectories across standard 1h, 24h, and 7d horizons.',
+      paragraphs: [
+        'Ecosystems succeed when they can predict failures before they cascade into multi-chain bridges.',
+        'We execute high-fidelity scenario projections, evaluating consensus trends, treasury pressures, and governance volatilities statefully.',
+        'This empowers operators to proactively deploy mitigation keys, preventing consensus collapse and maintaining premium reliability.'
+      ],
+      metrics: [
+        { label: 'Forecast Horizon', value: '7-Day Maximum' },
+        { label: 'Confidence Index', value: '98.5%' }
+      ]
+    },
+    {
+      id: 'self-optimizing-economies',
+      title: 'Self-Optimizing Digital Economies',
+      subtitle: 'Balancing incentive curves statefully in response to live operational anomalies.',
+      paragraphs: [
+        'Traditional reward systems fail to adjust yield buffers dynamically when network congestion rises.',
+        'Kubryx bridges this gap by coordinating incentive sweeps in direct response to the global consensus health and regional volatility.',
+        'The resulting self-balancing ecosystem represents the pinnacle of operational intelligence for future global protocols.'
+      ],
+      metrics: [
+        { label: 'Adjustment Cycle', value: 'Continuous Sine' },
+        { label: 'Resilience Score', value: '99.4%' }
+      ]
     }
   ]
 

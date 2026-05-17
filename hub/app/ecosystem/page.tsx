@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useGlobalOperations, KubryxEventType } from '../../lib/global-operations-engine'
+import { useStrategicIntelligence } from '../../lib/strategic-intelligence-engine'
 import { toast } from '../../lib/toast'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
@@ -70,6 +71,9 @@ export default function EcosystemPage() {
     restoreSnapshot 
   } = useGlobalOperations()
 
+  // Connect to Strategic Intelligence Layer
+  const { recommendations, forecasts, activeMitigationPlan } = useStrategicIntelligence()
+
   const [selectedWebhook, setSelectedWebhook] = useState<WebhookEvent>(DEFAULT_WEBHOOKS[0])
   const [targetUrl, setTargetUrl] = useState('https://api.enterprise.dao/webhooks/kubryx')
   const [inspectPayload, setInspectPayload] = useState<string | null>(null)
@@ -79,6 +83,9 @@ export default function EcosystemPage() {
   const [customPayload, setCustomPayload] = useState('{\n  "status": "nominal",\n  "active": true\n}')
   const [customEventType, setCustomEventType] = useState<KubryxEventType>('kubryx_ecosystem_alert')
   const [customEventDesc, setCustomEventDesc] = useState('Custom ecosystem webhook telemetry dispatch.')
+
+  // Strategic Explorer State
+  const [selectedForecastTimeframe, setSelectedForecastTimeframe] = useState<'1-hour' | '24-hour' | '7-day'>('1-hour')
 
   function handleTriggerWebhook() {
     setTriggering(true)
@@ -114,6 +121,8 @@ export default function EcosystemPage() {
     publish(type, payload, `[REPLAY] ${desc}`)
     toast.success(`Replayed past event: "${type}" successfully re-dispatched!`)
   }
+
+  const selectedForecast = forecasts.find(f => f.timeframe === selectedForecastTimeframe) || forecasts[0]
 
   return (
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
@@ -161,6 +170,37 @@ export default function EcosystemPage() {
         {/* Left Side: Code integrations & playground */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           
+          {/* Mitigation Simulation Sandbox */}
+          <article className="card" style={{ padding: 18, border: '1px solid rgba(245,197,24,0.15)' }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🧪 Mitigation Simulation Sandbox</h3>
+            <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+              Simulate strategic outage cascades and test real-time failover curves and restoration timelines.
+            </p>
+
+            {activeMitigationPlan ? (
+              <div style={{ padding: 12, background: 'rgba(239,68,68,0.02)', border: '1px solid rgba(239,68,68,0.15)', borderRadius: 6 }}>
+                <strong style={{ display: 'block', fontSize: 13, color: '#EF4444', marginBottom: 6 }}>{activeMitigationPlan.title}</strong>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  {activeMitigationPlan.steps.map((step, idx) => (
+                    <div key={idx} style={{ fontSize: 11, color: '#ccc', display: 'flex', gap: 6 }}>
+                      <span style={{ color: '#F5C518' }}>✔</span>
+                      <span>{step}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display: 'flex', gap: 12, fontSize: 10, color: '#666', marginTop: 10 }}>
+                  <span>Timeline: {activeMitigationPlan.estimatedTimelineSeconds}s Target</span>
+                  <span>Restoration: 98.2% baseline consensus</span>
+                </div>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px 0', opacity: 0.7 }}>
+                <span style={{ fontSize: 32 }}>🛡️</span>
+                <p style={{ margin: '6px 0 0', fontSize: 12 }}>Ecosystem Nominal: Simulate an outage on `/executive` to test recovery cascades.</p>
+              </div>
+            )}
+          </article>
+
           {/* Webhook Playground */}
           <article className="card" style={{ padding: 18 }}>
             <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>📡 Autonomous Webhook & Event Playground</h3>
@@ -236,7 +276,7 @@ export default function EcosystemPage() {
             </div>
           </article>
 
-          {/* Live Event Stream Simulator Form */}
+          {/* Live Event Simulator Form */}
           <article className="card" style={{ padding: 18 }}>
             <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>⚙️ Real-time Event Simulator</h3>
             <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
@@ -333,6 +373,70 @@ client.on('consensus.drift_detected', (event) => {
         {/* Right Side: Replay Debugger, Snapshot Inspector, API topologies */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           
+          {/* Operational Recommendation Stream */}
+          <article className="card" style={{ padding: 18 }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🤖 AI Recommendation Stream</h3>
+            <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+              Trace real-time operational optimizations dispatched from our strategic layer.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {recommendations.map((rec) => (
+                <div key={rec.id} style={{ padding: 10, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
+                    <strong style={{ color: '#fff' }}>{rec.title}</strong>
+                    <span style={{ color: '#F5C518' }}>+{rec.estimatedGain}%</span>
+                  </div>
+                  <span style={{ display: 'block', fontSize: 10, color: '#888', marginTop: 2 }}>{rec.description}</span>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          {/* Forecast Payload Explorer & strategic event inspector */}
+          <article className="card" style={{ padding: 18 }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🔮 Forecast Payload Explorer</h3>
+            <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+              Inspect deterministic API response schema outputs for chosen strategic forecasting boundaries.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div>
+                <label style={{ display: 'block', fontSize: 11, color: '#888', marginBottom: 4 }}>Forecasting Horizon</label>
+                <select
+                  value={selectedForecastTimeframe}
+                  onChange={(e) => setSelectedForecastTimeframe(e.target.value as any)}
+                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
+                >
+                  <option value="1-hour">1-Hour Forecast</option>
+                  <option value="24-hour">24-Hour Forecast</option>
+                  <option value="7-day">7-Day Forecast</option>
+                </select>
+              </div>
+
+              {selectedForecast && (
+                <div>
+                  <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', display: 'block', marginBottom: 4 }}>REST API JSON Output</span>
+                  <pre 
+                    style={{
+                      padding: 12,
+                      background: '#030303',
+                      border: '1px solid rgba(255,255,255,0.03)',
+                      borderRadius: 8,
+                      fontSize: 10,
+                      fontFamily: 'monospace',
+                      color: '#F5C518',
+                      overflowX: 'auto',
+                      maxHeight: 180
+                    }}
+                  >
+                    {JSON.stringify(selectedForecast, null, 2)}
+                  </pre>
+                </div>
+              )}
+            </div>
+          </article>
+
           {/* Live Event Replay Debugger */}
           <article className="card" style={{ padding: 18 }}>
             <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🐞 Event Replay Debugger</h3>

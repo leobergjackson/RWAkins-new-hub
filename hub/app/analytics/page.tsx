@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePlatformState } from '../../lib/platform-engine'
 import { useGlobalOperations } from '../../lib/global-operations-engine'
 import { useFabric } from '../../lib/fabric-engine'
+import { useStrategicIntelligence } from '../../lib/strategic-intelligence-engine'
 import { toast } from '../../lib/toast'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
@@ -29,6 +30,9 @@ export default function AnalyticsPage() {
   // Connect to Fabric and Global state synchronizations
   const { regions } = useFabric()
   const { consensusIndex, driftIndex, aiConfidence } = useGlobalOperations()
+
+  // Connect to Strategic Intelligence Layer
+  const { forecasts, strategicConfidence } = useStrategicIntelligence()
 
   const [ticks, setTicks] = useState<number>(0)
   
@@ -131,12 +135,18 @@ export default function AnalyticsPage() {
       </header>
 
       {/* Synchronized operational consensus & drift metrics */}
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12, marginBottom: 24 }}>
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12, marginBottom: 24 }}>
         
         <article className="card">
           <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Consensus Index</span>
           <strong style={{ display: 'block', fontSize: 24, color: '#F5C518', marginTop: 4 }}>{consensusIndex}%</strong>
           <span style={{ fontSize: 9, color: '#666', display: 'block', marginTop: 6 }}>Sovereign quorum state</span>
+        </article>
+
+        <article className="card">
+          <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Strategic Confidence</span>
+          <strong style={{ display: 'block', fontSize: 24, color: '#F5C518', marginTop: 4 }}>{strategicConfidence}%</strong>
+          <span style={{ fontSize: 9, color: '#666', display: 'block', marginTop: 6 }}>Predictive planning index</span>
         </article>
 
         <article className="card">
@@ -151,12 +161,48 @@ export default function AnalyticsPage() {
           <span style={{ fontSize: 9, color: '#666', display: 'block', marginTop: 6 }}>Heuristic consensus validator</span>
         </article>
 
-        <article className="card">
-          <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Consensus Decay</span>
-          <strong style={{ display: 'block', fontSize: 24, color: '#EF4444', marginTop: 4 }}>0.04% / hr</strong>
-          <span style={{ fontSize: 9, color: '#666', display: 'block', marginTop: 6 }}>Entropy decay forecast</span>
-        </article>
+      </section>
 
+      {/* Predictive Stability Projections Grid */}
+      <section className="card" style={{ padding: 18, marginBottom: 24 }}>
+        <h3 style={{ margin: '0 0 4px', fontSize: 15, fontWeight: 700 }}>🔮 Predictive Operational Scenario Projections</h3>
+        <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+          Deterministic forecasts computed continuously across standard 1-hour, 24-hour, and 7-day trajectories.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+          {forecasts.map((f) => (
+            <div 
+              key={f.timeframe}
+              style={{
+                padding: 14,
+                background: 'rgba(255,255,255,0.01)',
+                border: '1px solid rgba(255,255,255,0.03)',
+                borderRadius: 6
+              }}
+            >
+              <strong style={{ display: 'block', fontSize: 13, color: '#F5C518', marginBottom: 8, textTransform: 'uppercase' }}>{f.timeframe} Forecast</strong>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 11 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#888' }}>Consensus Index:</span>
+                  <strong style={{ color: '#fff' }}>{f.consensusTrajectory}%</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#888' }}>Treasury Stress Index:</span>
+                  <strong style={{ color: '#10B981' }}>{f.treasuryStability}% Stability</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#888' }}>Governance Volatility:</span>
+                  <strong style={{ color: '#EF4444' }}>{f.governanceVolatility}% Volatility</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#888' }}>Regional Resilience:</span>
+                  <strong style={{ color: '#ccc' }}>{f.regionalResilience}%</strong>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Regional Volatility Map Grid */}

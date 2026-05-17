@@ -101,6 +101,154 @@ export default function CommandPalette() {
         clearTelemetryErrors()
         toast.success('Diagnostics telemetry wiped clean')
       }
+    },
+    {
+      id: 'strat-fail',
+      title: 'Simulate Strategic Failure Cascade',
+      subtitle: 'Simulate a multi-region outage and degrade quorums statefully',
+      category: 'Actions',
+      action: () => {
+        if (typeof window !== 'undefined') {
+          const saved = localStorage.getItem('kubryx_global_ops_layer')
+          const state = saved ? JSON.parse(saved) : { consensusIndex: 98.2, regionalOutages: [], events: [] }
+          state.consensusIndex = 40.0
+          state.regionalOutages = ['Singapore (ap-southeast-1)', 'Frankfurt (eu-central-1)']
+          const newEvt = {
+            id: `evt-${Date.now()}`,
+            type: 'kubryx_region_outage',
+            payload: JSON.stringify({ active: true, degradedRegions: state.regionalOutages }),
+            description: 'Strategic Simulation: degradation triggered by Command Palette.',
+            timestamp: new Date().toISOString()
+          }
+          state.events = [newEvt, ...(state.events || [])]
+          localStorage.setItem('kubryx_global_ops_layer', JSON.stringify(state))
+          window.dispatchEvent(new Event('kubryx_global_ops_update'))
+          window.dispatchEvent(new Event('kubryx_fabric_update'))
+          toast.error('Strategic failover simulation started: 2 regions offline!')
+        }
+      }
+    },
+    {
+      id: 'strat-mitigate',
+      title: 'Trigger Mitigation Cascade',
+      subtitle: 'Execute state-healing quorums and recover parameters',
+      category: 'Actions',
+      action: () => {
+        if (typeof window !== 'undefined') {
+          const saved = localStorage.getItem('kubryx_global_ops_layer')
+          const state = saved ? JSON.parse(saved) : { consensusIndex: 98.2, regionalOutages: [], events: [] }
+          state.consensusIndex = 98.2
+          state.regionalOutages = []
+          const newEvt = {
+            id: `evt-${Date.now()}`,
+            type: 'kubryx_recovery_trigger',
+            payload: JSON.stringify({ resolved: true }),
+            description: 'Strategic Mitigation: sovereign restoration consensus sweep successful.',
+            timestamp: new Date().toISOString()
+          }
+          state.events = [newEvt, ...(state.events || [])]
+          localStorage.setItem('kubryx_global_ops_layer', JSON.stringify(state))
+          window.dispatchEvent(new Event('kubryx_global_ops_update'))
+          window.dispatchEvent(new Event('kubryx_fabric_update'))
+          toast.success('Self-healing quorums deployed. Operational balance restored.')
+        }
+      }
+    },
+    {
+      id: 'strat-collapse',
+      title: 'Forecast Consensus Collapse',
+      subtitle: 'Set consensus to 12% temporarily to audit decay risk paths',
+      category: 'Actions',
+      action: () => {
+        if (typeof window !== 'undefined') {
+          const saved = localStorage.getItem('kubryx_global_ops_layer')
+          const state = saved ? JSON.parse(saved) : { consensusIndex: 98.2, regionalOutages: [], events: [] }
+          state.consensusIndex = 12.0
+          const newEvt = {
+            id: `evt-${Date.now()}`,
+            type: 'kubryx_policy_update',
+            payload: JSON.stringify({ alert: 'quorums_offline' }),
+            description: 'Entropy Alarm: predicted consensus decay path triggered.',
+            timestamp: new Date().toISOString()
+          }
+          state.events = [newEvt, ...(state.events || [])]
+          localStorage.setItem('kubryx_global_ops_layer', JSON.stringify(state))
+          window.dispatchEvent(new Event('kubryx_global_ops_update'))
+          toast.warning('Consensus collapse forecasted! Multi-sig quorum at 12%!')
+        }
+      }
+    },
+    {
+      id: 'strat-crisis',
+      title: 'Replay Governance Crisis',
+      subtitle: 'Dispatch parallel high-pressure proposal votes statefully',
+      category: 'Actions',
+      action: () => {
+        if (typeof window !== 'undefined') {
+          const saved = localStorage.getItem('kubryx_global_ops_layer')
+          const state = saved ? JSON.parse(saved) : { consensusIndex: 98.2, regionalOutages: [], events: [] }
+          const newEvt = {
+            id: `evt-${Date.now()}`,
+            type: 'kubryx_governance_vote',
+            payload: JSON.stringify({ conflict: true }),
+            description: 'Crisis Replay: high-pressure voting sweep initiated on KIP.',
+            timestamp: new Date().toISOString()
+          }
+          state.events = [newEvt, ...(state.events || [])]
+          localStorage.setItem('kubryx_global_ops_layer', JSON.stringify(state))
+          window.dispatchEvent(new Event('kubryx_global_ops_update'))
+          toast.warning('Governance crisis replayed statefully!')
+        }
+      }
+    },
+    {
+      id: 'strat-stabilize',
+      title: 'Stabilize Treasury Confidence',
+      subtitle: 'Deploy APY sweep sweepers to balance cashflows',
+      category: 'Actions',
+      action: () => {
+        if (typeof window !== 'undefined') {
+          const saved = localStorage.getItem('kubryx_global_ops_layer')
+          const state = saved ? JSON.parse(saved) : { consensusIndex: 98.2, regionalOutages: [], events: [] }
+          const newEvt = {
+            id: `evt-${Date.now()}`,
+            type: 'kubryx_treasury_shift',
+            payload: JSON.stringify({ balanced: true }),
+            description: 'Treasury Balanced: stabilization APY sweep dispatched.',
+            timestamp: new Date().toISOString()
+          }
+          state.events = [newEvt, ...(state.events || [])]
+          localStorage.setItem('kubryx_global_ops_layer', JSON.stringify(state))
+          window.dispatchEvent(new Event('kubryx_global_ops_update'))
+          toast.success('Treasury rebalancing sweep dispatched!')
+        }
+      }
+    },
+    {
+      id: 'strat-equilibrium',
+      title: 'Restore Operational Equilibrium',
+      subtitle: 'Re-align global matrices back to 98.2% baseline consensus',
+      category: 'Actions',
+      action: () => {
+        if (typeof window !== 'undefined') {
+          const saved = localStorage.getItem('kubryx_global_ops_layer')
+          const state = saved ? JSON.parse(saved) : { consensusIndex: 98.2, regionalOutages: [], events: [] }
+          state.consensusIndex = 98.2
+          state.regionalOutages = []
+          const newEvt = {
+            id: `evt-${Date.now()}`,
+            type: 'kubryx_protocol_sync',
+            payload: JSON.stringify({ sync: true }),
+            description: 'Equilibrium Secured: system state synced statefully.',
+            timestamp: new Date().toISOString()
+          }
+          state.events = [newEvt, ...(state.events || [])]
+          localStorage.setItem('kubryx_global_ops_layer', JSON.stringify(state))
+          window.dispatchEvent(new Event('kubryx_global_ops_update'))
+          window.dispatchEvent(new Event('kubryx_fabric_update'))
+          toast.success('Global operational equilibrium successfully secured!')
+        }
+      }
     }
   ]
 
