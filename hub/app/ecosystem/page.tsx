@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useGlobalOperations, KubryxEventType } from '../../lib/global-operations-engine'
 import { toast } from '../../lib/toast'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
@@ -61,18 +62,57 @@ const DEFAULT_WEBHOOKS: WebhookEvent[] = [
 ]
 
 export default function EcosystemPage() {
+  const { 
+    consensusIndex, 
+    events: globalEvents, 
+    snapshots: globalCheckpoints, 
+    publish, 
+    restoreSnapshot 
+  } = useGlobalOperations()
+
   const [selectedWebhook, setSelectedWebhook] = useState<WebhookEvent>(DEFAULT_WEBHOOKS[0])
   const [targetUrl, setTargetUrl] = useState('https://api.enterprise.dao/webhooks/kubryx')
   const [inspectPayload, setInspectPayload] = useState<string | null>(null)
   const [triggering, setTriggering] = useState(false)
+
+  // Simulator Inputs
+  const [customPayload, setCustomPayload] = useState('{\n  "status": "nominal",\n  "active": true\n}')
+  const [customEventType, setCustomEventType] = useState<KubryxEventType>('kubryx_ecosystem_alert')
+  const [customEventDesc, setCustomEventDesc] = useState('Custom ecosystem webhook telemetry dispatch.')
 
   function handleTriggerWebhook() {
     setTriggering(true)
     setTimeout(() => {
       setTriggering(false)
       setInspectPayload(selectedWebhook.payload)
+      
+      // Dispatch statefully to event bus
+      publish(
+        'kubryx_ecosystem_alert',
+        selectedWebhook.payload,
+        `Webhook payload dispatched: "${selectedWebhook.name}"`
+      )
+      
       toast.success(`Sent event: "${selectedWebhook.name}" payload successfully dispatched!`)
     }, 1200)
+  }
+
+  function handleDispatchCustomEvent(e: React.FormEvent) {
+    e.preventDefault()
+    try {
+      // Validate JSON content
+      JSON.parse(customPayload)
+      publish(customEventType, customPayload, customEventDesc)
+      toast.success(`Event bus: successfully published "${customEventType}"!`)
+      setCustomEventDesc('')
+    } catch {
+      toast.error('Invalid JSON payload provided inside simulator.')
+    }
+  }
+
+  function handleReplayEvent(payload: string, desc: string, type: KubryxEventType) {
+    publish(type, payload, `[REPLAY] ${desc}`)
+    toast.success(`Replayed past event: "${type}" successfully re-dispatched!`)
   }
 
   return (
@@ -91,6 +131,29 @@ export default function EcosystemPage() {
           </h1>
         </div>
       </header>
+
+      {/* Consensus Replay Explorer Panel */}
+      <section className="card" style={{ padding: 18, marginBottom: 24 }}>
+        <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🔍 Live Consensus Replay & State Explorer</h3>
+        <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+          Inspect current sovereign parameters. Every event dispatched below directly mutates consensus scoring in real-time.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+            <span style={{ fontSize: 10, color: '#888' }}>Current Global Consensus</span>
+            <strong style={{ display: 'block', fontSize: 22, color: '#F5C518', marginTop: 4 }}>{consensusIndex}%</strong>
+          </div>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+            <span style={{ fontSize: 10, color: '#888' }}>Active Event Traces</span>
+            <strong style={{ display: 'block', fontSize: 22, color: '#fff', marginTop: 4 }}>{globalEvents.length} Events</strong>
+          </div>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+            <span style={{ fontSize: 10, color: '#888' }}>Archived Checkpoints</span>
+            <strong style={{ display: 'block', fontSize: 22, color: '#fff', marginTop: 4 }}>{globalCheckpoints.length} Snaps</strong>
+          </div>
+        </div>
+      </section>
 
       {/* Main Grid Layout */}
       <section style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 20, marginBottom: 24 }}>
@@ -173,6 +236,58 @@ export default function EcosystemPage() {
             </div>
           </article>
 
+          {/* Live Event Stream Simulator Form */}
+          <article className="card" style={{ padding: 18 }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>⚙️ Real-time Event Simulator</h3>
+            <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+              Publish custom event payloads directly onto the authoritative Global Event Bus.
+            </p>
+
+            <form onSubmit={handleDispatchCustomEvent} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: 11, color: '#888', marginBottom: 4 }}>Event Type</label>
+                  <select
+                    value={customEventType}
+                    onChange={(e) => setCustomEventType(e.target.value as KubryxEventType)}
+                    style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
+                  >
+                    <option value="kubryx_ecosystem_alert">kubryx_ecosystem_alert</option>
+                    <option value="kubryx_treasury_shift">kubryx_treasury_shift</option>
+                    <option value="kubryx_policy_update">kubryx_policy_update</option>
+                    <option value="kubryx_cognition_signal">kubryx_cognition_signal</option>
+                    <option value="kubryx_protocol_sync">kubryx_protocol_sync</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: 11, color: '#888', marginBottom: 4 }}>Description</label>
+                  <input 
+                    type="text"
+                    value={customEventDesc}
+                    onChange={(e) => setCustomEventDesc(e.target.value)}
+                    placeholder="Short description..."
+                    required
+                    style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: 11, color: '#888', marginBottom: 4 }}>JSON Payload</label>
+                <textarea 
+                  value={customPayload}
+                  onChange={(e) => setCustomPayload(e.target.value)}
+                  rows={4}
+                  required
+                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none', fontFamily: 'monospace', resize: 'none' }}
+                />
+              </div>
+
+              <button type="submit" className="btn-gold" style={{ padding: 10, fontSize: 12, fontWeight: 'bold' }}>⚡ Publish to Event Bus</button>
+            </form>
+          </article>
+
           {/* Integration SDK Code Examples */}
           <article className="card" style={{ padding: 18 }}>
             <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>💻 Enterprise SDK & REST Integration models</h3>
@@ -215,9 +330,88 @@ client.on('consensus.drift_detected', (event) => {
 
         </div>
 
-        {/* Right Side: Architecture & event lifecycles */}
+        {/* Right Side: Replay Debugger, Snapshot Inspector, API topologies */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           
+          {/* Live Event Replay Debugger */}
+          <article className="card" style={{ padding: 18 }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🐞 Event Replay Debugger</h3>
+            <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+              Re-propagate or debug past event transactions to trace system response.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxHeight: 220, overflowY: 'auto', paddingRight: 6 }}>
+              {globalEvents.map((evt) => (
+                <div 
+                  key={evt.id}
+                  style={{
+                    padding: 10,
+                    background: 'rgba(255,255,255,0.01)',
+                    border: '1px solid rgba(255,255,255,0.03)',
+                    borderRadius: 6,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}
+                >
+                  <div style={{ flex: 1, marginRight: 8 }}>
+                    <span style={{ fontSize: 9, color: '#F5C518', fontFamily: 'monospace' }}>[{evt.type}]</span>
+                    <span style={{ display: 'block', fontSize: 11, color: '#fff', marginTop: 2 }}>{evt.description}</span>
+                  </div>
+                  <button 
+                    onClick={() => handleReplayEvent(evt.payload, evt.description, evt.type)}
+                    className="btn-outline" 
+                    style={{ padding: '3px 8px', fontSize: 10, height: 'auto' }}
+                  >
+                    🔄 Replay
+                  </button>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          {/* Operational Snapshot Inspector */}
+          <article className="card" style={{ padding: 18 }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>💾 Operational Snapshot Inspector</h3>
+            <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+              Compare and restore historical consensus checkpoint parameters statefully.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {globalCheckpoints.map((snap) => (
+                <div 
+                  key={snap.id}
+                  style={{
+                    padding: 10,
+                    background: 'rgba(255,255,255,0.01)',
+                    border: '1px solid rgba(255,255,255,0.03)',
+                    borderRadius: 6,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}
+                >
+                  <div>
+                    <strong style={{ fontSize: 11, color: '#fff' }}>{snap.description}</strong>
+                    <span style={{ display: 'block', fontSize: 8, color: '#888', marginTop: 2 }}>
+                      Consensus: {snap.consensusIndex}% • Votes: {snap.activeGovernanceVotes}
+                    </span>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      restoreSnapshot(snap.id)
+                      toast.success(`Restored snap state: "${snap.description}"`)
+                    }}
+                    className="btn-gold" 
+                    style={{ padding: '3px 8px', fontSize: 10, height: 'auto' }}
+                  >
+                    Restore
+                  </button>
+                </div>
+              ))}
+            </div>
+          </article>
+
           {/* Operational API topology */}
           <article className="card" style={{ padding: 18 }}>
             <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🏛️ Event Schema & API Topology</h3>

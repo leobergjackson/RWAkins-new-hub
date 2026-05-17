@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePlatformState } from '../../lib/platform-engine'
+import { useGlobalOperations } from '../../lib/global-operations-engine'
+import { useFabric } from '../../lib/fabric-engine'
 import { toast } from '../../lib/toast'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
@@ -23,6 +25,11 @@ import {
 
 export default function AnalyticsPage() {
   const { currentMode, activeScenario, analytics } = usePlatformState()
+  
+  // Connect to Fabric and Global state synchronizations
+  const { regions } = useFabric()
+  const { consensusIndex, driftIndex, aiConfidence } = useGlobalOperations()
+
   const [ticks, setTicks] = useState<number>(0)
   
   // Rolling latency datasets
@@ -100,6 +107,8 @@ export default function AnalyticsPage() {
 
   return (
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
+      
+      {/* Header Panel */}
       <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -120,6 +129,82 @@ export default function AnalyticsPage() {
           📥 Export Dataset
         </button>
       </header>
+
+      {/* Synchronized operational consensus & drift metrics */}
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12, marginBottom: 24 }}>
+        
+        <article className="card">
+          <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Consensus Index</span>
+          <strong style={{ display: 'block', fontSize: 24, color: '#F5C518', marginTop: 4 }}>{consensusIndex}%</strong>
+          <span style={{ fontSize: 9, color: '#666', display: 'block', marginTop: 6 }}>Sovereign quorum state</span>
+        </article>
+
+        <article className="card">
+          <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Sinusoidal Drift Rate</span>
+          <strong style={{ display: 'block', fontSize: 24, color: '#fff', marginTop: 4 }}>±{driftIndex}%</strong>
+          <span style={{ fontSize: 9, color: '#666', display: 'block', marginTop: 6 }}>Real-time telemetry waves</span>
+        </article>
+
+        <article className="card">
+          <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>AI Confidence Score</span>
+          <strong style={{ display: 'block', fontSize: 24, color: '#10B981', marginTop: 4 }}>{aiConfidence}%</strong>
+          <span style={{ fontSize: 9, color: '#666', display: 'block', marginTop: 6 }}>Heuristic consensus validator</span>
+        </article>
+
+        <article className="card">
+          <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Consensus Decay</span>
+          <strong style={{ display: 'block', fontSize: 24, color: '#EF4444', marginTop: 4 }}>0.04% / hr</strong>
+          <span style={{ fontSize: 9, color: '#666', display: 'block', marginTop: 6 }}>Entropy decay forecast</span>
+        </article>
+
+      </section>
+
+      {/* Regional Volatility Map Grid */}
+      <section className="card" style={{ padding: 18, marginBottom: 24 }}>
+        <h3 style={{ margin: '0 0 4px', fontSize: 15, fontWeight: 700 }}>🌍 Regional Volatility & Geo-Latency Map</h3>
+        <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+          Real-time geo-balancing tracking showing active communication backoffs and latency flutters across regions.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12 }}>
+          {regions.map((region) => (
+            <div 
+              key={region.name}
+              style={{
+                padding: 12,
+                background: 'rgba(255,255,255,0.01)',
+                border: '1px solid rgba(255,255,255,0.03)',
+                borderRadius: 6
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <strong style={{ fontSize: 12, color: '#fff' }}>{region.name}</strong>
+                <span 
+                  style={{ 
+                    fontSize: 8, 
+                    background: region.status === 'outage' ? 'rgba(239,68,68,0.06)' : 'rgba(16,185,129,0.06)', 
+                    color: region.status === 'outage' ? '#EF4444' : '#10B981',
+                    padding: '1px 4px',
+                    borderRadius: 3
+                  }}
+                >
+                  {region.status}
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, marginTop: 8 }}>
+                <span style={{ color: '#888' }}>RPC Ping:</span>
+                <strong style={{ color: '#ccc' }}>{region.status === 'outage' ? 'TIMEOUT' : `${region.latency}ms`}</strong>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, marginTop: 4 }}>
+                <span style={{ color: '#888' }}>Drift Volatility:</span>
+                <strong style={{ color: '#999' }}>{(region.latency * 0.05).toFixed(1)}%</strong>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Grid of Dynamic Charts */}
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: 20, marginBottom: 24 }}>
@@ -206,113 +291,11 @@ export default function AnalyticsPage() {
                 <XAxis dataKey="name" stroke="#666" fontSize={10} />
                 <YAxis stroke="#666" fontSize={10} />
                 <Tooltip contentStyle={{ background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 11 }} />
-                <Legend wrapperStyle={{ fontSize: 10 }} />
-                <Bar dataKey="active" name="Wallets connected" fill="#fff" opacity={0.8} radius={[4, 4, 0, 0]} barSize={20} />
-                <Bar dataKey="transactions" name="Verified loops" fill="#F5C518" radius={[4, 4, 0, 0]} barSize={20} />
+                <Legend wrapperStyle={{ fontSize: 10, marginTop: 10 }} />
+                <Bar dataKey="active" name="Active Extension" fill="#F5C518" />
+                <Bar dataKey="transactions" name="Verified Handshakes" fill="#4B5563" />
               </BarChart>
             </ResponsiveContainer>
-          </div>
-        </article>
-
-      </section>
-
-      {/* Node Matrix and Summaries */}
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, alignItems: 'start' }}>
-        
-        {/* Telemetry Node Heatmap */}
-        <article className="card">
-          <h3 style={{ margin: '0 0 4px', fontSize: 15, fontWeight: 700 }}>🟢 Global RPC Node Heatmap</h3>
-          <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-            Uptime health matrix across 25 regional gateway endpoints checking SLA compliance.
-          </p>
-          
-          <div 
-            style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(5, 1fr)', 
-              gap: 8, 
-              padding: 10, 
-              background: '#040404', 
-              borderRadius: 8,
-              border: '1px solid rgba(255,255,255,0.04)'
-            }}
-          >
-            {Array.from({ length: 25 }).map((_, idx) => {
-              let color = '#10B981' // Green
-              let status = 'Nominal'
-
-              // Simulated variations based on active scenarios
-              if (activeScenario === 'degraded_rpc' && idx % 4 === 0) {
-                color = '#F5C518' // Yellow
-                status = 'Latency Backoff'
-              } else if (activeScenario === 'telemetry_anomaly_spikes' && idx % 3 === 0) {
-                color = '#EF4444' // Red
-                status = 'Node Outage'
-              } else if (idx === 12 && activeScenario !== 'none') {
-                color = '#EF4444'
-                status = 'Threat Lockdown'
-              }
-
-              return (
-                <div 
-                  key={idx}
-                  title={`Regional Node #${idx + 1} - Status: ${status}`}
-                  style={{
-                    height: 40,
-                    borderRadius: 4,
-                    background: color,
-                    opacity: 0.15,
-                    border: `1.5px solid ${color}`,
-                    boxShadow: `inset 0 0 8px ${color}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: 9,
-                    color: '#fff',
-                    fontWeight: 'bold',
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  #{idx + 1}
-                </div>
-              )
-            })}
-          </div>
-        </article>
-
-        {/* Chain utilization summaries */}
-        <article className="card">
-          <h3 style={{ margin: '0 0 4px', fontSize: 15, fontWeight: 700 }}>⛓ Chain Utilization Summaries</h3>
-          <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-            Utilization indices relative to maximum structural gas boundaries and network congestion.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {[
-              { name: 'Solana Devnet Streamers', util: '34.2%', load: 'Nominal', color: '#10B981' },
-              { name: 'Stellar Soroban Splitter', util: '12.4%', load: 'Nominal', color: '#10B981' },
-              { name: 'QIE Mainnet Soulbounds', util: activeScenario === 'chain_congestion' ? '88.6%' : '14.8%', load: activeScenario === 'chain_congestion' ? 'Congested' : 'Nominal', color: activeScenario === 'chain_congestion' ? '#EC4899' : '#10B981' },
-              { name: 'Arbitrum One Lending Desk', util: activeScenario === 'degraded_rpc' ? '64.2%' : '22.8%', load: activeScenario === 'degraded_rpc' ? 'Degraded' : 'Nominal', color: activeScenario === 'degraded_rpc' ? '#F5C518' : '#10B981' }
-            ].map((chain) => (
-              <div 
-                key={chain.name}
-                style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  fontSize: 12, 
-                  borderBottom: '1px solid rgba(255,255,255,0.04)',
-                  paddingBottom: 6
-                }}
-              >
-                <strong style={{ color: '#fff' }}>{chain.name}</strong>
-                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                  <span style={{ color: '#888' }}>{chain.util} util</span>
-                  <span style={{ fontSize: 9, color: chain.color, border: `1px solid ${chain.color}`, padding: '1px 5px', borderRadius: 4, textTransform: 'uppercase', fontWeight: 800 }}>
-                    {chain.load}
-                  </span>
-                </div>
-              </div>
-            ))}
           </div>
         </article>
 

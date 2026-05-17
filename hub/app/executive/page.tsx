@@ -9,13 +9,14 @@ import { usePlatformState } from '../../lib/platform-engine'
 import { useAutonomousOps } from '../../lib/autonomous-ops'
 import { useCognition } from '../../lib/cognition-engine'
 import { useFabric } from '../../lib/fabric-engine'
+import { useGlobalOperations } from '../../lib/global-operations-engine'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
 
 export default function ExecutivePage() {
   const { proposals, sovereigntyIndex, consensusStability, quorumIntegrity, threats, toggleThreat } = useSovereignOps()
   const { treasuryEquilibriumIndex, treasuryPressureLevel, rebalanceIncentives } = useEconomicOps()
-  const { snapshots, restoreSnapshot } = useGlobalMemory()
+  const { snapshots: memSnapshots, restoreSnapshot: memRestore } = useGlobalMemory()
   const { activeScenario, currentMode } = usePlatformState()
   const { operationalRiskScore, infrastructureConfidenceScore } = useAutonomousOps()
 
@@ -25,6 +26,18 @@ export default function ExecutivePage() {
   // Fabric Engine integrations
   const { regions, compatibility, maturityScore, ecosystemTrustForecast, failoverInProgress, toggleOutage } = useFabric()
 
+  // Global Operations State Synchronization Hook
+  const { 
+    consensusIndex, 
+    infrastructureHealth, 
+    driftIndex, 
+    aiConfidence, 
+    events: globalEvents, 
+    takeSnapshot: globalTakeSnapshot, 
+    restoreSnapshot: globalRestoreSnapshot,
+    snapshots: globalCheckpoints 
+  } = useGlobalOperations()
+
   const [selectedSnapshotId, setSelectedSnapshotId] = useState<string | null>(null)
   
   // Custom Epoch Form
@@ -32,12 +45,22 @@ export default function ExecutivePage() {
   const [epochSummaryInput, setEpochSummaryInput] = useState('')
   const [showEpochModal, setShowEpochModal] = useState(false)
 
+  // Custom Snapshot Name Form
+  const [snapNameInput, setSnapNameInput] = useState('')
+
   function handleRestore(id: string) {
-    restoreSnapshot(id)
+    globalRestoreSnapshot(id)
     setSelectedSnapshotId(id)
     setTimeout(() => {
       setSelectedSnapshotId(null)
     }, 2000)
+  }
+
+  function handleTakeSnapshot(e: React.FormEvent) {
+    e.preventDefault()
+    if (!snapNameInput.trim()) return
+    globalTakeSnapshot(snapNameInput)
+    setSnapNameInput('')
   }
 
   function handleArchiveEpoch(e: React.FormEvent) {
@@ -93,6 +116,42 @@ export default function ExecutivePage() {
           </button>
         </div>
       </header>
+
+      {/* Global Consensus Monitor & Stability Meter Dashboard */}
+      <section style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 16, marginBottom: 24 }}>
+        
+        {/* Consensus Stability Meter */}
+        <article className="card" style={{ padding: 18, display: 'flex', gap: 20, alignItems: 'center' }}>
+          <div style={{ position: 'relative', width: 90, height: 90, borderRadius: '50%', background: 'rgba(255,255,255,0.01)', border: '4px solid rgba(245,197,24,0.05)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Consensus</span>
+            <strong style={{ fontSize: 22, fontWeight: 800, color: '#F5C518' }}>{consensusIndex}%</strong>
+            <div style={{ position: 'absolute', inset: -4, borderRadius: '50%', border: '4px solid #F5C518', borderRightColor: 'transparent', borderBottomColor: 'transparent', transform: `rotate(${consensusIndex * 3.6}deg)`, transition: 'transform 0.5s ease' }} />
+          </div>
+
+          <div style={{ flex: 1 }}>
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Global Consensus Stability Monitor</span>
+            <h3 style={{ margin: '4px 0', fontSize: 18, fontWeight: 800, color: '#fff' }}>Sovereign Sync Network Status</h3>
+            <p style={{ margin: 0, fontSize: 12, color: '#aaa', lineHeight: 1.4 }}>
+              Authoritative operational confidence metric computed dynamically across multi-region quorums, ledger synchronization trust, and AI validation backoffs.
+            </p>
+          </div>
+        </article>
+
+        {/* Operational Drift Detection */}
+        <article className="card" style={{ padding: 18, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Operational Drift Detection</span>
+              <span style={{ fontSize: 9, background: 'rgba(239,68,68,0.08)', color: '#EF4444', padding: '2px 6px', borderRadius: 4 }}>ACTIVE WAVE</span>
+            </div>
+            <strong style={{ display: 'block', fontSize: 26, fontWeight: 800, marginTop: 6, color: '#fff' }}>
+              ±{driftIndex}% drift rate
+            </strong>
+          </div>
+          <span style={{ fontSize: 10, color: '#888' }}>Sinusoidal fluctuation targeting APY sweep boundaries.</span>
+        </article>
+
+      </section>
 
       {/* Living Infrastructure Telemetry Dashboard Indicators */}
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12, marginBottom: 24 }}>
@@ -209,6 +268,35 @@ export default function ExecutivePage() {
         {/* Left Side: Living behaviors, cognition, and graphs */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           
+          {/* Sovereign state timeline stream */}
+          <article className="card" style={{ padding: 18 }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>⛓️ Sovereign Global Event Bus Timeline</h3>
+            <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+              Continuous, event-driven ledger stream logging governance proposals, regional shifts, and webhook playground dispatches.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxHeight: 300, overflowY: 'auto', paddingRight: 6 }}>
+              {globalEvents.map((evt) => (
+                <div 
+                  key={evt.id} 
+                  style={{
+                    padding: '10px 14px',
+                    background: 'rgba(255,255,255,0.01)',
+                    borderLeft: '2px solid #F5C518',
+                    borderRadius: '0 6px 6px 0',
+                    fontSize: 12
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                    <span style={{ fontFamily: 'monospace', color: '#F5C518', fontSize: 10 }}>[{evt.type}]</span>
+                    <span style={{ fontSize: 9, color: '#666' }}>{new Date(evt.timestamp).toLocaleTimeString()}</span>
+                  </div>
+                  <div style={{ color: '#fff' }}>{evt.description}</div>
+                </div>
+              ))}
+            </div>
+          </article>
+
           {/* Distributed Cognition & situational awareness */}
           <article className="card" style={{ padding: 18 }}>
             <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🧠 Distributed Operational Cognition Layer</h3>
@@ -416,13 +504,25 @@ export default function ExecutivePage() {
 
           {/* Historical state snapshots */}
           <article className="card" style={{ padding: 18 }}>
-            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>💾 Global Strategic Memory Archive</h3>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>💾 Global Strategic Memory Archive Checkpoints</h3>
             <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-              Compare historical infrastructure states and restore configurations statefully.
+              Compare historical consensus states and restore parameters statefully.
             </p>
 
+            <form onSubmit={handleTakeSnapshot} style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
+              <input 
+                type="text"
+                value={snapNameInput}
+                onChange={(e) => setSnapNameInput(e.target.value)}
+                placeholder="Checkpoint label..."
+                required
+                style={{ flex: 1, padding: '6px 10px', background: '#040404', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: 11, borderRadius: 6, outline: 'none' }}
+              />
+              <button type="submit" className="btn-outline" style={{ padding: '6px 12px', fontSize: 11, minWidth: 100 }}>📸 Take Snap</button>
+            </form>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {snapshots.map((snap) => {
+              {globalCheckpoints.map((snap) => {
                 const isRestoring = selectedSnapshotId === snap.id
                 return (
                   <div 
@@ -440,7 +540,7 @@ export default function ExecutivePage() {
                     <div>
                       <strong style={{ fontSize: 12, color: '#fff' }}>{snap.description}</strong>
                       <span style={{ display: 'block', fontSize: 9, color: '#888', marginTop: 2 }}>
-                        Captured: {new Date(snap.timestamp).toLocaleString()} • Risk Index: {snap.riskScore}%
+                        Captured: {new Date(snap.timestamp).toLocaleString()} • Consensus Score: {snap.consensusIndex}%
                       </span>
                     </div>
 

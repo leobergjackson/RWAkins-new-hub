@@ -172,6 +172,76 @@ export default function StoryPage() {
         { label: 'Ecosystem APY', value: 'Dynamic Rewards' },
         { label: 'Maturity Score', value: '98.4%' }
       ]
+    },
+    {
+      id: 'sovereign-coordination',
+      title: 'The Sovereign Coordination Layer',
+      subtitle: 'Binding isolated blockchain environments into a unified state registry.',
+      paragraphs: [
+        'As organizations scale across EVM, Solana, and Soroban Stellar, infrastructure data becomes highly fragmented.',
+        'Kubryx solves this by implementing our stateful Global Operations Engine, which synchronizes telemetry updates, governance votes, and transaction sweeps into a single, authoritative ledger.',
+        'This creates a resilient coordination network that allows protocols and DAOs to coordinate assets with complete operational permanence.'
+      ],
+      metrics: [
+        { label: 'Sync Registry', value: 'Event-Driven' },
+        { label: 'State Latency', value: 'Sub-second' }
+      ]
+    },
+    {
+      id: 'operational-consensus',
+      title: 'Operational Consensus Systems',
+      subtitle: 'Dynamically computing network health and multi-region quorum reliability.',
+      paragraphs: [
+        'Traditional systems rely on simple uptime scores that ignore consensus drift and validator state discrepancies.',
+        'Our Operational Consensus Index continuously aggregates infrastructure status, governance rates, and AI confidence indices.',
+        'By matching telemetry metrics with real-time consensus calculations, we ensure that operators always have an explainable, institutional view of ecosystem health.'
+      ],
+      metrics: [
+        { label: 'Consensus Score', value: 'Dynamic Index' },
+        { label: 'Audit Baseline', value: '98.4%' }
+      ]
+    },
+    {
+      id: 'ai-governed-infra',
+      title: 'AI-Governed Infrastructure',
+      subtitle: 'Delegating high-throughput operations within rigorous policy constraints.',
+      paragraphs: [
+        'Autonomous agents excel at fast transaction execution but need safety guardrails to protect capital.',
+        'Kubryx embeds agents within our deterministic Infrastructure Policy Engine, which automatically enforces limits, checks consensus drift, and logs decision rationale in zero-knowledge decision chains.',
+        'This establishes a secure sandbox where machine intelligence performs sweeps while preserving absolute operator override control.'
+      ],
+      metrics: [
+        { label: 'Agent Mesh', value: 'Heuristic Gating' },
+        { label: 'Override Control', value: '100% Secure' }
+      ]
+    },
+    {
+      id: 'self-healing-economies',
+      title: 'Self-Healing Digital Economies',
+      subtitle: 'Automating consensus adjustments and multi-chain liquidity sweeps.',
+      paragraphs: [
+        'During market volatility, liquid sweeps must execute instantly to prevent yield imbalance cascading across bridges.',
+        'Our Autonomous Recovery engine automatically simulates consensus restoration and initializes recovery propagation across all active regions.',
+        'This resolves degraded nodes statefully, stabilizing the network index and preserving optimal APY incentives for enterprise pools.'
+      ],
+      metrics: [
+        { label: 'Healing Time', value: '4s Recovery' },
+        { label: 'Resilience Score', value: '99.2%' }
+      ]
+    },
+    {
+      id: 'protocol-civilization',
+      title: 'Protocol Civilization Scale',
+      subtitle: 'Powering the next era of decentralized sovereign organizational operations.',
+      paragraphs: [
+        'We are moving past passive web dashboards towards autonomous, permanently synchronized operational networks.',
+        'Kubryx represents the pinnacle of this shift, providing enterprises, DAOs, and developers with a complete, single-product operating system.',
+        'With state-of-the-art aesthetics and absolute mathematical reliability, Kubryx is fully prepared to orchestrate the next chapter of digital finance.'
+      ],
+      metrics: [
+        { label: 'Scale Target', value: 'Enterprise Permanent' },
+        { label: 'Product Status', value: 'Accelerator Ready' }
+      ]
     }
   ]
 

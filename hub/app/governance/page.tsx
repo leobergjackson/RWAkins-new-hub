@@ -4,12 +4,16 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useSovereignOps, ProposalType } from '../../lib/sovereign-ops'
 import { useOrgContext } from '../../lib/org-context'
+import { useGlobalOperations } from '../../lib/global-operations-engine'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
 
 export default function GovernancePage() {
   const { proposals, sovereigntyIndex, consensusStability, quorumIntegrity, castVote, simulateVoting, proposePolicy } = useSovereignOps()
   const { currentOrgId, currentWorkspaceId, organizations } = useOrgContext()
+
+  // Sync to Global state layer
+  const { publish, consensusIndex } = useGlobalOperations()
 
   // Form State
   const [propTitle, setPropTitle] = useState('')
@@ -28,10 +32,36 @@ export default function GovernancePage() {
     e.preventDefault()
     if (!propTitle.trim() || !propDesc.trim()) return
     proposePolicy(propTitle, propDesc, propType, propRationale || 'Operator designated policy re-sync.')
+    
+    // Sync to Event Bus
+    publish(
+      'kubryx_governance_vote',
+      JSON.stringify({ title: propTitle, type: propType }),
+      `Dispatched new policy proposal KIP: "${propTitle}"`
+    )
+
     setPropTitle('')
     setPropDesc('')
     setPropRationale('')
     setShowCreateModal(false)
+  }
+
+  function handleVote(id: string, support: boolean) {
+    castVote(id, support)
+    publish(
+      'kubryx_governance_vote',
+      JSON.stringify({ proposalId: id, support }),
+      `Cast ballot for KIP proposal: ${support ? 'APPROVE' : 'REJECT'}`
+    )
+  }
+
+  function handleSimulate(id: string) {
+    simulateVoting(id)
+    publish(
+      'kubryx_governance_vote',
+      JSON.stringify({ proposalId: id, fastForward: true }),
+      `Simulated high-throughput quorum verification run for KIP-${id.split('-')[1]}`
+    )
   }
 
   return (
@@ -64,6 +94,16 @@ export default function GovernancePage() {
         
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Global Consensus Index</span>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
+              {consensusIndex}%
+            </strong>
+          </div>
+          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Synchronized Global Operational Confidence Score</span>
+        </article>
+
+        <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Infrastructure Sovereignty</span>
             <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
               {sovereigntyIndex}%
@@ -92,6 +132,68 @@ export default function GovernancePage() {
           <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Decentralized Multi-Sig quorum health</span>
         </article>
 
+      </section>
+
+      {/* Cross-Region Policy Influence Mapping */}
+      <section className="card" style={{ padding: 18, marginBottom: 24 }}>
+        <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🌍 Cross-Region Policy Weight Distribution</h3>
+        <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+          Validator weights mapped statefully across our primary multi-region quorums to enforce localized compliance constraints.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12 }}>
+          
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
+              <strong style={{ color: '#fff' }}>Singapore (ap-southeast-1)</strong>
+              <span style={{ color: '#F5C518' }}>30% Weight</span>
+            </div>
+            <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 6 }}>
+              <div style={{ width: '30%', background: '#F5C518', height: '100%' }} />
+            </div>
+          </div>
+
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
+              <strong style={{ color: '#fff' }}>Frankfurt (eu-central-1)</strong>
+              <span style={{ color: '#F5C518' }}>25% Weight</span>
+            </div>
+            <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 6 }}>
+              <div style={{ width: '25%', background: '#F5C518', height: '100%' }} />
+            </div>
+          </div>
+
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
+              <strong style={{ color: '#fff' }}>Tokyo (ap-northeast-1)</strong>
+              <span style={{ color: '#F5C518' }}>20% Weight</span>
+            </div>
+            <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 6 }}>
+              <div style={{ width: '20%', background: '#F5C518', height: '100%' }} />
+            </div>
+          </div>
+
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
+              <strong style={{ color: '#fff' }}>Virginia (us-east-1)</strong>
+              <span style={{ color: '#F5C518' }}>15% Weight</span>
+            </div>
+            <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 6 }}>
+              <div style={{ width: '15%', background: '#F5C518', height: '100%' }} />
+            </div>
+          </div>
+
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
+              <strong style={{ color: '#fff' }}>Mumbai (ap-south-1)</strong>
+              <span style={{ color: '#F5C518' }}>10% Weight</span>
+            </div>
+            <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 6 }}>
+              <div style={{ width: '10%', background: '#F5C518', height: '100%' }} />
+            </div>
+          </div>
+
+        </div>
       </section>
 
       {/* Main Governance Grid Layout */}
@@ -137,25 +239,25 @@ export default function GovernancePage() {
 
                         <div style={{ display: 'flex', gap: 6 }}>
                           <button
-                            onClick={() => castVote(prop.id, true)}
+                            onClick={() => handleVote(prop.id, true)}
                             className="btn-gold"
                             style={{ padding: '4px 10px', fontSize: 11, height: 'auto' }}
                           >
                             Vote For
                           </button>
                           <button
-                            onClick={() => castVote(prop.id, false)}
+                            onClick={() => handleVote(prop.id, false)}
                             className="btn-outline"
                             style={{ padding: '4px 10px', fontSize: 11, height: 'auto' }}
                           >
                             Vote Against
                           </button>
                           <button
-                            onClick={() => simulateVoting(prop.id)}
+                            onClick={() => handleSimulate(prop.id)}
                             className="btn-outline"
                             style={{ padding: '4px 10px', fontSize: 11, height: 'auto', color: '#F5C518', borderColor: 'rgba(245,197,24,0.3)' }}
                           >
-                            ⚡ Fast Fast-Forward
+                            ⚡ Fast-Forward
                           </button>
                         </div>
                       </div>
