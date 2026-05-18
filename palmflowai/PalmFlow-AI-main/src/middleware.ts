@@ -8,13 +8,27 @@ const corsHeaders = {
 };
 
 export async function middleware(request: NextRequest) {
-  const isApiRoute = request.nextUrl.pathname.startsWith("/api");
+  const path = request.nextUrl.pathname;
+  const isApiRoute = path.startsWith("/api");
+
+  // Health check and any other unauthenticated routes must bypass Supabase
+  // session refresh — otherwise a missing NEXT_PUBLIC_SUPABASE_URL env var
+  // throws and Render's health probe sees 500.
+  if (path === "/api/health") {
+    return NextResponse.next();
+  }
 
   if (isApiRoute && request.method === "OPTIONS") {
     return new NextResponse(null, { status: 204, headers: corsHeaders });
   }
 
-  const response = await updateSession(request);
+  let response: NextResponse;
+  try {
+    response = await updateSession(request);
+  } catch (err) {
+    console.warn("[middleware] supabase updateSession failed:", err);
+    response = NextResponse.next();
+  }
 
   if (isApiRoute) {
     Object.entries(corsHeaders).forEach(([key, value]) => {
@@ -27,13 +41,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
-     */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|api/health|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
