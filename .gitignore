@@ -56,3 +56,5 @@ desktop.ini
 **/wallet.json
 **/*.pem
 **/*.key
+
+.vercel
