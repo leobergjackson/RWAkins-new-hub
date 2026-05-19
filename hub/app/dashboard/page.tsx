@@ -200,10 +200,10 @@ function DashSidebar({
 
 /* ── Stat card ──────────────────────────────────────── */
 const STAT_CARDS = [
-  { label: 'Tools',     value: DASH_STATS.tools.toString(),  sub: DASH_STATS.toolsSub,    bg: 'rgba(99,102,241,0.1)',   border: 'rgba(99,102,241,0.25)',  subColor: '#A5B4FC' },
-  { label: 'Chains',    value: DASH_STATS.chains.toString(), sub: DASH_STATS.chainsSub,   bg: 'rgba(6,182,212,0.1)',    border: 'rgba(6,182,212,0.25)',   subColor: '#67E8F9' },
-  { label: 'Mock Data', value: DASH_STATS.mockData,          sub: DASH_STATS.mockDataSub, bg: 'rgba(16,185,129,0.1)',   border: 'rgba(16,185,129,0.25)',  subColor: '#6EE7B7' },
-  { label: 'Uptime',    value: DASH_STATS.uptime,            sub: DASH_STATS.uptimeSub,   bg: 'rgba(249,115,22,0.1)',   border: 'rgba(249,115,22,0.25)',  subColor: '#FDBA74' },
+  { label: 'Active Tools',  value: DASH_STATS.tools.toString(),  sub: DASH_STATS.toolsSub,    bg: 'rgba(99,102,241,0.1)',   border: 'rgba(99,102,241,0.25)',  subColor: '#A5B4FC' },
+  { label: 'Chains',        value: DASH_STATS.chains.toString(), sub: DASH_STATS.chainsSub,   bg: 'rgba(6,182,212,0.1)',    border: 'rgba(6,182,212,0.25)',   subColor: '#67E8F9' },
+  { label: 'Mock Data',     value: DASH_STATS.mockData,          sub: DASH_STATS.mockDataSub, bg: 'rgba(16,185,129,0.1)',   border: 'rgba(16,185,129,0.25)',  subColor: '#6EE7B7' },
+  { label: 'Uptime',        value: DASH_STATS.uptime,            sub: DASH_STATS.uptimeSub,   bg: 'rgba(249,115,22,0.1)',   border: 'rgba(249,115,22,0.25)',  subColor: '#FDBA74' },
 ]
 
 function StatCard({ card }: { card: typeof STAT_CARDS[0] }) {
