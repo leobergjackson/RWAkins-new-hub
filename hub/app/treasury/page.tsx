@@ -1,317 +1,376 @@
 'use client'
 
-import { FormEvent, useEffect, useState } from 'react'
-import { fallbackTreasury } from '../../lib/fallback'
-import { toast } from '../../lib/toast'
-import { loadWallet, persistWallet } from '../../lib/wallet-utils'
-import DemoBanner from '../components/DemoBanner'
-import { SkeletonCard, SkeletonRow } from '../components/Skeleton'
-import EmptyState from '../components/EmptyState'
-import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
-import CommandPalette from '../components/CommandPalette'
+import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
+import { toast } from 'sonner'
+import { loadWallet, persistWallet } from '@/lib/wallet-utils'
+import {
+  fetchTreasury, fetchAgents, askAdvisor,
+  type TreasuryData,
+} from '@/lib/palmflow-api'
+import { PF_ACTIVITY_POOL, type PFAgent } from '@/lib/palmflow-fallbacks'
 
 type PhantomProvider = {
+  isPhantom?: boolean
   connect: () => Promise<{ publicKey: { toString: () => string } }>
-  signMessage?: (message: Uint8Array, encoding: string) => Promise<{ signature: Uint8Array }>
 }
 
-declare global {
-  interface Window {
-    solana?: PhantomProvider & { isPhantom?: boolean }
-  }
+type FeedItem = { id: string; agent: string; action: string; timestamp: string }
+
+const TEAL = '#00E5CC'
+const BG = '#080810'
+const CARD = 'rgba(255,255,255,0.03)'
+const BDR = 'rgba(255,255,255,0.07)'
+const MONO = '"JetBrains Mono","Fira Code",monospace'
+
+function ts() {
+  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
 }
 
-type TreasuryData = {
-  totalBalance?: string
-  balance?: string
-  inflows?: string
-  outflows?: string
-  apy?: string
+function short(addr: string) {
+  return addr.length > 10 ? `${addr.slice(0, 6)}...${addr.slice(-4)}` : addr
 }
 
-type PayrollStream = {
-  id?: string
-  recipient?: string
-  ratePerSecond?: string
-  token?: string
-  status?: string
+const SVG_W = 600, SVG_H = 120, PAD = 10
+function buildPath(data: number[]) {
+  if (!data.length) return ''
+  const mn = Math.min(...data), mx = Math.max(...data)
+  const range = mx - mn || 1
+  const pts = data.map((v, i) => {
+    const x = PAD + (i / (data.length - 1)) * (SVG_W - PAD * 2)
+    const y = SVG_H - PAD - ((v - mn) / range) * (SVG_H - PAD * 2)
+    return `${x.toFixed(1)},${y.toFixed(1)}`
+  })
+  return `M${pts.join('L')}`
 }
 
-const apiBase = process.env.NEXT_PUBLIC_PALMFLOW_URL || process.env.NEXT_PUBLIC_PALMFLOW_API || ''
-
-function shortAddress(address: string) {
-  return `${address.slice(0, 6)}...${address.slice(-4)}`
-}
-
-function ChainBadge() {
-  return (
-    <span className="chain-badge">
-      <span className="chain-dot" />
-      Solana Devnet
-    </span>
-  )
-}
-
-export default function TreasuryPage() {
+export default function TreasuryDashboard() {
   const [wallet, setWallet] = useState('')
-  const [treasury, setTreasury] = useState<TreasuryData>({})
-  const [streams, setStreams] = useState<PayrollStream[]>([])
-  const [recipient, setRecipient] = useState('')
-  const [ratePerSecond, setRatePerSecond] = useState('')
-  const [token, setToken] = useState('SOL')
-  const [proposalTitle, setProposalTitle] = useState('')
-  const [proposalDescription, setProposalDescription] = useState('')
-  const [vote, setVote] = useState('yes')
-  const [advisorInput, setAdvisorInput] = useState('')
-  const [advisor, setAdvisor] = useState<string[]>([])
-  const [health, setHealth] = useState<'checking' | 'ok' | 'down'>('checking')
-  const [loading, setLoading] = useState(false)
+  const [treasury, setTreasury] = useState<TreasuryData | null>(null)
+  const [agents, setAgents] = useState<PFAgent[]>([])
+  const [activity, setActivity] = useState<FeedItem[]>([])
   const [isDemo, setIsDemo] = useState(false)
-  const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [chatInput, setChatInput] = useState('')
+  const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'ai'; text: string }[]>([])
+  const [chatLoading, setChatLoading] = useState(false)
+  const poolIdx = useRef(0)
 
   useEffect(() => {
     const saved = loadWallet('solana')
     if (saved) setWallet(saved)
   }, [])
 
-  async function requestJson<T>(path: string, options?: RequestInit): Promise<T> {
-    if (!apiBase) throw new Error('NEXT_PUBLIC_PALMFLOW_API is not configured.')
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 10000)
-    try {
-      const response = await fetch(`${apiBase}${path}`, {
-        ...options,
-        signal: controller.signal,
-        headers: { 'Content-Type': 'application/json', ...(options?.headers || {}) },
-      })
-      if (!response.ok) throw new Error(`Request failed: ${response.status}`)
-      return await response.json() as Promise<T>
-    } finally {
-      clearTimeout(timeout)
-    }
-  }
-
-  async function connectWallet() {
-    try {
-      setError('')
-      if (!window.solana?.isPhantom) throw new Error('Phantom is not installed.')
-      const result = await window.solana.connect()
-      const address = result.publicKey.toString()
-      setWallet(address)
-      persistWallet('solana', address)
-      toast.success('Phantom connected')
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Unable to connect Phantom.'
-      setError(msg)
-      toast.error(msg)
-    }
-  }
-
-  async function loadTreasury(pubkey: string) {
-    try {
-      setLoading(true)
-      setError('')
-      const [treasuryData, payrollData] = await Promise.all([
-        requestJson<TreasuryData>(`/api/treasury/${pubkey}`),
-        requestJson<PayrollStream[] | { streams?: PayrollStream[] }>(`/api/payroll/${pubkey}`),
-      ])
-      setTreasury(treasuryData)
-      setStreams(Array.isArray(payrollData) ? payrollData : payrollData.streams || [])
-      setIsDemo(false)
-    } catch {
-      setTreasury(fallbackTreasury as unknown as TreasuryData)
-      setStreams(fallbackTreasury.streams as unknown as PayrollStream[])
-      setIsDemo(true)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function addPayroll(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    try {
-      setLoading(true)
-      setError('')
-      await requestJson('/api/payroll/add', {
-        method: 'POST',
-        body: JSON.stringify({ recipient, ratePerSecond, token }),
-      })
-      setMessage('Payroll stream added.')
-      toast.success('Payroll stream created')
-      if (wallet) await loadTreasury(wallet)
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Unable to add payroll stream.'
-      setError(msg)
-      toast.error(msg)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function createProposal(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    try {
-      setLoading(true)
-      setError('')
-      await requestJson('/api/governance/propose', {
-        method: 'POST',
-        body: JSON.stringify({ title: proposalTitle, description: proposalDescription, vote }),
-      })
-      setMessage('Governance proposal submitted.')
-      toast.success('Proposal submitted')
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Unable to submit proposal.'
-      setError(msg)
-      toast.error(msg)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function askAdvisor(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    try {
-      setLoading(true)
-      setError('')
-      const data = await requestJson<{ response?: string; advice?: string }>('/api/ai/advise', {
-        method: 'POST',
-        body: JSON.stringify({ message: advisorInput, treasuryData: treasury }),
-      })
-      setAdvisor((current) => [data.response || data.advice || 'Advisor response received.', ...current])
-      setAdvisorInput('')
-      toast.success('AI advisor responded')
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Unable to get AI advice.'
-      setError(msg)
-      toast.error(msg)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function rebalance() {
-    setMessage('Yield optimizer rebalance queued.')
-    toast.success('Rebalance queued')
-  }
-
   useEffect(() => {
-    async function checkHealth() {
-      try {
-        const data = await requestJson<{ status?: string }>('/health')
-        setHealth(data.status === 'ok' ? 'ok' : 'down')
-      } catch {
-        setHealth('down')
-      }
+    if (!wallet) return
+    setLoading(true)
+    Promise.all([fetchTreasury(wallet), fetchAgents()])
+      .then(([t, a]) => {
+        setTreasury(t)
+        setAgents(a)
+        setIsDemo(false)
+        setActivity(
+          PF_ACTIVITY_POOL.slice(0, 6).map((p, i) => ({
+            ...p, id: `i${i}`, timestamp: ts(),
+          }))
+        )
+      })
+      .catch(() => setIsDemo(true))
+      .finally(() => setLoading(false))
+  }, [wallet])
+
+  /* auto-append activity in demo mode */
+  useEffect(() => {
+    if (!isDemo && !treasury) return
+    if (!treasury) {
+      import('@/lib/palmflow-api').then(m => m.fetchTreasury('demo')).then(t => {
+        setTreasury(t)
+        setAgents([])
+        setIsDemo(true)
+        setActivity(
+          PF_ACTIVITY_POOL.slice(0, 6).map((p, i) => ({ ...p, id: `d${i}`, timestamp: ts() }))
+        )
+      })
     }
-    checkHealth()
   }, [])
 
   useEffect(() => {
-    if (wallet) loadTreasury(wallet)
-  }, [wallet])
+    const id = setInterval(() => {
+      const item = PF_ACTIVITY_POOL[poolIdx.current % PF_ACTIVITY_POOL.length]
+      poolIdx.current++
+      setActivity(p => [{ ...item, id: `a${Date.now()}`, timestamp: ts() }, ...p.slice(0, 19)])
+    }, 5000)
+    return () => clearInterval(id)
+  }, [])
+
+  async function connectWallet() {
+    try {
+      const phantom = (window as any).solana as PhantomProvider | undefined
+      if (!phantom?.isPhantom) throw new Error('Phantom wallet not installed.')
+      const res = await phantom.connect()
+      const addr = res.publicKey.toString()
+      setWallet(addr)
+      persistWallet('solana', addr)
+      toast.success('Phantom connected')
+    } catch (e: any) {
+      toast.error(e?.message || 'Wallet connection failed')
+    }
+  }
+
+  async function sendChat(e: React.FormEvent) {
+    e.preventDefault()
+    if (!chatInput.trim()) return
+    const question = chatInput.trim()
+    setChatInput('')
+    setChatHistory(h => [...h, { role: 'user', text: question }])
+    setChatLoading(true)
+    const reply = await askAdvisor(question, treasury)
+    setChatHistory(h => [...h, { role: 'ai', text: reply }])
+    setChatLoading(false)
+  }
+
+  const t = treasury
+  const chartPath = t ? buildPath(t.chartData) : ''
+  const chartFill = t ? `${chartPath}L${SVG_W - PAD},${SVG_H - PAD}L${PAD},${SVG_H - PAD}Z` : ''
+
+  const kpis = [
+    { label: 'Total Liquidity',  value: t ? `${t.totalLiquidity.toLocaleString()} PUSD` : '—', icon: '💎', color: TEAL },
+    { label: 'Network Flow',     value: t ? `$${t.networkFlow.toLocaleString()}` : '—',          icon: '🔁', color: '#A855F7' },
+    { label: 'Protocol Yield',   value: t ? `$${t.protocolYield.toLocaleString()}` : '—',        icon: '📈', color: '#22C55E' },
+    { label: 'Active Agents',    value: t ? String(t.activeAgents) : '—',                        icon: '🤖', color: '#F59E0B' },
+  ]
 
   return (
-    <main className="dashboard-page">
-      <section className="dashboard-hero" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
+    <div style={{ background: BG, minHeight: '100vh', padding: '24px', fontFamily: '"Inter",system-ui,sans-serif', color: '#fff' }}>
+
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <p className="eyebrow">PalmFlow</p>
-          <h1>Treasury AI</h1>
-          <p className="silver-text">Monitor balances, stream payroll, govern spending, optimize yield, and ask the AI advisor.</p>
-          
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 12 }}>
-            <span style={{ fontSize: 10, background: isDemo ? 'rgba(255, 255, 255, 0.03)' : 'rgba(34, 197, 94, 0.05)', border: isDemo ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(34, 197, 94, 0.3)', color: isDemo ? '#bbb' : '#22C55E', padding: '4px 10px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDemo ? '#bbb' : '#22C55E' }} />
-              {isDemo ? 'Demo Mode' : 'Live Connection'}
-            </span>
-            <span style={{ fontSize: 10, background: 'rgba(168, 85, 247, 0.05)', border: '1px solid rgba(168, 85, 247, 0.25)', color: '#C084FC', padding: '4px 10px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#A855F7' }} />
-              Solana Devnet
+          <div style={{ fontSize: 11, color: TEAL, fontFamily: MONO, letterSpacing: '0.1em', marginBottom: 4 }}>
+            PALMFLOW AI / NEURAL TREASURY OS
+          </div>
+          <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700 }}>Treasury Dashboard</h1>
+          <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
+            Autonomous treasury & neural workforce management on Solana
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 10, padding: '4px 10px', borderRadius: 20, border: `1px solid ${isDemo ? 'rgba(255,255,255,0.15)' : 'rgba(0,229,204,0.4)'}`, color: isDemo ? 'rgba(255,255,255,0.4)' : TEAL, display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDemo ? '#666' : TEAL }} />
+            {isDemo ? 'Demo Mode' : 'Live'}
+          </span>
+          <span style={{ fontSize: 10, padding: '4px 10px', borderRadius: 20, border: '1px solid rgba(168,85,247,0.3)', color: '#C084FC', display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#A855F7' }} />
+            Solana Devnet
+          </span>
+          <button
+            onClick={connectWallet}
+            style={{ padding: '7px 16px', borderRadius: 8, border: `1px solid ${TEAL}`, background: wallet ? 'rgba(0,229,204,0.1)' : 'transparent', color: TEAL, fontSize: 12, fontWeight: 600, cursor: 'pointer' }}
+          >
+            {wallet ? short(wallet) : 'Connect Phantom'}
+          </button>
+        </div>
+      </div>
+
+      {/* KPI Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 12, marginBottom: 20 }}>
+        {kpis.map(k => (
+          <div key={k.label} style={{ background: CARD, border: `1px solid ${BDR}`, borderRadius: 12, padding: '18px 20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <div>
+                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>{k.label}</div>
+                <div style={{ fontSize: 22, fontWeight: 700, color: k.color, fontFamily: MONO }}>
+                  {loading ? <span style={{ opacity: 0.3 }}>——</span> : k.value}
+                </div>
+              </div>
+              <span style={{ fontSize: 22 }}>{k.icon}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Chart + Sentinel row */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 12, marginBottom: 20 }}>
+
+        {/* SVG Chart */}
+        <div style={{ background: CARD, border: `1px solid ${BDR}`, borderRadius: 12, padding: '20px 24px' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>Treasury Analytics</div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginBottom: 16 }}>7-day balance history (PUSD)</div>
+          <svg width="100%" viewBox={`0 0 ${SVG_W} ${SVG_H}`} style={{ overflow: 'visible' }}>
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={TEAL} stopOpacity="0.3" />
+                <stop offset="100%" stopColor={TEAL} stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            {chartFill && <path d={chartFill} fill="url(#chartGrad)" />}
+            {chartPath && <path d={chartPath} fill="none" stroke={TEAL} strokeWidth="2" />}
+          </svg>
+          {t && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
+              {t.chartLabels.map(l => (
+                <span key={l} style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>{l}</span>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Neural Sentinel */}
+        <div style={{ background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: 12, padding: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+            <span style={{ fontSize: 18 }}>🛡</span>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 700 }}>Neural Sentinel</div>
+              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>Security Guardian</div>
+            </div>
+            <span style={{ marginLeft: 'auto', fontSize: 10, padding: '3px 9px', borderRadius: 20, background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.4)', color: '#EF4444' }}>
+              🔒 LOCK ACTIVE
             </span>
           </div>
+          <div style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 8, padding: '10px 12px', marginBottom: 14, fontSize: 11, color: '#FCA5A5' }}>
+            Emergency Lock: Abnormal spending velocity detected.
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 14 }}>
+            {[
+              { label: 'Transactions Blocked', value: '3', color: '#EF4444' },
+              { label: 'Policy Checks', value: '100%', color: '#22C55E' },
+              { label: 'Risk Score', value: 'LOW', color: '#22C55E' },
+            ].map(r => (
+              <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+                <span style={{ color: 'rgba(255,255,255,0.5)' }}>{r.label}</span>
+                <span style={{ color: r.color, fontWeight: 700, fontFamily: MONO }}>{r.value}</span>
+              </div>
+            ))}
+          </div>
+          <Link href="/treasury/policy">
+            <button style={{ width: '100%', padding: '9px', borderRadius: 8, border: '1px solid rgba(239,68,68,0.4)', background: 'rgba(239,68,68,0.1)', color: '#FCA5A5', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
+              Security Audit →
+            </button>
+          </Link>
         </div>
-        <div className="hero-actions" style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <ChainBadge />
-          <span className={`health-badge ${health === 'ok' ? 'is-live' : 'is-down'}`}><span className="chain-dot" />{health === 'ok' ? 'Live' : 'Offline'}</span>
-          <button className="btn-gold" onClick={connectWallet} aria-label={wallet ? `Connected as ${shortAddress(wallet)}` : 'Connect Phantom Wallet'}>{wallet ? shortAddress(wallet) : 'Connect Phantom'}</button>
-        </div>
-      </section>
+      </div>
 
-      {isDemo && <DemoBanner />}
-      {error && <div className="card error-card">{error}</div>}
-      {message && <div className="card success-card">{message}</div>}
-      {!wallet && <div className="card">Connect Phantom to load treasury balances and streams.</div>}
+      {/* Workforce + Activity + Advisor */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 360px', gap: 12, marginBottom: 20 }}>
 
-      <section className="stats-grid">
-        {loading ? (
-          <><SkeletonCard /><SkeletonCard /><SkeletonCard /><SkeletonCard /></>
-        ) : (
-          <>
-            <div className="card"><p>Total balance</p><strong className="gold-text">{treasury.totalBalance || treasury.balance || '0 SOL'}</strong></div>
-            <div className="card"><p>Inflows</p><strong className="gold-text">{treasury.inflows || '0'}</strong></div>
-            <div className="card"><p>Outflows</p><strong className="gold-text">{treasury.outflows || '0'}</strong></div>
-            <div className="card"><p>Current APY</p><strong className="gold-text">{treasury.apy || '0%'}</strong></div>
-          </>
-        )}
-      </section>
-
-      <section className="dashboard-grid">
-        <form className="card form-panel" onSubmit={addPayroll}>
-          <h2>Payroll streaming</h2>
-          <label>Recipient</label>
-          <input value={recipient} onChange={(event) => setRecipient(event.target.value)} placeholder="Solana wallet" />
-          <label>Rate per second</label>
-          <input value={ratePerSecond} onChange={(event) => setRatePerSecond(event.target.value)} placeholder="0.0001" />
-          <label>Token</label>
-          <select value={token} onChange={(event) => setToken(event.target.value)}>
-            <option>SOL</option>
-            <option>PUSD</option>
-          </select>
-          <button className="btn-gold" disabled={loading || !wallet}>{loading ? <span className="spinner" /> : 'Add stream'}</button>
-        </form>
-        <form className="card form-panel" onSubmit={createProposal}>
-          <h2>Governance</h2>
-          <label>Proposal title</label>
-          <input value={proposalTitle} onChange={(event) => setProposalTitle(event.target.value)} />
-          <label>Description</label>
-          <textarea value={proposalDescription} onChange={(event) => setProposalDescription(event.target.value)} />
-          <label>Vote</label>
-          <select value={vote} onChange={(event) => setVote(event.target.value)}>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-            <option value="abstain">Abstain</option>
-          </select>
-          <button className="btn-gold" disabled={loading || !wallet}>Create proposal</button>
-        </form>
-      </section>
-
-      <section className="dashboard-grid">
-        <div className="card">
-          <h2>Active streams</h2>
-          {loading ? (
-            <><SkeletonRow /><SkeletonRow /><SkeletonRow /></>
-          ) : streams.length === 0 ? (
-            <EmptyState icon="💸" title="No active streams" subtitle="Add a payroll stream to start real-time payments." />
-          ) : streams.map((stream, index) => (
-            <article className="mini-card" key={stream.id || index}>
-              <p className="gold-text">{stream.ratePerSecond || '0'} {stream.token || 'SOL'} / sec</p>
-              <p className="silver-text">{stream.recipient ? shortAddress(stream.recipient) : 'Recipient pending'}</p>
-              <span className="status-pill">{stream.status || 'active'}</span>
-            </article>
+        {/* Active Workforce */}
+        <div style={{ background: CARD, border: `1px solid ${BDR}`, borderRadius: 12, padding: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+            <div style={{ fontSize: 13, fontWeight: 600 }}>Active Workforce</div>
+            <Link href="/treasury/agents" style={{ fontSize: 11, color: TEAL, textDecoration: 'none' }}>View all →</Link>
+          </div>
+          {(agents.length ? agents.slice(0, 4) : [
+            { id:'a1', name:'Arbitrage Hunter', type:'DeFi Specialist', status:'active' as const, efficiency:100, allocation:500, resourceUsed:0, lastAction:'Arbitrage cycle on Solana DEXs', rating:4.9, tasks:24 },
+            { id:'a2', name:'Atlas', type:'Product AI', status:'active' as const, efficiency:100, allocation:1000, resourceUsed:0, lastAction:'Product roadmap analysis complete', rating:5.0, tasks:12 },
+            { id:'a5', name:'Risk Manager', type:'Risk Manager', status:'active' as const, efficiency:100, allocation:5000, resourceUsed:10, lastAction:'Emergency lock engaged', rating:5.0, tasks:8 },
+            { id:'a7', name:'Marketing AI', type:'Ad Buying & Growth', status:'idle' as const, efficiency:100, allocation:25000, resourceUsed:18200, lastAction:'Ad campaigns paused', rating:4.8, tasks:45 },
+          ]).map(a => (
+            <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: `1px solid ${BDR}` }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 600 }}>{a.name}</div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>{a.type}</div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: 10, color: a.status === 'active' ? '#22C55E' : '#F59E0B' }}>
+                  ● {a.status}
+                </div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', fontFamily: MONO }}>{a.efficiency}% eff.</div>
+              </div>
+            </div>
           ))}
         </div>
-        <form className="card form-panel" onSubmit={askAdvisor}>
-          <h2>AI advisor</h2>
-          <textarea value={advisorInput} onChange={(event) => setAdvisorInput(event.target.value)} placeholder="How should we rebalance this week?" />
-          <div className="button-row">
-            <button className="btn-gold" disabled={loading || !wallet}>Ask advisor</button>
-            <button type="button" className="btn-outline" onClick={rebalance}>Rebalance</button>
+
+        {/* Neural Activity Feed */}
+        <div style={{ background: CARD, border: `1px solid ${BDR}`, borderRadius: 12, padding: '20px' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: TEAL, display: 'inline-block', animation: 'pulse 2s infinite' }} />
+            Neural Activity Feed
           </div>
-          {advisor.map((item, index) => <p key={index} style={{ marginTop: 8, fontSize: 14 }}>{item}</p>)}
-        </form>
-      </section>
-      <ExecutiveWalkthrough />
-      <CommandPalette />
-    </main>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 280, overflowY: 'auto' }}>
+            {activity.map(a => (
+              <div key={a.id} style={{ padding: '8px 10px', background: 'rgba(255,255,255,0.02)', borderRadius: 6, borderLeft: `2px solid ${TEAL}` }}>
+                <div style={{ fontSize: 10, color: TEAL, fontFamily: MONO, marginBottom: 2 }}>{a.agent}</div>
+                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>{a.action}</div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginTop: 2 }}>{a.timestamp}</div>
+              </div>
+            ))}
+            {activity.length === 0 && (
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', textAlign: 'center', padding: '20px 0' }}>
+                Connect wallet to load activity
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Neural Advisor */}
+        <div style={{ background: CARD, border: `1px solid rgba(0,229,204,0.12)`, borderRadius: 12, padding: '20px', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 4, color: TEAL }}>⚡ Neural Advisor</div>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', marginBottom: 14 }}>AI-powered treasury intelligence</div>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 220, overflowY: 'auto', marginBottom: 12 }}>
+            {chatHistory.length === 0 && (
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)', fontStyle: 'italic' }}>
+                Ask about treasury balance, agent performance, yield strategy, or risk...
+              </div>
+            )}
+            {chatHistory.map((m, i) => (
+              <div key={i} style={{
+                padding: '8px 10px', borderRadius: 8, fontSize: 12,
+                background: m.role === 'user' ? 'rgba(0,229,204,0.08)' : 'rgba(255,255,255,0.04)',
+                color: m.role === 'user' ? TEAL : 'rgba(255,255,255,0.8)',
+                alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
+                maxWidth: '90%',
+              }}>
+                {m.text}
+              </div>
+            ))}
+            {chatLoading && (
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic' }}>Thinking...</div>
+            )}
+          </div>
+          <form onSubmit={sendChat} style={{ display: 'flex', gap: 6 }}>
+            <input
+              value={chatInput}
+              onChange={e => setChatInput(e.target.value)}
+              placeholder="Ask the advisor..."
+              style={{ flex: 1, padding: '8px 10px', borderRadius: 8, border: `1px solid ${BDR}`, background: 'rgba(255,255,255,0.03)', color: '#fff', fontSize: 12, outline: 'none' }}
+            />
+            <button
+              type="submit"
+              disabled={chatLoading || !chatInput.trim()}
+              style={{ padding: '8px 14px', borderRadius: 8, border: `1px solid ${TEAL}`, background: chatLoading ? 'transparent' : 'rgba(0,229,204,0.1)', color: TEAL, fontSize: 12, cursor: 'pointer' }}
+            >
+              →
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* Asset Allocation */}
+      <div style={{ background: CARD, border: `1px solid ${BDR}`, borderRadius: 12, padding: '20px 24px' }}>
+        <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 16 }}>Asset Allocation</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))', gap: 12 }}>
+          {[
+            { symbol: 'SOL',  name: 'Solana',           amount: '0.984',     pct: 0,  color: '#A855F7' },
+            { symbol: 'PUSD', name: 'PalmFlow USD',      amount: '999,945',   pct: 100, color: TEAL },
+            { symbol: 'KMN',  name: 'Kamino (Yield)',    amount: '3,500',     pct: 35,  color: '#22C55E' },
+            { symbol: 'RYD',  name: 'Raydium (Yield)',   amount: '2,800',     pct: 28,  color: '#60A5FA' },
+            { symbol: 'JITO', name: 'Jito (Yield)',      amount: '2,000',     pct: 20,  color: '#F59E0B' },
+          ].map(a => (
+            <div key={a.symbol} style={{ padding: '14px', background: 'rgba(255,255,255,0.02)', borderRadius: 10, border: `1px solid rgba(255,255,255,0.05)` }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                <span style={{ fontWeight: 700, fontSize: 13, color: a.color, fontFamily: MONO }}>{a.symbol}</span>
+                <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>{a.pct}%</span>
+              </div>
+              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)' }}>{a.name}</div>
+              <div style={{ fontSize: 14, fontWeight: 700, marginTop: 4, fontFamily: MONO }}>{a.amount}</div>
+              <div style={{ height: 3, borderRadius: 2, background: 'rgba(255,255,255,0.08)', marginTop: 8 }}>
+                <div style={{ height: 3, borderRadius: 2, width: `${a.pct}%`, background: a.color }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
   )
 }
