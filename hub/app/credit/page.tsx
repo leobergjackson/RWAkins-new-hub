@@ -58,8 +58,8 @@ function CreditGauge({ score, loading }: { score: number; loading: boolean }) {
         <svg viewBox="0 0 220 220" width={220} height={220}>
           <defs>
             <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#8B5CF6" />
-              <stop offset="100%" stopColor="#3B5BFA" />
+              <stop offset="0%" stopColor="#F5A623" />
+              <stop offset="100%" stopColor="#FDE047" />
             </linearGradient>
             <filter id="gaugeGlow">
               <feGaussianBlur stdDeviation="3" result="blur" />
@@ -73,7 +73,7 @@ function CreditGauge({ score, loading }: { score: number; loading: boolean }) {
           <circle
             cx={GAUGE_CX} cy={GAUGE_CY} r={GAUGE_R}
             fill="none"
-            stroke="rgba(255,255,255,0.06)"
+            stroke="rgba(0,0,0,0.06)"
             strokeWidth={16}
             strokeDasharray={`${GAUGE_ARC} 999`}
             strokeLinecap="round"
@@ -107,18 +107,18 @@ function CreditGauge({ score, loading }: { score: number; loading: boolean }) {
               style={{
                 width: 40,
                 height: 40,
-                border: '3px solid rgba(255,255,255,0.1)',
-                borderTop: '3px solid #8B5CF6',
+                border: '3px solid rgba(245, 166, 35, 0.2)',
+                borderTop: '3px solid #F5A623',
                 borderRadius: '50%',
                 animation: 'spin 1s linear infinite',
               }}
             />
           ) : (
             <>
-              <p style={{ fontSize: 52, fontWeight: 800, lineHeight: 1, margin: 0, color: '#fff', letterSpacing: '-2px' }}>
+              <p style={{ fontSize: 52, fontWeight: 800, lineHeight: 1, margin: 0, color: '#2D1A26', letterSpacing: '-2px', fontFamily: "'Syne', sans-serif" }}>
                 {score}
               </p>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', margin: '2px 0 0' }}>/ 1000</p>
+              <p style={{ fontSize: 12, color: 'rgba(45,26,38,0.45)', margin: '2px 0 0', fontFamily: "'DM Sans', sans-serif" }}>/ 1000</p>
             </>
           )}
         </div>
@@ -146,7 +146,7 @@ function CreditGauge({ score, loading }: { score: number; loading: boolean }) {
             flexShrink: 0,
           }}
         />
-        <span style={{ fontSize: 13, fontWeight: 600, color }}>{label}</span>
+        <span style={{ fontSize: 13, fontWeight: 600, color, fontFamily: "'DM Sans', sans-serif" }}>{label}</span>
       </div>
 
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
@@ -169,12 +169,12 @@ function ProgressBar({
 }) {
   const pct = Math.max(0, Math.min((value / max) * 100, 100))
   return (
-    <div style={{ marginBottom: 16 }}>
+    <div style={{ marginBottom: 16, fontFamily: "'DM Sans', sans-serif" }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 6 }}>
-        <span style={{ color: 'rgba(255,255,255,0.7)' }}>{label}</span>
-        <span style={{ fontWeight: 600, color }}>{displayValue}</span>
+        <span style={{ color: 'rgba(45,26,38,0.6)' }}>{label}</span>
+        <span style={{ fontWeight: 600, color: '#2D1A26' }}>{displayValue}</span>
       </div>
-      <div style={{ height: 8, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden' }}>
+      <div style={{ height: 8, background: 'rgba(45,26,38,0.06)', borderRadius: 99, overflow: 'hidden' }}>
         <div
           style={{
             height: '100%',
@@ -191,35 +191,43 @@ function ProgressBar({
 
 // ─── Style helpers ───────────────────────────────────────────
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)',
-  borderRadius: 14,
-  padding: '20px 22px',
+  background: '#FFFFFF',
+  border: '1px solid #FEF08A',
+  borderRadius: 24,
+  padding: '28px 24px',
+  boxShadow: '0 4px 24px rgba(245, 166, 35, 0.05)',
+  fontFamily: "'DM Sans', sans-serif",
+  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
 }
 
 const btnPrimary: React.CSSProperties = {
-  background: 'linear-gradient(135deg, #8B5CF6, #3B5BFA)',
-  color: '#fff',
+  background: '#F5A623',
+  color: '#FFFFFF',
   border: 'none',
-  borderRadius: 8,
-  padding: '10px 20px',
+  borderRadius: 9999,
+  padding: '14px 32px',
   fontSize: 14,
   fontWeight: 600,
   cursor: 'pointer',
   display: 'inline-flex',
   alignItems: 'center',
-  gap: 6,
+  gap: 8,
+  fontFamily: "'DM Sans', sans-serif",
+  boxShadow: '0 4px 14px rgba(245, 166, 35, 0.22)',
+  transition: 'transform 0.2s, box-shadow 0.2s, background-color 0.2s',
 }
 
 const btnOutline: React.CSSProperties = {
   background: 'transparent',
-  color: 'rgba(255,255,255,0.6)',
-  border: '1px solid rgba(255,255,255,0.15)',
-  borderRadius: 8,
-  padding: '10px 20px',
-  fontSize: 14,
+  color: '#2D1A26',
+  border: '1px solid #F5A623',
+  borderRadius: 9999,
+  padding: '10px 24px',
+  fontSize: 13,
   fontWeight: 500,
   cursor: 'pointer',
+  fontFamily: "'DM Sans', sans-serif",
+  transition: 'transform 0.2s, background-color 0.2s',
 }
 
 // ─── Page ─────────────────────────────────────────────────────
@@ -233,6 +241,11 @@ export default function CreditDashboard() {
   const [loading, setLoading] = useState(false)
   const [isDemo, setIsDemo] = useState(false)
   const [error, setError] = useState('')
+  const [mounted, setMounted] = useState(false)
+
+  // Cursor position
+  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 })
+  const [cursorTrail, setCursorTrail] = useState({ x: -100, y: -100 })
 
   const [scenario, setScenario] = useState('')
   const [prediction, setPrediction] = useState<NcPrediction | null>(null)
@@ -241,10 +254,37 @@ export default function CreditDashboard() {
   const installed = useMemo(() => (typeof window === 'undefined' ? true : isMetaMaskInstalled()), [])
 
   useEffect(() => {
+    setMounted(true)
     const saved = loadWallet('evm')
     if (saved) setWallet(saved)
     fetchOraclePrice().then(setOraclePrice)
+
+    // Custom cursor mechanics
+    const moveCursor = (e: MouseEvent) => {
+      setCursorPos({ x: e.clientX, y: e.clientY })
+    }
+    window.addEventListener('mousemove', moveCursor)
+    return () => window.removeEventListener('mousemove', moveCursor)
   }, [])
+
+  // Smooth trail for cursor
+  useEffect(() => {
+    if (!mounted) return
+    let animationFrameId: number
+    const updateTrail = () => {
+      setCursorTrail(prev => {
+        const dx = cursorPos.x - prev.x
+        const dy = cursorPos.y - prev.y
+        return {
+          x: prev.x + dx * 0.18,
+          y: prev.y + dy * 0.18
+        }
+      })
+      animationFrameId = requestAnimationFrame(updateTrail)
+    }
+    updateTrail()
+    return () => cancelAnimationFrame(animationFrameId)
+  }, [cursorPos, mounted])
 
   useEffect(() => {
     if (!wallet) return
@@ -323,477 +363,516 @@ export default function CreditDashboard() {
     return tier
   }
 
+  // Float circles rendering helpers
+  const floatingCircles = useMemo(() => {
+    return Array.from({ length: 14 }).map((_, i) => ({
+      id: i,
+      size: Math.floor(Math.random() * 26) + 8, // 8px - 34px
+      left: Math.floor(Math.random() * 100),
+      top: Math.floor(Math.random() * 100),
+      duration: Math.floor(Math.random() * 6) + 9, // 9s - 15s
+      delay: Math.floor(Math.random() * 4),
+      opacity: (Math.random() * 0.15 + 0.10).toFixed(2)
+    }))
+  }, [])
+
   return (
-    <main style={{ padding: '32px 24px', maxWidth: 1100, margin: '0 auto' }}>
-      {/* ── Header ── */}
-      <header style={{ marginBottom: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
-        <div>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: '#8B5CF6', marginBottom: 4 }}>
-            CREDIT PASSPORT
-          </p>
-          <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, lineHeight: 1.2 }}>Your Credit Score</h1>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 4 }}>
-            Based on on-chain analysis
-          </p>
+    <div className="premium-container">
+      {/* Google Fonts Link */}
+      <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+
+      {/* Embedded Vanilla CSS Stylesheet */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        /* Custom Font Imports fallback */
+        .premium-container {
+          background-color: #FFFBF0;
+          color: #2D1A26;
+          font-family: 'DM Sans', sans-serif;
+          min-height: 100vh;
+          position: relative;
+          overflow-x: hidden;
+          width: 100%;
+          cursor: none;
+        }
+
+        /* ── Custom Cursor ── */
+        .custom-cursor-dot {
+          position: fixed;
+          width: 6px;
+          height: 6px;
+          background-color: #F5A623;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 99999;
+          transform: translate(-50%, -50%);
+          transition: transform 0.05s ease-out;
+        }
+        .custom-cursor-ring {
+          position: fixed;
+          width: 24px;
+          height: 24px;
+          border: 1.5px solid #F5A623;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 99998;
+          transform: translate(-50%, -50%);
+          background-color: rgba(245, 166, 35, 0.03);
+        }
+        a:hover ~ .custom-cursor-ring,
+        button:hover ~ .custom-cursor-ring,
+        input:hover ~ .custom-cursor-ring,
+        select:hover ~ .custom-cursor-ring {
+          width: 32px;
+          height: 32px;
+          border-color: #FBBF24;
+          background-color: rgba(251, 191, 36, 0.08);
+        }
+
+        /* Hide cursor on mobile devices */
+        @media (max-width: 768px) {
+          .custom-cursor-dot, .custom-cursor-ring {
+            display: none !important;
+          }
+          .premium-container {
+            cursor: auto !important;
+          }
+        }
+
+        /* ── Floating Circles ── */
+        .floating-container {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 0;
+          overflow: hidden;
+        }
+        .float-bubble {
+          position: absolute;
+          background-color: #FEF08A;
+          border-radius: 50%;
+          animation: driftBubble linear infinite;
+        }
+        @keyframes driftBubble {
+          0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+          33% { transform: translateY(-30px) translateX(15px) rotate(120deg); }
+          66% { transform: translateY(15px) translateX(-20px) rotate(240deg); }
+          100% { transform: translateY(0px) translateX(0px) rotate(360deg); }
+        }
+
+        /* ── CSS Dot Grid Texture ── */
+        .dot-grid-overlay {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, #FEF08A 1px, transparent 1px);
+          background-size: 28px 28px;
+          opacity: 0.15;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        /* ── Global Layout Resets ── */
+        header.nav-bar {
+          background-color: #FFFFFF;
+          border-bottom: 1px solid #FEF08A;
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          padding: 16px 40px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .nav-logo {
+          font-family: 'Dancing Script', cursive;
+          font-size: 20px;
+          font-weight: 600;
+          color: #2D1A26;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .sparkle-icon {
+          color: #F5A623;
+          font-size: 14px;
+        }
+
+        /* ── Main Content ── */
+        .main-content {
+          padding: 60px 40px 100px;
+          max-width: 1200px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 10;
+        }
+
+        .header-box {
+          margin-bottom: 40px;
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+        
+        .eyebrow {
+          font-family: 'Dancing Script', cursive;
+          color: #F5A623;
+          font-size: 16px;
+          margin-bottom: 8px;
+        }
+        .title-syne {
+          font-family: 'Syne', sans-serif;
+          font-size: clamp(32px, 5vw, 48px);
+          color: #2D1A26;
+          font-weight: 700;
+          line-height: 1.1;
+          margin: 0;
+        }
+
+        .bento-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 24px;
+        }
+
+        .bento-card {
+          background: #FFFFFF;
+          border: 1px solid #FEF08A;
+          border-radius: 24px;
+          padding: 32px 28px;
+          box-shadow: 0 4px 24px rgba(245, 166, 35, 0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .bento-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 10px 30px rgba(245, 166, 35, 0.15);
+        }
+
+        .action-link-card {
+          text-decoration: none;
+          color: inherit;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 20px 24px;
+          background: #FFFFFF;
+          border: 1px solid #FEF08A;
+          border-radius: 20px;
+          margin-bottom: 12px;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .action-link-card:hover {
+          transform: translateX(4px);
+          box-shadow: 0 8px 24px rgba(245, 166, 35, 0.1);
+          border-color: #F5A623;
+        }
+      `}} />
+
+      {mounted && (
+        <>
+          <div className="custom-cursor-dot" style={{ left: `${cursorPos.x}px`, top: `${cursorPos.y}px` }} />
+          <div className="custom-cursor-ring" style={{ left: `${cursorTrail.x}px`, top: `${cursorTrail.y}px` }} />
+        </>
+      )}
+
+      {/* Floating Background Effects */}
+      <div className="dot-grid-overlay" />
+      <div className="floating-container">
+        {floatingCircles.map(circle => (
+          <div
+            key={circle.id}
+            className="float-bubble"
+            style={{
+              width: circle.size,
+              height: circle.size,
+              left: `${circle.left}%`,
+              top: `${circle.top}%`,
+              animationDuration: `${circle.duration}s`,
+              animationDelay: `${circle.delay}s`,
+              opacity: circle.opacity,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Navigation */}
+      <header className="nav-bar">
+        <div className="nav-logo">
+          Kubryx <span className="sparkle-icon">✦</span>
         </div>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-          <span
-            style={{
-              fontSize: 11,
-              padding: '4px 10px',
-              borderRadius: 20,
-              background: isDemo ? 'rgba(255,255,255,0.04)' : 'rgba(34,197,94,0.06)',
-              border: `1px solid ${isDemo ? 'rgba(255,255,255,0.1)' : 'rgba(34,197,94,0.3)'}`,
-              color: isDemo ? '#888' : '#22C55E',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 5,
-            }}
-          >
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDemo ? '#888' : '#22C55E', flexShrink: 0 }} />
-            {isDemo ? 'Demo Mode' : 'Live'}
-          </span>
-          <span
-            style={{
-              fontSize: 11,
-              padding: '4px 10px',
-              borderRadius: 20,
-              background: 'rgba(245,197,24,0.06)',
-              border: '1px solid rgba(245,197,24,0.25)',
-              color: '#F5C518',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 5,
-            }}
-          >
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#F5C518', flexShrink: 0 }} />
-            QIE Mainnet
-          </span>
+        <div>
+          <Link href="/dashboard" style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 13,
+            fontWeight: 500,
+            color: '#2D1A26',
+            textDecoration: 'none',
+          }}>
+            ← Back to App
+          </Link>
         </div>
       </header>
 
-      {/* ── No MetaMask ── */}
-      {!installed && (
-        <div style={{ ...card, marginBottom: 20, textAlign: 'center' }}>
-          <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>MetaMask is required to use NeuroCredit.</p>
-          <a href={WALLET_INSTALL_LINKS.metamask} target="_blank" rel="noopener noreferrer" style={btnPrimary}>
-            Install MetaMask
-          </a>
-        </div>
-      )}
-
-      {/* ── Connect wallet ── */}
-      {installed && !wallet && (
-        <div style={{ ...card, marginBottom: 20, textAlign: 'center', padding: '40px 24px' }}>
-          <div
-            style={{
-              width: 60,
-              height: 60,
-              borderRadius: '50%',
-              background: 'rgba(139,92,246,0.12)',
-              border: '1px solid rgba(139,92,246,0.3)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 16px',
-              fontSize: 28,
-            }}
-          >
-            🧠
+      {/* Main Container */}
+      <main className="main-content">
+        <div className="header-box">
+          <div>
+            <div className="eyebrow">On-Chain Identity</div>
+            <h1 className="title-syne">Credit Passport</h1>
+            <p style={{ color: 'rgba(45,26,38,0.6)', marginTop: 12, fontSize: 15 }}>
+              Generate your on-chain credit score as a soulbound NFT.
+            </p>
           </div>
-          <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 6 }}>Connect your wallet</p>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 20 }}>
-            Connect MetaMask on QIE Mainnet (Chain ID {QIE_MAINNET.chainId}) to generate your credit score.
-          </p>
-          <button style={btnPrimary} onClick={connect}>
-            Connect MetaMask
-          </button>
-          {error && <p style={{ color: '#F87171', marginTop: 10, fontSize: 13 }}>{error}</p>}
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+            <span style={{
+              fontSize: 12, padding: '6px 14px', borderRadius: 20,
+              background: isDemo ? 'rgba(45,26,38,0.04)' : 'rgba(34,197,94,0.1)',
+              border: `1px solid ${isDemo ? 'rgba(45,26,38,0.1)' : 'rgba(34,197,94,0.3)'}`,
+              color: isDemo ? 'rgba(45,26,38,0.6)' : '#16A34A',
+              display: 'inline-flex', alignItems: 'center', gap: 6, fontWeight: 500
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDemo ? '#888' : '#16A34A', flexShrink: 0 }} />
+              {isDemo ? 'Demo Mode' : 'Live Data'}
+            </span>
+            <span style={{
+              fontSize: 12, padding: '6px 14px', borderRadius: 20,
+              background: 'rgba(245,166,35,0.1)', border: '1px solid rgba(245,166,35,0.3)',
+              color: '#B47814', display: 'inline-flex', alignItems: 'center', gap: 6, fontWeight: 500
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#F5A623', flexShrink: 0 }} />
+              QIE Mainnet
+            </span>
+          </div>
         </div>
-      )}
 
-      {/* ── Connected Dashboard ── */}
-      {wallet && (
-        <>
-          {/* Wallet bar */}
-          <div
-            style={{
-              ...card,
-              marginBottom: 20,
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: 10,
-              padding: '12px 18px',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div
-                style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #8B5CF6, #3B5BFA)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: 14,
-                  flexShrink: 0,
-                }}
-              >
-                👤
-              </div>
-              <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(255,255,255,0.8)' }}>
-                {truncateAddress(wallet)}
-              </span>
-              <span
-                style={{
-                  fontSize: 10,
-                  padding: '3px 8px',
-                  borderRadius: 12,
-                  background: 'rgba(139,92,246,0.1)',
-                  border: '1px solid rgba(139,92,246,0.25)',
-                  color: '#A78BFA',
-                }}
-              >
-                {QIE_MAINNET.chainName}
-              </span>
-            </div>
-            <button onClick={disconnect} style={btnOutline}>
-              Disconnect
+        {/* ── No MetaMask ── */}
+        {!installed && (
+          <div className="bento-card" style={{ textAlign: 'center', maxWidth: 600, margin: '0 auto' }}>
+            <p style={{ color: 'rgba(45,26,38,0.7)', marginBottom: 16 }}>MetaMask is required to use NeuroCredit.</p>
+            <a href={WALLET_INSTALL_LINKS.metamask} target="_blank" rel="noopener noreferrer" style={btnPrimary}
+              onMouseEnter={(e) => { (e.target as HTMLElement).style.backgroundColor = '#EAB308' }}
+              onMouseLeave={(e) => { (e.target as HTMLElement).style.backgroundColor = '#F5A623' }}>
+              Install MetaMask
+            </a>
+          </div>
+        )}
+
+        {/* ── Connect wallet ── */}
+        {installed && !wallet && (
+          <div className="bento-card" style={{ textAlign: 'center', maxWidth: 600, margin: '0 auto', padding: '60px 24px' }}>
+            <div style={{
+              width: 72, height: 72, borderRadius: '50%', background: 'rgba(245,166,35,0.1)',
+              border: '1px solid rgba(245,166,35,0.3)', display: 'flex', alignItems: 'center',
+              justifyContent: 'center', margin: '0 auto 20px', fontSize: 32,
+            }}>🧠</div>
+            <p style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, fontFamily: "'Syne', sans-serif" }}>Connect your wallet</p>
+            <p style={{ fontSize: 14, color: 'rgba(45,26,38,0.5)', marginBottom: 28, maxWidth: 360, margin: '0 auto 28px' }}>
+              Connect MetaMask on QIE Mainnet (Chain ID {QIE_MAINNET.chainId}) to generate your credit score.
+            </p>
+            <button style={btnPrimary} onClick={connect}
+              onMouseEnter={(e) => { (e.target as HTMLElement).style.backgroundColor = '#EAB308' }}
+              onMouseLeave={(e) => { (e.target as HTMLElement).style.backgroundColor = '#F5A623' }}>
+              Connect MetaMask
             </button>
+            {error && <p style={{ color: '#EF4444', marginTop: 12, fontSize: 13 }}>{error}</p>}
           </div>
+        )}
 
-          {/* ── Main 2-col layout ── */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: 20,
-              marginBottom: 20,
-            }}
-          >
-            {/* Score Gauge panel */}
-            <div style={{ ...card, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
-              <CreditGauge score={score} loading={loading} />
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', textAlign: 'center', lineHeight: 1.5, maxWidth: 280 }}>
-                {explanation}. Stake NCRD to boost your score further.
-              </p>
-
-              {/* Refresh button */}
-              <button
-                style={{
-                  ...btnPrimary,
-                  width: '100%',
-                  justifyContent: 'center',
-                  opacity: loading ? 0.7 : 1,
-                }}
-                onClick={refreshScore}
-                disabled={loading}
-              >
-                {loading ? (
-                  <>
-                    <span
-                      style={{
-                        width: 14,
-                        height: 14,
-                        border: '2px solid rgba(255,255,255,0.3)',
-                        borderTop: '2px solid #fff',
-                        borderRadius: '50%',
-                        animation: 'spin 0.8s linear infinite',
-                        display: 'inline-block',
-                      }}
-                    />
-                    Refreshing…
-                  </>
-                ) : (
-                  '↻ Refresh Score'
-                )}
-              </button>
-
-              {refreshTxHash && (
-                <div
-                  style={{
-                    width: '100%',
-                    background: 'rgba(139,92,246,0.06)',
-                    border: '1px solid rgba(139,92,246,0.2)',
-                    borderRadius: 8,
-                    padding: '10px 14px',
-                    fontSize: 12,
-                  }}
-                >
-                  <p style={{ color: '#A78BFA', fontWeight: 600, margin: '0 0 4px' }}>On-chain ✓</p>
-                  <p style={{ fontFamily: 'monospace', color: 'rgba(255,255,255,0.5)', margin: 0, wordBreak: 'break-all' }}>
-                    Tx: {refreshTxHash.slice(0, 18)}…{refreshTxHash.slice(-8)}
-                  </p>
-                </div>
-              )}
-            </div>
-
-            {/* Quick Actions */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {[
-                {
-                  icon: '🧠',
-                  title: 'NeuroLend',
-                  desc: 'Get personalized loan offers',
-                  href: '/credit/lend',
-                  accent: '#8B5CF6',
-                },
-                {
-                  icon: '🛡',
-                  title: 'Stake NCRD',
-                  desc: 'Boost your credit score',
-                  href: '/credit/stake',
-                  accent: '#22C55E',
-                },
-                {
-                  icon: '⚡',
-                  title: 'DeFi Demo',
-                  desc: 'See your borrowing power',
-                  href: '/credit/lending-demo',
-                  accent: '#F5C518',
-                },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  style={{
-                    ...card,
-                    textDecoration: 'none',
-                    color: 'inherit',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 14,
-                    padding: '16px 18px',
-                    transition: 'border-color 0.2s, background 0.2s',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 42,
-                      height: 42,
-                      borderRadius: 10,
-                      background: `${item.accent}15`,
-                      border: `1px solid ${item.accent}30`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: 20,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {item.icon}
-                  </div>
-                  <div>
-                    <p style={{ fontWeight: 600, margin: 0, fontSize: 14, color: item.accent }}>{item.title}</p>
-                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: '2px 0 0' }}>{item.desc}</p>
-                  </div>
-                  <span style={{ marginLeft: 'auto', color: 'rgba(255,255,255,0.2)', fontSize: 18 }}>›</span>
-                </Link>
-              ))}
-
-              {/* Bottom stats */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                <div style={{ ...card, padding: '14px 16px' }}>
-                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: '0.08em', margin: '0 0 4px' }}>
-                    ORACLE PRICE
-                  </p>
-                  <p style={{ fontSize: 18, fontWeight: 700, color: '#60A5FA', margin: 0 }}>
-                    ${oraclePrice.toFixed(2)}
-                  </p>
-                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', margin: '2px 0 0' }}>QIE / USD</p>
-                  <span
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: 4,
-                      fontSize: 9,
-                      color: '#22C55E',
-                      marginTop: 4,
-                    }}
-                  >
-                    <span className="live-dot" style={{ width: 5, height: 5, borderRadius: '50%', background: '#22C55E', display: 'inline-block' }} />
-                    Live
-                  </span>
-                </div>
-                <div style={{ ...card, padding: '14px 16px' }}>
-                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: '0.08em', margin: '0 0 4px' }}>
-                    STAKING TIER
-                  </p>
-                  <p
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 700,
-                      color:
-                        breakdown.stakingTier === 'Gold'
-                          ? '#F5C518'
-                          : breakdown.stakingTier === 'Silver'
-                          ? '#9CA3AF'
-                          : breakdown.stakingTier === 'Bronze'
-                          ? '#F97316'
-                          : 'rgba(255,255,255,0.35)',
-                      margin: 0,
-                    }}
-                  >
-                    {stakingTierLabel(breakdown.stakingTier)}
-                  </p>
-                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', margin: '2px 0 0' }}>
-                    Boost: +{breakdown.stakingBoost}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Score Breakdown + Predictor row ── */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: 20,
-            }}
-          >
-            {/* Score Breakdown */}
-            <div style={card}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.35)', margin: '0 0 16px' }}>
-                SCORE BREAKDOWN
-              </p>
-              <ProgressBar
-                label="Base Score"
-                value={breakdown.baseScore}
-                max={1000}
-                color="rgba(255,255,255,0.4)"
-                displayValue={String(breakdown.baseScore)}
-              />
-              <ProgressBar
-                label="Staking Boost"
-                value={breakdown.stakingBoost}
-                max={300}
-                color="#22C55E"
-                displayValue={`+${breakdown.stakingBoost}`}
-              />
-              <ProgressBar
-                label="Oracle Penalty"
-                value={breakdown.oraclePenalty}
-                max={200}
-                color="#EF4444"
-                displayValue={breakdown.oraclePenalty === 0 ? '0' : `-${breakdown.oraclePenalty}`}
-              />
-              <div
-                style={{
-                  marginTop: 16,
-                  paddingTop: 14,
-                  borderTop: '1px solid rgba(255,255,255,0.06)',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>
-                  {breakdown.baseScore} + {breakdown.stakingBoost} − {breakdown.oraclePenalty} =
+        {/* ── Connected Dashboard ── */}
+        {wallet && (
+          <>
+            {/* Wallet bar */}
+            <div className="bento-card" style={{
+              marginBottom: 24, display: 'flex', justifyContent: 'space-between',
+              alignItems: 'center', flexWrap: 'wrap', gap: 12, padding: '16px 24px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{
+                  width: 36, height: 36, borderRadius: '50%', background: '#F5A623',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: '#fff'
+                }}>👤</div>
+                <span style={{ fontFamily: "monospace", fontSize: 14, color: '#2D1A26', fontWeight: 500 }}>
+                  {truncateAddress(wallet)}
                 </span>
-                <span style={{ fontSize: 20, fontWeight: 800, color: '#A78BFA' }}>{score}</span>
               </div>
-              {breakdown.lastUpdated && (
-                <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)', marginTop: 10 }}>
-                  Updated: {new Date(breakdown.lastUpdated).toLocaleString()}
-                </p>
-              )}
-            </div>
-
-            {/* Score Predictor */}
-            <div style={card}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.35)', margin: '0 0 16px' }}>
-                SCORE PREDICTOR
-              </p>
-              <div style={{ marginBottom: 12 }}>
-                <select
-                  value={scenario}
-                  onChange={(e) => { setScenario(e.target.value); setPrediction(null) }}
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    background: 'rgba(255,255,255,0.06)',
-                    border: '1px solid rgba(255,255,255,0.12)',
-                    borderRadius: 8,
-                    color: scenario ? '#fff' : 'rgba(255,255,255,0.35)',
-                    fontSize: 13,
-                    cursor: 'pointer',
-                    appearance: 'none',
-                  }}
-                >
-                  <option value="" disabled style={{ background: '#1a1a1a' }}>Select a scenario</option>
-                  {Object.entries(SCENARIO_LABELS).map(([key, label]) => (
-                    <option key={key} value={key} style={{ background: '#1a1a1a' }}>
-                      {label} — {SCENARIO_DESCRIPTIONS[key]}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <button
-                style={{
-                  ...btnPrimary,
-                  width: '100%',
-                  justifyContent: 'center',
-                  opacity: !scenario || predicting ? 0.6 : 1,
-                }}
-                onClick={runPredictor}
-                disabled={!scenario || predicting}
-              >
-                {predicting ? 'Predicting…' : 'Predict Score Change'}
+              <button onClick={disconnect} style={btnOutline}
+                onMouseEnter={(e) => { (e.target as HTMLElement).style.backgroundColor = 'rgba(245,166,35,0.08)' }}
+                onMouseLeave={(e) => { (e.target as HTMLElement).style.backgroundColor = 'transparent' }}>
+                Disconnect
               </button>
-
-              {prediction && (
-                <div
-                  style={{
-                    marginTop: 16,
-                    background: 'rgba(139,92,246,0.06)',
-                    border: '1px solid rgba(139,92,246,0.2)',
-                    borderRadius: 10,
-                    padding: '14px 16px',
-                  }}
-                >
-                  <p style={{ fontSize: 12, color: '#A78BFA', fontWeight: 600, margin: '0 0 8px' }}>
-                    If you: {SCENARIO_LABELS[scenario]}
-                  </p>
-                  <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 8 }}>
-                    <div>
-                      <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', margin: 0 }}>Current</p>
-                      <p style={{ fontSize: 22, fontWeight: 700, color: '#fff', margin: 0 }}>{prediction.currentScore}</p>
-                    </div>
-                    <span style={{ fontSize: 20, color: 'rgba(255,255,255,0.2)' }}>→</span>
-                    <div>
-                      <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', margin: 0 }}>Predicted</p>
-                      <p style={{ fontSize: 22, fontWeight: 700, color: '#22C55E', margin: 0 }}>
-                        {prediction.predictedScore}{' '}
-                        <span style={{ fontSize: 14 }}>
-                          (+{prediction.change})
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: 0, lineHeight: 1.5 }}>
-                    {prediction.explanation}
-                  </p>
-                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', margin: '8px 0 0' }}>
-                    Confidence: {Math.round(prediction.confidence * 100)}%
-                  </p>
-                </div>
-              )}
-
-              {!prediction && !predicting && (
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)', marginTop: 14, textAlign: 'center' }}>
-                  Select a scenario to see how actions affect your score
-                </p>
-              )}
             </div>
-          </div>
-        </>
-      )}
-    </main>
+
+            {/* ── Main 2-col layout ── */}
+            <div className="bento-grid" style={{ marginBottom: 24 }}>
+              {/* Score Gauge panel */}
+              <div className="bento-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+                <CreditGauge score={score} loading={loading} />
+                <p style={{ fontSize: 14, color: 'rgba(45,26,38,0.6)', textAlign: 'center', lineHeight: 1.5, maxWidth: 280 }}>
+                  {explanation}. Stake NCRD to boost your score further.
+                </p>
+
+                <button style={{ ...btnPrimary, width: '100%', justifyContent: 'center', opacity: loading ? 0.7 : 1 }}
+                  onClick={refreshScore} disabled={loading}
+                  onMouseEnter={(e) => { if (!loading) (e.target as HTMLElement).style.backgroundColor = '#EAB308' }}
+                  onMouseLeave={(e) => { if (!loading) (e.target as HTMLElement).style.backgroundColor = '#F5A623' }}>
+                  {loading ? 'Refreshing…' : '↻ Refresh Score'}
+                </button>
+
+                {refreshTxHash && (
+                  <div style={{
+                    width: '100%', background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.2)',
+                    borderRadius: 12, padding: '12px 16px', fontSize: 12
+                  }}>
+                    <p style={{ color: '#16A34A', fontWeight: 600, margin: '0 0 6px' }}>On-chain Verified ✓</p>
+                    <p style={{ fontFamily: 'monospace', color: 'rgba(45,26,38,0.6)', margin: 0, wordBreak: 'break-all' }}>
+                      Tx: {refreshTxHash.slice(0, 18)}…{refreshTxHash.slice(-8)}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Quick Actions */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {[
+                  { icon: '🧠', title: 'NeuroLend', desc: 'Get personalized loan offers', href: '/credit/lend', accent: '#8B5CF6' },
+                  { icon: '🛡', title: 'Stake NCRD', desc: 'Boost your credit score', href: '/credit/stake', accent: '#22C55E' },
+                  { icon: '⚡', title: 'DeFi Demo', desc: 'See your borrowing power', href: '/credit/lending-demo', accent: '#F5A623' },
+                ].map((item) => (
+                  <Link key={item.href} href={item.href} className="action-link-card">
+                    <div style={{
+                      width: 48, height: 48, borderRadius: 14, background: `${item.accent}15`,
+                      border: `1px solid ${item.accent}30`, display: 'flex', alignItems: 'center',
+                      justifyContent: 'center', fontSize: 24, flexShrink: 0,
+                    }}>
+                      {item.icon}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <p style={{ fontWeight: 600, margin: 0, fontSize: 15, color: item.accent }}>{item.title}</p>
+                      <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.5)', margin: '4px 0 0' }}>{item.desc}</p>
+                    </div>
+                    <span style={{ color: 'rgba(45,26,38,0.2)', fontSize: 20 }}>→</span>
+                  </Link>
+                ))}
+
+                {/* Bottom stats */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 4 }}>
+                  <div className="bento-card" style={{ padding: '20px', minHeight: 0 }}>
+                    <p style={{ fontSize: 11, color: 'rgba(45,26,38,0.5)', fontWeight: 700, letterSpacing: '0.08em', margin: '0 0 8px' }}>
+                      ORACLE PRICE
+                    </p>
+                    <p style={{ fontSize: 24, fontWeight: 700, color: '#3B82F6', margin: 0, fontFamily: "'Syne', sans-serif" }}>
+                      ${oraclePrice.toFixed(2)}
+                    </p>
+                    <p style={{ fontSize: 11, color: 'rgba(45,26,38,0.4)', margin: '4px 0 0' }}>QIE / USD</p>
+                  </div>
+                  <div className="bento-card" style={{ padding: '20px', minHeight: 0 }}>
+                    <p style={{ fontSize: 11, color: 'rgba(45,26,38,0.5)', fontWeight: 700, letterSpacing: '0.08em', margin: '0 0 8px' }}>
+                      STAKING TIER
+                    </p>
+                    <p style={{
+                        fontSize: 20, fontWeight: 700, fontFamily: "'Syne', sans-serif", margin: 0,
+                        color: breakdown.stakingTier === 'Gold' ? '#F5C518' : breakdown.stakingTier === 'Silver' ? '#9CA3AF' : breakdown.stakingTier === 'Bronze' ? '#F97316' : 'rgba(45,26,38,0.4)',
+                      }}>
+                      {stakingTierLabel(breakdown.stakingTier)}
+                    </p>
+                    <p style={{ fontSize: 11, color: 'rgba(45,26,38,0.4)', margin: '6px 0 0' }}>
+                      Boost: +{breakdown.stakingBoost}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Score Breakdown + Predictor row ── */}
+            <div className="bento-grid">
+              {/* Score Breakdown */}
+              <div className="bento-card">
+                <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', color: '#F5A623', margin: '0 0 24px' }}>
+                  SCORE BREAKDOWN
+                </p>
+                <ProgressBar label="Base Score" value={breakdown.baseScore} max={1000} color="#2D1A26" displayValue={String(breakdown.baseScore)} />
+                <ProgressBar label="Staking Boost" value={breakdown.stakingBoost} max={300} color="#16A34A" displayValue={`+${breakdown.stakingBoost}`} />
+                <ProgressBar label="Oracle Penalty" value={breakdown.oraclePenalty} max={200} color="#EF4444" displayValue={breakdown.oraclePenalty === 0 ? '0' : `-${breakdown.oraclePenalty}`} />
+                
+                <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(45,26,38,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: 14, color: 'rgba(45,26,38,0.5)', fontWeight: 500 }}>
+                    {breakdown.baseScore} + {breakdown.stakingBoost} − {breakdown.oraclePenalty} =
+                  </span>
+                  <span style={{ fontSize: 24, fontWeight: 700, color: '#F5A623', fontFamily: "'Syne', sans-serif" }}>{score}</span>
+                </div>
+                {breakdown.lastUpdated && (
+                  <p style={{ fontSize: 11, color: 'rgba(45,26,38,0.3)', marginTop: 12 }}>
+                    Updated: {new Date(breakdown.lastUpdated).toLocaleString()}
+                  </p>
+                )}
+              </div>
+
+              {/* Score Predictor */}
+              <div className="bento-card">
+                <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', color: '#F5A623', margin: '0 0 24px' }}>
+                  SCORE PREDICTOR
+                </p>
+                <div style={{ marginBottom: 16 }}>
+                  <select value={scenario} onChange={(e) => { setScenario(e.target.value); setPrediction(null) }}
+                    style={{
+                      width: '100%', padding: '14px 16px', background: '#FFFBF0', border: '1px solid #FEF08A',
+                      borderRadius: 12, color: scenario ? '#2D1A26' : 'rgba(45,26,38,0.4)', fontSize: 14,
+                      cursor: 'pointer', appearance: 'none', fontFamily: "'DM Sans', sans-serif", fontWeight: 500,
+                    }}>
+                    <option value="" disabled>Select an action to simulate...</option>
+                    {Object.entries(SCENARIO_LABELS).map(([key, label]) => (
+                      <option key={key} value={key}>{label} — {SCENARIO_DESCRIPTIONS[key]}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <button style={{ ...btnPrimary, width: '100%', justifyContent: 'center', opacity: !scenario || predicting ? 0.6 : 1 }}
+                  onClick={runPredictor} disabled={!scenario || predicting}
+                  onMouseEnter={(e) => { if (!(!scenario || predicting)) (e.target as HTMLElement).style.backgroundColor = '#EAB308' }}
+                  onMouseLeave={(e) => { if (!(!scenario || predicting)) (e.target as HTMLElement).style.backgroundColor = '#F5A623' }}>
+                  {predicting ? 'Simulating…' : 'Predict Score Change'}
+                </button>
+
+                {prediction && (
+                  <div style={{ marginTop: 20, background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.2)', borderRadius: 16, padding: '20px' }}>
+                    <p style={{ fontSize: 13, color: '#16A34A', fontWeight: 600, margin: '0 0 12px' }}>
+                      If you: {SCENARIO_LABELS[scenario]}
+                    </p>
+                    <div style={{ display: 'flex', gap: 24, alignItems: 'center', marginBottom: 12 }}>
+                      <div>
+                        <p style={{ fontSize: 11, color: 'rgba(45,26,38,0.5)', margin: '0 0 4px', fontWeight: 600 }}>Current</p>
+                        <p style={{ fontSize: 24, fontWeight: 700, color: '#2D1A26', margin: 0, fontFamily: "'Syne', sans-serif" }}>{prediction.currentScore}</p>
+                      </div>
+                      <span style={{ fontSize: 24, color: 'rgba(45,26,38,0.2)' }}>→</span>
+                      <div>
+                        <p style={{ fontSize: 11, color: 'rgba(45,26,38,0.5)', margin: '0 0 4px', fontWeight: 600 }}>Predicted</p>
+                        <p style={{ fontSize: 24, fontWeight: 700, color: '#16A34A', margin: 0, fontFamily: "'Syne', sans-serif" }}>
+                          {prediction.predictedScore}{' '}
+                          <span style={{ fontSize: 15, fontWeight: 600 }}>
+                            ({prediction.change >= 0 ? '+' : ''}{prediction.change})
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.6)', margin: 0, lineHeight: 1.5 }}>
+                      {prediction.explanation}
+                    </p>
+                    <p style={{ fontSize: 11, color: 'rgba(45,26,38,0.3)', margin: '12px 0 0', fontWeight: 500 }}>
+                      Confidence: {Math.round(prediction.confidence * 100)}%
+                    </p>
+                  </div>
+                )}
+
+                {!prediction && !predicting && (
+                  <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.4)', marginTop: 20, textAlign: 'center' }}>
+                    Select a scenario to see how on-chain actions affect your QIE credit rating.
+                  </p>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+      </main>
+    </div>
   )
 }

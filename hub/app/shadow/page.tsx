@@ -1,6 +1,7 @@
 'use client'
 
 import { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { fallbackShadowAgents } from '../../lib/fallback'
 import { toast } from '../../lib/toast'
 import { loadWallet, persistWallet } from '../../lib/wallet-utils'
@@ -21,19 +22,19 @@ type FeedItem = { id: string; agentType: string; action: string; timestamp: stri
 
 const apiBase = process.env.NEXT_PUBLIC_SHADOW_URL || process.env.NEXT_PUBLIC_SHADOW_API || ''
 
-const P = '#A855F7', PL = '#C084FC', GOLD = '#F5C518', GRN = '#22C55E'
-const RED = '#EF4444', ORG = '#F97316', BLU = '#60A5FA'
-const BG = '#060608', MONO = '"JetBrains Mono","Fira Code","Courier New",monospace'
-const CARD = 'rgba(255,255,255,0.025)', BORDER = 'rgba(255,255,255,0.07)'
+const P = '#64748B', PL = '#94A3B8', GOLD = '#EAB308', GRN = '#10B981'
+const RED = '#EF4444', ORG = '#F97316', BLU = '#3B82F6'
+const BG = '#F8FAFC', MONO = '"JetBrains Mono","Fira Code","Courier New",monospace'
+const CARD = 'rgba(255,255,255,0.85)', BORDER = 'rgba(255,255,255,0.6)'
 
 const DEPTS = [
-  { type:'cfo',         name:'CFO Agent',         icon:'💰', role:'Treasury oversight, rebalancing & capital allocation', color:GOLD, bg:'rgba(245,197,24,0.06)',   bd:'rgba(245,197,24,0.25)',   metric:'12,480.50', unit:'SOL',    label:'Treasury Balance',   action:'Rebalance treasury' },
-  { type:'payroll',     name:'Payroll Agent',      icon:'💸', role:'Real-time SOL salary streaming to team wallets',       color:GRN,  bg:'rgba(34,197,94,0.06)',    bd:'rgba(34,197,94,0.25)',    metric:'0.00034',   unit:'SOL/s',  label:'Stream Rate',        action:'Process payroll batch' },
-  { type:'compliance',  name:'Compliance Agent',   icon:'⚖️', role:'Regulatory rule enforcement & AML screening',         color:BLU,  bg:'rgba(96,165,250,0.06)',   bd:'rgba(96,165,250,0.25)',   metric:'347',       unit:'rules',  label:'Rules Checked',      action:'Run compliance sweep' },
-  { type:'audit',       name:'Audit Agent',        icon:'🔍', role:'Immutable transaction logging & on-chain audit trail', color:PL,   bg:'rgba(192,132,252,0.06)', bd:'rgba(192,132,252,0.25)', metric:'1,847',     unit:'txns',   label:'Txns Logged',        action:'Run full audit' },
-  { type:'procurement', name:'Procurement Agent',  icon:'🛒', role:'Vendor management & automated purchase orders',       color:ORG,  bg:'rgba(249,115,22,0.06)',   bd:'rgba(249,115,22,0.25)',   metric:'3',         unit:'orders', label:'Pending POs',        action:'Process pending POs' },
-  { type:'tax',         name:'Tax Agent',          icon:'📋', role:'On-chain tax liability estimation & filing prep',      color:'#F472B6', bg:'rgba(244,114,182,0.06)', bd:'rgba(244,114,182,0.25)', metric:'0.082', unit:'SOL',   label:'Est. Liability',     action:'Calculate liability' },
-  { type:'risk',        name:'Risk Agent',         icon:'🛡',  role:'Real-time anomaly detection & threat monitoring',     color:RED,  bg:'rgba(239,68,68,0.06)',    bd:'rgba(239,68,68,0.25)',    metric:'2',         unit:'/ 10',   label:'Threat Level',       action:'Run threat scan' },
+  { type:'cfo',         name:'CFO Agent',         icon:'💰', role:'Treasury oversight, rebalancing & capital allocation', color:'#EAB308', bg:'#FEF9C3', bd:'#FEF08A', metric:'12,480.50', unit:'SOL',    label:'Treasury Balance',   action:'Rebalance treasury' },
+  { type:'payroll',     name:'Payroll Agent',      icon:'💸', role:'Real-time SOL salary streaming to team wallets',       color:'#10B981', bg:'#D1FAE5', bd:'#A7F3D0', metric:'0.00034',   unit:'SOL/s',  label:'Stream Rate',        action:'Process payroll batch' },
+  { type:'compliance',  name:'Compliance Agent',   icon:'⚖️', role:'Regulatory rule enforcement & AML screening',         color:'#3B82F6', bg:'#DBEAFE', bd:'#BFDBFE', metric:'347',       unit:'rules',  label:'Rules Checked',      action:'Run compliance sweep' },
+  { type:'audit',       name:'Audit Agent',        icon:'🔍', role:'Immutable transaction logging & on-chain audit trail', color:'#8B5CF6', bg:'#EDE9FE', bd:'#DDD6FE', metric:'1,847',     unit:'txns',   label:'Txns Logged',        action:'Run full audit' },
+  { type:'procurement', name:'Procurement Agent',  icon:'🛒', role:'Vendor management & automated purchase orders',       color:'#F97316', bg:'#FFEDD5', bd:'#FED7AA', metric:'3',         unit:'orders', label:'Pending POs',        action:'Process pending POs' },
+  { type:'tax',         name:'Tax Agent',          icon:'📋', role:'On-chain tax liability estimation & filing prep',      color:'#F43F5E', bg:'#FFE4E6', bd:'#FECDD3', metric:'0.082', unit:'SOL',   label:'Est. Liability',     action:'Calculate liability' },
+  { type:'risk',        name:'Risk Agent',         icon:'🛡',  role:'Real-time anomaly detection & threat monitoring',     color:'#EF4444', bg:'#FEE2E2', bd:'#FECACA', metric:'2',         unit:'/ 10',   label:'Threat Level',       action:'Run threat scan' },
 ] as const
 
 const POOL: Omit<FeedItem,'id'|'timestamp'>[] = [
@@ -59,7 +60,7 @@ function ts() {
   return `${n.getHours().toString().padStart(2,'0')}:${n.getMinutes().toString().padStart(2,'0')}:${n.getSeconds().toString().padStart(2,'0')}`
 }
 function shorten(a: string) { return `${a.slice(0,6)}…${a.slice(-4)}` }
-function sColor(s: string) { return s==='active'?GRN:s==='idle'?ORG:s==='alert'?RED:'rgba(255,255,255,0.35)' }
+function sColor(s: string) { return s==='active'?'#10B981':s==='idle'?'#F59E0B':s==='alert'?'#EF4444':'#94A3B8' }
 
 // ─── AgentCard ────────────────────────────────────────────────────────────────
 
@@ -85,67 +86,71 @@ function AgentCard({
   }
 
   return (
-    <article style={{
-      background: dept.bg, border: `1px solid ${dept.bd}`,
-      borderRadius: 14, padding: '18px 20px',
-      display: 'flex', flexDirection: 'column', gap: 10, position: 'relative', overflow: 'hidden',
-    }}>
-      <div style={{ position:'absolute', top:0, left:0, right:0, height:1, background:`linear-gradient(90deg,transparent,${dept.color}55,transparent)` }} />
-
+    <motion.article 
+      whileHover={{ y: -4, boxShadow: '0 12px 32px rgba(100, 116, 139, 0.12)' }}
+      className="glass-card"
+      style={{
+        padding: '24px',
+        display: 'flex', flexDirection: 'column', gap: 16, position: 'relative', overflow: 'hidden',
+        borderTop: `4px solid ${dept.color}`
+      }}
+    >
       {/* Header */}
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start' }}>
-        <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-          <span style={{ fontSize:20 }}>{dept.icon}</span>
+        <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+          <div style={{ background: dept.bg, width: 48, height: 48, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>
+            {dept.icon}
+          </div>
           <div>
-            <p style={{ fontSize:13, fontWeight:700, color:dept.color, margin:0 }}>{dept.name}</p>
-            <p style={{ fontSize:10, color:'rgba(255,255,255,0.38)', margin:0 }}>{dept.role}</p>
+            <p style={{ fontSize: 16, fontWeight: 700, color: '#0F172A', margin: 0 }}>{dept.name}</p>
+            <p style={{ fontSize: 12, color: '#64748B', margin: 0 }}>{dept.role}</p>
           </div>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:5 }}>
-          <span style={{ width:7, height:7, borderRadius:'50%', background:sColor(status), boxShadow:isActive?`0 0 6px ${sColor(status)}`:'none' }} />
-          <span style={{ fontSize:10, color:sColor(status), fontWeight:600, textTransform:'uppercase' }}>{status}</span>
+          <span style={{ width:8, height:8, borderRadius:'50%', background:sColor(status), boxShadow:isActive?`0 0 8px ${sColor(status)}`:'none' }} />
         </div>
       </div>
 
       {/* Metric */}
-      <div style={{ background:'rgba(0,0,0,0.22)', borderRadius:8, padding:'10px 13px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+      <div style={{ background:'#F8FAFC', borderRadius:12, padding:'16px', display:'flex', justifyContent:'space-between', alignItems:'center', border: '1px solid #E2E8F0' }}>
         <div>
-          <p style={{ fontSize:10, color:'rgba(255,255,255,0.35)', margin:'0 0 2px', textTransform:'uppercase', letterSpacing:'0.05em' }}>{dept.label}</p>
-          <p style={{ fontSize:20, fontWeight:800, color:'#fff', margin:0, fontFamily:MONO }}>
+          <p style={{ fontSize:11, color:'#64748B', margin:'0 0 4px', textTransform:'uppercase', letterSpacing:'0.05em', fontWeight: 600 }}>{dept.label}</p>
+          <p style={{ fontSize:24, fontWeight:800, color:'#0F172A', margin:0, fontFamily:MONO }}>
             {stealth ? '●●●●●' : dept.metric}
-            <span style={{ fontSize:10, color:'rgba(255,255,255,0.35)', marginLeft:4 }}>{dept.unit}</span>
+            <span style={{ fontSize:12, color:'#64748B', marginLeft:6 }}>{dept.unit}</span>
           </p>
         </div>
-        <span style={{ fontSize:24, opacity:0.15 }}>{dept.icon}</span>
       </div>
 
       {/* Last action */}
-      <div>
-        <p style={{ fontSize:10, color:'rgba(255,255,255,0.3)', margin:'0 0 3px', letterSpacing:'0.04em' }}>LAST ACTION</p>
-        <p style={{ fontSize:11, color:'rgba(255,255,255,0.65)', margin:0, lineHeight:1.45 }}>
+      <div style={{ flex: 1 }}>
+        <p style={{ fontSize:11, color:'#64748B', margin:'0 0 4px', letterSpacing:'0.04em', fontWeight: 600 }}>LAST ACTION</p>
+        <p style={{ fontSize:13, color:'#334155', margin:0, lineHeight:1.5, fontWeight: 500 }}>
           {stealth ? '[ REDACTED — STEALTH ACTIVE ]' : lastAction}
         </p>
-        {agent?.time && <p style={{ fontSize:10, color:'rgba(255,255,255,0.25)', margin:'3px 0 0', fontFamily:MONO }}>{agent.time}</p>}
+        {agent?.time && <p style={{ fontSize:11, color:'#94A3B8', margin:'6px 0 0', fontFamily:MONO }}>{agent.time}</p>}
       </div>
 
       {/* Button */}
-      <button
+      <motion.button
+        whileTap={{ scale: 0.98 }}
         onClick={handle}
         disabled={!enabled || busy || pageLoading}
         style={{
-          background: busy ? 'rgba(255,255,255,0.04)' : `${dept.color}14`,
-          color: busy ? 'rgba(255,255,255,0.35)' : dept.color,
-          border: `1px solid ${dept.color}35`,
-          borderRadius:8, padding:'8px 0', fontSize:12, fontWeight:600,
+          background: busy ? '#E2E8F0' : dept.bg,
+          color: busy ? '#94A3B8' : dept.color,
+          border: `1px solid ${dept.bd}`,
+          borderRadius: 12, padding: '12px 0', fontSize: 14, fontWeight: 700,
           cursor: !enabled || busy || pageLoading ? 'not-allowed' : 'pointer',
-          width:'100%', display:'flex', alignItems:'center', justifyContent:'center', gap:6,
+          width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+          transition: 'background 0.2s'
         }}
       >
         {busy
-          ? <><span style={{ width:10, height:10, border:`1.5px solid ${dept.color}40`, borderTop:`1.5px solid ${dept.color}`, borderRadius:'50%', animation:'spin 0.8s linear infinite', display:'inline-block' }} />Executing…</>
-          : <>▶ Trigger</>}
-      </button>
-    </article>
+          ? <><span style={{ width:12, height:12, border:`2px solid ${dept.color}40`, borderTop:`2px solid ${dept.color}`, borderRadius:'50%', animation:'spin 0.8s linear infinite', display:'inline-block' }} />Executing…</>
+          : <>▶ Trigger Action</>}
+      </motion.button>
+    </motion.article>
   )
 }
 
@@ -307,191 +312,223 @@ export default function ShadowPage() {
   // ── Render ────────────────────────────────────────────────────
 
   return (
-    <div style={{ background:BG, minHeight:'100vh', color:'#fff', fontFamily:'"Inter",system-ui,sans-serif', position:'relative' }}>
-
+    <div className="shadow-container">
       {/* Grid texture */}
-      <div style={{ position:'fixed', inset:0, pointerEvents:'none', zIndex:0, backgroundImage:'linear-gradient(rgba(168,85,247,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(168,85,247,0.018) 1px,transparent 1px)', backgroundSize:'40px 40px' }} />
+      <div className="dot-grid-overlay" />
 
-      <div style={{ position:'relative', zIndex:1, maxWidth:1300, margin:'0 auto', padding:'0 24px 60px' }}>
+      {/* Floating Shapes */}
+      <div className="floating-container">
+         <div className="float-shape" style={{ width: 300, height: 300, top: '10%', left: '-5%', animationDuration: '25s' }} />
+         <div className="float-shape" style={{ width: 400, height: 400, top: '40%', right: '-10%', animationDuration: '30s', animationDelay: '-5s' }} />
+         <div className="float-shape" style={{ width: 200, height: 200, bottom: '10%', left: '20%', animationDuration: '20s', animationDelay: '-10s' }} />
+      </div>
 
-        {/* ── Top Bar ── */}
-        <header style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'13px 0', borderBottom:'1px solid rgba(168,85,247,0.12)', flexWrap:'wrap', gap:8, position:'sticky', top:0, background:`${BG}ee`, backdropFilter:'blur(14px)', zIndex:50 }}>
-          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-            <span style={{ fontSize:18 }}>🌑</span>
-            <span style={{ fontSize:13, fontWeight:800, color:P, letterSpacing:'0.1em' }}>SHADOW OS</span>
-            <span style={{ fontSize:9, color:'rgba(255,255,255,0.2)', letterSpacing:'0.06em' }}>NEXUS v2.0</span>
+      {/* Top Bar */}
+      <header className="nav-bar" style={{ display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:16 }}>
+        <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+          <div style={{ width: 36, height: 36, background: '#0F172A', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🌑</div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ fontSize:14, fontWeight:800, color:'#0F172A', letterSpacing:'0.1em' }}>SHADOW OS</span>
+            <span style={{ fontSize:10, color:'#64748B', letterSpacing:'0.06em', fontWeight: 600 }}>NEXUS v2.0</span>
           </div>
-          <div style={{ display:'flex', alignItems:'center', gap:7, flexWrap:'wrap' }}>
-            {/* Live / Demo */}
-            <span style={{ fontSize:10, padding:'3px 10px', borderRadius:20, background:isDemo?'rgba(255,255,255,0.03)':'rgba(34,197,94,0.07)', border:`1px solid ${isDemo?'rgba(255,255,255,0.1)':'rgba(34,197,94,0.28)'}`, color:isDemo?'rgba(255,255,255,0.38)':GRN, display:'flex', alignItems:'center', gap:5, fontWeight:600 }}>
-              <span style={{ width:5, height:5, borderRadius:'50%', background:isDemo?'rgba(255,255,255,0.28)':GRN, boxShadow:isDemo?'none':`0 0 5px ${GRN}` }} />
-              {isDemo?'Demo Mode':'Live'}
-            </span>
-            {/* Solana */}
-            <span style={{ fontSize:10, padding:'3px 10px', borderRadius:20, background:'rgba(168,85,247,0.07)', border:'1px solid rgba(168,85,247,0.22)', color:PL, display:'flex', alignItems:'center', gap:5, fontWeight:600 }}>
-              <span style={{ width:5, height:5, borderRadius:'50%', background:P }} />Solana Devnet
-            </span>
-            {/* Health */}
-            <span style={{ fontSize:10, padding:'3px 10px', borderRadius:20, background:health==='ok'?'rgba(34,197,94,0.06)':'rgba(239,68,68,0.06)', border:`1px solid ${health==='ok'?'rgba(34,197,94,0.22)':'rgba(239,68,68,0.22)'}`, color:health==='ok'?GRN:RED, display:'flex', alignItems:'center', gap:5, fontWeight:600 }}>
-              <span style={{ width:5, height:5, borderRadius:'50%', background:health==='ok'?GRN:RED }} />
-              {health==='checking'?'Connecting…':health==='ok'?'API Online':'API Offline'}
-            </span>
-            {/* Stealth */}
-            <button onClick={()=>setStealth(s=>!s)} style={{ fontSize:10, padding:'3px 11px', borderRadius:20, cursor:'pointer', background:stealth?'rgba(239,68,68,0.1)':'rgba(255,255,255,0.04)', border:`1px solid ${stealth?'rgba(239,68,68,0.4)':'rgba(255,255,255,0.1)'}`, color:stealth?RED:'rgba(255,255,255,0.45)', fontWeight:600 }}>
-              {stealth?'🔴 STEALTH ON':'⚫ Stealth Off'}
-            </button>
-            {/* Wallet */}
-            <button onClick={connectWallet} style={{ fontSize:11, padding:'6px 14px', borderRadius:20, cursor:'pointer', background:wallet?'rgba(168,85,247,0.1)':'rgba(168,85,247,0.18)', border:`1px solid ${wallet?'rgba(168,85,247,0.38)':'rgba(168,85,247,0.55)'}`, color:PL, fontWeight:600, fontFamily:wallet?MONO:'inherit' }}>
-              {wallet ? shorten(wallet) : '🔗 Connect Phantom'}
-            </button>
-          </div>
-        </header>
+        </div>
+        <div style={{ display:'flex', alignItems:'center', gap:12, flexWrap:'wrap' }}>
+          {/* Live / Demo */}
+          <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:isDemo?'#F1F5F9':'#D1FAE5', border:`1px solid ${isDemo?'#E2E8F0':'#A7F3D0'}`, color:isDemo?'#64748B':'#10B981', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
+            <span style={{ width:6, height:6, borderRadius:'50%', background:isDemo?'#94A3B8':'#10B981', boxShadow:isDemo?'none':`0 0 6px #10B981` }} />
+            {isDemo?'Demo Mode':'Live'}
+          </span>
+          {/* Solana */}
+          <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:'#F8FAFC', border:'1px solid #E2E8F0', color:'#475569', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
+            <span style={{ width:6, height:6, borderRadius:'50%', background:'#64748B' }} />Solana Devnet
+          </span>
+          {/* Health */}
+          <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:health==='ok'?'#D1FAE5':'#FEE2E2', border:`1px solid ${health==='ok'?'#A7F3D0':'#FECACA'}`, color:health==='ok'?'#10B981':'#EF4444', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
+            <span style={{ width:6, height:6, borderRadius:'50%', background:health==='ok'?'#10B981':'#EF4444' }} />
+            {health==='checking'?'Connecting…':health==='ok'?'API Online':'API Offline'}
+          </span>
+          {/* Stealth */}
+          <button onClick={()=>setStealth(s=>!s)} style={{ fontSize:12, padding:'6px 16px', borderRadius:999, cursor:'pointer', background:stealth?'#FEF2F2':'#FFFFFF', border:`1px solid ${stealth?'#FECACA':'#E2E8F0'}`, color:stealth?'#EF4444':'#64748B', fontWeight:700, transition: 'all 0.2s' }} onMouseOver={e => !stealth && (e.currentTarget.style.background = '#F8FAFC')} onMouseOut={e => !stealth && (e.currentTarget.style.background = '#FFFFFF')}>
+            {stealth?'🔴 STEALTH ON':'⚫ Stealth Off'}
+          </button>
+          {/* Wallet */}
+          <button onClick={connectWallet} style={{ fontSize:13, padding:'8px 20px', borderRadius:999, cursor:'pointer', background:wallet?'#F1F5F9':'#0F172A', border:`1px solid ${wallet?'#E2E8F0':'#0F172A'}`, color:wallet?'#0F172A':'#FFFFFF', fontWeight:700, fontFamily:wallet?MONO:'inherit', transition: 'all 0.2s' }}>
+            {wallet ? shorten(wallet) : '🔗 Connect Phantom'}
+          </button>
+        </div>
+      </header>
 
-        {/* ── Hero ── */}
-        <section style={{ padding:'36px 0 26px' }}>
-          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', flexWrap:'wrap', gap:16 }}>
-            <div>
-              <p style={{ fontSize:10, fontWeight:700, color:P, letterSpacing:'0.14em', margin:'0 0 8px' }}>SHADOWLEDGER NEXUS</p>
-              <h1 style={{ fontSize:'clamp(24px,4vw,40px)', fontWeight:900, margin:'0 0 10px', lineHeight:1.15, background:`linear-gradient(135deg,#fff 20%,${PL} 80%)`, WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
-                Shadow OS — Autonomous Corporate AI
-              </h1>
-              <p style={{ fontSize:14, color:'rgba(255,255,255,0.48)', maxWidth:560, lineHeight:1.65, margin:0 }}>
-                Orchestrate 7 invisible AI departments across treasury, payroll, compliance, audit, procurement, tax and risk on Solana.
-              </p>
+      <main style={{ position: 'relative', zIndex: 1, maxWidth: 1400, margin: '0 auto', padding: '0 24px 60px' }}>
+        
+        {/* Hero */}
+        <section className="hero-section" style={{ textAlign: 'center', padding: '60px 20px 40px', position: 'relative', zIndex: 10 }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 16px', background: '#FFFFFF', borderRadius: 999, border: '1px solid #E2E8F0', marginBottom: 24, boxShadow: '0 4px 12px rgba(100, 116, 139, 0.05)' }}>
+              <span style={{ fontSize: 12, fontWeight: 800, color: '#64748B', letterSpacing: '0.1em' }}>SHADOWLEDGER NEXUS</span>
             </div>
-            <div style={{ display:'flex', gap:10, flexWrap:'wrap' }}>
-              <button onClick={()=>setOrgOpen(o=>!o)} style={{ background:`linear-gradient(135deg,${P},#7C3AED)`, color:'#fff', border:'none', borderRadius:8, padding:'10px 20px', fontSize:13, fontWeight:700, cursor:'pointer' }}>
+            <h1 style={{ fontSize: 'clamp(40px, 6vw, 64px)', fontWeight: 900, color: '#0F172A', margin: '0 auto 24px', lineHeight: 1.1, maxWidth: 900, letterSpacing: '-0.02em' }}>
+              Autonomous Corporate AI <br/>
+              <span style={{ color: '#64748B' }}>on Solana.</span>
+            </h1>
+            <p style={{ fontSize: 18, color: '#475569', maxWidth: 640, margin: '0 auto 40px', lineHeight: 1.6 }}>
+              Orchestrate 7 invisible AI departments across treasury, payroll, compliance, audit, procurement, tax and risk.
+            </p>
+            
+            <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button onClick={()=>setOrgOpen(o=>!o)} className="btn-primary">
                 {orgOpen ? '✕ Close Setup' : '⚙ Setup Organization'}
               </button>
-              <button onClick={()=>loadData(wallet||undefined)} disabled={loading} style={{ background:'rgba(255,255,255,0.05)', color:'rgba(255,255,255,0.65)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:8, padding:'10px 20px', fontSize:13, fontWeight:600, cursor:loading?'not-allowed':'pointer' }}>
-                {loading ? '⟳ Loading…' : '↻ Refresh'}
+              <button onClick={()=>loadData(wallet||undefined)} disabled={loading} className="btn-secondary">
+                {loading ? '⟳ Loading…' : '↻ Refresh Status'}
               </button>
             </div>
-          </div>
+          </motion.div>
         </section>
 
-        {/* ── Alerts ── */}
-        {error && <div style={{ background:'rgba(239,68,68,0.07)', border:'1px solid rgba(239,68,68,0.25)', borderRadius:10, padding:'12px 16px', marginBottom:16, fontSize:13, color:RED }}>❌ {error}</div>}
-        {message && <div style={{ background:'rgba(34,197,94,0.07)', border:'1px solid rgba(34,197,94,0.25)', borderRadius:10, padding:'12px 16px', marginBottom:16, fontSize:13, color:GRN }}>✅ {message}</div>}
-        {!wallet && <div style={{ background:'rgba(168,85,247,0.05)', border:'1px solid rgba(168,85,247,0.18)', borderRadius:10, padding:'11px 16px', marginBottom:16, fontSize:13, color:PL }}>🔗 Connect Phantom to enable agent triggers and org management.</div>}
+        {/* Alerts */}
+        {error && <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ background:'#FEF2F2', border:'1px solid #FECACA', borderRadius:12, padding:'16px 20px', marginBottom:24, fontSize:14, fontWeight: 600, color:'#EF4444' }}>❌ {error}</motion.div>}
+        {message && <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ background:'#F0FDF4', border:'1px solid #BBF7D0', borderRadius:12, padding:'16px 20px', marginBottom:24, fontSize:14, fontWeight: 600, color:'#10B981' }}>✅ {message}</motion.div>}
+        {!wallet && <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ background:'#F8FAFC', border:'1px solid #E2E8F0', borderRadius:12, padding:'16px 20px', marginBottom:24, fontSize:14, fontWeight: 600, color:'#64748B', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span>🔗</span> Connect Phantom to enable agent triggers and org management.
+        </motion.div>}
 
-        {/* ── Stats Strip ── */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(175px,1fr))', gap:12, marginBottom:24 }}>
+        {/* Stats Strip */}
+        <div className="bento-grid" style={{ marginBottom: 40 }}>
           {[
-            { label:'Treasury Balance',   value: stealth?'●●●●●':'12,480.50 SOL', icon:'💰', color:GOLD },
-            { label:'Active Agents',       value:`${agents.filter(a=>(a.status||'active')==='active').length||6} / 7`,         icon:'🤖', color:GRN },
-            { label:'SOL Streamed Today',  value: stealth?'●●●●●':`${streamed.toFixed(4)} SOL`, icon:'💸', color:PL },
-            { label:'Threat Level',        value:'2 / 10 — LOW',                                icon:'🛡', color:GRN },
-          ].map(s=>(
-            <div key={s.label} style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:12, padding:'13px 15px', display:'flex', alignItems:'center', gap:12 }}>
-              <span style={{ fontSize:22 }}>{s.icon}</span>
-              <div>
-                <p style={{ fontSize:9, color:'rgba(255,255,255,0.32)', margin:'0 0 3px', textTransform:'uppercase', letterSpacing:'0.05em' }}>{s.label}</p>
-                <p style={{ fontSize:14, fontWeight:700, color:s.color, margin:0, fontFamily:MONO }}>{s.value}</p>
+            { label:'Treasury Balance',   value: stealth?'●●●●●':'12,480.50 SOL', icon:'💰', color:'#EAB308', bg:'#FEF9C3' },
+            { label:'Active Agents',       value:`${agents.filter(a=>(a.status||'active')==='active').length||6} / 7`,         icon:'🤖', color:'#10B981', bg:'#D1FAE5' },
+            { label:'SOL Streamed Today',  value: stealth?'●●●●●':`${streamed.toFixed(4)} SOL`, icon:'💸', color:'#3B82F6', bg:'#DBEAFE' },
+            { label:'Threat Level',        value:'2 / 10 — LOW',                                icon:'🛡', color:'#10B981', bg:'#D1FAE5' },
+          ].map((s, i) => (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              key={s.label} 
+              className="glass-card" 
+              style={{ padding: '24px', display: 'flex', alignItems: 'center', gap: 16 }}
+            >
+              <div style={{ background: s.bg, width: 56, height: 56, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28 }}>
+                {s.icon}
               </div>
-            </div>
+              <div>
+                <p style={{ fontSize: 12, color: '#64748B', margin: '0 0 4px', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>{s.label}</p>
+                <p style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', margin: 0, fontFamily: MONO }}>{s.value}</p>
+              </div>
+            </motion.div>
           ))}
         </div>
 
-        {/* ── Org Setup (collapsible) ── */}
+        {/* Org Setup */}
         {orgOpen && (
-          <div style={{ background:'rgba(168,85,247,0.04)', border:'1px solid rgba(168,85,247,0.18)', borderRadius:14, padding:'20px 22px', marginBottom:22 }}>
-            <p style={{ fontSize:13, fontWeight:700, color:PL, margin:'0 0 16px' }}>⚙ Organization Setup</p>
-            <form onSubmit={setupOrg} style={{ display:'grid', gridTemplateColumns:'1fr 1fr auto', gap:12, alignItems:'end' }}>
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="glass-card" style={{ padding:'32px', marginBottom:40, borderTop: '4px solid #64748B' }}>
+            <p style={{ fontSize:18, fontWeight:800, color:'#0F172A', margin:'0 0 24px' }}>⚙ Organization Setup</p>
+            <form onSubmit={setupOrg} style={{ display:'grid', gridTemplateColumns:'1fr 1fr auto', gap:24, alignItems:'end' }}>
               <div>
-                <label style={{ display:'block', fontSize:10, color:'rgba(255,255,255,0.38)', marginBottom:6, letterSpacing:'0.05em' }}>ORGANIZATION NAME</label>
-                <input value={orgName} onChange={e=>setOrgName(e.target.value)} placeholder="Shadow DAO" style={{ width:'100%', padding:'10px 12px', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(168,85,247,0.28)', borderRadius:8, color:'#fff', fontSize:13, boxSizing:'border-box', outline:'none' }} />
+                <label style={{ display:'block', fontSize:12, fontWeight: 700, color:'#64748B', marginBottom:8, letterSpacing:'0.05em' }}>ORGANIZATION NAME</label>
+                <input value={orgName} onChange={e=>setOrgName(e.target.value)} placeholder="Shadow DAO" style={{ width:'100%', padding:'14px 16px', background:'#F8FAFC', border:'1px solid #E2E8F0', borderRadius:12, color:'#0F172A', fontSize:14, fontWeight: 500, boxSizing:'border-box', outline:'none', transition: 'border-color 0.2s' }} onFocus={e => e.target.style.borderColor = '#64748B'} onBlur={e => e.target.style.borderColor = '#E2E8F0'} />
               </div>
               <div>
-                <label style={{ display:'block', fontSize:10, color:'rgba(255,255,255,0.38)', marginBottom:6, letterSpacing:'0.05em' }}>ADMIN WALLET (SOLANA)</label>
-                <input value={admin} onChange={e=>setAdmin(e.target.value)} placeholder="Solana public key" style={{ width:'100%', padding:'10px 12px', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(168,85,247,0.28)', borderRadius:8, color:'#fff', fontSize:13, fontFamily:MONO, boxSizing:'border-box', outline:'none' }} />
+                <label style={{ display:'block', fontSize:12, fontWeight: 700, color:'#64748B', marginBottom:8, letterSpacing:'0.05em' }}>ADMIN WALLET (SOLANA)</label>
+                <input value={admin} onChange={e=>setAdmin(e.target.value)} placeholder="Solana public key" style={{ width:'100%', padding:'14px 16px', background:'#F8FAFC', border:'1px solid #E2E8F0', borderRadius:12, color:'#0F172A', fontSize:14, fontWeight: 500, fontFamily:MONO, boxSizing:'border-box', outline:'none', transition: 'border-color 0.2s' }} onFocus={e => e.target.style.borderColor = '#64748B'} onBlur={e => e.target.style.borderColor = '#E2E8F0'} />
               </div>
-              <button type="submit" disabled={loading} style={{ background:`linear-gradient(135deg,${P},#7C3AED)`, color:'#fff', border:'none', borderRadius:8, padding:'10px 20px', fontSize:13, fontWeight:700, cursor:loading?'not-allowed':'pointer', whiteSpace:'nowrap' }}>
-                {loading?'⟳ Saving…':'💾 Save'}
+              <button type="submit" disabled={loading} style={{ background:'#0F172A', color:'#fff', border:'none', borderRadius:12, padding:'14px 32px', fontSize:14, fontWeight:700, cursor:loading?'not-allowed':'pointer', whiteSpace:'nowrap', transition: 'background 0.2s' }} onMouseOver={e => e.currentTarget.style.background = '#1E293B'} onMouseOut={e => e.currentTarget.style.background = '#0F172A'}>
+                {loading?'⟳ Saving…':'💾 Save Configuration'}
               </button>
             </form>
-          </div>
+          </motion.div>
         )}
 
-        {/* ── Treasury + Activity ── */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))', gap:16, marginBottom:22 }}>
-
+        {/* Treasury + Activity */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 24, marginBottom: 40 }}>
           {/* Treasury */}
-          <div style={{ background:'rgba(245,197,24,0.04)', border:'1px solid rgba(245,197,24,0.18)', borderRadius:14, padding:'20px 22px' }}>
-            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:16 }}>
-              <p style={{ fontSize:13, fontWeight:700, color:GOLD, margin:0 }}>💰 Treasury Overview</p>
-              <span style={{ fontSize:9, color:'rgba(255,255,255,0.28)', fontFamily:MONO }}>CFO AGENT MANAGED</span>
+          <div className="glass-card" style={{ padding: '32px' }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: 24 }}>
+              <p style={{ fontSize:18, fontWeight:800, color:'#0F172A', margin:0 }}>💰 Treasury Overview</p>
+              <span style={{ fontSize:11, color:'#64748B', fontFamily:MONO, background: '#F1F5F9', padding: '4px 12px', borderRadius: 999 }}>CFO AGENT MANAGED</span>
             </div>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:14 }}>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom: 24 }}>
               {[
-                { label:'24h Inflow',      value:'+420.00 SOL', color:GRN  },
-                { label:'24h Outflow',     value:'-180.00 SOL', color:RED  },
-                { label:'Reserve Pool',    value:'4,992.20 SOL', color:GOLD },
-                { label:'Operations Pool', value:'7,488.30 SOL', color:BLU  },
+                { label:'24h Inflow',      value:'+420.00 SOL', color:'#10B981', bg:'#D1FAE5'  },
+                { label:'24h Outflow',     value:'-180.00 SOL', color:'#EF4444', bg:'#FEE2E2'  },
+                { label:'Reserve Pool',    value:'4,992.20 SOL', color:'#EAB308', bg:'#FEF9C3' },
+                { label:'Operations Pool', value:'7,488.30 SOL', color:'#3B82F6', bg:'#DBEAFE'  },
               ].map(m=>(
-                <div key={m.label} style={{ background:'rgba(0,0,0,0.22)', borderRadius:8, padding:'9px 12px' }}>
-                  <p style={{ fontSize:9, color:'rgba(255,255,255,0.32)', margin:'0 0 3px', textTransform:'uppercase', letterSpacing:'0.04em' }}>{m.label}</p>
-                  <p style={{ fontSize:15, fontWeight:700, color:m.color, margin:0, fontFamily:MONO }}>{stealth?'●●●●●':m.value}</p>
+                <div key={m.label} style={{ background:'#F8FAFC', border: '1px solid #E2E8F0', borderRadius:16, padding:'16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: m.color }} />
+                    <p style={{ fontSize:11, color:'#64748B', margin:0, textTransform:'uppercase', letterSpacing:'0.04em', fontWeight: 600 }}>{m.label}</p>
+                  </div>
+                  <p style={{ fontSize:20, fontWeight:800, color: '#0F172A', margin:0, fontFamily:MONO }}>{stealth?'●●●●●':m.value}</p>
                 </div>
               ))}
             </div>
-            <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:14 }}>
-              <div style={{ flex:1, height:5, borderRadius:3, background:'rgba(255,255,255,0.07)', overflow:'hidden' }}>
-                <div style={{ width:'60%', height:'100%', borderRadius:3, background:`linear-gradient(90deg,${GOLD},${ORG})` }} />
+            <div style={{ display:'flex', alignItems:'center', gap:16, marginBottom: 24 }}>
+              <div style={{ flex:1, height:8, borderRadius:4, background:'#E2E8F0', overflow:'hidden' }}>
+                <motion.div initial={{ width: 0 }} animate={{ width: '60%' }} transition={{ duration: 1 }} style={{ height:'100%', borderRadius:4, background:`linear-gradient(90deg, #EAB308, #F97316)` }} />
               </div>
-              <span style={{ fontSize:10, color:'rgba(255,255,255,0.35)', whiteSpace:'nowrap' }}>60% Ops / 40% Reserve</span>
+              <span style={{ fontSize:12, fontWeight: 600, color:'#64748B', whiteSpace:'nowrap' }}>60% Ops / 40% Reserve</span>
             </div>
             {/* Payroll streams */}
-            <div style={{ padding:'11px 13px', background:'rgba(34,197,94,0.05)', border:'1px solid rgba(34,197,94,0.18)', borderRadius:8 }}>
-              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:6 }}>
-                <p style={{ fontSize:11, fontWeight:700, color:GRN, margin:0 }}>💸 Active Payroll Streams</p>
-                <span style={{ fontSize:10, color:GRN, fontFamily:MONO }}>{stealth?'●●● SOL/s':`${RATE} SOL/s total`}</span>
+            <div style={{ padding:'20px', background:'#F8FAFC', border:'1px solid #E2E8F0', borderRadius:16 }}>
+              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:12 }}>
+                <p style={{ fontSize:14, fontWeight:700, color:'#0F172A', margin:0 }}>💸 Active Payroll Streams</p>
+                <span style={{ fontSize:13, color:'#10B981', fontFamily:MONO, fontWeight: 700 }}>{stealth?'●●● SOL/s':`${RATE} SOL/s total`}</span>
               </div>
               {[{ r:'Dev Team', v:'0.00023 SOL/s' },{ r:'Marketing', v:'0.00011 SOL/s' }].map(s=>(
-                <div key={s.r} style={{ display:'flex', justifyContent:'space-between', fontSize:11, color:'rgba(255,255,255,0.45)', marginTop:3 }}>
+                <div key={s.r} style={{ display:'flex', justifyContent:'space-between', fontSize:13, color:'#64748B', marginTop:8, fontWeight: 500 }}>
                   <span>{s.r}</span>
-                  <span style={{ fontFamily:MONO }}>{stealth?'●●●':s.v}</span>
+                  <span style={{ fontFamily:MONO, color: '#0F172A' }}>{stealth?'●●●':s.v}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Activity Feed */}
-          <div style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, padding:'20px 22px', display:'flex', flexDirection:'column' }}>
-            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14 }}>
-              <p style={{ fontSize:13, fontWeight:700, color:PL, margin:0 }}>📡 Global Activity Feed</p>
-              {isDemo && <span style={{ fontSize:9, color:GRN, fontFamily:MONO, display:'flex', alignItems:'center', gap:4 }}><span style={{ width:5, height:5, borderRadius:'50%', background:GRN, boxShadow:`0 0 4px ${GRN}`, display:'inline-block' }} />LIVE SIM</span>}
+          {/* Activity */}
+          <div className="glass-card" style={{ padding:'32px', display:'flex', flexDirection:'column', height: '100%' }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:24 }}>
+              <p style={{ fontSize:18, fontWeight:800, color:'#0F172A', margin:0 }}>📡 Global Activity Feed</p>
+              {isDemo && <span style={{ fontSize:11, color:'#10B981', fontFamily:MONO, fontWeight: 600, display:'flex', alignItems:'center', gap:6, background: '#D1FAE5', padding: '4px 12px', borderRadius: 999 }}>
+                <span style={{ width:6, height:6, borderRadius:'50%', background:'#10B981', boxShadow:`0 0 6px #10B981`, display:'inline-block' }} />LIVE SIM
+              </span>}
             </div>
-            <div ref={feedRef} style={{ flex:1, overflowY:'auto', display:'flex', flexDirection:'column', gap:7, maxHeight:340 }}>
+            <div ref={feedRef} style={{ flex:1, overflowY:'auto', display:'flex', flexDirection:'column', gap:12, maxHeight: 420, paddingRight: 8 }}>
               {activity.length === 0
-                ? <div style={{ textAlign:'center', padding:'32px 0' }}><p style={{ fontSize:28, margin:'0 0 8px' }}>📡</p><p style={{ fontSize:13, color:'rgba(255,255,255,0.38)', margin:0 }}>No activity yet.</p></div>
-                : activity.map((item, i)=>(
-                  <div key={item.id||i} style={{ padding:'8px 10px', background:i===0?'rgba(168,85,247,0.06)':'rgba(255,255,255,0.018)', border:`1px solid ${i===0?'rgba(168,85,247,0.14)':'rgba(255,255,255,0.04)'}`, borderRadius:8 }}>
-                    <div style={{ display:'flex', justifyContent:'space-between', marginBottom:2 }}>
-                      <span style={{ fontSize:10, fontWeight:700, color:PL }}>{item.agentType}</span>
-                      <span style={{ fontSize:9, color:'rgba(255,255,255,0.22)', fontFamily:MONO }}>{item.timestamp}</span>
-                    </div>
-                    <p style={{ fontSize:11, color:stealth?'rgba(255,255,255,0.18)':'rgba(255,255,255,0.62)', margin:0, lineHeight:1.45 }}>
-                      {stealth?'■■■■ ■■■■■■ ■■■ ■■■■■■■':item.action}
-                    </p>
-                  </div>
-                ))
+                ? <div style={{ textAlign:'center', padding:'40px 0' }}><p style={{ fontSize:32, margin:'0 0 12px' }}>📡</p><p style={{ fontSize:14, color:'#64748B', margin:0 }}>No activity yet.</p></div>
+                : <AnimatePresence>
+                    {activity.map((item, i)=>(
+                      <motion.div 
+                        key={item.id||i} 
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        style={{ padding:'16px', background: i===0?'#F1F5F9':'#FFFFFF', border:`1px solid ${i===0?'#CBD5E1':'#E2E8F0'}`, borderRadius:12 }}
+                      >
+                        <div style={{ display:'flex', justifyContent:'space-between', marginBottom:6 }}>
+                          <span style={{ fontSize:12, fontWeight:700, color: i===0?'#0F172A':'#64748B' }}>{item.agentType}</span>
+                          <span style={{ fontSize:11, color:'#94A3B8', fontFamily:MONO }}>{item.timestamp}</span>
+                        </div>
+                        <p style={{ fontSize:13, color:stealth?'#CBD5E1':'#334155', margin:0, lineHeight:1.5, fontWeight: 500 }}>
+                          {stealth?'■■■■ ■■■■■■ ■■■ ■■■■■■■':item.action}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
               }
             </div>
           </div>
         </div>
 
-        {/* ── Agent Grid ── */}
-        <section style={{ marginBottom:24 }}>
-          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14 }}>
-            <p style={{ fontSize:10, fontWeight:700, color:'rgba(255,255,255,0.28)', margin:0, letterSpacing:'0.1em' }}>AI DEPARTMENT GRID — 7 AUTONOMOUS AGENTS</p>
-            {!wallet && !isDemo && <p style={{ fontSize:10, color:'rgba(255,255,255,0.28)', margin:0 }}>Connect wallet to enable triggers</p>}
+        {/* Agent Grid */}
+        <section style={{ marginBottom:40 }}>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:24 }}>
+            <h2 style={{ fontSize: 24, fontWeight: 800, color: '#0F172A', margin: 0 }}>AI Department Grid</h2>
+            {!wallet && !isDemo && <p style={{ fontSize:13, color:'#64748B', margin:0, fontWeight: 500 }}>Connect wallet to enable triggers</p>}
           </div>
           {loading
-            ? <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(240px,1fr))', gap:14 }}>
-                {DEPTS.map(d=><div key={d.type} style={{ background:CARD, border:`1px solid ${BORDER}`, borderRadius:14, height:190, animation:'pulse 1.5s ease-in-out infinite' }} />)}
+            ? <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:24 }}>
+                {DEPTS.map(d=><div key={d.type} className="glass-card" style={{ height:260, animation:'pulse 1.5s ease-in-out infinite', background: '#F1F5F9' }} />)}
               </div>
-            : <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(240px,1fr))', gap:14 }}>
+            : <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:24 }}>
                 {DEPTS.map(dept=>{
                   const key = dept.type.toLowerCase()
                   const agent = byType.get(key) || byType.get(dept.name.toLowerCase().replace(' agent',''))
@@ -501,85 +538,201 @@ export default function ShadowPage() {
           }
         </section>
 
-        {/* ── Simulation + Stealth ── */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:16 }}>
-
+        {/* Simulation + Stealth */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(400px,1fr))', gap:24, marginBottom: 40 }}>
           {/* Simulation */}
-          <div style={{ background:'rgba(96,165,250,0.04)', border:'1px solid rgba(96,165,250,0.18)', borderRadius:14, padding:'20px 22px' }}>
-            <p style={{ fontSize:13, fontWeight:700, color:BLU, margin:'0 0 18px' }}>📊 Treasury Simulation</p>
-            <div style={{ display:'flex', flexDirection:'column', gap:14, marginBottom:20 }}>
+          <div className="glass-card" style={{ padding:'32px' }}>
+            <p style={{ fontSize:18, fontWeight:800, color:'#0F172A', margin:'0 0 24px' }}>📊 Treasury Simulation</p>
+            <div style={{ display:'flex', flexDirection:'column', gap:20, marginBottom:32 }}>
               {[
                 { label:'Treasury Size (SOL)', min:1000, max:100000, step:500, val:simT, set:setSimT },
                 { label:'Monthly Burn (SOL)',   min:10,   max:5000,  step:10,  val:simB, set:setSimB },
                 { label:'Payroll Recipients',   min:1,    max:50,    step:1,   val:simR, set:setSimR },
               ].map(s=>(
                 <div key={s.label}>
-                  <div style={{ display:'flex', justifyContent:'space-between', marginBottom:5 }}>
-                    <label style={{ fontSize:10, color:'rgba(255,255,255,0.38)', letterSpacing:'0.04em' }}>{s.label}</label>
-                    <span style={{ fontSize:11, color:BLU, fontFamily:MONO, fontWeight:700 }}>{s.val}</span>
+                  <div style={{ display:'flex', justifyContent:'space-between', marginBottom:8 }}>
+                    <label style={{ fontSize:12, fontWeight: 600, color:'#64748B', letterSpacing:'0.02em' }}>{s.label}</label>
+                    <span style={{ fontSize:13, color:'#0F172A', fontFamily:MONO, fontWeight:700 }}>{s.val.toLocaleString()}</span>
                   </div>
-                  <input type="range" min={s.min} max={s.max} step={s.step} value={s.val} onChange={e=>s.set(Number(e.target.value))} style={{ width:'100%', accentColor:BLU }} />
+                  <input type="range" min={s.min} max={s.max} step={s.step} value={s.val} onChange={e=>s.set(Number(e.target.value))} style={{ width:'100%', accentColor: '#64748B' }} />
                 </div>
               ))}
             </div>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:10, marginBottom:14 }}>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:16, marginBottom:24 }}>
               {[
-                { label:'Runway',       value:`${runway} mo`,          color:runway>12?GRN:runway>6?ORG:RED },
-                { label:'Risk Score',   value:`${riskPct}/100`,        color:riskPct<30?GRN:riskPct<60?ORG:RED },
-                { label:'Q4 Forecast',  value:q4>0?`${Math.round(q4)}`:'DEFICIT', color:q4>0?GRN:RED },
+                { label:'Runway',       value:`${runway} mo`,          color:runway>12?'#10B981':runway>6?'#F59E0B':'#EF4444' },
+                { label:'Risk Score',   value:`${riskPct}/100`,        color:riskPct<30?'#10B981':riskPct<60?'#F59E0B':'#EF4444' },
+                { label:'Q4 Forecast',  value:q4>0?`${Math.round(q4).toLocaleString()}`:'DEFICIT', color:q4>0?'#10B981':'#EF4444' },
               ].map(m=>(
-                <div key={m.label} style={{ background:'rgba(0,0,0,0.28)', borderRadius:10, padding:'12px 10px', textAlign:'center' }}>
-                  <p style={{ fontSize:9, color:'rgba(255,255,255,0.32)', margin:'0 0 5px', textTransform:'uppercase', letterSpacing:'0.04em' }}>{m.label}</p>
-                  <p style={{ fontSize:18, fontWeight:800, color:m.color, margin:0, fontFamily:MONO }}>{m.value}</p>
+                <div key={m.label} style={{ background:'#F8FAFC', border: '1px solid #E2E8F0', borderRadius:16, padding:'16px 12px', textAlign:'center' }}>
+                  <p style={{ fontSize:11, color:'#64748B', margin:'0 0 8px', textTransform:'uppercase', letterSpacing:'0.04em', fontWeight: 600 }}>{m.label}</p>
+                  <p style={{ fontSize:20, fontWeight:800, color:m.color, margin:0, fontFamily:MONO }}>{m.value}</p>
                 </div>
               ))}
             </div>
             <div>
-              <div style={{ display:'flex', justifyContent:'space-between', fontSize:9, color:'rgba(255,255,255,0.28)', marginBottom:4 }}><span>LOW RISK</span><span>HIGH RISK</span></div>
-              <div style={{ height:5, borderRadius:3, background:'rgba(255,255,255,0.07)', overflow:'hidden' }}>
-                <div style={{ width:`${riskPct}%`, height:'100%', borderRadius:3, background:`linear-gradient(90deg,${GRN},${ORG},${RED})`, transition:'width 0.4s' }} />
+              <div style={{ display:'flex', justifyContent:'space-between', fontSize:11, fontWeight: 700, color:'#94A3B8', marginBottom:8 }}><span>LOW RISK</span><span>HIGH RISK</span></div>
+              <div style={{ height:8, borderRadius:4, background:'#E2E8F0', overflow:'hidden' }}>
+                <div style={{ width:`${riskPct}%`, height:'100%', borderRadius:4, background:`linear-gradient(90deg, #10B981, #F59E0B, #EF4444)`, transition:'width 0.4s' }} />
               </div>
             </div>
           </div>
 
           {/* Stealth Card */}
-          <div style={{ background:stealth?'rgba(239,68,68,0.07)':'rgba(255,255,255,0.02)', border:`1px solid ${stealth?'rgba(239,68,68,0.32)':BORDER}`, borderRadius:14, padding:'20px 22px', display:'flex', flexDirection:'column', gap:14 }}>
+          <div className="glass-card" style={{ padding:'32px', display:'flex', flexDirection:'column', gap:20, border: stealth ? '2px solid #EF4444' : '1px solid rgba(255, 255, 255, 0.6)' }}>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-              <p style={{ fontSize:13, fontWeight:700, color:stealth?RED:'rgba(255,255,255,0.55)', margin:0 }}>🕵️ Stealth Mode</p>
-              {stealth && <span style={{ fontSize:9, color:RED, fontFamily:MONO, fontWeight:700, letterSpacing:'0.1em' }}>● ACTIVE</span>}
+              <p style={{ fontSize:18, fontWeight:800, color:stealth?'#EF4444':'#0F172A', margin:0 }}>🕵️ Stealth Mode</p>
+              {stealth && <span style={{ fontSize:11, color:'#EF4444', fontFamily:MONO, fontWeight:700, letterSpacing:'0.1em', background: '#FEE2E2', padding: '4px 12px', borderRadius: 999 }}>● ACTIVE</span>}
             </div>
-            <p style={{ fontSize:12, color:'rgba(255,255,255,0.38)', margin:0, lineHeight:1.6 }}>When active, financial amounts, wallet addresses and agent activity are masked — ideal for screen sharing or public demos.</p>
-            <div style={{ display:'flex', flexDirection:'column', gap:7 }}>
+            <p style={{ fontSize:14, color:'#475569', margin:0, lineHeight:1.6, fontWeight: 500 }}>When active, financial amounts, wallet addresses and agent activity are masked — ideal for screen sharing or public demos.</p>
+            <div style={{ display:'flex', flexDirection:'column', gap:12, flex: 1 }}>
               {['Mask wallet addresses','Redact treasury balances','Redact activity logs','Blur agent metrics'].map(item=>(
-                <div key={item} style={{ display:'flex', alignItems:'center', gap:8, fontSize:11, color:stealth?'rgba(255,255,255,0.65)':'rgba(255,255,255,0.32)' }}>
-                  <span style={{ width:5, height:5, borderRadius:'50%', background:stealth?RED:'rgba(255,255,255,0.14)', flexShrink:0 }} />{item}
+                <div key={item} style={{ display:'flex', alignItems:'center', gap:12, fontSize:13, fontWeight: 600, color:stealth?'#0F172A':'#64748B' }}>
+                  <span style={{ width:8, height:8, borderRadius:'50%', background:stealth?'#EF4444':'#CBD5E1', flexShrink:0 }} />{item}
                 </div>
               ))}
             </div>
-            <button onClick={()=>setStealth(s=>!s)} style={{ background:stealth?RED:'rgba(168,85,247,0.14)', color:stealth?'#fff':PL, border:`1px solid ${stealth?RED:'rgba(168,85,247,0.32)'}`, borderRadius:8, padding:'10px 0', fontSize:12, fontWeight:700, cursor:'pointer', width:'100%' }}>
+            
+            <button onClick={()=>setStealth(s=>!s)} style={{ background:stealth?'#EF4444':'#F8FAFC', color:stealth?'#fff':'#0F172A', border:stealth?'none':'1px solid #E2E8F0', borderRadius:12, padding:'14px 0', fontSize:14, fontWeight:700, cursor:'pointer', width:'100%', transition: 'all 0.2s', boxShadow: stealth ? '0 4px 12px rgba(239, 68, 68, 0.25)' : 'none' }}>
               {stealth?'🔴 Disable Stealth Mode':'⚫ Enable Stealth Mode'}
             </button>
 
             {/* Compliance quick summary */}
-            <div style={{ padding:'12px 14px', background:'rgba(34,197,94,0.05)', border:'1px solid rgba(34,197,94,0.16)', borderRadius:10 }}>
-              <p style={{ fontSize:11, fontWeight:700, color:GRN, margin:'0 0 8px' }}>⚖️ Compliance Summary</p>
+            <div style={{ padding:'20px', background:'#F8FAFC', border:'1px solid #E2E8F0', borderRadius:16, marginTop: 8 }}>
+              <p style={{ fontSize:13, fontWeight:800, color:'#10B981', margin:'0 0 12px' }}>⚖️ Compliance Summary</p>
               {[{ k:'AML Rules', v:'347 / 347 passed' },{ k:'KYC Flags', v:'0 active' },{ k:'Last Sweep', v:'2m ago' }].map(r=>(
-                <div key={r.k} style={{ display:'flex', justifyContent:'space-between', fontSize:11, color:'rgba(255,255,255,0.48)', marginTop:4 }}>
-                  <span>{r.k}</span><span style={{ fontFamily:MONO, color:'rgba(255,255,255,0.65)' }}>{r.v}</span>
+                <div key={r.k} style={{ display:'flex', justifyContent:'space-between', fontSize:13, color:'#64748B', marginTop:8, fontWeight: 600 }}>
+                  <span>{r.k}</span><span style={{ fontFamily:MONO, color:'#0F172A' }}>{r.v}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-      </div>
+      </main>
 
       <ExecutiveWalkthrough />
       <CommandPalette />
 
       <style>{`
+        .shadow-container {
+          background-color: #F8FAFC;
+          background-image: radial-gradient(at 0% 0%, #F1F5F9 0px, transparent 50%),
+                            radial-gradient(at 100% 0%, #E2E8F0 0px, transparent 50%);
+          color: #0F172A;
+          font-family: 'Inter', system-ui, sans-serif;
+          min-height: 100vh;
+          position: relative;
+          overflow-x: hidden;
+          width: 100%;
+        }
+
+        .dot-grid-overlay {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, #CBD5E1 1px, transparent 1px);
+          background-size: 32px 32px;
+          opacity: 0.4;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .floating-container {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 0;
+          overflow: hidden;
+        }
+
+        .float-shape {
+          position: absolute;
+          background: linear-gradient(135deg, rgba(100,116,139,0.1), rgba(100,116,139,0.02));
+          border-radius: 50%;
+          animation: drift linear infinite;
+          backdrop-filter: blur(8px);
+        }
+
+        @keyframes drift {
+          0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+          33% { transform: translateY(-40px) translateX(20px) rotate(120deg); }
+          66% { transform: translateY(20px) translateX(-30px) rotate(240deg); }
+          100% { transform: translateY(0px) translateX(0px) rotate(360deg); }
+        }
+
+        .glass-card {
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          border-radius: 24px;
+          box-shadow: 0 8px 32px rgba(100, 116, 139, 0.08);
+        }
+
+        .nav-bar {
+          background: rgba(248, 250, 252, 0.8);
+          backdrop-filter: blur(16px);
+          border-bottom: 1px solid rgba(100, 116, 139, 0.1);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          padding: 16px 40px;
+        }
+
+        .bento-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+          .bento-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        @media (max-width: 640px) {
+          .bento-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .btn-primary {
+          background-color: #0F172A;
+          color: #FFFFFF;
+          border: none;
+          padding: 14px 32px;
+          border-radius: 9999px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+        .btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+          background-color: #1E293B;
+        }
+
+        .btn-secondary {
+          background-color: #FFFFFF;
+          color: #0F172A;
+          border: 1px solid #E2E8F0;
+          padding: 14px 32px;
+          border-radius: 9999px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .btn-secondary:hover {
+          transform: translateY(-2px);
+          background-color: #F8FAFC;
+          border-color: #CBD5E1;
+        }
+
         @keyframes spin { to { transform:rotate(360deg); } }
-        @keyframes pulse { 0%,100% { opacity:0.35; } 50% { opacity:0.6; } }
+        @keyframes pulse { 0%,100% { opacity:0.6; } 50% { opacity:1; } }
       `}</style>
     </div>
   )

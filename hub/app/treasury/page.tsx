@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
@@ -8,42 +8,34 @@ import { loadWallet, persistWallet } from '@/lib/wallet-utils'
 
 type PhantomProvider = { isPhantom?: boolean; connect: () => Promise<{ publicKey: { toString: () => string } }> }
 
-const TEAL = '#00E5CC'
-const BG = '#06060e'
-const MONO = '"JetBrains Mono","Fira Code",monospace'
-
 const FEATURES = [
   {
     icon: '🤖',
     title: 'AI Payment Routing',
     desc: '7 specialized AI agents optimize every transaction for cost, speed, and privacy.',
     detail: 'Automatic multi-hop routing, slippage protection, 23% avg gas savings',
-    color: '#A855F7',
-    gradient: 'rgba(168,85,247,0.08)',
+    color: '#10B981',
   },
   {
     icon: '💼',
     title: 'Treasury Management',
     desc: 'Real-time portfolio view across all blockchains and wallets.',
     detail: 'Asset allocation, yield tracking, risk analysis, predictive simulations',
-    color: '#00E5CC',
-    gradient: 'rgba(0,229,204,0.08)',
+    color: '#059669',
   },
   {
     icon: '🔄',
     title: 'Seamless Swaps',
     desc: 'Multi-chain DEX integration with intelligent route optimization.',
     detail: 'Raydium, Jupiter, Orca, Uniswap — instant price quotes',
-    color: '#60A5FA',
-    gradient: 'rgba(96,165,250,0.08)',
+    color: '#34D399',
   },
   {
     icon: '⚡',
     title: 'Automated Payments',
     desc: 'Recurring payments, payroll, and scheduled transfers on autopilot.',
     detail: 'Daily/weekly/monthly schedules, batch payments, multi-recipient',
-    color: '#22C55E',
-    gradient: 'rgba(34,197,94,0.08)',
+    color: '#047857',
   },
 ]
 
@@ -55,7 +47,7 @@ const STATS = [
 ]
 
 const SUPPORTED = [
-  { name:'Solana',   symbol:'SOL',   color:'#A855F7' },
+  { name:'Solana',   symbol:'SOL',   color:'#10B981' },
   { name:'Ethereum', symbol:'ETH',   color:'#60A5FA' },
   { name:'Arbitrum', symbol:'ARB',   color:'#06B6D4' },
   { name:'Polygon',  symbol:'MATIC', color:'#8B5CF6' },
@@ -71,10 +63,39 @@ export default function TreasuryLanding() {
   const [wallet, setWallet] = useState('')
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  // Cursor position
+  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 })
+  const [cursorTrail, setCursorTrail] = useState({ x: -100, y: -100 })
+
   useEffect(() => {
     const saved = loadWallet('solana')
     if (saved) setWallet(saved)
   }, [])
+
+  useEffect(() => {
+    const moveCursor = (e: MouseEvent) => {
+      setCursorPos({ x: e.clientX, y: e.clientY })
+    }
+    window.addEventListener('mousemove', moveCursor)
+    return () => window.removeEventListener('mousemove', moveCursor)
+  }, [])
+
+  useEffect(() => {
+    let animationFrameId: number
+    const updateTrail = () => {
+      setCursorTrail(prev => {
+        const dx = cursorPos.x - prev.x
+        const dy = cursorPos.y - prev.y
+        return {
+          x: prev.x + dx * 0.18,
+          y: prev.y + dy * 0.18
+        }
+      })
+      animationFrameId = requestAnimationFrame(updateTrail)
+    }
+    updateTrail()
+    return () => cancelAnimationFrame(animationFrameId)
+  }, [cursorPos])
 
   /* particle canvas background */
   useEffect(() => {
@@ -107,7 +128,7 @@ export default function TreasuryLanding() {
         if (p.y > canvas.height) p.y = 0
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(0,229,204,${p.alpha})`
+        ctx.fillStyle = `rgba(16, 185, 129, ${p.alpha})`
         ctx.fill()
       })
       /* draw connections */
@@ -119,7 +140,7 @@ export default function TreasuryLanding() {
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
             ctx.lineTo(b.x, b.y)
-            ctx.strokeStyle = `rgba(0,229,204,${0.08 * (1 - dist / 120)})`
+            ctx.strokeStyle = `rgba(16, 185, 129, ${0.08 * (1 - dist / 120)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -158,45 +179,477 @@ export default function TreasuryLanding() {
     }
   }
 
+  const floatingCircles = useMemo(() => {
+    return Array.from({ length: 16 }).map((_, i) => ({
+      id: i,
+      size: Math.floor(Math.random() * 26) + 8, // 8px - 34px
+      left: Math.floor(Math.random() * 100),
+      top: Math.floor(Math.random() * 100),
+      duration: Math.floor(Math.random() * 6) + 9, // 9s - 15s
+      delay: Math.floor(Math.random() * 4),
+      opacity: (Math.random() * 0.15 + 0.10).toFixed(2)
+    }))
+  }, [])
+
   return (
-    <div style={{ background: BG, minHeight: '100vh', color: '#fff', fontFamily: '"Inter",system-ui,sans-serif', position: 'relative', overflow: 'hidden' }}>
+    <div className="treasury-container">
+      {/* Google Fonts Link */}
+      <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@600&family=Fira+Code:wght@400&display=swap" rel="stylesheet" />
 
+      {/* Embedded Vanilla CSS Stylesheet */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        .treasury-container {
+          background-color: #F0FDF4;
+          color: #064E3B;
+          font-family: 'DM Sans', sans-serif;
+          min-height: 100vh;
+          position: relative;
+          overflow-x: hidden;
+          width: 100%;
+          cursor: none;
+        }
+
+        .custom-cursor-dot {
+          position: fixed;
+          width: 6px;
+          height: 6px;
+          background-color: #10B981;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 99999;
+          transform: translate(-50%, -50%);
+          transition: transform 0.05s ease-out;
+        }
+        .custom-cursor-ring {
+          position: fixed;
+          width: 24px;
+          height: 24px;
+          border: 1.5px solid #10B981;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 99998;
+          transform: translate(-50%, -50%);
+          background-color: rgba(16, 185, 129, 0.03);
+        }
+        a:hover ~ .custom-cursor-ring,
+        button:hover ~ .custom-cursor-ring,
+        input:hover ~ .custom-cursor-ring,
+        textarea:hover ~ .custom-cursor-ring {
+          width: 32px;
+          height: 32px;
+          border-color: #34D399;
+          background-color: rgba(52, 211, 153, 0.08);
+        }
+
+        @media (max-width: 768px) {
+          .custom-cursor-dot, .custom-cursor-ring {
+            display: none !important;
+          }
+          .treasury-container {
+            cursor: auto !important;
+          }
+        }
+
+        .floating-container {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 0;
+          overflow: hidden;
+        }
+        .float-bubble {
+          position: absolute;
+          background-color: #D1FAE5;
+          border-radius: 50%;
+          animation: driftBubble linear infinite;
+        }
+        @keyframes driftBubble {
+          0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+          33% { transform: translateY(-30px) translateX(15px) rotate(120deg); }
+          66% { transform: translateY(15px) translateX(-20px) rotate(240deg); }
+          100% { transform: translateY(0px) translateX(0px) rotate(360deg); }
+        }
+
+        .dot-grid-overlay {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, #A7F3D0 1px, transparent 1px);
+          background-size: 28px 28px;
+          opacity: 0.3;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .hero-section {
+          padding: 90px 20px 80px 20px;
+          text-align: center;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          z-index: 10;
+        }
+        .eyebrow-cursive {
+          font-family: 'Dancing Script', cursive;
+          font-size: 18px;
+          color: #10B981;
+          letter-spacing: 0.05em;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 12px;
+        }
+        .hero-title {
+          margin: 12px 0 24px 0;
+          max-width: 800px;
+          line-height: 1.25;
+        }
+        .title-syne-emerald {
+          font-family: 'Syne', sans-serif;
+          font-size: clamp(40px, 6vw, 66px);
+          color: #10B981;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+        }
+        .title-cursive-dark {
+          font-family: 'Dancing Script', cursive;
+          font-size: clamp(38px, 5.5vw, 58px);
+          color: #064E3B;
+          font-weight: 600;
+        }
+        .hero-subtext {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 16px;
+          line-height: 1.7;
+          color: rgba(6, 78, 59, 0.70);
+          max-width: 600px;
+          margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+          display: flex;
+          gap: 16px;
+          margin-bottom: 50px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .btn-emerald-pill {
+          background-color: #10B981;
+          color: #FFFFFF;
+          border: none;
+          padding: 14px 32px;
+          border-radius: 9999px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+          box-shadow: 0 4px 14px rgba(16, 185, 129, 0.22);
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .btn-emerald-pill:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(16, 185, 129, 0.32);
+          background-color: #059669;
+        }
+        .btn-dark-pill {
+          background-color: #064E3B;
+          color: #FFFFFF;
+          border: none;
+          padding: 14px 32px;
+          border-radius: 9999px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .btn-dark-pill:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 22px rgba(6, 78, 59, 0.25);
+          background-color: #10B981;
+        }
+        .btn-ghost-pill {
+          background-color: transparent;
+          color: #064E3B;
+          border: 1px solid #6EE7B7;
+          padding: 14px 32px;
+          border-radius: 9999px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: transform 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .btn-ghost-pill:hover {
+          transform: translateY(-2px);
+          background-color: rgba(110, 231, 183, 0.15);
+        }
+
+        .stats-grid-container {
+          padding: 0 24px;
+          max-width: 1100px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 10;
+        }
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 24px;
+          margin-bottom: 80px;
+        }
+        .stat-card {
+          border-radius: 24px;
+          border: 1px solid rgba(167, 243, 208, 0.6);
+          padding: 32px 28px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-height: 160px;
+          box-shadow: 0 4px 24px rgba(16, 185, 129, 0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          background-color: rgba(255, 255, 255, 0.6);
+          backdrop-filter: blur(12px);
+        }
+        .stat-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+          border-color: #34D399;
+        }
+        .stat-eyebrow {
+          font-family: 'Dancing Script', cursive;
+          font-size: 18px;
+          color: #10B981;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .stat-number {
+          font-family: 'Syne', sans-serif;
+          font-weight: 700;
+          font-size: clamp(28px, 3.5vw, 42px);
+          color: #064E3B;
+          margin: 12px 0;
+          line-height: 1.1;
+        }
+        .stat-label {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px;
+          color: rgba(6, 78, 59, 0.65);
+          font-weight: 500;
+        }
+
+        .features-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 20px;
+          margin-bottom: 80px;
+        }
+        .feature-card {
+          background: rgba(255, 255, 255, 0.65);
+          border: 1px solid rgba(16, 185, 129, 0.2);
+          border-radius: 24px;
+          padding: 32px;
+          backdrop-filter: blur(12px);
+          transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+        .feature-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 40px rgba(16, 185, 129, 0.12);
+          border-color: rgba(16, 185, 129, 0.5);
+        }
+        .feature-icon {
+          font-size: 36px;
+          margin-bottom: 20px;
+          background: rgba(16, 185, 129, 0.1);
+          width: 64px;
+          height: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 16px;
+        }
+        .feature-title {
+          font-family: 'Syne', sans-serif;
+          font-size: 18px;
+          font-weight: 700;
+          color: #064E3B;
+          margin-bottom: 12px;
+        }
+        .feature-desc {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 14px;
+          color: rgba(6, 78, 59, 0.7);
+          line-height: 1.6;
+          margin-bottom: 20px;
+        }
+        .feature-detail {
+          font-family: 'Fira Code', monospace;
+          font-size: 11px;
+          color: #059669;
+          background: rgba(16, 185, 129, 0.08);
+          padding: 10px 14px;
+          border-radius: 10px;
+          line-height: 1.5;
+        }
+
+        .chains-container {
+          text-align: center;
+          margin-bottom: 80px;
+        }
+        .chains-title {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 12px;
+          color: rgba(6, 78, 59, 0.5);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-bottom: 24px;
+          font-weight: 600;
+        }
+        .chains-list {
+          display: flex;
+          justify-content: center;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+        .chain-pill {
+          padding: 10px 20px;
+          border-radius: 9999px;
+          border: 1px solid rgba(16, 185, 129, 0.2);
+          background: rgba(255, 255, 255, 0.6);
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          backdrop-filter: blur(10px);
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .chain-pill:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+        }
+        .chain-name {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 13px;
+          font-weight: 600;
+          color: #064E3B;
+        }
+        .chain-symbol {
+          font-family: 'Fira Code', monospace;
+          font-size: 11px;
+          color: #10B981;
+          font-weight: 500;
+        }
+        
+        .quick-actions-card {
+          background: rgba(255, 255, 255, 0.7);
+          border: 1px solid rgba(16, 185, 129, 0.2);
+          border-radius: 32px;
+          padding: 48px;
+          text-align: center;
+          backdrop-filter: blur(16px);
+          margin-bottom: 80px;
+          box-shadow: 0 8px 32px rgba(16, 185, 129, 0.08);
+        }
+        .qa-title {
+          font-family: 'Syne', sans-serif;
+          font-size: 28px;
+          font-weight: 700;
+          color: #064E3B;
+          margin-bottom: 12px;
+        }
+        .qa-desc {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 15px;
+          color: rgba(6, 78, 59, 0.65);
+          margin-bottom: 32px;
+          max-width: 500px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        
+        .footer-note {
+          text-align: center;
+          padding-bottom: 40px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 12px;
+          color: rgba(6, 78, 59, 0.4);
+          line-height: 1.6;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+      `}} />
+
+      {/* Custom Cursor Rendering */}
+      <div 
+        className="custom-cursor-dot" 
+        style={{ left: `${cursorPos.x}px`, top: `${cursorPos.y}px` }} 
+      />
+      <div 
+        className="custom-cursor-ring" 
+        style={{ left: `${cursorTrail.x}px`, top: `${cursorTrail.y}px` }} 
+      />
+
+      {/* Floating Circles */}
+      <div className="floating-container">
+        {floatingCircles.map(c => (
+          <div
+            key={c.id}
+            className="float-bubble"
+            style={{
+              width: `${c.size}px`,
+              height: `${c.size}px`,
+              left: `${c.left}%`,
+              top: `${c.top}%`,
+              animationDuration: `${c.duration}s`,
+              animationDelay: `${c.delay}s`,
+              opacity: c.opacity as any
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="dot-grid-overlay" />
+      
       {/* Animated particle canvas */}
-      <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} />
+      <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }} />
 
-      {/* Gradient blobs */}
-      <div style={{ position: 'absolute', top: -200, left: -200, width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,229,204,0.05) 0%, transparent 70%)', pointerEvents:'none', zIndex: 0 }} />
-      <div style={{ position: 'absolute', top: 100, right: -100, width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%)', pointerEvents:'none', zIndex: 0 }} />
-
-      <div style={{ position: 'relative', zIndex: 1 }}>
-
+      <div style={{ position: 'relative', zIndex: 10 }}>
         {/* Hero */}
-        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '80px 24px 60px', textAlign: 'center' }}>
+        <section className="hero-section">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 16px', borderRadius: 20, border: '1px solid rgba(0,229,204,0.3)', background: 'rgba(0,229,204,0.06)', marginBottom: 28 }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: TEAL, display: 'inline-block' }} />
-              <span style={{ fontSize: 11, color: TEAL, fontFamily: MONO, letterSpacing: '0.08em' }}>7 AI AGENTS ONLINE · MULTI-CHAIN READY</span>
+            <div className="eyebrow-cursive" style={{ justifyContent: 'center' }}>
+              ✦ Autonomous Treasury OS
             </div>
 
-            <h1 style={{ fontSize: 'clamp(32px,5vw,62px)', fontWeight: 900, lineHeight: 1.1, marginBottom: 20, letterSpacing: '-0.02em' }}>
-              Run Your Organization's<br />
-              <span style={{ background: `linear-gradient(135deg, ${TEAL}, #A855F7)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                Finances Invisibly On-Chain
-              </span>
+            <h1 className="hero-title">
+              <span className="title-cursive-dark">Run Your Organization's</span>
+              <br />
+              <span className="title-syne-emerald">Finances Invisibly On-Chain</span>
             </h1>
 
-            <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.55)', maxWidth: 600, margin: '0 auto 40px', lineHeight: 1.7 }}>
+            <p className="hero-subtext" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
               AI agents manage payments, optimize routing, and execute treasury operations autonomously.
               PalmFlow AI — the Autonomous Financial Operating System for DAOs and enterprises.
             </p>
 
             {/* CTAs */}
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div className="hero-buttons">
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={connectWallet}
-                style={{ padding: '14px 28px', borderRadius: 12, border: `1px solid ${TEAL}`, background: `linear-gradient(135deg, rgba(0,229,204,0.2), rgba(0,229,204,0.06))`, color: TEAL, fontSize: 14, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}
+                className="btn-emerald-pill"
               >
                 🔌 {wallet ? short(wallet) : 'Connect Wallet'}
               </motion.button>
@@ -204,7 +657,7 @@ export default function TreasuryLanding() {
                 <motion.button
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
-                  style={{ padding: '14px 28px', borderRadius: 12, border: '1px solid rgba(245,197,24,0.4)', background: 'rgba(245,197,24,0.06)', color: '#F5C518', fontSize: 14, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}
+                  className="btn-dark-pill"
                 >
                   📊 View Dashboard
                 </motion.button>
@@ -213,86 +666,91 @@ export default function TreasuryLanding() {
                 <motion.button
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
-                  style={{ padding: '14px 28px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}
+                  className="btn-ghost-pill"
                 >
                   🎯 Try Demo
                 </motion.button>
               </Link>
             </div>
           </motion.div>
+        </section>
 
-          {/* Stats bar */}
+        {/* Stats Grid */}
+        <section className="stats-grid-container">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            style={{ display: 'flex', justifyContent: 'center', gap: 40, marginTop: 56, flexWrap: 'wrap' }}
+            className="stats-grid"
           >
-            {STATS.map(s => (
-              <div key={s.label} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 28, fontWeight: 800, color: TEAL, fontFamily: MONO }}>{s.value}</div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginTop: 4 }}>{s.label}</div>
+            {STATS.map((s, idx) => (
+              <div key={s.label} className="stat-card">
+                <div>
+                  <div className="stat-eyebrow">✦ Metric {idx + 1}</div>
+                  <div className="stat-number">{s.value}</div>
+                </div>
+                <div className="stat-label">{s.label}</div>
               </div>
             ))}
           </motion.div>
         </section>
 
         {/* Feature Cards */}
-        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px 60px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 16 }}>
+        <section className="stats-grid-container">
+          <div className="features-grid">
             {FEATURES.map((f, i) => (
               <motion.div
                 key={f.title}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 * i + 0.4, duration: 0.5 }}
-                style={{ background: f.gradient, border: `1px solid ${f.color}22`, borderRadius: 16, padding: '24px', cursor: 'default' }}
+                className="feature-card"
               >
-                <div style={{ fontSize: 32, marginBottom: 14 }}>{f.icon}</div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: f.color, marginBottom: 8 }}>{f.title}</div>
-                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, marginBottom: 10 }}>{f.desc}</div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', lineHeight: 1.5 }}>{f.detail}</div>
+                <div className="feature-icon" style={{ color: f.color }}>{f.icon}</div>
+                <div className="feature-title">{f.title}</div>
+                <div className="feature-desc">{f.desc}</div>
+                <div className="feature-detail" style={{ color: f.color }}>{f.detail}</div>
               </motion.div>
             ))}
           </div>
         </section>
 
         {/* Supported Chains */}
-        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px 60px' }}>
-          <div style={{ textAlign: 'center', marginBottom: 24 }}>
-            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Multi-Chain Support</div>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
-            {SUPPORTED.map(c => (
-              <div key={c.name} style={{ padding: '8px 18px', borderRadius: 20, border: `1px solid ${c.color}33`, background: `${c.color}0a`, display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ width: 8, height: 8, borderRadius: '50%', background: c.color, display: 'inline-block' }} />
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>{c.name}</span>
-                <span style={{ fontSize: 10, color: c.color, fontFamily: MONO }}>{c.symbol}</span>
-              </div>
-            ))}
+        <section className="stats-grid-container">
+          <div className="chains-container">
+            <div className="chains-title">Multi-Chain Support</div>
+            <div className="chains-list">
+              {SUPPORTED.map(c => (
+                <div key={c.name} className="chain-pill">
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: c.color, display: 'inline-block' }} />
+                  <span className="chain-name">{c.name}</span>
+                  <span className="chain-symbol" style={{ color: c.color }}>{c.symbol}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* Quick Actions */}
-        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px 80px' }}>
-          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 20, padding: '40px', textAlign: 'center' }}>
-            <div style={{ fontSize: 13, color: TEAL, fontFamily: MONO, letterSpacing: '0.08em', marginBottom: 12 }}>GET STARTED</div>
-            <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 10 }}>Ready to automate your treasury?</h2>
-            <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', marginBottom: 32 }}>
+        <section className="stats-grid-container">
+          <div className="quick-actions-card">
+            <div className="eyebrow-cursive" style={{ justifyContent: 'center' }}>Get Started</div>
+            <h2 className="qa-title">Ready to automate your treasury?</h2>
+            <p className="qa-desc">
               Connect your wallet and let AI agents manage your finances autonomously.
             </p>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div className="hero-buttons" style={{ marginBottom: 0 }}>
               {[
-                { href:'/treasury/dashboard', label:'📊 Dashboard',  color: TEAL },
-                { href:'/treasury/send',      label:'💸 Send',       color:'#22C55E' },
-                { href:'/treasury/receive',   label:'📥 Receive',    color:'#60A5FA' },
-                { href:'/treasury/swap',      label:'🔄 Swap',       color:'#A855F7' },
-                { href:'/treasury/analytics', label:'📉 Analytics',  color:'#F59E0B' },
+                { href:'/treasury/dashboard', label:'📊 Dashboard',  color: '#10B981' },
+                { href:'/treasury/send',      label:'💸 Send',       color: '#059669' },
+                { href:'/treasury/receive',   label:'📥 Receive',    color: '#064E3B' },
+                { href:'/treasury/swap',      label:'🔄 Swap',       color: '#34D399' },
+                { href:'/treasury/analytics', label:'📉 Analytics',  color: '#047857' },
               ].map(a => (
                 <Link key={a.href} href={a.href}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
-                    style={{ padding: '10px 20px', borderRadius: 10, border: `1px solid ${a.color}44`, background: `${a.color}0f`, color: a.color, fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
+                    style={{ padding: '12px 24px', borderRadius: '12px', border: `1px solid ${a.color}44`, background: 'rgba(255,255,255,0.8)', color: a.color, fontSize: '14px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
                   >
                     {a.label}
                   </motion.button>
@@ -303,7 +761,7 @@ export default function TreasuryLanding() {
         </section>
 
         {/* Footer note */}
-        <div style={{ textAlign: 'center', padding: '0 24px 40px', fontSize: 11, color: 'rgba(255,255,255,0.2)' }}>
+        <div className="footer-note">
           PalmFlow AI is a production-ready financial OS. Connect your wallet to start managing treasury operations.
           All operations are non-custodial — your keys, your funds.
         </div>
