@@ -2415,7 +2415,7 @@ export default function SyncSplitPage() {
             Built on Stellar Soroban · Soroban Testnet
           </div>
           <div className="footer-right-cursive">
-            Part of the Kubryx Sovereign Operations Network
+            Part of the Kubryx Sovereign Operations Network • Built by vsrupeshkumar
           </div>
         </div>
       </footer>

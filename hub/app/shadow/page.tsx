@@ -734,6 +734,10 @@ export default function ShadowPage() {
         @keyframes spin { to { transform:rotate(360deg); } }
         @keyframes pulse { 0%,100% { opacity:0.6; } 50% { opacity:1; } }
       `}</style>
+
+      <div style={{ textAlign: 'center', padding: '24px', fontSize: '12px', color: 'inherit', opacity: 0.6, fontWeight: 500 }}>
+        Built by vsrupeshkumar
+      </div>
     </div>
   )
 }

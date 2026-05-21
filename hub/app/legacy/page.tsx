@@ -448,6 +448,9 @@ export default function LegacyLandingPage() {
         </div>
 
       </main>
+      <div style={{ textAlign: 'center', padding: '24px', fontSize: '12px', color: 'inherit', opacity: 0.6, fontWeight: 500 }}>
+        Built by vsrupeshkumar
+      </div>
     </div>
   )
 }
