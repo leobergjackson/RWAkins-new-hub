@@ -26,6 +26,7 @@ import { toast } from '../../lib/toast'
 import { useWalletForTool } from '../../hooks/useWalletForTool'
 import { useWallet } from '../../context/WalletContext'
 import { ConnectButton } from '../../components/wallet/ConnectButton'
+import { readCreditScore } from '../../lib/contracts/creditPassport'
 
 // ─── Gauge math ──────────────────────────────────────────────
 const GAUGE_R = 90
@@ -242,6 +243,7 @@ export default function CreditDashboard() {
   const [oraclePrice, setOraclePrice] = useState(2.45)
   const [loading, setLoading] = useState(false)
   const [isDemo, setIsDemo] = useState(false)
+  const [onChain, setOnChain] = useState(false)
   const [error, setError] = useState('')
   const [mounted, setMounted] = useState(false)
 
@@ -294,6 +296,7 @@ export default function CreditDashboard() {
       setRefreshTxHash('')
       setPrediction(null)
       setIsDemo(false)
+      setOnChain(false)
       return
     }
     loadDashboard(wallet)
@@ -309,6 +312,14 @@ export default function CreditDashboard() {
     setBreakdown(bd)
     setScore(bd.score)
     setIsDemo(bd.score === fallbackBreakdown.score && bd.baseScore === fallbackBreakdown.baseScore)
+    // Prefer the real on-chain credit score from CreditPassportNFT (QIE Mainnet).
+    const chainScore = await readCreditScore(addr)
+    if (chainScore > 0) {
+      setScore(chainScore)
+      setOnChain(true)
+    } else {
+      setOnChain(false)
+    }
     setLoading(false)
   }
 
@@ -330,6 +341,12 @@ export default function CreditDashboard() {
     // Also refresh breakdown
     const bd = await fetchScoreBreakdown(wallet)
     setBreakdown(bd)
+    // Re-read the real on-chain score after the refresh.
+    const chainScore = await readCreditScore(wallet)
+    if (chainScore > 0) {
+      setScore(chainScore)
+      setOnChain(true)
+    }
     setLoading(false)
     toast.success(res.transactionHash ? 'Score refreshed on-chain' : 'Score refreshed (demo mode)')
   }
@@ -627,6 +644,16 @@ export default function CreditDashboard() {
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#F5A623', flexShrink: 0 }} />
               QIE Mainnet
             </span>
+            {onChain && (
+              <span style={{
+                fontSize: 12, padding: '6px 14px', borderRadius: 20,
+                background: 'rgba(34,197,94,0.12)', border: '1px solid rgba(34,197,94,0.35)',
+                color: '#16A34A', display: 'inline-flex', alignItems: 'center', gap: 6, fontWeight: 600
+              }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#16A34A', flexShrink: 0 }} />
+                On-chain
+              </span>
+            )}
           </div>
         </div>
 

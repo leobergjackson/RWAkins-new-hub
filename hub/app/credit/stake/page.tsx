@@ -18,6 +18,7 @@ import { toast } from '../../../lib/toast'
 import { useWalletForTool } from '../../../hooks/useWalletForTool'
 import { useWallet } from '../../../context/WalletContext'
 import { ConnectButton } from '../../../components/wallet/ConnectButton'
+import { readStakingInfo, stakeTokens, unstakeTokens } from '../../../lib/contracts/creditPassport'
 
 // ─── Style helpers ────────────────────────────────────────────
 const card: React.CSSProperties = {
@@ -131,10 +132,25 @@ export default function StakePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wallet])
 
+  // Wraps window.ethereum's eth_sendTransaction for on-chain writes.
+  async function sendTx(tx: Record<string, unknown>): Promise<string> {
+    const eth = typeof window !== 'undefined'
+      ? (window as unknown as { ethereum?: { request: (a: { method: string; params?: unknown[] }) => Promise<unknown> } }).ethereum
+      : undefined
+    if (!eth) throw new Error('No wallet provider')
+    return (await eth.request({ method: 'eth_sendTransaction', params: [tx] })) as string
+  }
+
   async function loadStaking(addr: string) {
     setLoading(true)
     const d = await fetchStaking(addr)
     setData(d)
+    // Overlay real on-chain staking state from NeuroCredStaking (QIE Mainnet).
+    const chain = await readStakingInfo(addr)
+    const chainStaked = parseFloat(chain.stakedAmount)
+    if (chainStaked > 0 || chain.tier !== 'None') {
+      setData((prev) => ({ ...prev, stakedAmount: chainStaked, tier: chain.tier }))
+    }
     setLoading(false)
   }
 
@@ -151,8 +167,13 @@ export default function StakePage() {
     if (amount > data.availableBalance) { toast.error('Insufficient balance'); return }
     setLoading(true)
     setTxHash('')
-    const res = await stakeNCRD(wallet, amount)
-    setTxHash(res.txHash)
+    // Try the real on-chain stake first; fall back to the mock simulation.
+    let hash = await stakeTokens(wallet, stakeAmt, sendTx)
+    if (!hash) {
+      const res = await stakeNCRD(wallet, amount)
+      hash = res.txHash
+    }
+    setTxHash(hash)
     toast.success(`Staked ${amount} NCRD`)
     setStakeAmt('')
     // Optimistic update
@@ -171,8 +192,13 @@ export default function StakePage() {
     if (amount > data.stakedAmount) { toast.error('Exceeds staked amount'); return }
     setLoading(true)
     setTxHash('')
-    const res = await unstakeNCRD(wallet, amount)
-    setTxHash(res.txHash)
+    // Try the real on-chain unstake first; fall back to the mock simulation.
+    let hash = await unstakeTokens(wallet, unstakeAmt, sendTx)
+    if (!hash) {
+      const res = await unstakeNCRD(wallet, amount)
+      hash = res.txHash
+    }
+    setTxHash(hash)
     toast.success(`Unstaked ${amount} NCRD`)
     setUnstakeAmt('')
     setData((prev) => ({
