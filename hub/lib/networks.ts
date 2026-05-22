@@ -34,7 +34,7 @@ export const NETWORKS = {
     chainIdDecimal: 1990,
     name: 'QIE Mainnet',
     shortName: 'QIE',
-    rpcUrl: 'https://rpc.qie.space',
+    rpcUrl: 'https://mainnet.qie.digital/api/eth-rpc',
     explorer: 'https://mainnet.qie.digital',
     explorerTx: 'https://mainnet.qie.digital/tx/',
     currency: { name: 'QIE', symbol: 'QIE', decimals: 18 },

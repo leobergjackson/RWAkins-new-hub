@@ -3,7 +3,7 @@
 // No ethers.js — pure fetch plus a self-contained keccak-256 implementation
 // (Ethereum variant, 0x01 domain padding).
 
-const QIE_RPC = 'https://rpc.qie.space'
+const QIE_RPC = 'https://mainnet.qie.digital/api/eth-rpc'
 
 // ─── keccak-256 ──────────────────────────────────────────────────────────────
 
