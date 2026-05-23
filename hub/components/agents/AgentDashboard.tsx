@@ -52,8 +52,8 @@ export default function AgentDashboard() {
   }, [])
 
   const stats = [
-    { ...DASH_STAT_PLACEHOLDERS[0], value: String(analytics.stats.activeAgents) },
-    { ...DASH_STAT_PLACEHOLDERS[1], value: analytics.stats.totalJobs.toLocaleString() },
+    { ...DASH_STAT_PLACEHOLDERS[0], value: String(analytics.stats.activeAgents ?? 0) },
+    { ...DASH_STAT_PLACEHOLDERS[1], value: (analytics.stats.totalJobs ?? 0).toLocaleString() },
     DASH_STAT_PLACEHOLDERS[2],
     DASH_STAT_PLACEHOLDERS[3],
   ]
@@ -108,7 +108,7 @@ export default function AgentDashboard() {
                 Live Mesh Topology
               </div>
               <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
-                {analytics.stats.activeAgents.toLocaleString()} nodes active
+                {(analytics.stats.activeAgents ?? 0).toLocaleString()} nodes active
               </div>
             </div>
             <Link href="/agents/explorer" style={{

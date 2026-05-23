@@ -80,7 +80,7 @@ function LendMarketRow() {
     }}>
       {items.map((it) => {
         const p = prices[it.id]
-        const up = p ? p.change24h >= 0 : true
+        const up = p ? (p.change24h ?? 0) >= 0 : true
         return (
           <div key={it.id} style={{
             display: 'flex', alignItems: 'center', gap: 8,
@@ -94,7 +94,7 @@ function LendMarketRow() {
                   ${p.usd.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
                 <span style={{ fontSize: 12, fontWeight: 600, color: up ? '#059669' : '#DC2626' }}>
-                  {up ? '▲' : '▼'} {Math.abs(p.change24h).toFixed(2)}%
+                  {up ? '▲' : '▼'} {Math.abs(p.change24h ?? 0).toFixed(2)}%
                 </span>
               </>
             ) : (

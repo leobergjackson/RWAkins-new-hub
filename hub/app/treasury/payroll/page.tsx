@@ -115,7 +115,7 @@ export default function PayrollPage() {
                   </div>
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 14, fontWeight: 700, color: TEAL, fontFamily: MONO }}>
-                      {s.id === 's1' ? streamed.toFixed(4) : s.totalStreamed.toFixed(4)} {s.token}
+                      {s.id === 's1' ? streamed.toFixed(4) : (s.totalStreamed ?? 0).toFixed(4)} {s.token}
                     </div>
                     <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>Total streamed</div>
                     <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginTop: 2, fontFamily: MONO }}>

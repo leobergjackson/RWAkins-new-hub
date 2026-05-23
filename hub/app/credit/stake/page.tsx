@@ -305,13 +305,13 @@ export default function StakePage() {
               <div style={{ textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>
                   <span>Progress to {data.nextTierName}</span>
-                  <span>{data.progressToNextTier.toFixed(1)}%</span>
+                  <span>{(data.progressToNextTier ?? 0).toFixed(1)}%</span>
                 </div>
                 <div style={{ height: 8, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden' }}>
                   <div
                     style={{
                       height: '100%',
-                      width: `${data.progressToNextTier}%`,
+                      width: `${data.progressToNextTier ?? 0}%`,
                       background: 'linear-gradient(90deg, #8B5CF6, #3B5BFA)',
                       borderRadius: 99,
                       transition: 'width 1s',
@@ -319,7 +319,7 @@ export default function StakePage() {
                   />
                 </div>
                 <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 5 }}>
-                  Need {data.nextTierRequired.toLocaleString()} more NCRD for {data.nextTierName} tier
+                  Need {(data.nextTierRequired ?? 0).toLocaleString()} more NCRD for {data.nextTierName} tier
                 </p>
               </div>
             )}

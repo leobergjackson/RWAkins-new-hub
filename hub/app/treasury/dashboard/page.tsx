@@ -111,8 +111,8 @@ export default function DashboardPage() {
             ${ticker.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
           <div style={{ fontSize: 13, color: '#22C55E', marginTop: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span>↑ +{p?.change24hPercent.toFixed(1) || '5.2'}%</span>
-            <span style={{ color: 'rgba(255,255,255,0.3)' }}>24h · +${p?.change24h.toLocaleString() || '61,574'}</span>
+            <span>↑ +{(p?.change24hPercent ?? 0).toFixed(1) || '5.2'}%</span>
+            <span style={{ color: 'rgba(255,255,255,0.3)' }}>24h · +${(p?.change24h ?? 0).toLocaleString() || '61,574'}</span>
           </div>
         </div>
         <div style={{ fontSize: 48 }}>💰</div>
