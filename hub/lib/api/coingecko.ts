@@ -48,7 +48,9 @@ export async function fetchPrices(
     const headers: Record<string, string> = { accept: 'application/json' }
     if (API_KEY) headers['x-cg-demo-api-key'] = API_KEY
 
-    const res = await fetch(url, { headers })
+    const ctrl = new AbortController()
+    const t = setTimeout(() => ctrl.abort(), 5000)
+    const res = await fetch(url, { headers, signal: ctrl.signal }).finally(() => clearTimeout(t))
     if (!res.ok) throw new Error(`CoinGecko request failed: ${res.status}`)
 
     const json = (await res.json()) as Record<string, Record<string, number>>

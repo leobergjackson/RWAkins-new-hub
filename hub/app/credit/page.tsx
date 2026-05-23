@@ -351,25 +351,26 @@ export default function CreditDashboard() {
   async function loadDashboard(addr: string) {
     setLoading(true)
     setError('')
-    const [bd] = await Promise.all([
-      fetchScoreBreakdown(addr),
-      fetchOraclePrice().then(setOraclePrice),
-    ])
-    setBreakdown(bd)
-    setScore(bd.score)
-    setIsDemo(bd.score === fallbackBreakdown.score && bd.baseScore === fallbackBreakdown.baseScore)
-    // Check whether the Kubryx backend has minted a passport for this wallet.
-    const exists = await readPassportExists(addr)
-    setPassportExists(exists)
-    // Prefer the real on-chain credit score from CreditPassportNFT (QIE Mainnet).
-    const chainScore = exists ? await readCreditScore(addr) : 0
-    if (chainScore > 0) {
-      setScore(chainScore)
-      setOnChain(true)
-    } else {
-      setOnChain(false)
+    try {
+      const [bd] = await Promise.all([
+        fetchScoreBreakdown(addr),
+        fetchOraclePrice().then(setOraclePrice),
+      ])
+      setBreakdown(bd)
+      setScore(bd.score)
+      setIsDemo(bd.score === fallbackBreakdown.score && bd.baseScore === fallbackBreakdown.baseScore)
+      const exists = await readPassportExists(addr)
+      setPassportExists(exists)
+      const chainScore = exists ? await readCreditScore(addr) : 0
+      if (chainScore > 0) {
+        setScore(chainScore)
+        setOnChain(true)
+      } else {
+        setOnChain(false)
+      }
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   function disconnect() {
@@ -382,22 +383,23 @@ export default function CreditDashboard() {
     setLoading(true)
     setRefreshTxHash('')
     setError('')
-    const res = await generateScore(wallet)
-    setScore(res.score)
-    setExplanation(res.explanation || 'Based on on-chain analysis')
-    if (res.transactionHash) setRefreshTxHash(res.transactionHash)
-    setIsDemo(!res.transactionHash)
-    // Also refresh breakdown
-    const bd = await fetchScoreBreakdown(wallet)
-    setBreakdown(bd)
-    // Re-read the real on-chain score after the refresh.
-    const chainScore = await readCreditScore(wallet)
-    if (chainScore > 0) {
-      setScore(chainScore)
-      setOnChain(true)
+    try {
+      const res = await generateScore(wallet)
+      setScore(res.score)
+      setExplanation(res.explanation || 'Based on on-chain analysis')
+      if (res.transactionHash) setRefreshTxHash(res.transactionHash)
+      setIsDemo(!res.transactionHash)
+      const bd = await fetchScoreBreakdown(wallet)
+      setBreakdown(bd)
+      const chainScore = await readCreditScore(wallet)
+      if (chainScore > 0) {
+        setScore(chainScore)
+        setOnChain(true)
+      }
+      toast.success(res.transactionHash ? 'Score refreshed on-chain' : 'Score refreshed (demo mode)')
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
-    toast.success(res.transactionHash ? 'Score refreshed on-chain' : 'Score refreshed (demo mode)')
   }
 
   async function runPredictor() {

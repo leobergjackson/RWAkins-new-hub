@@ -43,8 +43,16 @@ function VaultInner() {
   useEffect(() => {
     setMounted(true)
     if (!apiBase) return
-    fetch(`${apiBase}/health`).then(r => r.ok && r.json()).then(d => setIsLive(d?.status === 'ok')).catch(() => {})
-    fetch(`${apiBase}/api/privacy/score`).then(r => r.ok && r.json()).then(d => d?.score && setPrivacyScore(d.score)).catch(() => {})
+    const ctrl1 = new AbortController()
+    const t1 = setTimeout(() => ctrl1.abort(), 5000)
+    fetch(`${apiBase}/health`, { signal: ctrl1.signal })
+      .then(r => r.ok && r.json()).then(d => setIsLive(d?.status === 'ok')).catch(() => {})
+      .finally(() => clearTimeout(t1))
+    const ctrl2 = new AbortController()
+    const t2 = setTimeout(() => ctrl2.abort(), 5000)
+    fetch(`${apiBase}/api/privacy/score`, { signal: ctrl2.signal })
+      .then(r => r.ok && r.json()).then(d => d?.score && setPrivacyScore(d.score)).catch(() => {})
+      .finally(() => clearTimeout(t2))
 
     const moveCursor = (e: MouseEvent) => setCursorPos({ x: e.clientX, y: e.clientY })
     window.addEventListener('mousemove', moveCursor)
