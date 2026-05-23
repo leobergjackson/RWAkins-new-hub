@@ -5,6 +5,7 @@ import { toast } from '../../lib/toast'
 import { getExplorerUrl } from '../../lib/explorer'
 import { useWalletForTool } from '../../hooks/useWalletForTool'
 import { ConnectButton } from '../../components/wallet/ConnectButton'
+import { useStellar } from '../../hooks/useStellar'
 
 type SplitRecord = {
   id: string
@@ -118,6 +119,9 @@ export default function SyncSplitPage() {
   const { address, isConnected } = useWalletForTool()
   const wallet = address ?? ''
   const [mounted, setMounted] = useState(false)
+
+  // Stellar Horizon live data
+  const { stats: stellarStats, isLive: stellarLive } = useStellar()
 
   // Cursor position
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 })
@@ -1901,24 +1905,26 @@ export default function SyncSplitPage() {
       {/* STATS ROW (4 Bento Tiles) */}
       <section id="stats" className="stats-grid-container" style={{ paddingBottom: '40px' }}>
         <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-          <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.12em', padding: '3px 12px', borderRadius: '12px', background: isLive ? 'rgba(16,185,129,0.12)' : 'rgba(249,115,22,0.10)', border: `1px solid ${isLive ? 'rgba(16,185,129,0.4)' : 'rgba(249,115,22,0.3)'}`, color: isLive ? '#10b981' : '#f59e0b', fontFamily: '"Fira Code",monospace' }}>
-            {isLive ? '⬤ Live Data — SyncSplit Connected' : '◎ Demo Data — SyncSplit connecting…'}
+          <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.12em', padding: '3px 12px', borderRadius: '12px', background: (isLive || stellarLive) ? 'rgba(16,185,129,0.12)' : 'rgba(249,115,22,0.10)', border: `1px solid ${(isLive || stellarLive) ? 'rgba(16,185,129,0.4)' : 'rgba(249,115,22,0.3)'}`, color: (isLive || stellarLive) ? '#10b981' : '#f59e0b', fontFamily: '"Fira Code",monospace' }}>
+            {(isLive || stellarLive) ? '⬤ Live Data — Stellar Testnet' : '◎ Demo Data — SyncSplit connecting…'}
           </span>
         </div>
         <div className="stats-grid">
           <div className="stat-card style-1">
             <div className="stat-eyebrow">✦ Bills Created</div>
             <div className="stat-number">
-              {mounted ? <CountUp end={28104} /> : '0'}
+              {mounted ? <CountUp end={stellarLive ? stellarStats.totalTransactions : 28104} /> : '0'}
             </div>
-            <div className="stat-label">on Stellar</div>
+            <div className="stat-label">{stellarLive ? 'from Horizon' : 'on Stellar'}</div>
           </div>
           <div className="stat-card style-2">
-            <div className="stat-eyebrow">✦ Total Settled</div>
+            <div className="stat-eyebrow">✦ XLM Balance</div>
             <div className="stat-number" style={{ color: '#F472B6' }}>
-              {mounted ? <CountUpDecimal end={4.2} decimals={1} prefix="$" suffix="M" /> : '0'}
+              {stellarLive
+                ? <>{parseFloat(stellarStats.balance ?? '0').toFixed(2)} <span style={{ fontSize: '0.55em', opacity: 0.7 }}>XLM</span></>
+                : mounted ? <CountUpDecimal end={4.2} decimals={1} prefix="$" suffix="M" /> : '0'}
             </div>
-            <div className="stat-label">auto-settled</div>
+            <div className="stat-label">{stellarLive ? 'testnet account' : 'auto-settled'}</div>
           </div>
           <div className="stat-card style-3">
             <div className="stat-eyebrow">✦ Avg Split Size</div>
@@ -2302,31 +2308,62 @@ export default function SyncSplitPage() {
         </div>
 
         <div className="timeline-container">
-          {INITIAL_SETTLED_BILLS.map((item) => (
-            <div key={item.id} className="timeline-item">
-              <div className="timeline-left-node">✦</div>
-              <div className="timeline-card">
-                <div className="timeline-card-top">
-                  <span className="timeline-card-title">{item.name}</span>
-                  <span className="timeline-card-date">{item.date}</span>
+          {stellarLive
+            ? stellarStats.recentPayments.slice(0, 4).map((p) => (
+                <div key={p.id} className="timeline-item">
+                  <div className="timeline-left-node">✦</div>
+                  <div className="timeline-card">
+                    <div className="timeline-card-top">
+                      <span className="timeline-card-title">
+                        {p.type === 'create_account' ? 'Account Created' : 'Payment'}
+                      </span>
+                      <span className="timeline-card-date">
+                        {new Date(p.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </span>
+                    </div>
+                    <div className="timeline-card-mid">
+                      {parseFloat(p.amount ?? '0').toFixed(2)} {p.assetType} · Stellar Testnet
+                    </div>
+                    <div className="timeline-card-bottom">
+                      <span className="timeline-tx-hash">Tx: {p.transactionHash.slice(0, 16)}…</span>
+                      <a
+                        href={`https://stellar.expert/explorer/testnet/tx/${p.transactionHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="timeline-explorer-link"
+                      >
+                        View on Stellar Expert ↗
+                      </a>
+                    </div>
+                  </div>
                 </div>
-                <div className="timeline-card-mid">
-                  {item.amount} · {item.participants} participants · Stellar Soroban
+              ))
+            : INITIAL_SETTLED_BILLS.map((item) => (
+                <div key={item.id} className="timeline-item">
+                  <div className="timeline-left-node">✦</div>
+                  <div className="timeline-card">
+                    <div className="timeline-card-top">
+                      <span className="timeline-card-title">{item.name}</span>
+                      <span className="timeline-card-date">{item.date}</span>
+                    </div>
+                    <div className="timeline-card-mid">
+                      {item.amount} · {item.participants} participants · Stellar Soroban
+                    </div>
+                    <div className="timeline-card-bottom">
+                      <span className="timeline-tx-hash">Tx: {item.txHash}</span>
+                      <a
+                        href={getExplorerUrl('stellar', 'address', 'CCEIBX7TF3OY5CWE5GDGZPFNNTIRTLLHDYJ4NQG4YLWYTNURUZ4YGKGF')}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="timeline-explorer-link"
+                      >
+                        View on Stellar Explorer ↗
+                      </a>
+                    </div>
+                  </div>
                 </div>
-                <div className="timeline-card-bottom">
-                  <span className="timeline-tx-hash">Tx: {item.txHash}</span>
-                  <a 
-                    href={getExplorerUrl('stellar', 'address', 'CCEIBX7TF3OY5CWE5GDGZPFNNTIRTLLHDYJ4NQG4YLWYTNURUZ4YGKGF')} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="timeline-explorer-link"
-                  >
-                    View on Stellar Explorer ↗
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
+              ))
+          }
         </div>
 
         <span className="timeline-end-quote">"Every settlement is permanent, transparent, and trustless. ✦"</span>
