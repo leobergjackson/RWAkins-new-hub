@@ -193,7 +193,7 @@ function ProgressBar({
 function MarketCard() {
   const { prices, loading } = usePrices(['ethereum'])
   const eth = prices['ethereum']
-  const up = eth ? eth.change24h >= 0 : true
+  const up = eth ? (eth.change24h ?? 0) >= 0 : true
 
   return (
     <div className="bento-card" style={{
@@ -214,7 +214,7 @@ function MarketCard() {
             <p style={{ fontSize: 20, fontWeight: 700, color: '#2D1A26', margin: '4px 0 0', fontFamily: "'Syne', sans-serif" }}>
               ${eth.usd.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               <span style={{ fontSize: 13, fontWeight: 600, marginLeft: 8, color: up ? '#16A34A' : '#EF4444' }}>
-                {up ? '▲' : '▼'} {Math.abs(eth.change24h).toFixed(2)}%
+                {up ? '▲' : '▼'} {Math.abs(eth.change24h ?? 0).toFixed(2)}%
               </span>
             </p>
           ) : (

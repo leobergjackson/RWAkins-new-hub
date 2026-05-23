@@ -75,10 +75,10 @@ export default function AgentAnalytics() {
         gap: 12,
       }}>
         {[
-          { label: 'Total Jobs',           value: data.stats.totalJobs.toLocaleString(),         color: ACCENT },
-          { label: 'Active Agents',        value: data.stats.activeAgents.toLocaleString(),      color: '#10b981' },
-          { label: 'Messages Logged',      value: data.stats.messagesLogged.toLocaleString(),    color: '#3b82f6' },
-          { label: 'Unauthorized Actions', value: data.stats.unauthorizedActions.toLocaleString(), color: '#ef4444' },
+          { label: 'Total Jobs',           value: (data.stats.totalJobs ?? 0).toLocaleString(),         color: ACCENT },
+          { label: 'Active Agents',        value: (data.stats.activeAgents ?? 0).toLocaleString(),      color: '#10b981' },
+          { label: 'Messages Logged',      value: (data.stats.messagesLogged ?? 0).toLocaleString(),    color: '#3b82f6' },
+          { label: 'Unauthorized Actions', value: (data.stats.unauthorizedActions ?? 0).toLocaleString(), color: '#ef4444' },
         ].map(m => (
           <div key={m.label} style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 12, padding: 18 }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>

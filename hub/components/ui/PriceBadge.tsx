@@ -39,7 +39,7 @@ export function PriceBadge({ coinId, label }: Props) {
     )
   }
 
-  const up = p.change24h >= 0
+  const up = (p.change24h ?? 0) >= 0
   return (
     <span className="inline-flex items-center gap-2 rounded-lg bg-black/40 border border-white/10 px-2.5 py-1">
       <span className="text-xs font-bold text-white/70">{label}</span>
@@ -49,7 +49,7 @@ export function PriceBadge({ coinId, label }: Props) {
       <span
         className={`text-[11px] tabular-nums ${up ? 'text-emerald-400/70' : 'text-red-400/70'}`}
       >
-        {up ? '▲' : '▼'} {Math.abs(p.change24h).toFixed(2)}%
+        {up ? '▲' : '▼'} {Math.abs(p.change24h ?? 0).toFixed(2)}%
       </span>
     </span>
   )
