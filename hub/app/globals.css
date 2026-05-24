@@ -113,3 +113,99 @@ body { background: #ffffff; color: #0A0F2E; }
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { scrollbar-width: none; }
+
+/* ── Global Typography & Layout (Unified UI) ── */
+.page-eyebrow {
+  font-family: 'Dancing Script', cursive;
+  font-size: 18px;
+  color: var(--violet);
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 5vw, 48px);
+  color: var(--foreground);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.page-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(10, 15, 46, 0.65);
+  max-width: 600px;
+  margin: 0 auto 32px auto;
+  text-align: center;
+}
+
+/* ── Badges ── */
+.badge-live, .badge-demo, .badge-network {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.badge-live {
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #10b981;
+}
+
+.badge-demo {
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #f59e0b;
+}
+
+.badge-network {
+  background-color: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  color: #8b5cf6;
+}
+
+/* ── Loading Skeletons ── */
+.skeleton-pulse {
+  animation: pulse-bg 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: rgba(10, 15, 46, 0.05);
+  border-radius: 8px;
+}
+.skeleton-card {
+  min-height: 120px;
+  width: 100%;
+}
+@keyframes pulse-bg {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ── Mobile & Accessibility Fixes ── */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 28px;
+  }
+  .btn-gradient, .btn-ghost, .btn-primary {
+    min-height: 44px; /* Touch target */
+    width: 100%;
+    justify-content: center;
+  }
+  .badge-live, .badge-demo, .badge-network {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+}

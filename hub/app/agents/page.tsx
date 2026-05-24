@@ -365,13 +365,17 @@ function AgentsPageInner() {
 
       {/* Hero Section */}
       <div className="hero-section">
-        <div className="eyebrow-cursive">
+        <div className="page-eyebrow">
           ✦ Agent co-ordinator Protocol
+          <span className="badge-live">
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981', flexShrink: 0 }} />
+            Live
+          </span>
         </div>
-        <h1 className="hero-title">
+        <h1 className="page-title">
           Agent <span>Coordination</span>
         </h1>
-        <p className="hero-subtext">
+        <p className="page-subtitle">
           Deploy, manage, and scale AI agents on the Solana network. Experience seamless on-chain execution with our premium orchestration layer.
         </p>
         

@@ -248,7 +248,8 @@ function VaultInner() {
           Kubryx <span className="sparkle-icon">◈</span> Private vault
         </div>
         <div className="nav-links">
-          <span className={`badge ${isLive ? 'badge-live' : 'badge-demo'}`}>
+          <span className={isLive ? 'badge-live' : 'badge-demo'}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: isLive ? '#10b981' : '#f59e0b', flexShrink: 0 }} />
             {isLive ? 'Multi-chain Live' : 'Demo Data'}
           </span>
           {vaultState && (
@@ -266,20 +267,19 @@ function VaultInner() {
       </header>
 
       <section className="hero-section">
-        <div className="eyebrow-cursive">◈ Secure & Private</div>
-        <h1 className="hero-title">
-          <span className="title-cursive-dark">Cross-Chain</span>
-          <span className="title-syne-cyan">Privacy Vault</span>
+        <div className="page-eyebrow">◈ Secure & Private</div>
+        <h1 className="page-title">
+          Cross-Chain Privacy Vault
         </h1>
-        <p className="hero-subtext">
+        <p className="page-subtitle">
           Deposit collateral across BTC, ETH, and SOL. Register MPC-secured dWallets, and execute private FHE-encrypted trades without revealing your positions.
         </p>
         
         <div className="hero-buttons">
-          <button className="btn-dark-pill" onClick={() => setTab('collateral')}>
+          <button className="btn-primary" onClick={() => setTab('collateral')}>
             + Deposit Collateral
           </button>
-          <button className="btn-ghost-pill" onClick={() => setTab('trade')}>
+          <button className="btn-outline" onClick={() => setTab('trade')}>
             Execute Private Trade
           </button>
         </div>

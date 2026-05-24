@@ -218,7 +218,7 @@ function MarketCard() {
               </span>
             </p>
           ) : (
-            <div className={loading ? 'animate-pulse' : ''} style={{
+            <div className={loading ? 'skeleton-row' : ''} style={{
               height: 22, width: 140, borderRadius: 6,
               background: 'rgba(45,26,38,0.08)', marginTop: 6,
             }} />
@@ -670,21 +670,15 @@ export default function CreditDashboard() {
       <main className="main-content">
         <div className="header-box">
           <div>
-            <div className="eyebrow">On-Chain Identity</div>
-            <h1 className="title-syne">Credit Passport</h1>
-            <p style={{ color: 'rgba(45,26,38,0.6)', marginTop: 12, fontSize: 15 }}>
+            <div className="page-eyebrow" style={{ justifyContent: 'flex-start', margin: '0 0 8px 0' }}>On-Chain Identity</div>
+            <h1 className="page-title" style={{ textAlign: 'left', margin: 0 }}>Credit Passport</h1>
+            <p className="page-subtitle" style={{ textAlign: 'left', margin: '12px 0 0 0', color: 'rgba(45,26,38,0.6)' }}>
               Generate your on-chain credit score as a soulbound NFT.
             </p>
           </div>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-            <span style={{
-              fontSize: 12, padding: '6px 14px', borderRadius: 20,
-              background: isDemo ? 'rgba(45,26,38,0.04)' : 'rgba(34,197,94,0.1)',
-              border: `1px solid ${isDemo ? 'rgba(45,26,38,0.1)' : 'rgba(34,197,94,0.3)'}`,
-              color: isDemo ? 'rgba(45,26,38,0.6)' : '#16A34A',
-              display: 'inline-flex', alignItems: 'center', gap: 6, fontWeight: 500
-            }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDemo ? '#888' : '#16A34A', flexShrink: 0 }} />
+            <span className={isDemo ? 'badge-demo' : 'badge-live'}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: isDemo ? '#f59e0b' : '#10b981', flexShrink: 0 }} />
               {isDemo ? 'Demo Mode' : 'Live Data'}
             </span>
             <span style={{

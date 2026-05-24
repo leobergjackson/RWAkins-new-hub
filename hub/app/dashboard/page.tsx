@@ -564,7 +564,7 @@ export default function DashboardPage() {
           {/* Left — mobile hamburger + greeting */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {isMobile && (
-              <button onClick={() => setMobileOpen(v => !v)} style={{
+              <button aria-label="Toggle Menu" onClick={() => setMobileOpen(v => !v)} style={{
                 background: 'none', border: `1px solid ${BORDER}`, color: MUTED,
                 borderRadius: 8, width: 36, height: 36, display: 'grid', placeItems: 'center',
                 cursor: 'pointer', fontSize: 16, flexShrink: 0,
@@ -585,20 +585,14 @@ export default function DashboardPage() {
             {!isMobile && <SearchBar />}
             {(() => {
               const isLive = stats ? stats.isLive : true
-              const badgeColor = isLive ? GREEN : '#f59e0b'
+              const badgeClass = isLive ? 'badge-live' : 'badge-demo'
               const badgeLabel = isMobile
                 ? (isLive ? 'Live' : 'Degraded')
-                : (isLive ? '⬤ Live Dashboard' : 'Partial Outage')
+                : (isLive ? 'Live Dashboard' : 'Partial Outage')
               return (
-                <div style={{
-                  display: 'flex', alignItems: 'center', gap: 6,
-                  padding: '6px 12px', borderRadius: 20,
-                  background: `${badgeColor}1a`, border: `1px solid ${badgeColor}40`,
-                }}>
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: badgeColor, flexShrink: 0 }} />
-                  <span style={{ fontSize: 12, fontWeight: 600, color: badgeColor, whiteSpace: 'nowrap' }}>
-                    {badgeLabel}
-                  </span>
+                <div className={badgeClass}>
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: isLive ? '#10b981' : '#f59e0b', flexShrink: 0 }} />
+                  {badgeLabel}
                 </div>
               )
             })()}

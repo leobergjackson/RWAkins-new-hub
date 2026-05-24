@@ -6,6 +6,7 @@ import { getExplorerUrl } from '../../lib/explorer'
 import { useWalletForTool } from '../../hooks/useWalletForTool'
 import { ConnectButton } from '../../components/wallet/ConnectButton'
 import { useStellar } from '../../hooks/useStellar'
+import { EmptyState } from '../../components/ui/EmptyState'
 
 type SplitRecord = {
   id: string
@@ -1879,23 +1880,21 @@ export default function SyncSplitPage() {
 
       {/* HERO SECTION */}
       <section className="hero-section">
-        <div className="eyebrow-cursive">
+        <div className="page-eyebrow">
           ✦ built on stellar soroban
         </div>
-        <h1 className="hero-title">
-          <span className="title-cursive-dark">Split every bill,</span>
-          <span className="title-syne-pink">trustlessly,</span>
-          <span className="title-cursive-dark">on-chain.</span>
+        <h1 className="page-title">
+          Split every bill, trustlessly, on-chain.
         </h1>
-        <p className="hero-subtext">
+        <p className="page-subtitle">
           No more awkward reminders. No more trust issues. Bill split uses Stellar Soroban smart contracts to lock everyone's share in escrow — and releases the full amount only when every participant has paid.
         </p>
         <div className="pull-quote">
           "Your share. Your wallet. Your chain."
         </div>
         <div className="hero-buttons">
-          <button className="btn-dark-pill" onClick={() => scrollTo('create-bill')}>Create a Bill</button>
-          <button className="btn-ghost-pill" onClick={() => scrollTo('active-bills')}>View Active Bills</button>
+          <button className="btn-primary" onClick={() => scrollTo('create-bill')}>Create a Bill</button>
+          <button className="btn-outline" onClick={() => scrollTo('active-bills')}>View Active Bills</button>
         </div>
         <div className="scroll-indicator" onClick={() => scrollTo('stats')}>
           ↓
@@ -1905,8 +1904,9 @@ export default function SyncSplitPage() {
       {/* STATS ROW (4 Bento Tiles) */}
       <section id="stats" className="stats-grid-container" style={{ paddingBottom: '40px' }}>
         <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-          <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.12em', padding: '3px 12px', borderRadius: '12px', background: (isLive || stellarLive) ? 'rgba(16,185,129,0.12)' : 'rgba(249,115,22,0.10)', border: `1px solid ${(isLive || stellarLive) ? 'rgba(16,185,129,0.4)' : 'rgba(249,115,22,0.3)'}`, color: (isLive || stellarLive) ? '#10b981' : '#f59e0b', fontFamily: '"Fira Code",monospace' }}>
-            {(isLive || stellarLive) ? '⬤ Live Data — Stellar Testnet' : '◎ Demo Data — SyncSplit connecting…'}
+          <span className={(isLive || stellarLive) ? 'badge-live' : 'badge-demo'}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: (isLive || stellarLive) ? '#10b981' : '#f59e0b', flexShrink: 0 }} />
+            {(isLive || stellarLive) ? 'Live Data — Stellar Testnet' : 'Demo Data — SyncSplit connecting…'}
           </span>
         </div>
         <div className="stats-grid">
@@ -2212,7 +2212,9 @@ export default function SyncSplitPage() {
         </div>
 
         <div className="bills-list-grid">
-          {filteredBills.map((bill) => {
+          {filteredBills.length === 0 ? (
+            <EmptyState icon="💸" title="No bills found" message={`No bills match the "${activeFilter}" filter.`} />
+          ) : filteredBills.map((bill) => {
             const status = getBillStatus(bill)
             const color = getStatusColor(status)
             const total = bill.amount

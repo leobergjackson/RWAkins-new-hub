@@ -9,6 +9,7 @@ import { ConnectButton } from '../../components/wallet/ConnectButton'
 import { PriceBadge } from '../../components/ui/PriceBadge'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
+import { EmptyState } from '../../components/ui/EmptyState'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -339,9 +340,9 @@ export default function ShadowPage() {
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:12, flexWrap:'wrap' }}>
           {/* Live / Demo */}
-          <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:isDemo?'#F1F5F9':'#D1FAE5', border:`1px solid ${isDemo?'#E2E8F0':'#A7F3D0'}`, color:isDemo?'#64748B':'#10B981', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
-            <span style={{ width:6, height:6, borderRadius:'50%', background:isDemo?'#94A3B8':'#10B981', boxShadow:isDemo?'none':`0 0 6px #10B981` }} />
-            {isDemo?'Demo Mode':'Live'}
+          <span className={isDemo ? 'badge-demo' : 'badge-live'}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: isDemo ? '#f59e0b' : '#10b981', flexShrink: 0 }} />
+            {isDemo ? 'Demo Mode' : 'Live'}
           </span>
           {/* Solana */}
           <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:'#F8FAFC', border:'1px solid #E2E8F0', color:'#475569', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
@@ -373,14 +374,14 @@ export default function ShadowPage() {
         {/* Hero */}
         <section className="hero-section" style={{ textAlign: 'center', padding: '60px 20px 40px', position: 'relative', zIndex: 10 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 16px', background: '#FFFFFF', borderRadius: 999, border: '1px solid #E2E8F0', marginBottom: 24, boxShadow: '0 4px 12px rgba(100, 116, 139, 0.05)' }}>
-              <span style={{ fontSize: 12, fontWeight: 800, color: '#64748B', letterSpacing: '0.1em' }}>SHADOWLEDGER NEXUS</span>
+            <div className="page-eyebrow">
+              SHADOWLEDGER NEXUS
             </div>
-            <h1 style={{ fontSize: 'clamp(40px, 6vw, 64px)', fontWeight: 900, color: '#0F172A', margin: '0 auto 24px', lineHeight: 1.1, maxWidth: 900, letterSpacing: '-0.02em' }}>
+            <h1 className="page-title">
               Autonomous Corporate AI <br/>
               <span style={{ color: '#64748B' }}>on Solana.</span>
             </h1>
-            <p style={{ fontSize: 18, color: '#475569', maxWidth: 640, margin: '0 auto 40px', lineHeight: 1.6 }}>
+            <p className="page-subtitle">
               Orchestrate 7 invisible AI departments across Yield Operations Hub, payroll, compliance, audit, procurement, tax and risk.
             </p>
             
@@ -504,7 +505,7 @@ export default function ShadowPage() {
             </div>
             <div ref={feedRef} style={{ flex:1, overflowY:'auto', display:'flex', flexDirection:'column', gap:12, maxHeight: 420, paddingRight: 8 }}>
               {activity.length === 0
-                ? <div style={{ textAlign:'center', padding:'40px 0' }}><p style={{ fontSize:32, margin:'0 0 12px' }}>📡</p><p style={{ fontSize:14, color:'#64748B', margin:0 }}>No activity yet.</p></div>
+                ? <EmptyState icon="📡" title="No Activity Yet" message="Activity logs will appear here once agents are triggered." />
                 : <AnimatePresence>
                     {activity.map((item, i)=>(
                       <motion.div 

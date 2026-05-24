@@ -599,17 +599,15 @@ export default function TreasuryLanding() {
         {/* Hero */}
         <section className="hero-section">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="eyebrow-cursive" style={{ justifyContent: 'center' }}>
+            <div className="page-eyebrow">
               ✦ Autonomous Yield Operations Hub OS
             </div>
 
-            <h1 className="hero-title">
-              <span className="title-cursive-dark">Run Your Organization's</span>
-              <br />
-              <span className="title-syne-emerald">Finances Invisibly On-Chain</span>
+            <h1 className="page-title">
+              Run Your Organization's Finances Invisibly On-Chain
             </h1>
 
-            <p className="hero-subtext" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+            <p className="page-subtitle" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
               AI agents manage payments, optimize routing, and execute Yield Operations Hub operations autonomously.
               PalmFlow AI — the Autonomous Financial Operating System for DAOs and enterprises.
             </p>
@@ -622,7 +620,7 @@ export default function TreasuryLanding() {
                 <motion.button
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
-                  className="btn-dark-pill"
+                  className="btn-primary"
                 >
                   📊 View Dashboard
                 </motion.button>
@@ -631,7 +629,7 @@ export default function TreasuryLanding() {
                 <motion.button
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
-                  className="btn-ghost-pill"
+                  className="btn-outline"
                 >
                   🎯 Try Demo
                 </motion.button>
@@ -644,17 +642,11 @@ export default function TreasuryLanding() {
         <section className="stats-grid-container">
           {/* Live badge */}
           <div style={{ textAlign: 'center', marginBottom: 16 }}>
-            <span style={{
-              fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
-              padding: '3px 14px', borderRadius: 12,
-              background: trustmesh.isLive ? 'rgba(16,185,129,0.12)' : 'rgba(249,115,22,0.10)',
-              border: `1px solid ${trustmesh.isLive ? 'rgba(16,185,129,0.4)' : 'rgba(249,115,22,0.3)'}`,
-              color: trustmesh.isLive ? '#10b981' : '#f59e0b',
-              fontFamily: '"Fira Code", monospace',
-            }}>
+            <span className={trustmesh.isLive ? 'badge-live' : 'badge-demo'}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: trustmesh.isLive ? '#10b981' : '#f59e0b', flexShrink: 0 }} />
               {trustmesh.isLive
-                ? `⬤ Live · Solana Devnet · Block ${trustmesh.currentSlot.toLocaleString()} · Operator ${operatorShort}`
-                : '◎ Demo Data — Connecting to Solana Devnet…'}
+                ? `Live · Solana Devnet · Block ${trustmesh.currentSlot.toLocaleString()} · Operator ${operatorShort}`
+                : 'Demo Data — Connecting to Solana Devnet…'}
             </span>
           </div>
           <motion.div
