@@ -196,7 +196,9 @@ function ProgressBar({
 function MarketCard() {
   const { prices, loading } = usePrices(['ethereum'])
   const eth = prices['ethereum']
-  const up = eth ? (eth.change24h ?? 0) >= 0 : true
+  const change24h = eth ? (eth.change24h ?? 0) : 0
+  const isZero = eth !== undefined && change24h === 0
+  const up = change24h > 0
 
   return (
     <div className="bento-card" style={{
@@ -216,8 +218,8 @@ function MarketCard() {
           {eth ? (
             <p style={{ fontSize: 20, fontWeight: 700, color: '#2D1A26', margin: '4px 0 0', fontFamily: "'Syne', sans-serif" }}>
               ${eth.usd.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-              <span style={{ fontSize: 13, fontWeight: 600, marginLeft: 8, color: up ? '#16A34A' : '#EF4444' }}>
-                {up ? '▲' : '▼'} {Math.abs(eth.change24h ?? 0).toFixed(2)}%
+              <span style={{ fontSize: 13, fontWeight: 600, marginLeft: 8, color: isZero ? 'rgba(45,26,38,0.4)' : up ? '#16A34A' : '#EF4444' }}>
+                {isZero ? '→' : up ? '▲' : '▼'} {Math.abs(change24h).toFixed(2)}%
               </span>
             </p>
           ) : (
@@ -298,6 +300,7 @@ export default function CreditDashboard() {
   const [integrationTier, setIntegrationTier] = useState(0)
   const [lastRefreshed, setLastRefreshed] = useState<number | null>(null)
   const [passportVerifiedAt, setPassportVerifiedAt] = useState<number | null>(null)
+  const [, setRefreshTick] = useState(0)
 
   // Cursor position
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 })
@@ -452,6 +455,12 @@ export default function CreditDashboard() {
     2: { bg: 'rgba(156,163,175,0.15)', color: '#6B7280', border: 'rgba(156,163,175,0.4)' },
     3: { bg: 'rgba(234,179,8,0.1)', color: '#A16207', border: 'rgba(234,179,8,0.35)' },
   }
+
+  useEffect(() => {
+    if (!lastRefreshed) return
+    const id = setInterval(() => setRefreshTick(t => t + 1), 1000)
+    return () => clearInterval(id)
+  }, [lastRefreshed])
 
   function secsAgo(ts: number) {
     const diff = Math.floor((Date.now() - ts) / 1000)

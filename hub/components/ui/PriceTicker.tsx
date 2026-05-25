@@ -39,7 +39,9 @@ export function PriceTicker() {
 
       {COINS.map((coin) => {
         const p = prices[coin.id]
-        const up = p ? (p.change24h ?? 0) >= 0 : true
+        const change = p ? (p.change24h ?? 0) : 0
+        const isZero = p !== undefined && change === 0
+        const up = change > 0
         return (
           <div key={coin.id} className="flex items-center gap-2">
             <span className="text-xs font-bold text-white/70">{coin.symbol}</span>
@@ -50,10 +52,10 @@ export function PriceTicker() {
                 </span>
                 <span
                   className={`text-xs font-medium tabular-nums ${
-                    up ? 'text-emerald-400' : 'text-red-400'
+                    isZero ? 'text-white/40' : up ? 'text-emerald-400' : 'text-red-400'
                   }`}
                 >
-                  {up ? '▲' : '▼'} {Math.abs(p.change24h ?? 0).toFixed(2)}%
+                  {isZero ? '→' : up ? '▲' : '▼'} {Math.abs(change).toFixed(2)}%
                 </span>
               </>
             ) : (

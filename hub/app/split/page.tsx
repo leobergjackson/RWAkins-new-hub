@@ -124,7 +124,15 @@ function secsAgo(ts: number) {
   const diff = Math.floor((Date.now() - ts) / 1000)
   if (diff < 60) return `${diff}s ago`
   if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
-  return new Date(ts).toLocaleTimeString()
+  return `${Math.floor(diff / 3600)}h ago`
+}
+
+function timeAgo(iso: string) {
+  const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 1000)
+  if (diff < 60) return `${diff}s ago`
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
+  return `${Math.floor(diff / 86400)}d ago`
 }
 
 export default function SyncSplitPage() {
@@ -1962,7 +1970,7 @@ export default function SyncSplitPage() {
             <div className="stat-eyebrow">✦ XLM Balance</div>
             <div className="stat-number" style={{ color: '#F472B6' }}>
               {stellarLive
-                ? <>{parseFloat(stellarStats.balance ?? '0').toFixed(2)} <span style={{ fontSize: '0.55em', opacity: 0.7 }}>XLM</span></>
+                ? <>{parseFloat(stellarStats.balance ?? '0').toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ fontSize: '0.55em', opacity: 0.7 }}>XLM</span></>
                 : mounted ? <CountUpDecimal end={4.2} decimals={1} prefix="$" suffix="M" /> : '0'}
             </div>
             <div className="stat-label">{stellarLive ? 'testnet account' : 'auto-settled'}</div>
@@ -2352,16 +2360,32 @@ export default function SyncSplitPage() {
 
         <div className="timeline-container">
           {stellarLive
-            ? stellarStats.recentPayments.slice(0, 4).map((p) => (
+            ? stellarStats.recentPayments.length === 0
+              ? (
+                <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+                  <p style={{ fontSize: 15, fontWeight: 600, color: 'rgba(45,26,38,0.5)', margin: '0 0 12px' }}>No transactions yet</p>
+                  <a
+                    href="https://laboratory.stellar.org/#account-creator?network=test"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: 13, color: '#F472B6', textDecoration: 'none', fontFamily: "'Dancing Script', cursive", fontWeight: 600 }}
+                  >
+                    Fund your testnet account ↗
+                  </a>
+                </div>
+              )
+              : stellarStats.recentPayments.slice(0, 4).map((p) => {
+                const direction = p.from === STELLAR_ACCOUNT ? '→ Sent' : '← Received'
+                return (
                 <div key={p.id} className="timeline-item">
                   <div className="timeline-left-node">✦</div>
                   <div className="timeline-card">
                     <div className="timeline-card-top">
                       <span className="timeline-card-title">
-                        {p.type === 'create_account' ? 'Account Created' : 'Payment'}
+                        {p.type === 'create_account' ? 'Account Created' : direction}
                       </span>
                       <span className="timeline-card-date">
-                        {new Date(p.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        {timeAgo(p.createdAt)}
                       </span>
                     </div>
                     <div className="timeline-card-mid">
@@ -2380,7 +2404,8 @@ export default function SyncSplitPage() {
                     </div>
                   </div>
                 </div>
-              ))
+                )
+              })
             : INITIAL_SETTLED_BILLS.map((item) => (
                 <div key={item.id} className="timeline-item">
                   <div className="timeline-left-node">✦</div>

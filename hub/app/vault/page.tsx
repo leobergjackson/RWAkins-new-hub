@@ -36,6 +36,7 @@ function VaultInner() {
   const { address } = useWalletForTool()
   const wallet = address ?? ''
   const [healthStatus, setHealthStatus] = useState<'checking' | 'live' | 'demo'>('checking')
+  const [retryAttempt, setRetryAttempt] = useState(0)
   const isLive = healthStatus === 'live'
   const [privacyScore, setPrivacyScore] = useState<number | undefined>(undefined)
   const [vaultState, setVaultState] = useState<LegacyVaultState | null>(null)
@@ -50,6 +51,7 @@ function VaultInner() {
     async function tryHealth() {
       if (!apiBase) { setHealthStatus('demo'); return }
       for (let attempt = 0; attempt < 3; attempt++) {
+        setRetryAttempt(attempt + 1)
         try {
           const ctrl = new AbortController()
           const t = setTimeout(() => ctrl.abort(), 8000)
@@ -81,7 +83,11 @@ function VaultInner() {
   }, [])
 
   useEffect(() => {
-    readLegacyVault(wallet || undefined).then(s => setVaultState(s)).catch(() => {})
+    let mounted = true
+    readLegacyVault(wallet || undefined)
+      .then(s => { if (mounted) setVaultState(s) })
+      .catch(() => {})
+    return () => { mounted = false }
   }, [wallet])
 
   useEffect(() => {
@@ -269,11 +275,11 @@ function VaultInner() {
         <div className="nav-links">
           <span className={healthStatus === 'live' ? 'badge-live' : 'badge-demo'}>
             <span style={{ width: 8, height: 8, borderRadius: '50%', background: healthStatus === 'live' ? '#10b981' : '#f59e0b', flexShrink: 0 }} />
-            {healthStatus === 'checking' ? 'Connecting…' : healthStatus === 'live' ? 'Multi-chain Live' : 'Demo Data'}
+            {healthStatus === 'checking' ? `Connecting… (${retryAttempt}/3)` : healthStatus === 'live' ? 'Multi-chain Live' : 'Demo Data'}
           </span>
           {vaultState && (
             <span className="badge badge-live" style={{ background: '#D1FAE5', color: '#059669', border: '1px solid #A7F3D0' }}>
-              ⬤ On-Chain · Arbitrum One
+              ⬤ On-Chain · QIE Mainnet
             </span>
           )}
           <span className="badge badge-private">FHE Private</span>

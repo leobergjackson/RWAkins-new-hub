@@ -163,6 +163,7 @@ export default function ShadowPage() {
   const [agents,  setAgents]  = useState<ShadowAgent[]>([])
   const [activity,setActivity]= useState<FeedItem[]>([])
   const [health,  setHealth]  = useState<'checking'|'ok'|'down'>('checking')
+  const [healthAttempt, setHealthAttempt] = useState(0)
   const [loading, setLoading] = useState(false)
   const [isDemo,  setIsDemo]  = useState(false)
   const [error,   setError]   = useState('')
@@ -218,8 +219,8 @@ export default function ShadowPage() {
         req<FeedItem[]|{activity?:FeedItem[]}>('/api/activity'),
         pubkey ? req(`/api/org/${pubkey}`).catch(()=>null) : Promise.resolve(null),
       ])
-      setAgents(Array.isArray(sd) ? sd : (sd as any).agents||[])
-      setActivity(Array.isArray(ad) ? ad : (ad as any).activity||[])
+      setAgents(Array.isArray(sd) ? (sd as ShadowAgent[]) : ((sd as { agents?: ShadowAgent[] }).agents ?? []))
+      setActivity(Array.isArray(ad) ? (ad as FeedItem[]) : ((ad as { activity?: FeedItem[] }).activity ?? []))
       setIsDemo(false)
     } catch { loadDemo() }
     finally { setLoading(false) }
@@ -246,6 +247,7 @@ export default function ShadowPage() {
     setIsDemo(false)
     let ok = false
     for (let i = 0; i < 3; i++) {
+      setHealthAttempt(i + 1)
       ok = await checkHealth()
       if (ok) break
     }
@@ -352,7 +354,7 @@ export default function ShadowPage() {
           {/* Health */}
           <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:health==='ok'?'#D1FAE5':health==='checking'?'#F1F5F9':'#FEE2E2', border:`1px solid ${health==='ok'?'#A7F3D0':health==='checking'?'#E2E8F0':'#FECACA'}`, color:health==='ok'?'#10B981':health==='checking'?'#64748B':'#EF4444', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
             <span style={{ width:6, height:6, borderRadius:'50%', background:health==='ok'?'#10B981':health==='checking'?'#94A3B8':'#EF4444' }} />
-            {health==='checking'?'Connecting…':health==='ok'?'API Online':'API Offline'}
+            {health==='checking'?`Connecting… (${healthAttempt}/3)`:health==='ok'?'API Online':'API Offline'}
           </span>
           {/* Retry button — only shown when API is offline */}
           {health === 'down' && (
