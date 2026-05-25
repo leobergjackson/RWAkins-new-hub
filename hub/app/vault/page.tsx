@@ -9,6 +9,7 @@ import { PriceBadge } from '@/components/ui/PriceBadge'
 
 import { readLegacyVault, type LegacyVaultState } from '@/lib/contracts/eternalVault'
 import { ColdStartBanner } from '@/components/ui/ColdStartBanner'
+import { useKubrykPlatform } from '@/context/KubrykPlatformContext'
 import VaultDashboard from '@/components/vault/VaultDashboard'
 import CollateralManager from '@/components/vault/CollateralManager'
 import DWalletManager from '@/components/vault/DWalletManager'
@@ -36,6 +37,7 @@ function VaultInner() {
   // Wallet state now comes from the global wallet context (EVM / Arbitrum).
   const { address } = useWalletForTool()
   const wallet = address ?? ''
+  const platform = useKubrykPlatform()
   const [healthStatus, setHealthStatus] = useState<'checking' | 'live' | 'demo'>('checking')
   const [retryAttempt, setRetryAttempt] = useState(0)
   const isLive = healthStatus === 'live'
@@ -86,10 +88,15 @@ function VaultInner() {
   useEffect(() => {
     let mounted = true
     readLegacyVault(wallet || undefined)
-      .then(s => { if (mounted) setVaultState(s) })
+      .then(s => {
+        if (mounted) {
+          setVaultState(s)
+          if (s) platform.setVault(true, s.owner)
+        }
+      })
       .catch(() => {})
     return () => { mounted = false }
-  }, [wallet])
+  }, [wallet]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!mounted) return
@@ -343,24 +350,29 @@ function VaultInner() {
         )}
 
         {vaultState && (
-          <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: 'rgba(255,255,255,0.7)', border: '1px solid #CFFAFE', color: '#083344', fontWeight: 600, fontFamily: 'Fira Code, monospace' }}>
-              Owner: {vaultState.owner.slice(0, 8)}…{vaultState.owner.slice(-6)}
-            </div>
-            <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: vaultState.deceased ? '#FEE2E2' : '#D1FAE5', border: `1px solid ${vaultState.deceased ? '#FECACA' : '#A7F3D0'}`, color: vaultState.deceased ? '#DC2626' : '#059669', fontWeight: 600 }}>
-              {vaultState.deceased ? '⚠ Legacy Mode Active' : '✓ Vault Active'}
-            </div>
-            {vaultState.unlockDate && (
-              <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: 'rgba(255,255,255,0.7)', border: '1px solid #CFFAFE', color: '#083344', fontWeight: 600 }}>
-                Unlock: {vaultState.unlockDate.toLocaleDateString()}
+          <>
+            <div style={{ display: 'flex', gap: 12, marginBottom: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: 'rgba(255,255,255,0.7)', border: '1px solid #CFFAFE', color: '#083344', fontWeight: 600, fontFamily: 'Fira Code, monospace' }}>
+                Owner: {vaultState.owner.slice(0, 8)}…{vaultState.owner.slice(-6)}
               </div>
-            )}
-            {vaultState.canAccess !== null && (
-              <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: vaultState.canAccess ? '#D1FAE5' : '#FEF3C7', border: `1px solid ${vaultState.canAccess ? '#A7F3D0' : '#FDE68A'}`, color: vaultState.canAccess ? '#059669' : '#D97706', fontWeight: 600 }}>
-                {vaultState.canAccess ? '✓ You have access' : '◎ Access pending'}
+              <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: vaultState.deceased ? '#FEE2E2' : '#D1FAE5', border: `1px solid ${vaultState.deceased ? '#FECACA' : '#A7F3D0'}`, color: vaultState.deceased ? '#DC2626' : '#059669', fontWeight: 600 }}>
+                {vaultState.deceased ? '⚠ Legacy Mode Active' : '✓ Vault Active'}
               </div>
-            )}
-          </div>
+              {vaultState.unlockDate && (
+                <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: 'rgba(255,255,255,0.7)', border: '1px solid #CFFAFE', color: '#083344', fontWeight: 600 }}>
+                  Unlock: {vaultState.unlockDate.toLocaleDateString()}
+                </div>
+              )}
+              {vaultState.canAccess !== null && (
+                <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: vaultState.canAccess ? '#D1FAE5' : '#FEF3C7', border: `1px solid ${vaultState.canAccess ? '#A7F3D0' : '#FDE68A'}`, color: vaultState.canAccess ? '#059669' : '#D97706', fontWeight: 600 }}>
+                  {vaultState.canAccess ? '✓ You have access' : '◎ Access pending'}
+                </div>
+              )}
+            </div>
+            <div style={{ fontSize: 12, padding: '6px 16px', borderRadius: 999, background: 'rgba(168,85,247,0.08)', border: '1px solid rgba(168,85,247,0.25)', color: '#7C3AED', fontWeight: 600, marginBottom: 20 }}>
+              🔐 Active vault → +85 pts to your Kubryx Credit Score
+            </div>
+          </>
         )}
 
         <div className="tabs-container">

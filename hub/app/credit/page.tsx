@@ -29,6 +29,8 @@ import { ConnectButton } from '../../components/wallet/ConnectButton'
 import { WrongNetworkBanner } from '../../components/wallet/WrongNetwork'
 import { readCreditScore, readPassportExists, readStakedAmount, readIntegrationTier } from '../../lib/contracts/creditPassport'
 import { usePrices } from '../../hooks/usePrices'
+import { useKubrykPlatform } from '../../context/KubrykPlatformContext'
+import { getCreditTier, getVaultBoost, getStellarBoost, getTreasuryBoost } from '../../lib/platform/scoring'
 
 // ─── Gauge math ──────────────────────────────────────────────
 const GAUGE_R = 90
@@ -285,6 +287,8 @@ export default function CreditDashboard() {
   const { disconnectEVM } = useWallet()
   const wallet = address ?? ''
 
+  const platform = useKubrykPlatform()
+
   const [score, setScore] = useState(650)
   const [explanation, setExplanation] = useState('Based on on-chain analysis')
   const [refreshTxHash, setRefreshTxHash] = useState('')
@@ -386,8 +390,10 @@ export default function CreditDashboard() {
       if (chainScore > 0) {
         setScore(chainScore)
         setOnChain(true)
+        platform.setCredit(chainScore)
       } else {
         setOnChain(false)
+        platform.setCredit(bd.score)
       }
       setLastRefreshed(Date.now())
     } finally {
@@ -756,6 +762,54 @@ export default function CreditDashboard() {
             )}
           </div>
         </div>
+
+        {/* ── Platform Unlocks — cross-module benefits from this score ── */}
+        {(() => {
+          const tier = getCreditTier(score)
+          const vBoost = getVaultBoost(platform.vaultActive)
+          const sBoost = getStellarBoost(platform.stellarPayments)
+          const tBoost = getTreasuryBoost(platform.treasuryValue)
+          const totalBoost = vBoost + sBoost + tBoost
+          return (
+            <div style={{ marginBottom: 32, padding: '20px 24px', borderRadius: 16, background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(45,26,38,0.08)', backdropFilter: 'blur(8px)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+                <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', color: 'rgba(45,26,38,0.4)', textTransform: 'uppercase' }}>Kubryx Platform Unlocks</span>
+                <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: tier.bg, border: `1px solid ${tier.border}`, color: tier.color }}>
+                  {tier.name} Tier — {score}/1000
+                </span>
+                {totalBoost > 0 && (
+                  <span style={{ fontSize: 11, color: '#059669', fontWeight: 600, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)', padding: '3px 10px', borderRadius: 20 }}>
+                    +{totalBoost} pts from platform activity
+                  </span>
+                )}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 12 }}>
+                {[
+                  { icon: '◎', label: 'AI Lending',    value: `${tier.lendingRate}% APR`,         sub: 'Your personalised rate',         color: '#F59E0B' },
+                  { icon: '🔐', label: 'Private Vault', value: `${tier.vaultLTV}% LTV`,            sub: 'Max loan-to-value ratio',         color: '#14B8A6' },
+                  { icon: '◇', label: 'Treasury Tier', value: tier.treasuryTier,                  sub: 'AI agent routing priority',       color: '#10B981' },
+                  { icon: '◆', label: 'Bill Split',    value: tier.splitTrust,                    sub: 'Escrow & settlement speed',        color: '#3B82F6' },
+                ].map(u => (
+                  <div key={u.label} style={{ padding: '12px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(45,26,38,0.06)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+                      <span style={{ fontSize: 13 }}>{u.icon}</span>
+                      <span style={{ fontSize: 10, fontWeight: 700, color: u.color, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{u.label}</span>
+                    </div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: 'rgba(45,26,38,0.85)', marginBottom: 2 }}>{u.value}</div>
+                    <div style={{ fontSize: 10, color: 'rgba(45,26,38,0.4)' }}>{u.sub}</div>
+                  </div>
+                ))}
+              </div>
+              {totalBoost > 0 && (
+                <div style={{ marginTop: 14, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {vBoost > 0 && <span style={{ fontSize: 10, padding: '3px 10px', borderRadius: 20, background: 'rgba(20,184,166,0.08)', border: '1px solid rgba(20,184,166,0.2)', color: '#0D9488', fontWeight: 600 }}>🔐 Vault active +{vBoost} pts</span>}
+                  {sBoost > 0 && <span style={{ fontSize: 10, padding: '3px 10px', borderRadius: 20, background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)', color: '#2563EB', fontWeight: 600 }}>◆ {platform.stellarPayments} Stellar payments +{sBoost} pts</span>}
+                  {tBoost > 0 && <span style={{ fontSize: 10, padding: '3px 10px', borderRadius: 20, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)', color: '#059669', fontWeight: 600 }}>◇ Treasury ${(platform.treasuryValue ?? 0).toLocaleString()} +{tBoost} pts</span>}
+                </div>
+              )}
+            </div>
+          )
+        })()}
 
         {/* ── No MetaMask ── */}
         {!installed && (

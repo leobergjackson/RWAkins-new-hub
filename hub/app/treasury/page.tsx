@@ -7,6 +7,7 @@ import { ConnectButton } from '@/components/wallet/ConnectButton'
 import { WrongNetworkBanner } from '@/components/wallet/WrongNetwork'
 import { PriceBadge } from '@/components/ui/PriceBadge'
 import { useTrustMesh } from '@/hooks/useTrustMesh'
+import { useKubrykPlatform } from '@/context/KubrykPlatformContext'
 import { type OnChainJobAccount } from '@/lib/api/solana'
 import { TRUSTMESH_OWNER_WALLET } from '@/lib/trustmesh-seeds'
 
@@ -67,6 +68,7 @@ function secsAgo(ts: number) {
 export default function TreasuryLanding() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const trustmesh = useTrustMesh()
+  const platform = useKubrykPlatform()
 
   // Derive live stats from on-chain job accounts
   const liveJobs = trustmesh.jobs.filter(j => j.isLive) as OnChainJobAccount[]
@@ -78,8 +80,11 @@ export default function TreasuryLanding() {
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
-    if (trustmesh.isLive) setLastUpdated(Date.now())
-  }, [trustmesh.currentSlot, trustmesh.isLive])
+    if (trustmesh.isLive) {
+      setLastUpdated(Date.now())
+      if (trustmesh.currentSlot) platform.setSolanaSlot(trustmesh.currentSlot)
+    }
+  }, [trustmesh.currentSlot, trustmesh.isLive]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function copyOperator() {
     navigator.clipboard.writeText(TRUSTMESH_OWNER_WALLET).then(() => {

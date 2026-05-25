@@ -8,6 +8,8 @@ import { toast } from 'sonner'
 import { fetchPortfolio, fetchAgentsAI } from '@/lib/palmflow-api'
 import type { PFPortfolio, PFAgentAI } from '@/lib/palmflow-api'
 import { PF_ACTIVITY_POOL } from '@/lib/palmflow-fallbacks'
+import { useKubrykPlatform } from '@/context/KubrykPlatformContext'
+import { getCreditTier } from '@/lib/platform/scoring'
 
 const TEAL = '#00E5CC'
 const BG = '#080810'
@@ -41,13 +43,15 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
   const [ticker, setTicker] = useState(1245678.90)
   const poolIdx = useRef(0)
+  const platform = useKubrykPlatform()
 
   useEffect(() => {
     Promise.all([fetchPortfolio(), fetchAgentsAI()]).then(([p, a]) => {
       setPortfolio(p); setAgents(a); setLoading(false)
       setFeed(PF_ACTIVITY_POOL.slice(0, 5).map((x, i) => ({ ...x, id:`f${i}`, ts: nowTs() })))
+      if (p?.totalValue) platform.setTreasury(p.totalValue)
     })
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   /* ticker pulse */
   useEffect(() => {
@@ -134,6 +138,37 @@ export default function DashboardPage() {
           </motion.div>
         ))}
       </div>
+
+      {/* Platform Identity — cross-module credit signal */}
+      {(() => {
+        const tier = getCreditTier(platform.creditScore)
+        const signals = [
+          platform.vaultActive     && { label: '🔐 Vault',   note: '+85 pts',        color: '#A855F7' },
+          platform.stellarPayments && { label: '⭐ Stellar', note: `${platform.stellarPayments} txns`, color: '#F472B6' },
+          platform.solanaSlot      && { label: '◎ Solana',  note: `slot #${platform.solanaSlot.toLocaleString()}`, color: '#9945FF' },
+        ].filter(Boolean) as { label: string; note: string; color: string }[]
+        return (
+          <div style={{ background: `linear-gradient(135deg, ${tier.bg}, rgba(0,229,204,0.03))`, border: `1px solid ${tier.border}`, borderRadius: 12, padding: '14px 20px', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: tier.color, fontFamily: MONO, letterSpacing: '0.05em' }}>
+                {tier.name.toUpperCase()} TIER
+              </span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', fontFamily: MONO }}>
+                {platform.creditScore !== null ? platform.creditScore : '—'}<span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>/1000</span>
+              </span>
+            </div>
+            <div style={{ width: 1, height: 24, background: 'rgba(255,255,255,0.1)' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, flexWrap: 'wrap' }}>
+              {signals.length ? signals.map(s => (
+                <span key={s.label} style={{ fontSize: 10, padding: '2px 10px', borderRadius: 999, background: `${s.color}15`, border: `1px solid ${s.color}33`, color: s.color, fontFamily: MONO }}>
+                  {s.label} · {s.note}
+                </span>
+              )) : <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>Connect vault, Stellar & Solana to boost your credit score</span>}
+            </div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', fontFamily: MONO }}>{tier.treasuryTier}</div>
+          </div>
+        )
+      })()}
 
       {/* Asset table + Agents panel */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 16, marginBottom: 16 }}>

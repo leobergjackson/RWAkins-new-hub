@@ -9,6 +9,7 @@ import { WrongNetworkBanner } from '../../components/wallet/WrongNetwork'
 import { useStellar } from '../../hooks/useStellar'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { ColdStartBanner } from '../../components/ui/ColdStartBanner'
+import { useKubrykPlatform } from '../../context/KubrykPlatformContext'
 
 type SplitRecord = {
   id: string
@@ -144,12 +145,18 @@ export default function SyncSplitPage() {
 
   // Stellar Horizon live data
   const { stats: stellarStats, isLive: stellarLive, refresh: refreshStellar } = useStellar()
+  const platform = useKubrykPlatform()
   const [stellarLastUpdated, setStellarLastUpdated] = useState<number | null>(null)
 
-  // Record time whenever stellarStats updates
+  // Record time whenever stellarStats updates; write to platform context for Credit Score
   useEffect(() => {
-    if (stellarLive) setStellarLastUpdated(Date.now())
-  }, [stellarStats, stellarLive])
+    if (stellarLive) {
+      setStellarLastUpdated(Date.now())
+      const balance = parseFloat(stellarStats?.balance ?? '0')
+      const payments = stellarStats?.totalTransactions ?? 0
+      platform.setStellar(balance, payments)
+    }
+  }, [stellarStats, stellarLive]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Cursor position
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 })
@@ -1931,6 +1938,11 @@ export default function SyncSplitPage() {
           <button className="btn-primary" onClick={() => scrollTo('create-bill')}>Create a Bill</button>
           <button className="btn-outline" onClick={() => scrollTo('active-bills')}>View Active Bills</button>
         </div>
+        {stellarLive && stellarStats && (
+          <div style={{ fontSize: 12, padding: '6px 16px', borderRadius: 999, background: 'rgba(244,114,182,0.08)', border: '1px solid rgba(244,114,182,0.25)', color: '#BE185D', fontWeight: 600, marginBottom: 16 }}>
+            ⭐ {stellarStats.totalTransactions} Stellar payments → feeds your Kubryx Credit Score
+          </div>
+        )}
         <div className="scroll-indicator" onClick={() => scrollTo('stats')}>
           ↓
         </div>
