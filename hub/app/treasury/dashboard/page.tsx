@@ -247,8 +247,10 @@ export default function DashboardPage() {
               { href:'/treasury/send',       label:'💸 Send Payment', color:'#22C55E', desc:'Transfer funds to any address' },
               { href:'/treasury/receive',     label:'📥 Receive',      color:'#60A5FA', desc:'Create payment requests + QR' },
               { href:'/treasury/swap',        label:'🔄 Swap Assets',  color:'#A855F7', desc:'AI-optimized DEX routing' },
-              { href:'/treasury/analytics',   label:'📉 Analytics',    color:'#F59E0B', desc:'Yield Operations Hub performance insights' },
-              { href:'/treasury/payroll',     label:'💰 Payroll',      color:TEAL,      desc:'Manage streaming payments' },
+              { href:'/treasury/pnl',         label:'📈 P&L Tracker',  color:TEAL,      desc:'Unrealized & realized gains per asset' },
+              { href:'/treasury/tax',         label:'🧾 Tax Report',   color:'#F59E0B', desc:'FIFO capital gains, short/long-term' },
+              { href:'/treasury/analytics',   label:'📉 Analytics',    color:'#6366F1', desc:'Volume, flows & network breakdown' },
+              { href:'/treasury/payroll',     label:'💰 Payroll',      color:'#10B981', desc:'Manage streaming payments' },
               { href:'/treasury/settings',    label:'⚙️ Settings',     color:'rgba(255,255,255,0.5)', desc:'Configure preferences' },
             ].map(a => (
               <Link key={a.href} href={a.href}>

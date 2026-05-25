@@ -778,6 +778,8 @@ export default function TreasuryLanding() {
                 { href:'/treasury/receive',   label:'📥 Receive',    color: '#064E3B' },
                 { href:'/treasury/swap',      label:'🔄 Swap',       color: '#34D399' },
                 { href:'/treasury/analytics', label:'📉 Analytics',  color: '#047857' },
+                { href:'/treasury/pnl',       label:'📈 P&L',        color: '#00E5CC' },
+                { href:'/treasury/tax',       label:'🧾 Tax Report', color: '#A855F7' },
               ].map(a => (
                 <Link key={a.href} href={a.href}>
                   <motion.button
