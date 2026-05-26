@@ -21,6 +21,7 @@ import { useKubrykPlatform } from '@/context/KubrykPlatformContext'
 import { getCreditTier } from '@/lib/platform/scoring'
 import { PlatformModeBadge } from '@/components/ui/PlatformModeBadge'
 import LiveCrossChainPulse from '@/components/ui/LiveCrossChainPulse'
+import DailyBriefing from '@/components/ui/DailyBriefing'
 
 /* ── Theme — light, landing-page aesthetic ──────────── */
 const BG      = '#FAFBFF'
@@ -907,6 +908,9 @@ export default function DashboardPage() {
           <div style={{ margin: '0 24px 24px' }}>
             <LiveCrossChainPulse theme="light" />
           </div>
+
+          {/* Daily briefing — AI markets pulse */}
+          <DailyBriefing />
 
           {/* Protocol activity chart */}
           <ProtocolActivity />
