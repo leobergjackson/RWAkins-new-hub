@@ -1,29 +1,21 @@
 // Built by vsrupeshkumar
-// Silently pings all Render backends every 4 minutes to prevent cold-start
+// Silently pings every Render backend every 4 minutes to prevent cold-start
 // delays during demos. Fire-and-forget — never throws, never blocks UI.
 'use client'
 
 import { useCallback, useEffect } from 'react'
 
-const ENDPOINTS: Array<{ name: string; env: string }> = [
-  { name: 'CreditBlock', env: 'NEXT_PUBLIC_CREDITBLOCK_URL' },
-  { name: 'Palmflow',    env: 'NEXT_PUBLIC_PALMFLOW_URL'    },
-  { name: 'Shadow',      env: 'NEXT_PUBLIC_SHADOW_URL'      },
-  { name: 'SyncSplit',   env: 'NEXT_PUBLIC_SYNCSPLIT_URL'   },
-  { name: 'TrustMesh',   env: 'NEXT_PUBLIC_TRUSTMESH_URL'   },
+// All env reads must be literal so Next.js can inline them at build time.
+const BACKENDS: Array<{ name: string; url: string | undefined }> = [
+  { name: 'CreditBlocks', url: process.env.NEXT_PUBLIC_CREDITBLOCKS_URL },
+  { name: 'Cipher',       url: process.env.NEXT_PUBLIC_CIPHER_URL       },
+  { name: 'EternalVault', url: process.env.NEXT_PUBLIC_ETERNALVAULT_URL },
+  { name: 'Lendora',      url: process.env.NEXT_PUBLIC_LENDORA_URL      },
+  { name: 'Palmflow',     url: process.env.NEXT_PUBLIC_PALMFLOW_URL     },
+  { name: 'Shadow',       url: process.env.NEXT_PUBLIC_SHADOW_URL       },
+  { name: 'SyncSplit',    url: process.env.NEXT_PUBLIC_SYNCSPLIT_URL    },
+  { name: 'TrustMesh',    url: process.env.NEXT_PUBLIC_TRUSTMESH_URL    },
 ]
-
-function getUrl(envKey: string): string | undefined {
-  // Access via process.env at call time so Next.js inlines at build
-  const map: Record<string, string | undefined> = {
-    NEXT_PUBLIC_CREDITBLOCK_URL: process.env.NEXT_PUBLIC_CREDITBLOCK_URL,
-    NEXT_PUBLIC_PALMFLOW_URL:    process.env.NEXT_PUBLIC_PALMFLOW_URL,
-    NEXT_PUBLIC_SHADOW_URL:      process.env.NEXT_PUBLIC_SHADOW_URL,
-    NEXT_PUBLIC_SYNCSPLIT_URL:   process.env.NEXT_PUBLIC_SYNCSPLIT_URL,
-    NEXT_PUBLIC_TRUSTMESH_URL:   process.env.NEXT_PUBLIC_TRUSTMESH_URL,
-  }
-  return map[envKey]
-}
 
 async function pingBackend(url: string): Promise<void> {
   const ctrl = new AbortController()
@@ -39,16 +31,13 @@ async function pingBackend(url: string): Promise<void> {
 
 export function useBackendWarmup(): void {
   const warmAll = useCallback(() => {
-    for (const ep of ENDPOINTS) {
-      const url = getUrl(ep.env)
-      if (url) pingBackend(url)
+    for (const b of BACKENDS) {
+      if (b.url) pingBackend(b.url)
     }
   }, [])
 
   useEffect(() => {
-    // Warm immediately on mount
     warmAll()
-    // Keep warm every 4 minutes (Render free tier sleeps after 15 min inactivity)
     const id = setInterval(warmAll, 4 * 60 * 1_000)
     return () => clearInterval(id)
   }, [warmAll])

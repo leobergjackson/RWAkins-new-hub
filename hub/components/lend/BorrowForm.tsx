@@ -12,24 +12,17 @@ const MUTED2 = 'rgba(255,255,255,0.4)'
 const MONO = '"Fira Code","JetBrains Mono",monospace'
 
 const apiBase = process.env.NEXT_PUBLIC_LENDORA_URL || process.env.NEXT_PUBLIC_LENDORA_API || ''
-const GROQ_KEY = process.env.NEXT_PUBLIC_GROQ_API_KEY || ''
 
 async function groqFallback(message: string): Promise<string> {
-  if (!GROQ_KEY) return getStaticAIResponse(message)
   try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const res = await fetch('/api/ai', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${GROQ_KEY}` },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages: [
-          { role: 'system', content: 'You are a DeFi loan negotiation AI for Kubryx Protocol Borrow Engine on Arbitrum. Be concise and specific about rates, ZK credit, and collateral.' },
-          { role: 'user', content: message },
-        ],
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message }),
     })
-    const json = await res.json()
-    return json?.choices?.[0]?.message?.content || getStaticAIResponse(message)
+    if (!res.ok) return getStaticAIResponse(message)
+    const json = await res.json() as { text?: string }
+    return json.text || getStaticAIResponse(message)
   } catch { return getStaticAIResponse(message) }
 }
 
