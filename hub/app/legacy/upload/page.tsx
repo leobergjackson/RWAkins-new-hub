@@ -95,6 +95,20 @@ export default function UploadPage() {
         ownerDid: wallet ? `did:qie:${wallet}` : 'did:qie:anonymous',
       })
 
+      // Best-effort: also pin the encrypted blob to IPFS via Pinata.
+      // If the route or the JWT is unconfigured, this fails silently —
+      // the EternalVault upload above remains the source of truth.
+      try {
+        const ipfsForm = new FormData()
+        ipfsForm.append('file', new Blob([encryptedBlob], { type: 'application/octet-stream' }), `${file.name}.enc`)
+        ipfsForm.append('name', `kubryx:${(title || file.name).slice(0, 60)}`)
+        const pin = await fetch('/api/pinata/upload', { method: 'POST', body: ipfsForm })
+        if (pin.ok) {
+          const { cid } = await pin.json() as { cid: string }
+          toast.success(`Pinned to IPFS · ${cid.slice(0, 10)}…${cid.slice(-6)}`)
+        }
+      } catch { /* non-fatal */ }
+
       setUploadId(res.id)
       setStatus('done')
       setVaultKey('')

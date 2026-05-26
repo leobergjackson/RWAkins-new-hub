@@ -22,6 +22,8 @@ import { getCreditTier } from '@/lib/platform/scoring'
 import { PlatformModeBadge } from '@/components/ui/PlatformModeBadge'
 import LiveCrossChainPulse from '@/components/ui/LiveCrossChainPulse'
 import DailyBriefing from '@/components/ui/DailyBriefing'
+import WalletPortfolio from '@/components/ui/WalletPortfolio'
+import ArbitrumActivity from '@/components/ui/ArbitrumActivity'
 
 /* ── Theme — light, landing-page aesthetic ──────────── */
 const BG      = '#FAFBFF'
@@ -908,6 +910,12 @@ export default function DashboardPage() {
           <div style={{ margin: '0 24px 24px' }}>
             <LiveCrossChainPulse theme="light" />
           </div>
+
+          {/* Cross-chain wallet portfolio (Moralis) */}
+          <WalletPortfolio />
+
+          {/* Recent Arbitrum activity (Arbiscan) */}
+          <ArbitrumActivity />
 
           {/* Daily briefing — AI markets pulse */}
           <DailyBriefing />
