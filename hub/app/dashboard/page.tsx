@@ -251,6 +251,8 @@ interface StatCardData {
   bg: string
   border: string
   subColor: string
+  icon: string
+  accent: string
 }
 
 function StatCard({ card }: { card: StatCardData }) {
@@ -260,25 +262,55 @@ function StatCard({ card }: { card: StatCardData }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        background: hov ? card.bg : 'rgba(255,255,255,0.04)',
-        border: `1px solid ${hov ? card.border : BORDER}`,
-        borderRadius: 10,
-        padding: '16px 18px',
-        transform: hov ? 'scale(1.025)' : 'scale(1)',
-        transition: 'all 0.2s ease',
+        position: 'relative',
+        background: 'rgba(255,255,255,0.03)',
+        backgroundImage: `linear-gradient(135deg, ${card.bg} 0%, transparent 60%)`,
+        border: `1px solid ${hov ? card.border : 'rgba(255,255,255,0.08)'}`,
+        borderRadius: 14,
+        padding: '18px 20px',
+        transform: hov ? 'translateY(-2px)' : 'translateY(0)',
+        boxShadow: hov ? `0 10px 32px ${card.bg}, 0 0 0 1px ${card.border}` : '0 4px 16px rgba(0,0,0,0.2)',
+        transition: 'all 0.25s ease',
         cursor: 'default',
+        overflow: 'hidden',
       }}
     >
-      <div style={{ fontSize: 10, fontWeight: 700, color: MUTED2, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 8 }}>
-        {card.label}
+      {/* Glow orb in corner */}
+      <div style={{
+        position: 'absolute',
+        top: -40,
+        right: -40,
+        width: 120,
+        height: 120,
+        borderRadius: '50%',
+        background: card.bg,
+        filter: 'blur(40px)',
+        opacity: hov ? 0.9 : 0.5,
+        transition: 'opacity 0.25s',
+        pointerEvents: 'none',
+      }} />
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'relative' }}>
+        <div style={{ fontSize: 10, fontWeight: 800, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+          {card.label}
+        </div>
+        <div style={{
+          width: 28, height: 28,
+          borderRadius: 8,
+          background: card.bg,
+          border: `1px solid ${card.border}`,
+          display: 'grid', placeItems: 'center',
+          fontSize: 14,
+        }}>
+          {card.icon}
+        </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-        <span style={{ fontSize: 32, fontWeight: 900, color: '#fff', letterSpacing: '-0.04em', lineHeight: 1 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 12, position: 'relative' }}>
+        <span style={{ fontSize: 34, fontWeight: 900, color: '#fff', letterSpacing: '-0.04em', lineHeight: 1, fontFamily: '"Inter",system-ui,sans-serif' }}>
           {card.value}
         </span>
-        <span style={{ fontSize: 11, fontWeight: 700, color: card.subColor }}>
-          {card.sub}
-        </span>
+      </div>
+      <div style={{ fontSize: 11, fontWeight: 600, color: card.subColor, marginTop: 6, position: 'relative' }}>
+        {card.sub}
       </div>
     </div>
   )
@@ -554,10 +586,10 @@ export default function DashboardPage() {
     : DASH_STATS.uptimeSub
 
   const statCards: StatCardData[] = [
-    { label: 'Active Tools',  value: activeToolsValue,                                               sub: 'backends live',                                          bg: 'rgba(99,102,241,0.1)',  border: 'rgba(99,102,241,0.25)', subColor: '#A5B4FC' },
-    { label: 'Chains',        value: DASH_STATS.chains.toString(),                                   sub: DASH_STATS.chainsSub,                                     bg: 'rgba(6,182,212,0.1)',   border: 'rgba(6,182,212,0.25)', subColor: '#67E8F9' },
-    { label: 'Active Agents', value: liveAgents !== null ? liveAgents.toLocaleString() : '—',        sub: liveAgents !== null ? 'via TrustMesh' : 'loading…',       bg: 'rgba(16,185,129,0.1)', border: 'rgba(16,185,129,0.25)', subColor: '#6EE7B7' },
-    { label: 'Backends Live', value: backendsLiveStr,                                                 sub: lastUpdatedSub,                                           bg: 'rgba(249,115,22,0.1)',  border: 'rgba(249,115,22,0.25)', subColor: '#FDBA74' },
+    { label: 'Active Tools',  value: activeToolsValue,                                               sub: 'backends live',                                          bg: 'rgba(99,102,241,0.18)',  border: 'rgba(99,102,241,0.4)',  subColor: '#A5B4FC', icon: '◈', accent: '#6366f1' },
+    { label: 'Chains',        value: DASH_STATS.chains.toString(),                                   sub: DASH_STATS.chainsSub,                                     bg: 'rgba(6,182,212,0.18)',   border: 'rgba(6,182,212,0.4)',   subColor: '#67E8F9', icon: '⛓', accent: '#06b6d4' },
+    { label: 'Active Agents', value: liveAgents !== null ? liveAgents.toLocaleString() : '—',        sub: liveAgents !== null ? 'via TrustMesh' : 'loading…',       bg: 'rgba(16,185,129,0.18)',  border: 'rgba(16,185,129,0.4)',  subColor: '#6EE7B7', icon: '⬡', accent: '#10b981' },
+    { label: 'Backends Live', value: backendsLiveStr,                                                sub: lastUpdatedSub,                                           bg: 'rgba(236,72,153,0.18)',  border: 'rgba(236,72,153,0.4)',  subColor: '#F9A8D4', icon: '◎', accent: '#ec4899' },
   ]
 
   function handleDisconnect() {
@@ -584,7 +616,27 @@ export default function DashboardPage() {
       />
 
       {/* Main panel */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0, position: 'relative' }}>
+        {/* Ambient gradient + floating orbs — purely decorative, behind all content */}
+        <div aria-hidden="true" style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          zIndex: 0,
+          overflow: 'hidden',
+        }}>
+          <div style={{ position: 'absolute', top: -200, left: -120, width: 520, height: 520, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.18), transparent 70%)', filter: 'blur(40px)' }} />
+          <div style={{ position: 'absolute', top: 240, right: -160, width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(236,72,153,0.12), transparent 70%)', filter: 'blur(60px)' }} />
+          <div style={{ position: 'absolute', bottom: -180, left: '30%', width: 480, height: 480, borderRadius: '50%', background: 'radial-gradient(circle, rgba(6,182,212,0.10), transparent 70%)', filter: 'blur(50px)' }} />
+          {/* Dot grid texture */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+            maskImage: 'linear-gradient(to bottom, black, transparent 70%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black, transparent 70%)',
+          }} />
+        </div>
 
         {/* Header */}
         <header style={{
@@ -595,13 +647,15 @@ export default function DashboardPage() {
           justifyContent: 'space-between',
           padding: '0 24px',
           borderBottom: `1px solid ${BORDER}`,
-          background: BG,
+          background: 'rgba(10,14,39,0.7)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
           position: 'sticky',
           top: 0,
           zIndex: 10,
           gap: 12,
         }}>
-          {/* Left — mobile hamburger + greeting */}
+          {/* Left — mobile hamburger + breadcrumb */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {isMobile && (
               <button aria-label="Toggle Menu" onClick={() => setMobileOpen(v => !v)} style={{
@@ -610,13 +664,11 @@ export default function DashboardPage() {
                 cursor: 'pointer', fontSize: 16, flexShrink: 0,
               }}>☰</button>
             )}
-            <div>
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED2, marginBottom: 2 }}>
-                Overview
-              </div>
-              <div style={{ fontSize: isMobile ? 16 : 22, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>
-                {greeting}, Kubryx.
-              </div>
+            <div style={{ fontSize: 13, color: MUTED, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ color: ACCENT, fontSize: 14 }}>✦</span>
+              <span style={{ fontWeight: 700, color: '#fff' }}>Kubryx</span>
+              <span style={{ color: MUTED2 }}>/</span>
+              <span style={{ color: MUTED2 }}>Overview</span>
             </div>
           </div>
 
@@ -641,7 +693,44 @@ export default function DashboardPage() {
         </header>
 
         {/* Body — scrollable */}
-        <div style={{ flex: 1, overflowY: 'auto' }}>
+        <div style={{ flex: 1, overflowY: 'auto', position: 'relative', zIndex: 1 }}>
+
+          {/* Hero greeting strip */}
+          <section style={{ padding: '28px 24px 8px', position: 'relative' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+              <span style={{
+                fontSize: 11, fontWeight: 800, letterSpacing: '0.18em', color: ACCENT,
+                textTransform: 'uppercase',
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+              }}>
+                <span style={{ fontSize: 14, color: PINK }}>✦</span> Financial OS · Multi-chain
+              </span>
+              <span style={{ width: 4, height: 4, borderRadius: '50%', background: MUTED2 }} />
+              <span style={{ fontSize: 11, fontFamily: MONO, color: MUTED2 }}>
+                {creditTier.lendingRate}% APR · {creditTier.vaultLTV}% LTV unlocked
+              </span>
+            </div>
+            <h1 style={{
+              fontSize: isMobile ? 28 : 40,
+              fontWeight: 900,
+              color: '#fff',
+              letterSpacing: '-0.035em',
+              lineHeight: 1.05,
+              margin: 0,
+            }}>
+              {greeting}, <span style={{
+                background: `linear-gradient(135deg, ${ACCENT}, ${PINK})`,
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Kubryx</span>.
+            </h1>
+            <p style={{ fontSize: 14, color: MUTED, margin: '8px 0 0', maxWidth: 580, lineHeight: 1.5 }}>
+              {platform.creditScore !== null
+                ? `Your ${creditTier.name} tier is live across all 4 chains. Below is your full cross-chain state, refreshed in real time.`
+                : 'Connect your wallets to bring your full cross-chain identity online. All 8 tools share one credit score.'}
+            </p>
+          </section>
 
           {/* Wrong-network warning (dashboard expects QIE Mainnet) */}
           <WrongNetworkBanner />
@@ -663,13 +752,88 @@ export default function DashboardPage() {
 
           {/* Platform Identity — unified cross-module credit signal */}
           <div style={{ padding: '20px 24px 0' }}>
-            <div style={{ background: `linear-gradient(135deg, ${creditTier.bg}, rgba(99,102,241,0.04))`, border: `1px solid ${creditTier.border}`, borderRadius: 12, padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: creditTier.color, fontFamily: MONO }}>{creditTier.name.toUpperCase()}</span>
-                <span style={{ fontSize: 20, fontWeight: 900, color: '#fff', fontFamily: MONO, letterSpacing: '-0.02em' }}>
-                  {platform.creditScore !== null ? platform.creditScore : '—'}
-                  <span style={{ fontSize: 11, color: MUTED2, fontWeight: 400 }}>/1000</span>
-                </span>
+            <div style={{
+              position: 'relative',
+              background: `linear-gradient(135deg, ${creditTier.bg}, rgba(99,102,241,0.04))`,
+              border: `1px solid ${creditTier.border}`,
+              borderRadius: 16,
+              padding: '20px 24px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 20,
+              flexWrap: 'wrap',
+              overflow: 'hidden',
+              boxShadow: `0 8px 32px ${creditTier.bg}`,
+            }}>
+              {/* Glow halo behind score */}
+              <div aria-hidden style={{
+                position: 'absolute',
+                top: -60,
+                left: -30,
+                width: 220,
+                height: 220,
+                borderRadius: '50%',
+                background: `radial-gradient(circle, ${creditTier.color}40, transparent 60%)`,
+                filter: 'blur(40px)',
+                pointerEvents: 'none',
+              }} />
+
+              {/* Score badge with gradient ring */}
+              <div style={{ position: 'relative', flexShrink: 0 }}>
+                <div style={{
+                  width: 84,
+                  height: 84,
+                  borderRadius: '50%',
+                  background: `conic-gradient(${creditTier.color} ${(platform.creditScore ?? 0) / 1000 * 360}deg, rgba(255,255,255,0.08) 0deg)`,
+                  display: 'grid',
+                  placeItems: 'center',
+                  padding: 3,
+                }}>
+                  <div style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                    background: '#0a0e27',
+                    display: 'grid',
+                    placeItems: 'center',
+                  }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: 22, fontWeight: 900, color: '#fff', fontFamily: MONO, letterSpacing: '-0.02em', lineHeight: 1 }}>
+                        {platform.creditScore !== null ? platform.creditScore : '—'}
+                      </div>
+                      <div style={{ fontSize: 8, fontWeight: 700, color: creditTier.color, fontFamily: MONO, letterSpacing: '0.14em', marginTop: 2 }}>
+                        / 1000
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Tier ribbon */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: -6,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: creditTier.color,
+                  color: '#0a0e27',
+                  fontSize: 9,
+                  fontWeight: 900,
+                  letterSpacing: '0.14em',
+                  padding: '2px 10px',
+                  borderRadius: 999,
+                  whiteSpace: 'nowrap',
+                  boxShadow: `0 4px 12px ${creditTier.color}50`,
+                }}>
+                  {creditTier.name.toUpperCase()}
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1, minWidth: 240, position: 'relative' }}>
+                <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.16em', color: MUTED2, textTransform: 'uppercase' }}>
+                  Credit Identity · Soulbound on QIE Mainnet
+                </div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', lineHeight: 1.3 }}>
+                  {creditTier.treasuryTier}
+                </div>
               </div>
               <div style={{ width: 1, height: 28, background: BORDER, flexShrink: 0 }} />
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', flex: 1 }}>
