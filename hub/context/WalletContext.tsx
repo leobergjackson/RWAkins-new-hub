@@ -7,18 +7,14 @@ import {
 } from 'react'
 import { NETWORKS } from '@/lib/networks'
 import { weiHexToEther } from '@/lib/wallet-utils'
+import { getEvmProvider, hasAnyEvmProvider, type Eip1193Provider } from '@/lib/wallet-providers'
 
 // ── Browser wallet typings ────────────────────────────────────────────────────
 // Other tool pages declare their own (differing) `window.ethereum` / `window.solana`
 // global shapes, so we deliberately avoid augmenting `Window` here and instead
 // resolve the providers through narrowly-typed accessors.
 
-interface EthereumProvider {
-  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
-  on: (event: string, handler: (...args: unknown[]) => void) => void
-  removeListener: (event: string, handler: (...args: unknown[]) => void) => void
-  isMetaMask?: boolean
-}
+type EthereumProvider = Eip1193Provider
 
 interface PhantomProvider {
   isPhantom?: boolean
@@ -28,9 +24,12 @@ interface PhantomProvider {
   removeListener?: (event: string, handler: (...args: unknown[]) => void) => void
 }
 
+// Resolve the EVM provider via EIP-6963 first, falling back to window.ethereum.
+// Without this, having multiple wallet extensions installed (Phantom + MetaMask
+// + Coinbase Wallet) lets the wrong one win the window.ethereum race — and
+// every connect request silently hits a wallet that never shows a popup.
 function getEthereum(): EthereumProvider | undefined {
-  if (typeof window === 'undefined') return undefined
-  return (window as unknown as { ethereum?: EthereumProvider }).ethereum
+  return getEvmProvider('MetaMask')
 }
 
 function getPhantom(): PhantomProvider | undefined {
@@ -159,41 +158,69 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const connectEVM = useCallback(async () => {
-    const eth = getEthereum()
-    if (!eth) {
+    if (!hasAnyEvmProvider()) {
       if (typeof window !== 'undefined') window.open('https://metamask.io/download/', '_blank')
-      setEvm(p => ({ ...p, error: 'MetaMask not installed' }))
+      setEvm(p => ({ ...p, error: 'MetaMask not installed — install it and reload' }))
       return
     }
+    const eth = getEthereum()
+    if (!eth) {
+      setEvm(p => ({ ...p, error: 'Could not reach MetaMask — disable other wallet extensions and retry' }))
+      return
+    }
+
+    // Wipe any stale saved address — if a previous session left a wallet
+    // address that the user has since disconnected in MetaMask, the silent
+    // eth_accounts probe returns empty and the UI dead-ends.
+    try { localStorage.removeItem(EVM_STORAGE_KEY) } catch { /* noop */ }
     setEvm(p => ({ ...p, isConnecting: true, error: null }))
 
     // Hard safety net — even if every guard below somehow fails, the UI must
     // never stay stuck on "Connecting…".
     const safetyNet = setTimeout(() => {
       setEvm(p => (p.isConnecting
-        ? { ...p, isConnecting: false, error: 'Connection timed out' }
+        ? {
+            ...p,
+            isConnecting: false,
+            error: 'No response from MetaMask — click the extension icon to bring up the popup, or unlock the wallet',
+          }
         : p))
     }, CONNECT_TIMEOUT + 3_000)
 
     try {
-      // eth_requestAccounts opens the MetaMask popup. If the popup never
-      // surfaces (a request is already pending, the extension is locked, the
-      // OS notification is suppressed) this promise hangs forever — the
-      // timeout guarantees it settles.
+      // First, see if MetaMask already has authorised accounts for this site
+      // (no popup needed). This handles the case where a stale localStorage
+      // wipe above made us think the user was disconnected, but MetaMask
+      // still trusts the dApp.
+      const existing = await withTimeout(
+        eth.request({ method: 'eth_accounts' }) as Promise<string[]>,
+        RPC_TIMEOUT,
+        'eth_accounts probe',
+      ).catch(() => [])
+      if (existing && existing.length > 0) {
+        await loadEVMDetails(existing[0])
+        return
+      }
+
+      // Otherwise, prompt the user. eth_requestAccounts opens the MetaMask
+      // popup. If a previous request is still pending (code -32002), this
+      // immediately rejects rather than hanging — the catch block handles it.
       const accounts = await withTimeout(
         eth.request({ method: 'eth_requestAccounts' }) as Promise<string[]>,
         CONNECT_TIMEOUT,
         'Wallet connection request',
       )
       if (accounts.length > 0) await loadEVMDetails(accounts[0])
-      else setEvm(p => ({ ...p, error: 'No accounts returned' }))
+      else setEvm(p => ({ ...p, error: 'MetaMask returned no accounts — unlock your wallet and retry' }))
     } catch (e) {
       const code = (e as { code?: number })?.code
       const message = (e as { message?: string })?.message ?? ''
-      let error = 'Connection failed'
-      if (code === 4001) error = 'Rejected by user'
-      else if (code === -32002) error = 'A connection request is already pending — open the MetaMask extension'
-      else if (message.includes('timed out')) error = 'Connection timed out — open the MetaMask extension and retry'
+      let error = 'Connection failed — try again'
+      if (code === 4001) error = 'You cancelled the request. Click Connect again when ready.'
+      else if (code === -32002) error = 'A connection popup is already open — click the MetaMask icon to find it'
+      else if (code === -32603) error = 'MetaMask internal error — close the extension and reopen, then retry'
+      else if (message.includes('timed out')) error = 'No response from MetaMask — click the extension icon, unlock if locked, then retry'
+      else if (message) error = message.slice(0, 120)
       setEvm(p => ({ ...p, error }))
     } finally {
       // Guaranteed reset — the wallet can never be left "Connecting…".
@@ -284,7 +311,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     const ph = getPhantom()
     if (!ph?.isPhantom) {
       if (typeof window !== 'undefined') window.open('https://phantom.app/', '_blank')
-      setSolana(p => ({ ...p, error: 'Phantom not installed' }))
+      setSolana(p => ({ ...p, error: 'Phantom not installed — install it and reload' }))
       return
     }
     setSolana(p => ({ ...p, isConnecting: true, error: null }))
@@ -292,7 +319,11 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     // Hard safety net — the UI must never stay stuck on "Connecting…".
     const safetyNet = setTimeout(() => {
       setSolana(p => (p.isConnecting
-        ? { ...p, isConnecting: false, error: 'Connection timed out' }
+        ? {
+            ...p,
+            isConnecting: false,
+            error: 'No response from Phantom — click the extension icon to bring up the popup, or unlock the wallet',
+          }
         : p))
     }, CONNECT_TIMEOUT + 3_000)
 
@@ -300,13 +331,17 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       const r = await withTimeout(ph.connect(), CONNECT_TIMEOUT, 'Wallet connection request')
       await loadSolanaDetails(r.publicKey.toString())
     } catch (e) {
-      const message = (e as { message?: string })?.message ?? 'Connection failed'
-      setSolana(p => ({
-        ...p,
-        error: message.includes('timed out')
-          ? 'Connection timed out — open the Phantom extension and retry'
-          : message,
-      }))
+      const code = (e as { code?: number })?.code
+      const rawMsg = (e as { message?: string })?.message ?? ''
+      let error = 'Connection failed — try again'
+      if (code === 4001 || /reject|denied|cancel/i.test(rawMsg)) {
+        error = 'You cancelled the request. Click Connect again when ready.'
+      } else if (rawMsg.includes('timed out')) {
+        error = 'No response from Phantom — click the extension icon, unlock if locked, then retry'
+      } else if (rawMsg) {
+        error = rawMsg.slice(0, 120)
+      }
+      setSolana(p => ({ ...p, error }))
     } finally {
       // Guaranteed reset.
       clearTimeout(safetyNet)

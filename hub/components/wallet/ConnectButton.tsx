@@ -52,32 +52,42 @@ export function ConnectButton({
   }
 
   // ─ Not connected ───────────────────────────────────────────────────────────
+  const handleClick = () => {
+    if (type === 'auto') setShowModal(true)
+    else if (isSolana) connectSolana()
+    else connectEVM()
+  }
+
   if (!isConnected) {
     return (
       <>
-        <button
-          disabled={isConnecting}
-          onClick={() => {
-            if (type === 'auto') setShowModal(true)
-            else if (isSolana) connectSolana()
-            else connectEVM()
-          }}
-          className={`
-            flex items-center rounded-full font-medium transition-all duration-200
-            bg-[#F5C518] text-[#080808] hover:bg-[#e6b800] active:scale-95
-            disabled:opacity-50 disabled:cursor-not-allowed
-            ${sizeMap[size]} ${className}
-          `}
-        >
-          <Wallet size={13} />
-          {isConnecting ? 'Connecting...' : 'Connect Wallet'}
-        </button>
+        <div className="flex flex-col items-center gap-1">
+          <button
+            disabled={isConnecting}
+            onClick={handleClick}
+            className={`
+              flex items-center rounded-full font-medium transition-all duration-200
+              bg-[#F5C518] text-[#080808] hover:bg-[#e6b800] active:scale-95
+              disabled:opacity-50 disabled:cursor-not-allowed
+              ${sizeMap[size]} ${className}
+            `}
+          >
+            <Wallet size={13} />
+            {isConnecting ? 'Connecting…' : error ? 'Retry Connect' : 'Connect Wallet'}
+          </button>
 
-        {error && !isConnecting && (
-          <p className="text-[10px] text-[#ef4444] mt-1 max-w-40 text-center leading-tight">
-            {error}
-          </p>
-        )}
+          {error && !isConnecting && (
+            <div className="mt-1 max-w-65 text-center leading-snug">
+              <p className="text-[11px] text-[#ef4444] font-medium">{error}</p>
+              <button
+                onClick={handleClick}
+                className="text-[10px] text-[#6366f1] hover:text-[#8b5cf6] font-semibold mt-0.5 underline-offset-2 hover:underline"
+              >
+                Try again
+              </button>
+            </div>
+          )}
+        </div>
 
         {showModal && (
           <WalletModal
