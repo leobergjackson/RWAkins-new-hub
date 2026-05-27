@@ -6,6 +6,7 @@ import {
   ResponsiveContainer,
   BarChart, Bar,
   PieChart, Pie, Cell,
+  LineChart, Line,
   Tooltip, XAxis, YAxis, CartesianGrid, Legend,
 } from 'recharts'
 import { fetchAnalytics } from '@/lib/trustmesh-api'
@@ -46,6 +47,8 @@ const TOOLTIP_STYLE = {
 export default function AgentAnalytics() {
   const [data, setData] = useState<AnalyticsResponse>(fallbackAnalytics)
   const [loading, setLoading] = useState(true)
+  const [pollingRate, setPollingRate] = useState(5)
+  const [maxSlippage, setMaxSlippage] = useState(1.5)
   // Defer Recharts ResponsiveContainer until after hydration — otherwise
   // it tries to measure during SSR with no DOM and logs noisy width(-1).
   const [mounted, setMounted] = useState(false)
@@ -70,6 +73,16 @@ export default function AgentAnalytics() {
 
   const totalJobs = pieData.reduce((s, d) => s + d.value, 0)
 
+  const latencyData = [
+    { slot: '144k', latency: 400 },
+    { slot: '145k', latency: 420 },
+    { slot: '146k', latency: 380 },
+    { slot: '147k', latency: 450 },
+    { slot: '148k', latency: 360 },
+    { slot: '149k', latency: 390 },
+    { slot: '150k', latency: 410 },
+  ]
+
   return (
     <div style={{ padding: 28, display: 'flex', flexDirection: 'column', gap: 20 }}>
       {/* Top metric cards */}
@@ -93,6 +106,74 @@ export default function AgentAnalytics() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 1fr)',
+        gap: 16,
+      }}>
+        {/* Latency Line chart */}
+        <div style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 12, padding: 20 }}>
+          <div style={{ marginBottom: 12 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
+              Execution Slot Latency
+            </div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+              Solana confirmation speed (ms)
+            </div>
+          </div>
+          {mounted && (
+            <ResponsiveContainer width="100%" height={240}>
+              <LineChart data={latencyData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+                <CartesianGrid stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="slot" tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} domain={[300, 500]} />
+                <Tooltip {...TOOLTIP_STYLE} />
+                <Line type="monotone" dataKey="latency" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: CARD, stroke: '#10b981', strokeWidth: 2 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+
+        {/* Settings panel */}
+        <div style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 12, padding: 20 }}>
+          <div style={{ marginBottom: 12 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
+              Coordinator Settings
+            </div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+              Runtime Config
+            </div>
+          </div>
+          
+          <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: MUTED, marginBottom: 8 }}>
+                <span>Agent Polling Rate (seconds)</span>
+                <span style={{ fontFamily: MONO, fontWeight: 700, color: '#fff' }}>{pollingRate}s</span>
+              </div>
+              <input 
+                type="range" min="1" max="15" step="1" 
+                value={pollingRate} 
+                onChange={e => setPollingRate(parseInt(e.target.value))}
+                style={{ width: '100%', accentColor: ACCENT }}
+              />
+            </div>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: MUTED, marginBottom: 8 }}>
+                <span>Max Execution Slippage (%)</span>
+                <span style={{ fontFamily: MONO, fontWeight: 700, color: '#fff' }}>{maxSlippage}%</span>
+              </div>
+              <input 
+                type="range" min="0.1" max="5.0" step="0.1" 
+                value={maxSlippage} 
+                onChange={e => setMaxSlippage(parseFloat(e.target.value))}
+                style={{ width: '100%', accentColor: ACCENT }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Bar + Donut */}

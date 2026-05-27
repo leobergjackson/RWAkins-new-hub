@@ -11,6 +11,8 @@ import { useStellar } from '../../hooks/useStellar'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { ColdStartBanner } from '../../components/ui/ColdStartBanner'
 import { useKubrykPlatform } from '../../context/KubrykPlatformContext'
+import FeatureOverviewPanel from '../../components/ui/FeatureOverviewPanel'
+import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts'
 
 type SplitRecord = {
   id: string
@@ -2147,23 +2149,28 @@ export default function SyncSplitPage() {
                   <span className="preview-pay-large">{share.toFixed(2)} {selectedCurrency}</span>
                 </div>
 
-                {/* Visual Segment Bar */}
-                <div className="split-visual-bar">
-                  {participantList.map((addr, idx) => {
-                    const colors = ['#F9A8D4', '#FBCFE8', '#F472B6', '#E879F9']
-                    const bg = colors[idx % colors.length]
-                    const initials = idx === 0 ? 'YOU' : `P${idx + 1}`
-                    return (
-                      <div
-                        key={addr}
-                        className="split-segment"
-                        style={{ flex: 1, backgroundColor: bg }}
-                        title={addr}
+                {/* Visual Segment Bar / Debt Distribution Chart */}
+                <div style={{ width: '100%', height: 180, marginTop: 16 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={participantList.map((addr, idx) => ({ name: idx === 0 ? 'YOU' : `Participant ${idx + 1}`, value: share }))}
+                        dataKey="value" nameKey="name"
+                        cx="50%" cy="50%"
+                        innerRadius={40} outerRadius={70}
+                        stroke="rgba(255,255,255,0.8)"
                       >
-                        {initials}
-                      </div>
-                    )
-                  })}
+                        {participantList.map((addr, idx) => {
+                          const colors = ['#F9A8D4', '#FBCFE8', '#F472B6', '#E879F9']
+                          return <Cell key={addr} fill={colors[idx % colors.length]} />
+                        })}
+                      </Pie>
+                      <RechartsTooltip 
+                        contentStyle={{ background: '#FFFBF0', border: '1px solid #FEF08A', borderRadius: 8, fontSize: 13, color: '#2D1A26', fontWeight: 600 }}
+                        itemStyle={{ color: '#F472B6' }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
 
@@ -2532,6 +2539,15 @@ export default function SyncSplitPage() {
           </div>
         </div>
       </footer>
+      
+      <FeatureOverviewPanel 
+        title="SyncSplit Escrows"
+        whatItIs="A high-speed, Soroban-powered smart escrow system on the Stellar network. Users create split-payment bills, and the smart contract securely holds all collateral. Once all participants have paid their share, the funds are automatically released to the recipient."
+        whyUseIt="Splitting bills in crypto normally requires manual tracking, waiting for individual transfers, and trusting the collector. SyncSplit enforces this logic on-chain—if someone does not pay, the funds stay locked or revert. No counterparty risk."
+        whyEfficient="<ul><li><b>Soroban Sub-Second Finality</b>: Settles splits incredibly fast with near-zero fees compared to EVM alternatives.</li><li><b>Zero-Click Settlement</b>: The smart contract automatically executes the final payout transaction without requiring a manual 'claim' click.</li></ul>"
+        whyBest="It demonstrates how to wrap complex, multi-party escrow logic into a seamless, Web2-like Splitwise interface, abstracting the blockchain away while preserving trustless security."
+        themeColor="#F472B6"
+      />
     </div>
   )
 }

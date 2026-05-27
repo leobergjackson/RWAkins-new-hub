@@ -16,6 +16,7 @@ import CollateralManager from '@/components/vault/CollateralManager'
 import DWalletManager from '@/components/vault/DWalletManager'
 import FHETradeForm from '@/components/vault/FHETradeForm'
 import VaultHistory from '@/components/vault/VaultHistory'
+import FeatureOverviewPanel from '@/components/ui/FeatureOverviewPanel'
 
 export type VaultTabId = 'dashboard' | 'collateral' | 'dwallet' | 'trade' | 'history'
 const VALID: VaultTabId[] = ['dashboard', 'collateral', 'dwallet', 'trade', 'history']
@@ -395,6 +396,14 @@ function VaultInner() {
       <div style={{ textAlign: 'center', padding: '24px', fontSize: '12px', color: 'inherit', opacity: 0.6, fontWeight: 500 }}>
         Built by vsrupeshkumar
       </div>
+      <FeatureOverviewPanel 
+        title="Cross-Chain Privacy Vault"
+        whatItIs="A privacy-preserving custody and trading terminal on Arbitrum. Users deposit collateral (BTC, ETH, SOL) into smart contracts, register MPC (Multi-Party Computation) secured dWallets, and execute private trades using FHE (Fully Homomorphic Encryption)."
+        whyUseIt="Corporate operators need to move assets and hedge positions without exposing their strategies to front-running bots, MEV (Maximal Extractable Value) searchers, or public competitor analysis. The Privacy Vault allows them to interact with DeFi with complete cryptographic confidentiality."
+        whyEfficient="<ul><li><b>Client-Side PBKDF2</b>: Secures access keys before anchoring references, removing the need for a central database.</li><li><b>Inverted Dark UI Overlay</b>: The vault component is wrapped in an inverted contrast filter to signal a high-security sandboxed state.</li></ul>"
+        whyBest="Most privacy solutions (like Tornado Cash) are simple pools with high regulatory friction. The Kubryx Privacy Vault is a <b>multi-purpose execution workspace</b> combining collateral locking, secure MPC dWallets, and homomorphic trading in a unified flow."
+        themeColor="#06B6D4"
+      />
     </div>
   )
 }

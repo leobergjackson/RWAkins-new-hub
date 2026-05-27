@@ -9,6 +9,17 @@ import {
   FALLBACK_RECENT_ACTIVITY,
 } from '@/lib/vault-fallbacks'
 import { type LegacyVaultState } from '@/lib/contracts/eternalVault'
+import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from 'recharts'
+
+const privacyData = [
+  { name: 'Mon', score: 65 },
+  { name: 'Tue', score: 68 },
+  { name: 'Wed', score: 74 },
+  { name: 'Thu', score: 82 },
+  { name: 'Fri', score: 88 },
+  { name: 'Sat', score: 92 },
+  { name: 'Sun', score: 95 },
+]
 
 const ACCENT = CIPHERVAULT_ACCENT
 const BORDER = 'rgba(255,255,255,0.08)'
@@ -159,6 +170,28 @@ export default function VaultDashboard({
           {privacyScore !== undefined && (
             <SummaryRow label="Privacy Score" value={`${privacyScore} / 100`} color={ACCENT} />
           )}
+
+          <div style={{ marginTop: 24, marginBottom: 16 }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: MUTED2, marginBottom: 12 }}>Anonymity Set Trajectory</div>
+            <div style={{ height: 120, width: '100%', marginLeft: -10 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={privacyData}>
+                  <defs>
+                    <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={ACCENT} stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor={ACCENT} stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="name" stroke={BORDER} fontSize={10} tickLine={false} axisLine={false} />
+                  <Tooltip 
+                    contentStyle={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 8, fontSize: 12, color: '#fff' }}
+                    itemStyle={{ color: ACCENT }}
+                  />
+                  <Area type="monotone" dataKey="score" stroke={ACCENT} fillOpacity={1} fill="url(#colorScore)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
 
           <div style={{ display: 'flex', gap: 8, marginTop: 18 }}>
             <button onClick={onGoToCollateral} style={pillBtn(ACCENT, true)}>Deposit More</button>

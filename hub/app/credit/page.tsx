@@ -32,6 +32,17 @@ import { usePrices } from '../../hooks/usePrices'
 import { useKubrykPlatform } from '../../context/KubrykPlatformContext'
 import { getCreditTier, getVaultBoost, getStellarBoost, getTreasuryBoost } from '../../lib/platform/scoring'
 import { PlatformModeBadge } from '../../components/ui/PlatformModeBadge'
+import FeatureOverviewPanel from '../../components/ui/FeatureOverviewPanel'
+import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from 'recharts'
+
+const historyData = [
+  { month: 'Jan', score: 320 },
+  { month: 'Feb', score: 450 },
+  { month: 'Mar', score: 510 },
+  { month: 'Apr', score: 580 },
+  { month: 'May', score: 650 },
+  { month: 'Jun', score: 650 },
+]
 
 // ─── Gauge math ──────────────────────────────────────────────
 const GAUGE_R = 90
@@ -297,6 +308,7 @@ export default function CreditDashboard() {
   const [oraclePrice, setOraclePrice] = useState(2.45)
   const [loading, setLoading] = useState(false)
   const [isDemo, setIsDemo] = useState(false)
+  const [privacyStrict, setPrivacyStrict] = useState(false)
   const [onChain, setOnChain] = useState(false)
   const [passportExists, setPassportExists] = useState<boolean | null>(null)
   const [error, setError] = useState('')
@@ -1086,6 +1098,64 @@ export default function CreditDashboard() {
                   </p>
                 )}
               </div>
+
+              {/* Historical Growth Chart */}
+              <div className="bento-card" style={{ gridColumn: '1 / -1' }}>
+                 <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', color: '#F5A623', margin: '0 0 16px' }}>
+                  HISTORICAL CREDIT GROWTH
+                </p>
+                <div style={{ height: 200, width: '100%', marginLeft: -10 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={historyData}>
+                      <defs>
+                        <linearGradient id="colorCredit" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#F5A623" stopOpacity={0.4}/>
+                          <stop offset="95%" stopColor="#F5A623" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <XAxis dataKey="month" stroke="rgba(45,26,38,0.2)" fontSize={11} tickLine={false} axisLine={false} />
+                      <Tooltip 
+                        contentStyle={{ background: '#FFFBF0', border: '1px solid #FEF08A', borderRadius: 8, fontSize: 13, color: '#2D1A26', fontWeight: 600 }}
+                        itemStyle={{ color: '#F5A623' }}
+                      />
+                      <Area type="monotone" dataKey="score" stroke="#F5A623" fillOpacity={1} fill="url(#colorCredit)" strokeWidth={3} />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* Privacy Settings */}
+              <div className="bento-card" style={{ gridColumn: '1 / -1', background: 'rgba(245,166,35,0.03)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+                  <div>
+                    <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', color: '#F5A623', margin: '0 0 8px' }}>
+                      ON-CHAIN PRIVACY PREFERENCES
+                    </p>
+                    <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.6)', margin: 0, maxWidth: 600 }}>
+                      Control which external chains the oracle is allowed to scan to generate your base score. 
+                      Enabling strict mode masks your secondary wallet histories.
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => { setPrivacyStrict(!privacyStrict); toast.success(`Privacy set to ${!privacyStrict ? 'Strict' : 'Public'}`) }}
+                    style={{
+                      background: privacyStrict ? '#16A34A' : '#E5E7EB',
+                      border: 'none',
+                      borderRadius: 999,
+                      width: 52, height: 28,
+                      position: 'relative',
+                      cursor: 'pointer',
+                      transition: 'background 0.3s'
+                    }}
+                  >
+                    <div style={{
+                      position: 'absolute', top: 2, left: privacyStrict ? 26 : 2,
+                      width: 24, height: 24, background: '#fff', borderRadius: '50%',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)', transition: 'left 0.3s'
+                    }} />
+                  </button>
+                </div>
+              </div>
             </div>
           </>
         )}
@@ -1093,6 +1163,14 @@ export default function CreditDashboard() {
       <div style={{ textAlign: 'center', padding: '24px', fontSize: '12px', color: 'inherit', opacity: 0.6, fontWeight: 500 }}>
         Built by vsrupeshkumar
       </div>
+      <FeatureOverviewPanel 
+        title="Credit Passport"
+        whatItIs="A decentralized reputation scoring registry. It aggregates a user's cross-chain transaction history, staking records, and vault balances to mint a Soulbound NFT (SB-NFT) on QIE Mainnet representing their creditworthiness."
+        whyUseIt="In Web3, lending is almost entirely over-collateralized (e.g., you must deposit $150 to borrow $100) because there is no identity or credit mechanism. The Credit Passport allows users to leverage their historical reputation to unlock under-collateralized loans."
+        whyEfficient="<ul><li><b>Rolling Score Estimator</b>: The client computes score projections locally before dispatching the on-chain minting tx, saving gas costs.</li><li><b>Dynamic Tiering</b>: The UI automatically shifts colors and badges based on the active score tier, providing instant user feedback.</li></ul>"
+        whyBest="It is not just a static badge. The Credit Passport <b>actively unlocks benefits across other Kubryx modules</b>, including lower AI Lending APRs, higher Privacy Vault LTVs, and priority Treasury routing."
+        themeColor="#F5A623"
+      />
     </div>
   )
 }

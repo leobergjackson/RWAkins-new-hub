@@ -28,6 +28,7 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
   const [mode, setMode] = useState<Mode>('deposit')
   const [selected, setSelected] = useState<AssetMeta>(FALLBACK_ASSET_META[1]) // ETH default
   const [amount, setAmount] = useState('')
+  const [targetHealth, setTargetHealth] = useState(1.5)
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState<null | { amount: string; usd: number; tx: string }>(null)
 
@@ -47,13 +48,21 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
 
   async function simulate() {
     setSubmitting(true)
-    await new Promise(r => setTimeout(r, 800))
-    setSuccess({
-      amount: `${amount} ${selected.symbol}`,
-      usd: usdValue,
-      tx: `0x${Math.random().toString(16).slice(2, 8)}…${Math.random().toString(16).slice(2, 8)}`,
-    })
-    setSubmitting(false)
+    try {
+      // Simulate real network fetch to get current arbitrum gas or backend response
+      const apiBase = process.env.NEXT_PUBLIC_CIPHER_URL || ''
+      if (apiBase) {
+        await fetch(`${apiBase}/health`).catch(() => {})
+      }
+      await new Promise(r => setTimeout(r, 800))
+      setSuccess({
+        amount: `${amount} ${selected.symbol}`,
+        usd: usdValue,
+        tx: `0x${Math.random().toString(16).slice(2, 8)}…${Math.random().toString(16).slice(2, 8)}`,
+      })
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   function reset() {
@@ -183,12 +192,29 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
             <span>≈ ${usdValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
           </div>
 
-          {/* Impact */}
+          {/* Impact & Target Health */}
           <div style={{
             marginTop: 18, padding: 14,
             background: 'rgba(255,255,255,0.02)',
             border: `1px solid ${BORDER}`, borderRadius: 8,
           }}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED2, marginBottom: 12 }}>
+              Target Health Settings
+            </div>
+            
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: MUTED, marginBottom: 8 }}>
+                <span>Target Health Factor</span>
+                <span style={{ fontFamily: MONO, fontWeight: 700, color: healthColor(targetHealth * 100) }}>{targetHealth.toFixed(2)}</span>
+              </div>
+              <input 
+                type="range" min="1.1" max="3.0" step="0.1" 
+                value={targetHealth} 
+                onChange={e => setTargetHealth(parseFloat(e.target.value))}
+                style={{ width: '100%', accentColor: healthColor(targetHealth * 100) }}
+              />
+            </div>
+
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED2, marginBottom: 8 }}>
               Collateral Impact
             </div>
