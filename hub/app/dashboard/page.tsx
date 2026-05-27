@@ -24,6 +24,7 @@ import LiveCrossChainPulse from '@/components/ui/LiveCrossChainPulse'
 import DailyBriefing from '@/components/ui/DailyBriefing'
 import WalletPortfolio from '@/components/ui/WalletPortfolio'
 import ArbitrumActivity from '@/components/ui/ArbitrumActivity'
+import AgentSafetyWidget from '@/components/ui/AgentSafetyWidget'
 
 /* ── Theme — light, landing-page aesthetic ──────────── */
 const BG      = '#FAFBFF'
@@ -910,6 +911,9 @@ export default function DashboardPage() {
           <div style={{ margin: '0 24px 24px' }}>
             <LiveCrossChainPulse theme="light" />
           </div>
+
+          {/* AI agent safety — deterministic policy enforcement (headline differentiator) */}
+          <AgentSafetyWidget />
 
           {/* Cross-chain wallet portfolio (Moralis) */}
           <WalletPortfolio />
