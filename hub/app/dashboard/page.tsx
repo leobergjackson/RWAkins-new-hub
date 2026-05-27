@@ -608,26 +608,18 @@ export default function DashboardPage() {
   }
 
   return (
+    // AppShell (app/components/AppShell.tsx) now wraps /dashboard too, so the
+    // KubrykSidebar + TopBar persist across navigation between dashboard and
+    // any other hub tool. This component just renders the dashboard panel
+    // content; layout chrome lives one level up.
     <div style={{
-      display: 'flex',
-      height: '100vh',
-      width: '100vw',
+      minHeight: '100%',
       background: BG,
       color: INK,
       fontFamily: '"Inter",system-ui,sans-serif',
-      overflow: 'hidden',
+      position: 'relative',
     }}>
-      {/* Sidebar */}
-      <DashSidebar
-        mobileOpen={mobileOpen}
-        onMobileClose={() => setMobileOpen(false)}
-        wallet={wallet}
-        onDisconnect={handleDisconnect}
-        isMobile={isMobile}
-      />
-
-      {/* Main panel */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0, position: 'relative' }}>
+      <div style={{ position: 'relative' }}>
         {/* Ambient gradient + floating orbs — light theme, soft pastel auras */}
         <div aria-hidden="true" style={{
           position: 'absolute',
@@ -648,62 +640,8 @@ export default function DashboardPage() {
           }} />
         </div>
 
-        {/* Header */}
-        <header style={{
-          flexShrink: 0,
-          height: 60,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 24px',
-          borderBottom: `1px solid ${BORDER}`,
-          background: 'rgba(255,255,255,0.78)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          position: 'sticky',
-          top: 0,
-          zIndex: 10,
-          gap: 12,
-        }}>
-          {/* Left — mobile hamburger + breadcrumb */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            {isMobile && (
-              <button aria-label="Toggle Menu" onClick={() => setMobileOpen(v => !v)} style={{
-                background: 'none', border: `1px solid ${BORDER}`, color: MUTED,
-                borderRadius: 8, width: 36, height: 36, display: 'grid', placeItems: 'center',
-                cursor: 'pointer', fontSize: 16, flexShrink: 0,
-              }}>☰</button>
-            )}
-            <div style={{ fontSize: 13, color: MUTED, display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ color: ACCENT, fontSize: 14 }}>✦</span>
-              <span style={{ fontWeight: 700, color: INK }}>Kubryx</span>
-              <span style={{ color: MUTED2 }}>/</span>
-              <span style={{ color: MUTED2 }}>Overview</span>
-            </div>
-          </div>
-
-          {/* Right — search + status + wallet */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            {!isMobile && <SearchBar />}
-            {(() => {
-              const isLive = stats ? stats.isLive : true
-              const badgeClass = isLive ? 'badge-live' : 'badge-demo'
-              const badgeLabel = isMobile
-                ? (isLive ? 'Live' : 'Degraded')
-                : (isLive ? 'Live Dashboard' : 'Partial Outage')
-              return (
-                <div className={badgeClass}>
-                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: isLive ? '#10b981' : '#f59e0b', flexShrink: 0 }} />
-                  {badgeLabel}
-                </div>
-              )
-            })()}
-            <ConnectButton type="auto" size="sm" />
-          </div>
-        </header>
-
-        {/* Body — scrollable */}
-        <div style={{ flex: 1, overflowY: 'auto', position: 'relative', zIndex: 1 }}>
+        {/* Body — no duplicate header; AppShell's TopBar lives above this */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
 
           {/* Hero greeting strip */}
           <section style={{ padding: '28px 24px 8px', position: 'relative' }}>

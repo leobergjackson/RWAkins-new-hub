@@ -12,8 +12,12 @@ import { WalletPlatformSync } from '../../components/wallet/WalletPlatformSync'
 import { useBackendWarmup } from '../../hooks/useBackendWarmup'
 
 /* Paths that render inside the hub shell (sidebar + topbar).
-   /dashboard is self-contained — it owns its own sidebar. */
+   /dashboard now uses the shared sidebar too — clicking a sidebar link from
+   /dashboard to any tool just swaps the main panel content, the sidebar
+   persists across navigation. One coherent experience instead of two
+   competing sidebars. */
 const HUB_PREFIXES: string[] = [
+  '/dashboard',
   '/credit', '/legacy', '/agents', '/vault', '/split', '/lend', '/treasury', '/shadow',
   '/performance', '/architecture', '/developers', '/governance', '/operations', '/executive',
   '/security', '/coordination', '/policies', '/integrations', '/ecosystem', '/analytics',
