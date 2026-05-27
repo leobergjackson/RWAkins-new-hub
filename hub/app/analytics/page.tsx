@@ -46,6 +46,11 @@ export default function AnalyticsPage() {
     activeConflict
   } = useCivilizationOrchestration()
 
+  // Defer Recharts until after hydration — ResponsiveContainer measures the
+  // DOM, which doesn't exist during SSR (would emit width(-1) build warnings).
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+
   const [ticks, setTicks] = useState<number>(0)
   
   // Rolling latency datasets
@@ -220,6 +225,7 @@ export default function AnalyticsPage() {
           <div style={{ height: 260, background: '#020202', padding: 14, border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6, display: 'flex', flexDirection: 'column' }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 8 }}>Coalition Stability Trajectory</span>
             <div style={{ flex: 1, minHeight: 0 }}>
+              {mounted && (
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={coalitionData}>
                   <defs>
@@ -236,6 +242,7 @@ export default function AnalyticsPage() {
                   <Area type="monotone" dataKey="alignment" name="Alignment" stroke="#10B981" fillOpacity={0} />
                 </AreaChart>
               </ResponsiveContainer>
+              )}
             </div>
           </div>
 
@@ -312,7 +319,8 @@ export default function AnalyticsPage() {
             Measures response speed (ms) and fallback activations. Spikes indicate active simulated RPC congestion.
           </p>
           <div style={{ flex: 1, minHeight: 0 }}>
-            <ResponsiveContainer width="100%" height="100%">
+            {mounted && (
+              <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={latencyData}>
                 <defs>
                   <linearGradient id="latencyGrad" x1="0" y1="0" x2="0" y2="1">
@@ -329,6 +337,7 @@ export default function AnalyticsPage() {
                 <Area type="monotone" dataKey="latency" name="Latency" stroke="#F5C518" strokeWidth={2} fillOpacity={1} fill="url(#latencyGrad)" />
               </AreaChart>
             </ResponsiveContainer>
+              )}
           </div>
         </article>
 
@@ -339,7 +348,8 @@ export default function AnalyticsPage() {
             Rolling transactions per second processed across connected EVM, SVM, and Stellar smart nodes.
           </p>
           <div style={{ flex: 1, minHeight: 0 }}>
-            <ResponsiveContainer width="100%" height="100%">
+            {mounted && (
+              <ResponsiveContainer width="100%" height="100%">
               <LineChart data={tpsData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                 <XAxis dataKey="name" stroke="#666" fontSize={10} />
@@ -352,6 +362,7 @@ export default function AnalyticsPage() {
                 <Line type="monotone" dataKey="QIE" stroke="#F5C518" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
+              )}
           </div>
         </article>
 
@@ -362,7 +373,8 @@ export default function AnalyticsPage() {
             Measures Natural Language negotiation loops and automated audit streams dispatched to AI nodes.
           </p>
           <div style={{ flex: 1, minHeight: 0 }}>
-            <ResponsiveContainer width="100%" height="100%">
+            {mounted && (
+              <ResponsiveContainer width="100%" height="100%">
               <BarChart data={aiData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                 <XAxis dataKey="name" stroke="#666" fontSize={10} />
@@ -371,6 +383,7 @@ export default function AnalyticsPage() {
                 <Bar dataKey="requests" name="Queries" fill="#F5C518" radius={[4, 4, 0, 0]} barSize={35} />
               </BarChart>
             </ResponsiveContainer>
+              )}
           </div>
         </article>
 
@@ -381,7 +394,8 @@ export default function AnalyticsPage() {
             Correlates connected wallet extensions with aggregate verified cryptographic transaction loops.
           </p>
           <div style={{ flex: 1, minHeight: 0 }}>
-            <ResponsiveContainer width="100%" height="100%">
+            {mounted && (
+              <ResponsiveContainer width="100%" height="100%">
               <BarChart data={walletData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                 <XAxis dataKey="name" stroke="#666" fontSize={10} />
@@ -392,6 +406,7 @@ export default function AnalyticsPage() {
                 <Bar dataKey="transactions" name="Verified Handshakes" fill="#4B5563" />
               </BarChart>
             </ResponsiveContainer>
+              )}
           </div>
         </article>
 

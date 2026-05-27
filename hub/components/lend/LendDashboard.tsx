@@ -1,5 +1,6 @@
 // Built by vsrupeshkumar
 'use client'
+import { useEffect, useState } from 'react'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Area, AreaChart } from 'recharts'
 import { LENDORA_ACCENT, FALLBACK_LEND_STATS, FALLBACK_MY_POSITIONS, FALLBACK_RATE_HISTORY, FALLBACK_AI_ACTIVITY } from '@/lib/lend-fallbacks'
 import { useKubrykPlatform } from '@/context/KubrykPlatformContext'
@@ -22,6 +23,10 @@ export default function LendDashboard({ onGoToBorrow, onGoToLoans }: { onGoToBor
   const liveScore = platform.creditScore
   const rateStr = TIER_BORROW_RATES[tier.name] ?? '18.9%'
   const liveRate = `${rateStr} APR`
+  // ResponsiveContainer can't measure its parent during SSR, so we hold off
+  // rendering until after hydration. Prevents the noisy width(-1) build warning.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
   return (
     <div style={{ padding: 28, display: 'flex', flexDirection: 'column', gap: 24 }}>
 
@@ -53,20 +58,22 @@ export default function LendDashboard({ onGoToBorrow, onGoToLoans }: { onGoToBor
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>Rate History</div>
             <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>30 days · supply vs borrow</div>
           </div>
-          <ResponsiveContainer width="100%" height={240}>
-            <AreaChart data={FALLBACK_RATE_HISTORY}>
-              <defs>
-                <linearGradient id="sup" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={A} stopOpacity={0.3} /><stop offset="95%" stopColor={A} stopOpacity={0} /></linearGradient>
-                <linearGradient id="bor" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#ef4444" stopOpacity={0.2} /><stop offset="95%" stopColor="#ef4444" stopOpacity={0} /></linearGradient>
-              </defs>
-              <CartesianGrid stroke="rgba(255,255,255,0.05)" vertical={false} />
-              <XAxis dataKey="date" tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} interval={4} />
-              <YAxis tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} unit="%" />
-              <Tooltip contentStyle={{ background: '#080808', border: `1px solid ${BORDER}`, borderRadius: 8, fontSize: 12 }} />
-              <Area type="monotone" dataKey="supplyAPY" name="Supply APY" stroke={A} fill="url(#sup)" strokeWidth={2} />
-              <Area type="monotone" dataKey="borrowAPR" name="Borrow APR" stroke="#ef4444" fill="url(#bor)" strokeWidth={2} />
-            </AreaChart>
-          </ResponsiveContainer>
+          {mounted && (
+            <ResponsiveContainer width="100%" height={240}>
+              <AreaChart data={FALLBACK_RATE_HISTORY}>
+                <defs>
+                  <linearGradient id="sup" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={A} stopOpacity={0.3} /><stop offset="95%" stopColor={A} stopOpacity={0} /></linearGradient>
+                  <linearGradient id="bor" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#ef4444" stopOpacity={0.2} /><stop offset="95%" stopColor="#ef4444" stopOpacity={0} /></linearGradient>
+                </defs>
+                <CartesianGrid stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <XAxis dataKey="date" tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} interval={4} />
+                <YAxis tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} unit="%" />
+                <Tooltip contentStyle={{ background: '#080808', border: `1px solid ${BORDER}`, borderRadius: 8, fontSize: 12 }} />
+                <Area type="monotone" dataKey="supplyAPY" name="Supply APY" stroke={A} fill="url(#sup)" strokeWidth={2} />
+                <Area type="monotone" dataKey="borrowAPR" name="Borrow APR" stroke="#ef4444" fill="url(#bor)" strokeWidth={2} />
+              </AreaChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
         <div style={{ background: CARD, border: `1px solid ${A}40`, borderRadius: 12, padding: 24 }}>

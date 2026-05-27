@@ -352,7 +352,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const refreshBalances = useCallback(async () => {
     if (evm.address) await loadEVMDetails(evm.address)
     if (solana.address) await loadSolanaDetails(solana.address)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [evm.address, solana.address])
 
   // ─ EVM auto-reconnect ──────────────────────────────────────────────────────
@@ -369,7 +369,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         else disconnectEVM()
       })
       .catch(() => {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [])
 
   // ─ EVM event listeners ─────────────────────────────────────────────────────
@@ -396,7 +396,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       eth.removeListener('accountsChanged', onAccounts)
       eth.removeListener('chainChanged', onChain)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [])
 
   // ─ Solana auto-reconnect + listeners ───────────────────────────────────────
@@ -420,7 +420,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       ph.removeListener?.('disconnect', onDisconnect)
       ph.removeListener?.('accountChanged', onAccountChanged)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [])
 
   return (

@@ -52,7 +52,7 @@ export default function DashboardPage() {
       setFeed(PF_ACTIVITY_POOL.slice(0, 5).map((x, i) => ({ ...x, id:`f${i}`, ts: nowTs() })))
       if (p?.totalValue) platform.setTreasury(p.totalValue)
     })
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])  
 
   /* ticker pulse */
   useEffect(() => {

@@ -142,7 +142,7 @@ export default function LendPage() {
 
   useEffect(() => {
     addAIMsg(CHAT_GREETING)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [])
 
   // Load the score breakdown whenever a wallet is connected.

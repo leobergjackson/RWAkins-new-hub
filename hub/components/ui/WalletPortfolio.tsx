@@ -258,7 +258,7 @@ function ChainCard({ chain, loading }: { chain: ChainHoldings; loading: boolean 
           {chain.tokens.map(t => (
             <div key={`${t.symbol}-${t.name}`} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '4px 0' }}>
               {t.logo ? (
-                // eslint-disable-next-line @next/next/no-img-element
+                 
                 <img src={t.logo} alt={t.symbol} width={22} height={22} style={{ borderRadius: '50%', flexShrink: 0 }} />
               ) : (
                 <div style={{ width: 22, height: 22, borderRadius: '50%', background: `${chain.chainColor}25`, color: chain.chainColor, display: 'grid', placeItems: 'center', fontSize: 10, fontWeight: 800, flexShrink: 0 }}>

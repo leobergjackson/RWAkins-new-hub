@@ -182,7 +182,7 @@ export default function LendingDemoPage() {
   // Load lending offers whenever a wallet is connected.
   useEffect(() => {
     if (wallet) loadOffers(wallet)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [wallet])
 
   async function loadOffers(addr: string) {

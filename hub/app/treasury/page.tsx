@@ -84,7 +84,7 @@ export default function TreasuryLanding() {
       setLastUpdated(Date.now())
       if (trustmesh.currentSlot) platform.setSolanaSlot(trustmesh.currentSlot)
     }
-  }, [trustmesh.currentSlot, trustmesh.isLive]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [trustmesh.currentSlot, trustmesh.isLive])  
 
   function copyOperator() {
     navigator.clipboard.writeText(TRUSTMESH_OWNER_WALLET).then(() => {

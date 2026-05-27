@@ -157,7 +157,7 @@ export default function SyncSplitPage() {
       const payments = stellarStats?.totalTransactions ?? 0
       platform.setStellar(balance, payments)
     }
-  }, [stellarStats, stellarLive]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [stellarStats, stellarLive])  
 
   // Cursor position
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 })

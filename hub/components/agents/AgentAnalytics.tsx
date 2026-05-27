@@ -46,6 +46,10 @@ const TOOLTIP_STYLE = {
 export default function AgentAnalytics() {
   const [data, setData] = useState<AnalyticsResponse>(fallbackAnalytics)
   const [loading, setLoading] = useState(true)
+  // Defer Recharts ResponsiveContainer until after hydration — otherwise
+  // it tries to measure during SSR with no DOM and logs noisy width(-1).
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -107,15 +111,17 @@ export default function AgentAnalytics() {
               Last 24 hours · hourly
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={240}>
-            <BarChart data={FALLBACK_HOURLY_JOBS} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
-              <CartesianGrid stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="hour" tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} interval={3} />
-              <YAxis tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} />
-              <Tooltip {...TOOLTIP_STYLE} />
-              <Bar dataKey="jobs" fill={ACCENT} radius={[3, 3, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+          {mounted && (
+            <ResponsiveContainer width="100%" height={240}>
+              <BarChart data={FALLBACK_HOURLY_JOBS} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+                <CartesianGrid stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="hour" tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} interval={3} />
+                <YAxis tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} />
+                <Tooltip {...TOOLTIP_STYLE} />
+                <Bar dataKey="jobs" fill={ACCENT} radius={[3, 3, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
         {/* Donut chart */}
@@ -129,28 +135,30 @@ export default function AgentAnalytics() {
             </div>
           </div>
           <div style={{ position: 'relative' }}>
-            <ResponsiveContainer width="100%" height={220}>
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  dataKey="value" nameKey="name"
-                  cx="50%" cy="50%"
-                  innerRadius={56} outerRadius={88}
-                  stroke="rgba(0,0,0,0.4)"
-                  isAnimationActive={false}
-                >
-                  {pieData.map((s, i) => (
-                    <Cell key={i} fill={STATUS_COLORS[s.key]} />
-                  ))}
-                </Pie>
-                <Tooltip {...TOOLTIP_STYLE} />
-                <Legend
-                  iconType="circle"
-                  wrapperStyle={{ fontSize: 11, color: MUTED }}
-                  formatter={(v: string) => <span style={{ color: MUTED }}>{v}</span>}
-                />
-              </PieChart>
-            </ResponsiveContainer>
+            {mounted && (
+              <ResponsiveContainer width="100%" height={220}>
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    dataKey="value" nameKey="name"
+                    cx="50%" cy="50%"
+                    innerRadius={56} outerRadius={88}
+                    stroke="rgba(0,0,0,0.4)"
+                    isAnimationActive={false}
+                  >
+                    {pieData.map((s, i) => (
+                      <Cell key={i} fill={STATUS_COLORS[s.key]} />
+                    ))}
+                  </Pie>
+                  <Tooltip {...TOOLTIP_STYLE} />
+                  <Legend
+                    iconType="circle"
+                    wrapperStyle={{ fontSize: 11, color: MUTED }}
+                    formatter={(v: string) => <span style={{ color: MUTED }}>{v}</span>}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
             <div style={{
               position: 'absolute', top: '38%', left: 0, right: 0,
               textAlign: 'center', pointerEvents: 'none',

@@ -68,7 +68,7 @@ export default function AgentDashboard() {
     if (trustmesh.isLive && trustmesh.currentSlot > 0) {
       platform.setSolanaSlot(trustmesh.currentSlot)
     }
-  }, [trustmesh.currentSlot, trustmesh.isLive]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [trustmesh.currentSlot, trustmesh.isLive])  
 
   const stats = [
     { ...DASH_STAT_PLACEHOLDERS[0], value: String(analytics.stats.activeAgents ?? 0) },

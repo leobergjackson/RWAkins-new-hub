@@ -97,7 +97,7 @@ function VaultInner() {
       })
       .catch(() => {})
     return () => { mounted = false }
-  }, [wallet]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [wallet])  
 
   useEffect(() => {
     if (!mounted) return

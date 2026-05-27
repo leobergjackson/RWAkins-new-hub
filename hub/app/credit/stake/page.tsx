@@ -132,7 +132,7 @@ export default function StakePage() {
   // Load staking data whenever a wallet is connected.
   useEffect(() => {
     if (wallet) loadStaking(wallet)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [wallet])
 
   // Wraps window.ethereum's eth_sendTransaction for on-chain writes.

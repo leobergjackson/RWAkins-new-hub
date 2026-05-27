@@ -275,7 +275,7 @@ export default function ShadowPage() {
   }
 
   useEffect(() => { runInit() }, [])
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
 
   // Auto-append activity in demo
   useEffect(() => {
