@@ -26,6 +26,7 @@ import DailyBriefing from '@/components/ui/DailyBriefing'
 import WalletPortfolio from '@/components/ui/WalletPortfolio'
 import ArbitrumActivity from '@/components/ui/ArbitrumActivity'
 import AgentSafetyWidget from '@/components/ui/AgentSafetyWidget'
+import { getInvoiceStats } from '@/lib/invoice/invoiceStore'
 
 /* ── Theme — light, landing-page aesthetic ──────────── */
 const BG      = '#FAFBFF'
@@ -466,6 +467,52 @@ function ProtocolActivity() {
   )
 }
 
+/* ── Invoice Activity Card ───────────────────────────── */
+function InvoiceActivityCard() {
+  const [stats, setStats] = useState<{ totalCreated: number; totalPaid: number; totalUSDC: number; lastCreated: string | null } | null>(null)
+
+  useEffect(() => {
+    setStats(getInvoiceStats())
+  }, [])
+
+  if (!stats) return null
+
+  return (
+    <div style={{ padding: '20px 24px 0' }}>
+      <div style={{
+        background: 'rgba(200,255,0,0.03)',
+        border: '1px solid rgba(200,255,0,0.15)',
+        borderRadius: 16, padding: '16px 20px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16,
+      }}>
+        <div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#C8FF00', marginBottom: 4 }}>
+            Invoice Activity
+          </div>
+          <div style={{ fontSize: 13, color: MUTED }}>
+            {stats.totalCreated === 0
+              ? 'No invoices yet — create your first'
+              : `${stats.totalCreated} created · ${stats.totalPaid} paid · $${stats.totalUSDC.toFixed(2)} USDC received`}
+          </div>
+          {stats.lastCreated && (
+            <div style={{ fontSize: 11, color: MUTED2, marginTop: 4 }}>
+              Last: {new Date(stats.lastCreated).toLocaleDateString()}
+            </div>
+          )}
+        </div>
+        <Link href="/invoice" style={{
+          display: 'inline-flex', alignItems: 'center', gap: 8,
+          padding: '8px 16px', borderRadius: 999, fontSize: 13, fontWeight: 700,
+          background: 'rgba(200,255,0,0.1)', color: '#C8FF00',
+          border: '1px solid rgba(200,255,0,0.25)', textDecoration: 'none',
+        }}>
+          📄 Create Invoice
+        </Link>
+      </div>
+    </div>
+  )
+}
+
 /* ── Search ─────────────────────────────────────────── */
 function SearchBar() {
   const [q, setQ] = useState('')
@@ -698,6 +745,9 @@ export default function DashboardPage() {
           }}>
             {statCards.map(card => <StatCard key={card.label} card={card} />)}
           </div>
+
+          {/* Invoice Activity Card */}
+          <InvoiceActivityCard />
 
           {/* Platform Identity — unified cross-module credit signal */}
           <div style={{ padding: '20px 24px 0' }}>

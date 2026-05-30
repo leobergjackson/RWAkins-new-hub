@@ -17,6 +17,19 @@ export interface ToolConfig {
 
 export const TOOLS: ToolConfig[] = [
   {
+    route: '/invoice',
+    name: 'Invoice',
+    tagline: 'AI-parsed USDC invoicing',
+    description: 'Paste any invoice — AI reads it, generates a payment link, client pays in USDC on Arbitrum in seconds.',
+    icon: '📄',
+    category: 'Payments',
+    chain: 'Arbitrum Sepolia',
+    status: 'Live',
+    color: '#C8FF00',
+    walletType: 'evm',
+    networkKey: 'ARBITRUM_SEPOLIA',
+  },
+  {
     route: '/credit',
     name: 'Credit Passport',
     tagline: 'AI Credit Scoring',

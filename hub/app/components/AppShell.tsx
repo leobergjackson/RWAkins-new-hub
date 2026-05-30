@@ -18,6 +18,7 @@ import { useBackendWarmup } from '../../hooks/useBackendWarmup'
    persists across navigation. One coherent experience instead of two
    competing sidebars. */
 const HUB_PREFIXES: string[] = [
+  '/invoice',
   '/dashboard',
   '/credit', '/legacy', '/agents', '/vault', '/split', '/lend', '/treasury', '/shadow',
   '/performance', '/architecture', '/developers', '/governance', '/operations', '/executive',

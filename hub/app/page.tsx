@@ -4,10 +4,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, type Variants } from 'framer-motion'
 import Link from 'next/link'
-import { MessageCircle, ArrowUp, ArrowRight, ArrowUpRight, Check, X, Search, RefreshCw, Lock } from 'lucide-react'
+import { MessageCircle, ArrowUp, ArrowRight, ArrowUpRight, Check, X, FileText, Zap, Wallet, Shield, CreditCard, TrendingUp, Bot, Lock, RefreshCw, Search } from 'lucide-react'
 import Navbar from './components/Navbar'
 import LiveStatsStrip from '@/components/ui/LiveStatsStrip'
-import { useTrustMesh as useTrustMeshForStats } from '@/hooks/useTrustMesh'
 
 // ─── Animation variants ───────────────────────────────────────
 const fadeUp: Variants = {
@@ -16,7 +15,6 @@ const fadeUp: Variants = {
 }
 const stagger: Variants = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
-// ─── Hooks ───────────────────────────────────────────────────
 function useWindowWidth(): number {
   const [w, setW] = useState(1200)
   useEffect(() => {
@@ -47,56 +45,6 @@ function useCountUp(target: number, active: boolean): number {
   return v
 }
 
-// ─── Data ────────────────────────────────────────────────────
-const TOOLS = [
-  { icon: '◈', name: 'Credit Passport', href: '/credit', tagline: 'AI Credit Scoring', desc: 'Generate your on-chain credit score as a soulbound NFT. Every DeFi protocol reads your score with a single contract call.', chain: 'Arbitrum', chainColor: '#F5A623', badge: 'Identity' },
-  { icon: '⬟', name: 'Family Vault', href: '/legacy', tagline: 'Encrypted Inheritance', desc: 'Store your most important files with AES-GCM encryption. Heirs unlock access on-chain after validator attestation.', chain: 'Arbitrum', chainColor: '#F5A623', badge: 'Security' },
-  { icon: '⬡', name: 'Agent Coordinator', href: '/agents', tagline: 'AI Agent Coordination', desc: 'Deploy AI agents with verified on-chain identities. Every delegation is Ed25519 signed and permanently logged.', chain: 'Arbitrum Sepolia', chainColor: '#9945FF', badge: 'AI' },
-  { icon: '🔐', name: 'Private Vault', href: '/vault', tagline: 'Cross-Chain Privacy', desc: 'Trade assets across chains with complete privacy. Zero transaction metadata exposed to any observer.', chain: 'Multi', chainColor: '#06B6D4', badge: 'Privacy' },
-  { icon: '◆', name: 'Bill Split', href: '/split', tagline: 'On-Chain Bill Splitting', desc: 'Split bills using smart contracts on Arbitrum. Multi-wallet support with automatic settlement on full payment.', chain: 'Arbitrum', chainColor: '#3B82F6', badge: 'Payments' },
-  { icon: '◎', name: 'AI Lending', href: '/lend', tagline: 'DeFi Loan Negotiation', desc: 'AI agents negotiate your loan terms in natural language. Zero-knowledge credit verification. L2 settlement.', chain: 'ETH L2', chainColor: '#6366F1', badge: 'DeFi' },
-  { icon: '◇', name: 'Yield Operations Hub', href: '/treasury', tagline: 'Autonomous Yield Management', desc: 'AI agents manage your treasury, stream payroll per-second, enforce governance, and optimize yield automatically.', chain: 'Arbitrum Sepolia', chainColor: '#10B981', badge: 'Yield' },
-  { icon: '▲', name: 'Stealth Execution Suite', href: '/shadow', tagline: 'Invisible Operations', desc: 'Run your entire financial organization invisibly on-chain. Seven specialized AI agents. Fully autonomous.', chain: 'Arbitrum Sepolia', chainColor: '#64748B', badge: 'Enterprise' },
-]
-
-const STATS = [
-  { value: 8, suffix: '+', label: 'Powerful tools in one platform' },
-  { value: 4, suffix: '', label: 'Blockchains: Arbitrum · Arbitrum Sepolia · Arbitrum · ETH' },
-  { value: 7, suffix: '+', label: 'Live backends with on-chain data' },
-]
-
-const FEATURES = [
-  { num: '01', title: 'One Wallet. Every Tool.', desc: 'Connect MetaMask, Phantom, or Freighter once per chain. Access every tool instantly without reconnecting.' },
-  { num: '02', title: 'Real On-Chain Data Only', desc: 'Every number, every score, every transaction comes from live deployed smart contracts. Zero mock data.' },
-  { num: '03', title: 'AI Runs Every Tool', desc: 'Credit scoring, loan negotiation, agent coordination, Yield Operations Hub management — AI powers every feature.' },
-  { num: '04', title: 'One Chain, One Dashboard', desc: 'Arbitrum, Arbitrum Sepolia, Arbitrum, and Ethereum L2 — all accessible from one unified interface without switching apps.' },
-]
-
-const CHAINS = [
-  { name: 'Arbitrum Mainnet', id: 'Chain ID: 1990', color: '#F5A623', glyph: '⬡', tools: 'Credit Passport · Family Vault' },
-  { name: 'Arbitrum Sepolia', id: 'Mainnet Beta', color: '#9945FF', glyph: '◎', tools: 'Agent Coordinator · Yield Operations Hub · Stealth Execution Suite' },
-  { name: 'Arbitrum', id: 'Soroban', color: '#3B82F6', glyph: '✦', tools: 'Bill Split' },
-  { name: 'Ethereum L2', id: 'Arbitrum', color: '#6366F1', glyph: '◆', tools: 'AI Lending · Private Vault' },
-]
-
-const TESTIMONIALS = [
-  { quote: 'Credit Passport issues a soulbound NFT on Arbitrum Mainnet. Any DeFi protocol can verify your score with a single on-chain read — no oracles, no off-chain trust.', name: 'Credit Passport', title: 'Arbitrum Mainnet · Chain ID 1990', avatar: '◈' },
-  { quote: 'Agent Coordinator logs every AI delegation as an Ed25519-signed Arbitrum Sepolia account. Rogue or hallucinating agents cannot act without a valid on-chain proof of authority.', name: 'Agent Coordinator', title: 'Arbitrum Sepolia Devnet · TrustMesh Protocol', avatar: '⬡' },
-  { quote: 'Stealth Execution Suite runs CFO, Payroll, Compliance, Audit, Procurement, Tax and Risk agents autonomously. The entire corporate stack, invisible on-chain.', name: 'Stealth Execution Suite', title: 'Arbitrum Sepolia · 7 Autonomous AI Agents', avatar: '▲' },
-]
-
-const LOGOS = ['Arbitrum Network', 'Arbitrum Sepolia', 'Arbitrum', 'Ethereum', 'Arbitrum', 'Anchor Protocol', 'Soroban', 'Groq']
-
-const CHAIN_SWATCHES: Record<string, string> = {
-  'Arbitrum Network': 'linear-gradient(135deg,#F5C518,#FFA800)',
-  'Arbitrum Sepolia': 'linear-gradient(135deg,#9945FF,#14F195)',
-  'Arbitrum': 'linear-gradient(135deg,#2D374B,#28A0F0)',
-  'Ethereum': 'linear-gradient(135deg,#6366F1,#8B5CF6)',
-  'Anchor Protocol': 'linear-gradient(135deg,#4A6CFE,#A5B4FC)',
-  'Soroban': 'linear-gradient(135deg,#000,#3B82F6)',
-  'Groq': 'linear-gradient(135deg,#FF6B35,#F5A623)',
-}
-
 // ─── Shared utility components ────────────────────────────────
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -114,7 +62,7 @@ function GradBtn({ href, children, className = '' }: { href: string; children: R
     <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} style={{ display: 'inline-flex' }}>
       <Link href={href} className={`btn-gradient ${className}`} style={{
         display: 'inline-flex', alignItems: 'center', gap: 8,
-        borderRadius: 999, padding: '12px 28px', fontSize: 15,
+        borderRadius: 999, padding: '14px 32px', fontSize: 16,
         fontWeight: 700, textDecoration: 'none', color: '#fff',
       }}>
         {children}
@@ -123,12 +71,12 @@ function GradBtn({ href, children, className = '' }: { href: string; children: R
   )
 }
 
-function GhostBtn({ href, children }: { href: string; children: React.ReactNode }) {
+function GhostBtn({ href, children, scroll = false }: { href: string; children: React.ReactNode; scroll?: boolean }) {
   return (
     <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} style={{ display: 'inline-flex' }}>
       <Link href={href} className="btn-ghost" style={{
         display: 'inline-flex', alignItems: 'center', gap: 8,
-        borderRadius: 999, padding: '12px 28px', fontSize: 15,
+        borderRadius: 999, padding: '14px 32px', fontSize: 16,
         fontWeight: 600, textDecoration: 'none', color: '#0A0F2E',
       }}>
         {children}
@@ -137,76 +85,64 @@ function GhostBtn({ href, children }: { href: string; children: React.ReactNode 
   )
 }
 
-// ─── HERO ────────────────────────────────────────────────────
-function FloatingPill({ label, color, style, delay }: { label: string; color: string; style: React.CSSProperties; delay: number }) {
+// ─── HERO ─────────────────────────────────────────────────────
+function InvoiceCard() {
   return (
-    <div className="float-anim" style={{ position: 'absolute', animationDelay: `${delay}s`, ...style }}>
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: 8,
-        background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(8px)',
-        borderRadius: 999, padding: '6px 14px 6px 8px',
-        border: '1px solid rgba(255,255,255,0.9)',
-        boxShadow: '0 10px 30px rgba(15,23,42,0.1)',
-      }}>
-        <span style={{ width: 20, height: 20, borderRadius: '50%', background: color, boxShadow: 'inset 0 0 0 2px rgba(255,255,255,0.6)' }} />
-        <span style={{ fontSize: 12, fontWeight: 700, color: '#0A0F2E' }}>{label}</span>
+    <motion.div
+      animate={{ y: [-8, 8, -8], rotate: [0, 1, -1, 0] }}
+      transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}
+      style={{
+        width: 300, background: '#fff', borderRadius: 24,
+        boxShadow: '0 40px 100px -20px rgba(59,91,250,0.25), 0 0 0 1px rgba(59,91,250,0.08)',
+        padding: 28, display: 'flex', flexDirection: 'column', gap: 16,
+        position: 'relative', zIndex: 10,
+      }}
+    >
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{
+          width: 36, height: 36, borderRadius: 10,
+          background: 'linear-gradient(135deg, #C8FF00, #86efac)',
+          display: 'grid', placeItems: 'center',
+        }}>
+          <FileText size={16} color="#000" />
+        </div>
+        <div style={{
+          fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase',
+          padding: '3px 10px', borderRadius: 999, background: 'rgba(59,91,250,0.08)', color: '#3B5BFA',
+        }}>Arbitrum Sepolia</div>
       </div>
-    </div>
-  )
-}
 
-function HeroShape() {
-  return (
-    <div style={{ position: 'relative', width: 'min(540px, 90vw)', aspectRatio: '1/1' }}>
-      {/* Spinning orb ring */}
-      <div className="spin-slow" style={{ position: 'absolute', inset: 0 }}>
-        {[0, 60, 120, 180, 240, 300].map((deg, i) => (
-          <div key={i} style={{ position: 'absolute', left: '50%', top: '50%', transform: `rotate(${deg}deg) translateY(-46%)` }}>
-            <div style={{
-              width: 26, height: 26, borderRadius: '50%',
-              background: ['#8B5CF6','#3B5BFA','#EC4899','#C084FC','#06B6D4','#F43F5E'][i],
-              boxShadow: '0 8px 24px rgba(139,92,246,0.35), inset 0 0 14px rgba(255,255,255,0.6)',
-              opacity: 0.85,
-            }} />
+      {/* Amount */}
+      <div>
+        <div style={{ fontSize: 11, color: '#94A3B8', marginBottom: 4, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Total Due</div>
+        <div style={{ fontSize: 40, fontWeight: 900, color: '#0A0F2E', letterSpacing: '-0.04em', lineHeight: 1 }}>$2,750</div>
+        <div style={{ fontSize: 12, color: '#3B5BFA', marginTop: 4, fontWeight: 700 }}>USDC</div>
+      </div>
+
+      {/* Details */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, borderTop: '1px solid #F1F5F9', paddingTop: 14 }}>
+        {[
+          ['Client', 'Startup Inc'],
+          ['Service', 'Full-stack dev · 40h'],
+          ['Due', 'Jun 28, 2026'],
+        ].map(([k, v]) => (
+          <div key={k} style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ fontSize: 11, color: '#94A3B8', fontWeight: 600 }}>{k}</span>
+            <span style={{ fontSize: 11, color: '#0A0F2E', fontWeight: 600 }}>{v}</span>
           </div>
         ))}
       </div>
 
-      {/* Glass binocular shape */}
-      <div className="float-anim" style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
-        <div style={{ position: 'relative', width: '78%', aspectRatio: '1/1' }}>
-          <div style={{
-            position: 'absolute', left: '-2%', top: '12%', width: '62%', height: '76%',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, rgba(139,92,246,0.55), rgba(59,91,250,0.35))',
-            border: '1.5px solid rgba(255,255,255,0.7)',
-            backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)',
-            boxShadow: '0 30px 80px -20px rgba(139,92,246,0.45), inset 0 0 60px rgba(255,255,255,0.35)',
-          }} />
-          <div style={{
-            position: 'absolute', right: '-2%', top: '12%', width: '62%', height: '76%',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, rgba(236,72,153,0.5), rgba(192,132,252,0.4))',
-            border: '1.5px solid rgba(255,255,255,0.7)',
-            backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)',
-            boxShadow: '0 30px 80px -20px rgba(236,72,153,0.4), inset 0 0 60px rgba(255,255,255,0.35)',
-          }} />
-          <div style={{
-            position: 'absolute', left: '50%', top: '50%',
-            transform: 'translate(-50%,-50%)', width: '26%', height: '26%',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle at 30% 30%, #ffffff 0%, rgba(255,255,255,0.7) 30%, rgba(192,132,252,0) 70%)',
-            filter: 'blur(0.5px)',
-          }} />
-        </div>
+      {/* Pay button */}
+      <div style={{
+        height: 44, background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6)',
+        borderRadius: 999, display: 'flex', alignItems: 'center', justifyContent: 'center',
+        color: '#fff', fontWeight: 700, fontSize: 14,
+      }}>
+        Pay with USDC →
       </div>
-
-      {/* Chain pills */}
-      <FloatingPill label="Arbitrum" color="#F5C518" style={{ top: '8%', left: '-6%' }} delay={0} />
-      <FloatingPill label="Arbitrum Sepolia" color="#9945FF" style={{ top: '12%', right: '-4%' }} delay={1.2} />
-      <FloatingPill label="Arbitrum" color="#3B82F6" style={{ bottom: '10%', left: '2%' }} delay={2.4} />
-      <FloatingPill label="ETH L2" color="#6366F1" style={{ bottom: '6%', right: '-8%' }} delay={1.6} />
-    </div>
+    </motion.div>
   )
 }
 
@@ -217,26 +153,26 @@ function Hero() {
     <section className="hero-bg grain" id="platform" style={{ position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', inset: '0 0 auto', height: 1, background: 'rgba(255,255,255,0.4)' }} />
       <div style={{
-        maxWidth: 1280, margin: '0 auto', padding: isMobile ? '120px 20px 80px' : '176px 24px 128px',
-        display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.05fr 1fr',
-        gap: isMobile ? 48 : 48, alignItems: 'center',
+        maxWidth: 1280, margin: '0 auto',
+        padding: isMobile ? '120px 20px 80px' : '176px 24px 128px',
+        display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.1fr 1fr',
+        gap: isMobile ? 48 : 64, alignItems: 'center',
       }}>
         {/* Left */}
         <motion.div variants={stagger} initial="hidden" animate="visible" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 28 }}>
-          <motion.div variants={fadeUp}><Eyebrow>Arbitrum-native AI financial super-app</Eyebrow></motion.div>
+          <motion.div variants={fadeUp}><Eyebrow>AI-powered USDC Invoice OS · Arbitrum Sepolia</Eyebrow></motion.div>
           <motion.h1 variants={fadeUp} style={{ fontSize: 'clamp(44px, 7.4vw, 88px)', lineHeight: 1.02, fontWeight: 900, color: '#0A0F2E', letterSpacing: '-0.035em', margin: 0 }}>
-            <span style={{ display: 'block' }}>The Financial OS</span>
-            <span style={{ display: 'block' }}>for <span className="gradient-text">Web3</span></span>
-            <span style={{ display: 'block', fontWeight: 700, color: 'rgba(10,15,46,0.8)' }}>&amp; Beyond</span>
+            <span style={{ display: 'block' }}>Get Paid in</span>
+            <span style={{ display: 'block' }}>USDC. <span className="gradient-text">Instantly.</span></span>
           </motion.h1>
           <motion.p variants={fadeUp} style={{ fontSize: 18, lineHeight: 1.65, color: '#475569', maxWidth: 520, margin: 0 }}>
-            Eight powerful tools. Credit scoring, inheritance vaults, private trading, DeFi lending, Yield Operations Hub automation, and AI agents — all on-chain in one unified platform.
+            Paste any invoice — AI reads it, generates a payment link, client pays in seconds. No banks. No 8% fees. Live on Arbitrum Sepolia.
           </motion.p>
           <motion.div variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {[
-              { icon: '🔗', color: '#3B5BFA', label: 'Arbitrum Network' },
-              { icon: '✓', color: '#10B981', label: '100% On-Chain Data' },
-              { icon: '🤖', color: '#8B5CF6', label: 'AI-Powered Tools' },
+              { icon: '⚡', color: '#3B5BFA', label: '100% On-Chain' },
+              { icon: '🤖', color: '#8B5CF6', label: 'AI Invoice Parser' },
+              { icon: '💲', color: '#10B981', label: 'USDC Native' },
             ].map(pill => (
               <div key={pill.label} style={{
                 display: 'flex', alignItems: 'center', gap: 8,
@@ -252,27 +188,62 @@ function Hero() {
             ))}
           </motion.div>
           <motion.div variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-            <GhostBtn href="#tools">Explore All Tools</GhostBtn>
-            <GradBtn href="/dashboard">Launch App <ArrowRight size={17} strokeWidth={2.2} /></GradBtn>
+            <GradBtn href="/invoice">Create Invoice <ArrowRight size={17} strokeWidth={2.2} /></GradBtn>
+            <GhostBtn href="#how-it-works">See How It Works</GhostBtn>
           </motion.div>
           <motion.div variants={fadeUp} style={{ width: '100%' }}>
             <LiveStatsStrip />
           </motion.div>
+          {/* Badges */}
+          <motion.div variants={fadeUp} style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              padding: '6px 14px', borderRadius: 999, fontSize: 12, fontWeight: 700,
+              background: 'rgba(40,160,240,0.08)', color: '#28a0f0',
+              border: '1px solid rgba(40,160,240,0.2)',
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#28a0f0', display: 'inline-block' }} />
+              Live on Arbitrum Sepolia
+            </div>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              padding: '6px 14px', borderRadius: 999, fontSize: 12, fontWeight: 700,
+              background: 'rgba(39,117,202,0.08)', color: '#2775CA',
+              border: '1px solid rgba(39,117,202,0.2)',
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#2775CA', display: 'inline-block' }} />
+              Powered by USDC
+            </div>
+          </motion.div>
         </motion.div>
 
-        {/* Right shape */}
+        {/* Right — floating invoice card */}
         {!isMobile && (
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <HeroShape />
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', position: 'relative' }}>
+            {/* Background glow */}
+            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,91,250,0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
+            <InvoiceCard />
           </motion.div>
         )}
       </div>
-      <div style={{ position: 'absolute', inset: '0 0 0 auto', bottom: 0, height: 96, background: 'linear-gradient(to bottom, transparent, white)', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 96, background: 'linear-gradient(to bottom, transparent, white)', pointerEvents: 'none' }} />
     </section>
   )
 }
 
 // ─── TRUST BAR ────────────────────────────────────────────────
+const LOGOS = ['Arbitrum Sepolia', 'USDC · Circle', 'Groq AI', 'Wagmi', 'RainbowKit', 'Next.js', 'Arbitrum', 'Ethereum']
+const CHAIN_SWATCHES: Record<string, string> = {
+  'Arbitrum Sepolia': 'linear-gradient(135deg,#28a0f0,#1a6bb5)',
+  'USDC · Circle': 'linear-gradient(135deg,#2775CA,#1a5fa8)',
+  'Groq AI': 'linear-gradient(135deg,#FF6B35,#F5A623)',
+  'Wagmi': 'linear-gradient(135deg,#6366F1,#8B5CF6)',
+  'RainbowKit': 'linear-gradient(135deg,#EC4899,#8B5CF6)',
+  'Next.js': 'linear-gradient(135deg,#000,#444)',
+  'Arbitrum': 'linear-gradient(135deg,#12AAFF,#0088cc)',
+  'Ethereum': 'linear-gradient(135deg,#6366F1,#8B5CF6)',
+}
+
 function TrustBar() {
   const doubled = [...LOGOS, ...LOGOS]
   return (
@@ -289,266 +260,192 @@ function TrustBar() {
             </div>
           ))}
         </div>
-        <div style={{ position: 'absolute', inset: '0 0 0 auto', left: 0, width: 80, background: 'linear-gradient(to right, #fff, transparent)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', inset: '0 0 0 auto', right: 0, width: 80, background: 'linear-gradient(to left, #fff, transparent)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 80, background: 'linear-gradient(to right, #fff, transparent)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 80, background: 'linear-gradient(to left, #fff, transparent)', pointerEvents: 'none' }} />
       </div>
     </section>
   )
 }
 
-// ─── STATS ────────────────────────────────────────────────────
-function StatCounter({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [active, setActive] = useState(false)
-  const count = useCountUp(value, active)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setActive(true) }, { threshold: 0.5 })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-
-  return (
-    <div ref={ref} style={{ textAlign: 'center', padding: '0 16px' }}>
-      <div style={{ fontSize: 'clamp(56px, 7vw, 88px)', fontWeight: 900, color: '#0A0F2E', lineHeight: 1, letterSpacing: '-0.04em' }}>
-        {count}{suffix}
-      </div>
-      <div style={{ marginTop: 12, fontSize: 14.5, color: '#64748B', maxWidth: 220, margin: '12px auto 0', lineHeight: 1.4 }}>{label}</div>
-    </div>
-  )
-}
-
-function LiveJobCounter() {
-  const mesh = useTrustMeshForStats()
-  const ref = useRef<HTMLDivElement>(null)
-  const [active, setActive] = useState(false)
-  const targetVal = Math.max(mesh.jobs.length, 7)
-  const count = useCountUp(targetVal, active)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setActive(true) }, { threshold: 0.5 })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-
-  return (
-    <div ref={ref} style={{ textAlign: 'center', padding: '0 16px' }}>
-      <div style={{ fontSize: 'clamp(56px, 7vw, 88px)', fontWeight: 900, color: '#0A0F2E', lineHeight: 1, letterSpacing: '-0.04em', display: 'inline-flex', alignItems: 'baseline', gap: 6 }}>
-        {count}
-        <span style={{ fontSize: 'clamp(24px, 3vw, 36px)', color: '#10b981', fontWeight: 800 }}>+</span>
-      </div>
-      <div style={{ marginTop: 12, fontSize: 14.5, color: '#64748B', maxWidth: 240, margin: '12px auto 0', lineHeight: 1.4 }}>
-        Live agent jobs on Arbitrum Sepolia Devnet
-        <div style={{ marginTop: 6, fontSize: 11, fontFamily: '"Fira Code","JetBrains Mono",monospace', color: mesh.isLive ? '#10b981' : '#94A3B8', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-          <span style={{ width: 6, height: 6, borderRadius: '50%', background: mesh.isLive ? '#10b981' : '#94A3B8', boxShadow: mesh.isLive ? '0 0 6px #10b981' : 'none' }} />
-          {mesh.isLive && mesh.currentSlot > 0 ? `slot ${mesh.currentSlot.toLocaleString()}` : 'connecting…'}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function Stats() {
-  return (
-    <section style={{ background: '#fff', padding: '96px 24px' }}>
-      <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', alignItems: 'center', gap: 0 }} className="grid grid-cols-1 md:grid-cols-3">
-        <StatCounter value={STATS[0].value} suffix={STATS[0].suffix} label={STATS[0].label} />
-        <div style={{ width: 1, height: 80, background: '#E2E8F0', margin: '0 auto' }} className="hidden md:block" />
-        <StatCounter value={STATS[1].value} suffix={STATS[1].suffix} label={STATS[1].label} />
-        <div style={{ width: 1, height: 80, background: '#E2E8F0', margin: '0 auto' }} className="hidden md:block" />
-        <LiveJobCounter />
-      </div>
-    </section>
-  )
-}
-
-// ─── TOOLS GRID ───────────────────────────────────────────────
-function ToolCard({ tool, index }: { tool: typeof TOOLS[0]; index: number }) {
-  const colSpan = index < 2 ? 3 : 2
-  return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.2 }}
-      style={{ gridColumn: `span ${colSpan}` }}
-    >
-      <Link href={tool.href} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
-        <div
-          className="module-card"
-          style={{
-            background: '#fff', border: '1px solid #E2E8F0', borderRadius: 24,
-            padding: 32, height: '100%', cursor: 'pointer',
-          }}
-          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = tool.chainColor + '66' }}
-          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = '#E2E8F0' }}
-        >
-          {/* Top row */}
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <span style={{
-                width: 48, height: 48, borderRadius: 16, display: 'grid', placeItems: 'center',
-                fontSize: 22, background: tool.chainColor + '22', color: tool.chainColor,
-              }}>{tool.icon}</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span className="live-dot" style={{ width: 8, height: 8, borderRadius: '50%', background: '#22C55E' }} />
-                <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#16A34A' }}>Live</span>
-              </div>
-            </div>
-            <span style={{
-              fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase',
-              padding: '4px 10px', borderRadius: 999, background: '#EEF2FF', color: '#3B5BFA',
-            }}>{tool.badge}</span>
-          </div>
-
-          {/* Body */}
-          <h3 style={{ fontSize: 22, fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.02em', margin: '0 0 4px' }}>{tool.name}</h3>
-          <div style={{ fontSize: 13, fontWeight: 700, color: tool.chainColor, marginBottom: 12 }}>{tool.tagline}</div>
-          <p style={{ fontSize: 14.5, lineHeight: 1.65, color: '#64748B', margin: 0 }}>{tool.desc}</p>
-
-          {/* Bottom */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 24 }}>
-            <span style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
-              padding: '4px 12px', borderRadius: 999, fontSize: 12, fontWeight: 700,
-              background: tool.chainColor + '1a', color: tool.chainColor,
-            }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: tool.chainColor }} />
-              {tool.chain}
-            </span>
-            <span className="btn-gradient" style={{
-              width: 36, height: 36, borderRadius: '50%', display: 'grid', placeItems: 'center',
-              boxShadow: '0 8px 20px -6px rgba(139,92,246,0.5)',
-            }}>
-              <ArrowUpRight size={16} strokeWidth={2.4} color="#fff" />
-            </span>
-          </div>
-        </div>
-      </Link>
-    </motion.div>
-  )
-}
-
-function Tools() {
+// ─── HOW IT WORKS ─────────────────────────────────────────────
+function HowItWorks() {
   const w = useWindowWidth()
-  const cols = w < 768 ? 1 : w < 1024 ? 4 : 6
+  const cols = w < 768 ? 1 : 3
+  const steps = [
+    {
+      num: '01',
+      icon: <FileText size={28} color="#3B5BFA" />,
+      title: 'Paste Your Invoice',
+      desc: 'Drop any invoice text or PDF content. Groq AI reads it in seconds — extracts amount, client, due date automatically.',
+      color: '#3B5BFA',
+    },
+    {
+      num: '02',
+      icon: <Zap size={28} color="#8B5CF6" />,
+      title: 'Share Payment Link',
+      desc: 'One link. Your client pays USDC directly on Arbitrum. No fees. No middlemen. No bank delays.',
+      color: '#8B5CF6',
+    },
+    {
+      num: '03',
+      icon: <Wallet size={28} color="#10B981" />,
+      title: 'Get Paid Instantly',
+      desc: 'USDC lands in your wallet in seconds. Use it across the full Kubryx financial ecosystem.',
+      color: '#10B981',
+    },
+  ]
+
   return (
-    <section id="tools" style={{ padding: '112px 0', position: 'relative', overflow: 'hidden', background: 'linear-gradient(180deg, #F5F7FF 0%, #EEF2FF 100%)' }}>
-      <div style={{ position: 'absolute', top: -80, left: -80, width: 384, height: 384, borderRadius: '50%', background: 'radial-gradient(circle, rgba(192,132,252,0.45), transparent 65%)', opacity: 0.5, pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', bottom: -128, right: 0, width: 420, height: 420, borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,91,250,0.35), transparent 65%)', opacity: 0.4, pointerEvents: 'none' }} />
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', position: 'relative' }}>
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }}
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 20, marginBottom: 56 }}>
-          <motion.div variants={fadeUp}><Eyebrow>Our Platform</Eyebrow></motion.div>
+    <section id="how-it-works" style={{ background: '#fff', padding: '112px 24px' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginBottom: 64 }}>
+          <motion.div variants={fadeUp}><Eyebrow>How It Works</Eyebrow></motion.div>
           <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(36px, 5.2vw, 60px)', fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.03em', margin: 0, lineHeight: 1.05 }}>
-            Eight tools. <span className="gradient-text">One platform.</span>
-          </motion.h2>
-          <motion.p variants={fadeUp} style={{ fontSize: 17, color: '#64748B', maxWidth: 600, margin: 0 }}>
-            Every tool is live, deployed, and production-ready — wired into one unified wallet, one identity layer, one dashboard.
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }}
-          style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 16 }}
-        >
-          {TOOLS.map((tool, i) => <ToolCard key={tool.name} tool={tool} index={i} />)}
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} style={{ display: 'flex', justifyContent: 'center', marginTop: 56 }}>
-          <GradBtn href="/credit">Explore All Tools <ArrowRight size={17} strokeWidth={2.2} /></GradBtn>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── FEATURES ────────────────────────────────────────────────
-function Features() {
-  const w = useWindowWidth()
-  const isMobile = w < 1024
-  return (
-    <section style={{ background: '#fff', padding: '112px 24px' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1.1fr', gap: isMobile ? 48 : 56, alignItems: 'flex-start' }}>
-        {/* Left */}
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'flex', flexDirection: 'column', gap: 24, position: 'sticky', top: 128 }}>
-          <motion.div variants={fadeUp}><Eyebrow>Why Kubryx</Eyebrow></motion.div>
-          <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.03em', margin: 0, lineHeight: 1.04 }}>
-            Powerful tools,<br />all in <span className="gradient-text">one place.</span>
-          </motion.h2>
-          <motion.p variants={fadeUp} style={{ fontSize: 18, lineHeight: 1.65, color: '#64748B', maxWidth: 440, margin: 0 }}>
-            One wallet. One platform. Eight blockchain tools working together seamlessly across the chains you already use.
-          </motion.p>
-          <motion.div variants={fadeUp}><GradBtn href="/credit">Start exploring <ArrowRight size={17} strokeWidth={2.2} /></GradBtn></motion.div>
-        </motion.div>
-
-        {/* Right */}
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}
-          style={{ background: 'linear-gradient(180deg, #F5F3FF 0%, #EEF2FF 100%)', border: '1px solid #E0E7FF', borderRadius: 28, padding: 16 }}>
-          {FEATURES.map((f, i) => (
-            <motion.div key={f.num} variants={fadeUp} style={{
-              display: 'flex', gap: 24, padding: '28px 24px',
-              borderBottom: i < FEATURES.length - 1 ? '1px solid rgba(139,92,246,0.15)' : 'none',
-            }}>
-              <div style={{ flexShrink: 0 }}>
-                <div style={{
-                  width: 48, height: 48, borderRadius: '50%', display: 'grid', placeItems: 'center',
-                  fontWeight: 900, fontSize: 15, color: '#fff',
-                  background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6 60%, #EC4899)',
-                  boxShadow: '0 10px 24px -8px rgba(139,92,246,0.6)',
-                }}>
-                  {f.num}
-                </div>
-              </div>
-              <div>
-                <h3 style={{ fontSize: 18, fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.02em', margin: '0 0 6px' }}>{f.title}</h3>
-                <p style={{ fontSize: 14.5, lineHeight: 1.7, color: '#64748B', margin: 0 }}>{f.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── CHAINS ──────────────────────────────────────────────────
-function Chains() {
-  const w = useWindowWidth()
-  const cols = w < 640 ? 1 : w < 1024 ? 2 : 4
-  return (
-    <section id="chains" style={{ padding: '112px 24px', position: 'relative', overflow: 'hidden', background: 'linear-gradient(135deg, #EDE9FE 0%, #E0F2FE 100%)' }}>
-      <div style={{ position: 'absolute', inset: 0, opacity: 0.3, pointerEvents: 'none', background: 'radial-gradient(60% 60% at 80% 20%, #fce7f3, transparent 60%)' }} />
-      <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative' }}>
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 48 }}>
-          <motion.div variants={fadeUp}><Eyebrow>Arbitrum-native</Eyebrow></motion.div>
-          <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.03em', margin: 0, lineHeight: 1.05 }}>
-            Built natively on <span className="gradient-text">4 blockchains.</span>
+            Three steps. <span className="gradient-text">One seamless flow.</span>
           </motion.h2>
           <motion.p variants={fadeUp} style={{ fontSize: 17, color: '#64748B', maxWidth: 560, margin: 0 }}>
-            One wallet across them all. Pick a tool — Kubryx routes the call to the right chain automatically.
+            Stop bouncing between platforms. Paste, generate, get paid — all on-chain.
           </motion.p>
         </motion.div>
 
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 20 }}>
-          {CHAINS.map(c => (
-            <motion.div key={c.name} variants={fadeUp} className="module-card"
-              style={{ background: '#fff', border: '1px solid rgba(255,255,255,0.8)', borderRadius: 24, padding: 28, textAlign: 'center', boxShadow: '0 8px 30px -12px rgba(15,23,42,0.12)' }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = c.color + '66' }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.8)' }}>
-              <div style={{ width: 64, height: 64, borderRadius: 20, display: 'grid', placeItems: 'center', margin: '0 auto 20px', fontSize: 24, fontWeight: 900, color: '#fff', background: `linear-gradient(135deg, ${c.color}, ${c.color}cc)`, boxShadow: `0 16px 30px -10px ${c.color}80` }}>
-                {c.glyph}
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 24 }}>
+          {steps.map((step, i) => (
+            <motion.div key={i} variants={fadeUp} className="module-card" style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: 24, padding: 36, display: 'flex', flexDirection: 'column', gap: 20 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                <div style={{ width: 56, height: 56, borderRadius: 16, background: `${step.color}12`, display: 'grid', placeItems: 'center' }}>
+                  {step.icon}
+                </div>
+                <span style={{ fontFamily: '"Fira Code",monospace', fontSize: 28, fontWeight: 900, color: `${step.color}30`, letterSpacing: '-0.04em' }}>{step.num}</span>
               </div>
-              <div style={{ fontSize: 20, fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.02em' }}>{c.name}</div>
-              <div style={{ fontSize: 12.5, fontFamily: 'var(--font-mono, monospace)', fontWeight: 500, color: '#94A3B8', margin: '4px 0 16px' }}>{c.id}</div>
-              <div style={{ paddingTop: 16, borderTop: '1px solid #F1F5F9' }}>
-                <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#94A3B8', marginBottom: 6 }}>Tools</div>
-                <div style={{ fontSize: 13.5, fontWeight: 600, color: '#0A0F2E', lineHeight: 1.4 }}>{c.tools}</div>
+              <div>
+                <h3 style={{ fontSize: 22, fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.02em', margin: '0 0 10px' }}>{step.title}</h3>
+                <p style={{ fontSize: 15, lineHeight: 1.65, color: '#64748B', margin: 0 }}>{step.desc}</p>
               </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} style={{ display: 'flex', justifyContent: 'center', marginTop: 48 }}>
+          <GradBtn href="/invoice">Create Your First Invoice <ArrowRight size={17} strokeWidth={2.2} /></GradBtn>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ─── STATS BAR ────────────────────────────────────────────────
+function StatsBar() {
+  const items = [
+    '8 Financial Tools', '4 Chains', 'USDC Native', 'AI Powered', 'Arbitrum Sepolia', '0% Platform Fees',
+  ]
+  return (
+    <section style={{ background: 'linear-gradient(135deg, #F5F7FF 0%, #EEF2FF 100%)', padding: '40px 24px', borderTop: '1px solid #E0E7FF', borderBottom: '1px solid #E0E7FF' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 0 }}>
+        {items.map((item, i) => (
+          <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+            <span style={{ fontSize: 14, fontWeight: 700, color: '#3B5BFA', padding: '0 20px', letterSpacing: '-0.01em' }}>{item}</span>
+            {i < items.length - 1 && <span style={{ color: '#C7D2FE', fontSize: 16 }}>·</span>}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+// ─── ECOSYSTEM SECTION ────────────────────────────────────────
+const ECOSYSTEM_TOOLS = [
+  {
+    icon: '◈',
+    name: 'Credit Passport',
+    desc: 'Build your on-chain credit score',
+    href: '/credit',
+    color: '#06b6d4',
+  },
+  {
+    icon: '◎',
+    name: 'AI Lending',
+    desc: 'Unlock instant liquidity against your USDC',
+    href: '/lend',
+    color: '#f59e0b',
+  },
+  {
+    icon: '◆',
+    name: 'Bill Split',
+    desc: 'Split expenses with clients on-chain',
+    href: '/split',
+    color: '#3b82f6',
+  },
+  {
+    icon: '◇',
+    name: 'Yield Operations',
+    desc: 'Put your USDC to work automatically',
+    href: '/treasury',
+    color: '#10b981',
+  },
+  {
+    icon: '🔐',
+    name: 'Private Vault',
+    desc: 'Secure your assets cross-chain',
+    href: '/vault',
+    color: '#14b8a6',
+  },
+  {
+    icon: '⬡',
+    name: 'Agent Co-ordinator',
+    desc: 'AI agents managing your finances',
+    href: '/agents',
+    color: '#6366f1',
+  },
+]
+
+function Ecosystem() {
+  const w = useWindowWidth()
+  const cols = w < 640 ? 1 : w < 1024 ? 2 : 3
+  return (
+    <section style={{ background: '#fff', padding: '112px 24px' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 16, marginBottom: 56 }}>
+          <motion.div variants={fadeUp}><Eyebrow>Your Full Financial OS</Eyebrow></motion.div>
+          <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(36px, 5.2vw, 56px)', fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.03em', margin: 0, lineHeight: 1.05 }}>
+            Once you receive USDC —<br /><span className="gradient-text">do more with it.</span>
+          </motion.h2>
+          <motion.p variants={fadeUp} style={{ fontSize: 17, color: '#64748B', maxWidth: 540, margin: 0 }}>
+            Eight powerful tools in one platform. Invoice is just the beginning.
+          </motion.p>
+        </motion.div>
+
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 16 }}>
+          {ECOSYSTEM_TOOLS.map(tool => (
+            <motion.div key={tool.href} variants={fadeUp}>
+              <Link href={tool.href} style={{ textDecoration: 'none', display: 'block' }}>
+                <div
+                  className="module-card"
+                  style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: 20, padding: 24, cursor: 'pointer', transition: 'border-color 0.2s' }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = tool.color + '55' }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = '#E2E8F0' }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                    <span style={{ width: 44, height: 44, borderRadius: 12, display: 'grid', placeItems: 'center', fontSize: 20, background: `${tool.color}18`, color: tool.color }}>{tool.icon}</span>
+                    <span className="btn-gradient" style={{ width: 32, height: 32, borderRadius: '50%', display: 'grid', placeItems: 'center' }}>
+                      <ArrowUpRight size={14} strokeWidth={2.4} color="#fff" />
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: 17, fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.02em', margin: '0 0 6px' }}>{tool.name}</h3>
+                  <p style={{ fontSize: 13.5, color: '#64748B', margin: 0, lineHeight: 1.5 }}>{tool.desc}</p>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} style={{ display: 'flex', justifyContent: 'center', marginTop: 48 }}>
+          <Link href="/dashboard" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            borderRadius: 999, border: '1px solid #E2E8F0', color: '#0A0F2E',
+            fontWeight: 600, padding: '12px 24px', fontSize: 15, textDecoration: 'none',
+          }}>
+            View Full Dashboard <ArrowRight size={16} strokeWidth={2.2} />
+          </Link>
         </motion.div>
       </div>
     </section>
@@ -606,10 +503,19 @@ function ActivityChart() {
 }
 
 function DashFrame() {
-  const sideItems = [['◉', 'Overview', true], ['◈', 'Credit Passport'], ['⬟', 'Family Vault'], ['⬡', 'Agent Coordinator'], ['🔐', 'Private Vault'], ['◆', 'Bill Split'], ['◎', 'AI Lending'], ['◇', 'Yield Operations Hub'], ['▲', 'Stealth Execution Suite']]
+  const sideItems = [
+    ['📄', 'Invoice', true],
+    ['◈', 'Credit Passport'],
+    ['⬟', 'Family Vault'],
+    ['⬡', 'Agent Co-ordinator'],
+    ['🔐', 'Private Vault'],
+    ['◆', 'Bill Split'],
+    ['◎', 'AI Lending'],
+    ['◇', 'Yield Operations Hub'],
+    ['▲', 'Stealth Execution Suite'],
+  ]
   return (
     <div className="dash-tilt" style={{ maxWidth: 960, margin: '0 auto', borderRadius: 22, overflow: 'hidden', boxShadow: '0 50px 120px -30px rgba(15,23,42,0.45)', background: '#0A0F2E', border: '1px solid rgba(255,255,255,0.08)' }}>
-      {/* Chrome */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: '#0E1535', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         <div style={{ display: 'flex', gap: 6 }}>
           <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FF5F57' }} />
@@ -617,14 +523,11 @@ function DashFrame() {
           <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#28C840' }} />
         </div>
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: 'rgba(255,255,255,0.05)', borderRadius: 999, padding: '6px 12px', fontSize: 12, color: '#94A3B8', fontFamily: 'var(--font-mono, monospace)' }}>
-          <Lock size={11} strokeWidth={2.2} /> kubryx.vercel.app/dashboard
+          <Lock size={11} strokeWidth={2.2} /> kubryx.vercel.app/invoice
         </div>
         <RefreshCw size={14} strokeWidth={2.2} color="#94A3B8" />
       </div>
-
-      {/* App */}
       <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', minHeight: 520 }}>
-        {/* Sidebar */}
         <aside style={{ background: '#0C1232', borderRight: '1px solid rgba(255,255,255,0.05)', padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 12, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
             <span style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#3B5BFA,#EC4899)', display: 'grid', placeItems: 'center', fontSize: 13, fontWeight: 900, color: '#fff' }}>K</span>
@@ -634,64 +537,38 @@ function DashFrame() {
             {sideItems.map(([icon, name, active]) => (
               <div key={String(name)} style={{
                 display: 'flex', alignItems: 'center', gap: 10, padding: '7px 10px', borderRadius: 8, fontSize: 13, fontWeight: 500,
-                background: active ? 'rgba(255,255,255,0.1)' : 'transparent',
-                color: active ? '#fff' : '#94A3B8',
+                background: active ? 'rgba(200,255,0,0.1)' : 'transparent',
+                color: active ? '#C8FF00' : '#94A3B8',
               }}>
                 <span style={{ fontSize: 14 }}>{icon}</span>
                 <span>{name}</span>
               </div>
             ))}
           </nav>
-          <div style={{ marginTop: 'auto', padding: 12, borderRadius: 12, background: 'linear-gradient(135deg, rgba(139,92,246,0.3), rgba(236,72,153,0.2))', border: '1px solid rgba(139,92,246,0.2)' }}>
-            <div style={{ fontSize: 10, letterSpacing: '0.16em', fontWeight: 700, textTransform: 'uppercase', color: '#C4B5FD' }}>Wallet</div>
-            <div style={{ fontSize: 12.5, fontFamily: 'var(--font-mono, monospace)', color: '#fff', marginTop: 4 }}>0x9F…E3A1</div>
-            <div style={{ fontSize: 10.5, color: '#94A3B8', marginTop: 4 }}>Arbitrum · Arbitrum Sepolia · Arbitrum · ETH</div>
-          </div>
         </aside>
-
-        {/* Main */}
         <main style={{ padding: 24 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
             <div>
-              <div style={{ fontSize: 11, letterSpacing: '0.16em', fontWeight: 700, textTransform: 'uppercase', color: '#475569' }}>Overview</div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', marginTop: 2 }}>Good afternoon, Alex.</div>
+              <div style={{ fontSize: 11, letterSpacing: '0.16em', fontWeight: 700, textTransform: 'uppercase', color: '#475569' }}>Invoice</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', marginTop: 2 }}>Create Payment Link</div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 12px', background: 'rgba(255,255,255,0.05)', borderRadius: 999, fontSize: 12, color: '#94A3B8', border: '1px solid rgba(255,255,255,0.05)', fontFamily: 'var(--font-mono, monospace)' }}>
-                <Search size={12} strokeWidth={2.2} /> search tools
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 999, fontSize: 11.5, fontWeight: 700, border: '1px solid rgba(74,222,128,0.3)', background: 'rgba(74,222,128,0.1)', color: '#86EFAC' }}>
-                <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#4ADE80' }} /> All systems live
-              </div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 999, fontSize: 11.5, fontWeight: 700, border: '1px solid rgba(200,255,0,0.3)', background: 'rgba(200,255,0,0.1)', color: '#C8FF00' }}>
+              <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#C8FF00' }} /> Arbitrum Sepolia
             </div>
           </div>
-
-          {/* Stat tiles */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 16 }}>
-            {[['8', 'Tools', '+2 this Q'], ['4', 'Chains', 'Arbitrum-native'], ['0', 'Mock Data', '100% live'], ['∞', 'Uptime', '30d streak']].map(([n, label, sub], i) => (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 16 }}>
+            {[['$2,750', 'Invoice Amount', 'USDC'], ['< 3s', 'Settlement', 'On Arbitrum'], ['0%', 'Fees Taken', 'By Kubryx']].map(([n, label, sub], i) => (
               <div key={i} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 12, padding: 16 }}>
                 <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#475569', fontWeight: 700 }}>{label}</div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 6 }}>
-                  <span style={{ fontSize: 26, fontWeight: 900, color: '#fff', letterSpacing: '-0.03em' }}>{n}</span>
-                  <span style={{ fontSize: 10.5, fontWeight: 700, color: '#4ADE80' }}>{sub}</span>
+                  <span style={{ fontSize: 22, fontWeight: 900, color: '#fff', letterSpacing: '-0.03em' }}>{n}</span>
+                  <span style={{ fontSize: 10.5, fontWeight: 700, color: '#C8FF00' }}>{sub}</span>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Chart */}
           <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 12, padding: 16 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-              <div>
-                <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#475569', fontWeight: 700 }}>Protocol Activity</div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>Last 30 days</div>
-              </div>
-              <div style={{ display: 'flex', gap: 4 }}>
-                {['1D','7D','30D','All'].map(t => (
-                  <span key={t} style={{ padding: '2px 8px', borderRadius: 999, fontSize: 11, fontWeight: 700, background: t === '30D' ? 'rgba(255,255,255,0.1)' : 'transparent', color: t === '30D' ? '#fff' : '#475569' }}>{t}</span>
-                ))}
-              </div>
-            </div>
+            <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#475569', fontWeight: 700, marginBottom: 12 }}>Invoice Activity (30d)</div>
             <ActivityChart />
           </div>
         </main>
@@ -710,141 +587,9 @@ function DashboardPreview() {
           <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.03em', margin: 0, lineHeight: 1.05 }}>
             See it in <span className="gradient-text">action.</span>
           </motion.h2>
-          <motion.p variants={fadeUp} style={{ fontSize: 17, color: '#64748B', maxWidth: 480, margin: 0 }}>
-            A unified dashboard across all 8 tools — every chain, every signal, in a single view.
-          </motion.p>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 60 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease: 'easeOut' }}>
           <DashFrame />
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── TESTIMONIALS ────────────────────────────────────────────
-function Testimonials() {
-  const w = useWindowWidth()
-  const cols = w < 768 ? 1 : 3
-  return (
-    <section style={{ background: '#F9FAFB', padding: '112px 24px' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 48, maxWidth: 700 }}>
-          <motion.div variants={fadeUp}><Eyebrow>How It Works</Eyebrow></motion.div>
-          <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.03em', margin: 0, lineHeight: 1.05 }}>
-            Three tools. Three chains.<br /><span className="gradient-text">One platform.</span>
-          </motion.h2>
-        </motion.div>
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 20 }}>
-          {TESTIMONIALS.map((t, i) => (
-            <motion.article key={i} variants={fadeUp} className="module-card" style={{ position: 'relative', background: '#fff', borderRadius: 24, border: '1px solid rgba(226,232,240,0.7)', padding: 28, display: 'flex', flexDirection: 'column', gap: 24, boxShadow: '0 10px 30px -15px rgba(15,23,42,0.15)' }}>
-              <p style={{ position: 'relative', fontSize: 16, fontWeight: 500, lineHeight: 1.65, color: '#334155', letterSpacing: '-0.01em', margin: 0 }}>{t.quote}</p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingTop: 20, borderTop: '1px solid #F1F5F9', marginTop: 'auto' }}>
-                <span style={{ width: 44, height: 44, borderRadius: 12, display: 'grid', placeItems: 'center', fontSize: 22, background: `linear-gradient(135deg, ${['#3B5BFA','#8B5CF6','#EC4899'][i]}, #8B5CF6 80%)` }}>{t.avatar}</span>
-                <div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: '#0A0F2E', letterSpacing: '-0.01em' }}>{t.name}</div>
-                  <div style={{ fontSize: 12.5, color: '#64748B', marginTop: 2 }}>{t.title}</div>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── PRICING ─────────────────────────────────────────────────
-function Bullet({ text }: { text: string }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 10 }}>
-      <span style={{ width: 20, height: 20, borderRadius: '50%', background: 'linear-gradient(135deg,#3B5BFA22,#EC489922)', display: 'grid', placeItems: 'center', flexShrink: 0, marginTop: 2 }}>
-        <Check size={12} strokeWidth={3} color="#3B5BFA" />
-      </span>
-      <span style={{ fontSize: 14.5, color: '#475569' }}>{text}</span>
-    </div>
-  )
-}
-function BulletLight({ text }: { text: string }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 10 }}>
-      <span style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', display: 'grid', placeItems: 'center', flexShrink: 0, marginTop: 2 }}>
-        <Check size={12} strokeWidth={3} color="#fff" />
-      </span>
-      <span style={{ fontSize: 14.5, color: 'rgba(255,255,255,0.9)' }}>{text}</span>
-    </div>
-  )
-}
-
-function Pricing() {
-  const w = useWindowWidth()
-  const cols = w < 1024 ? 1 : 3
-  return (
-    <section id="launch" style={{ background: '#fff', padding: '112px 24px' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginBottom: 56 }}>
-          <motion.div variants={fadeUp}><Eyebrow>Get Started</Eyebrow></motion.div>
-          <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.03em', margin: 0, lineHeight: 1.05 }}>
-            Start building. <span className="gradient-text">Scale confidently.</span>
-          </motion.h2>
-          <motion.p variants={fadeUp} style={{ fontSize: 17, color: '#64748B', maxWidth: 480, margin: 0 }}>
-            Open source today. Arbitrum-native forever. Pick the lane that matches where you are.
-          </motion.p>
-        </motion.div>
-
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: 20, alignItems: 'stretch' }}>
-          {/* Explorer */}
-          <motion.div variants={fadeUp} style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: 26, padding: 36, display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ background: '#F1F5F9', color: '#64748B', borderRadius: 999, padding: '4px 12px', fontSize: 11, fontWeight: 700 }}>Open Source</span>
-            </div>
-            <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.02em' }}>Explorer</div>
-              <div style={{ fontSize: 56, fontWeight: 900, color: '#0A0F2E', lineHeight: 1, letterSpacing: '-0.04em', marginTop: 12 }}>Free</div>
-              <div style={{ fontSize: 13.5, color: '#94A3B8', marginTop: 8 }}>Forever, for everyone</div>
-            </div>
-            <div style={{ flex: 1 }}>
-              {['Credit Passport tool', 'Family Vault tool', 'Arbitrum Mainnet access', 'Read-only dashboard'].map(f => <Bullet key={f} text={f} />)}
-            </div>
-            <GhostBtn href="#launch">Start exploring</GhostBtn>
-          </motion.div>
-
-          {/* Builder — featured */}
-          <motion.div variants={fadeUp} className="featured-glow" style={{ background: '#fff', borderRadius: 26, padding: 36, display: 'flex', flexDirection: 'column', gap: 24, position: 'relative' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ background: 'linear-gradient(135deg,#8B5CF6,#EC4899)', color: '#fff', borderRadius: 999, padding: '4px 12px', fontSize: 11, fontWeight: 700 }}>Most Popular</span>
-            </div>
-            <div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.02em' }}>Builder</div>
-              <div style={{ fontSize: 56, fontWeight: 900, color: '#0A0F2E', lineHeight: 1, letterSpacing: '-0.04em', marginTop: 12 }}>$0</div>
-              <div style={{ fontSize: 13.5, color: '#94A3B8', marginTop: 8 }}>Currently free — open beta</div>
-            </div>
-            <div style={{ flex: 1 }}>
-              {['All 8 tools included', 'All 4 blockchains', 'Real wallet connection', 'AI features enabled', 'Full dashboard access'].map(f => <Bullet key={f} text={f} />)}
-            </div>
-            <GradBtn href="/dashboard">Launch App <ArrowRight size={17} strokeWidth={2.2} /></GradBtn>
-          </motion.div>
-
-          {/* Enterprise */}
-          <motion.div variants={fadeUp} style={{ background: 'linear-gradient(160deg, #3B5BFA 0%, #4F46E5 55%, #312E81 100%)', borderRadius: 26, padding: 36, display: 'flex', flexDirection: 'column', gap: 24, position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.3, pointerEvents: 'none', background: 'radial-gradient(50% 50% at 90% 10%, #EC4899 0%, transparent 60%)' }} />
-            <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ background: 'rgba(255,255,255,0.15)', color: '#fff', borderRadius: 999, padding: '4px 12px', fontSize: 11, fontWeight: 700 }}>Custom</span>
-            </div>
-            <div style={{ position: 'relative' }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Enterprise</div>
-              <div style={{ fontSize: 40, fontWeight: 900, color: '#fff', lineHeight: 1, letterSpacing: '-0.04em', marginTop: 12 }}>Contact Us</div>
-              <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.7)', marginTop: 8 }}>Tailored deployments</div>
-            </div>
-            <div style={{ position: 'relative', flex: 1 }}>
-              {['Custom chain deployment', 'Private instance', 'SLA guarantee', 'Priority support', 'White-label options'].map(f => <BulletLight key={f} text={f} />)}
-            </div>
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} style={{ position: 'relative' }}>
-              <a href="mailto:vijayakumarsasikalarupeshkumar@gmail.com?subject=Kubryx%20Enterprise%20Inquiry" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, borderRadius: 999, border: '1px solid rgba(255,255,255,0.5)', color: '#fff', padding: '12px 24px', fontSize: 15, fontWeight: 600, textDecoration: 'none', transition: 'background 0.2s' }}>
-                Talk to us <ArrowRight size={17} strokeWidth={2.2} />
-              </a>
-            </motion.div>
-          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -859,27 +604,30 @@ function FinalCTA() {
     <section style={{ background: '#fff', padding: '0 24px 80px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 32, padding: isMobile ? 40 : 64, background: 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%)' }}>
+          <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 32, padding: isMobile ? 40 : 64, background: 'linear-gradient(135deg, #3B5BFA 0%, #8B5CF6 50%, #EC4899 100%)' }}>
             <div style={{ position: 'absolute', top: -80, right: -80, width: 320, height: 320, borderRadius: '50%', opacity: 0.3, background: 'radial-gradient(circle, #ffffff 0%, transparent 70%)', pointerEvents: 'none' }} />
-            <div style={{ position: 'absolute', bottom: -128, left: -64, width: 384, height: 384, borderRadius: '50%', opacity: 0.2, background: 'radial-gradient(circle, #3B5BFA 0%, transparent 70%)', pointerEvents: 'none' }} />
             <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.3fr 1fr', gap: 40, alignItems: 'center' }}>
               <div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 12px', borderRadius: 999, background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', fontSize: 11.5, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#fff', marginBottom: 20 }}>
-                  <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#fff' }} /> Live now
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 12px', borderRadius: 999, background: 'rgba(255,255,255,0.2)', fontSize: 11.5, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#fff', marginBottom: 20 }}>
+                  <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#fff' }} /> Live on Arbitrum Sepolia
                 </div>
-                <h3 style={{ fontSize: 'clamp(34px, 4.5vw, 52px)', fontWeight: 800, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1.04, margin: '0 0 20px' }}>Ready to build on Kubryx?</h3>
+                <h3 style={{ fontSize: 'clamp(34px, 4.5vw, 52px)', fontWeight: 800, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1.04, margin: '0 0 20px' }}>
+                  Ready to get paid in USDC?
+                </h3>
                 <p style={{ fontSize: 17, color: 'rgba(255,255,255,0.85)', maxWidth: 480, lineHeight: 1.65, margin: 0 }}>
-                  One platform. Eight tools. Four blockchains. Start now — no credit card, no API keys, no waitlist.
+                  Create your first invoice in 60 seconds. No signup. No credit card. Just your wallet.
                 </p>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: isMobile ? 'stretch' : 'flex-end' }}>
                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                  <Link href="/dashboard" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, borderRadius: 999, background: '#fff', color: '#0A0F2E', fontWeight: 700, padding: '16px 28px', fontSize: 15, textDecoration: 'none', boxShadow: '0 20px 40px -10px rgba(0,0,0,0.25)' }}>
-                    <span className="gradient-text">Launch App</span>
+                  <Link href="/invoice" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, borderRadius: 999, background: '#fff', color: '#0A0F2E', fontWeight: 700, padding: '16px 28px', fontSize: 15, textDecoration: 'none', boxShadow: '0 20px 40px -10px rgba(0,0,0,0.25)' }}>
+                    <span className="gradient-text">Create Invoice</span>
                     <ArrowRight size={17} strokeWidth={2.4} color="#0A0F2E" />
                   </Link>
                 </motion.div>
-
+                <Link href="/dashboard" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, borderRadius: 999, border: '1px solid rgba(255,255,255,0.4)', color: '#fff', fontWeight: 600, padding: '14px 28px', fontSize: 14, textDecoration: 'none' }}>
+                  Full Dashboard
+                </Link>
               </div>
             </div>
           </div>
@@ -893,20 +641,20 @@ function FinalCTA() {
 type FooterLink = { label: string; href: string; external?: boolean }
 const FOOTER_COLS: Record<string, FooterLink[]> = {
   PLATFORM: [
-    { label: 'Credit Passport',            href: '/credit'   },
-    { label: 'Family Vault',               href: '/legacy'   },
-    { label: 'Agent Coordinator',          href: '/agents'   },
-    { label: 'Private Vault',              href: '/vault'    },
-    { label: 'Bill Split',                 href: '/split'    },
-    { label: 'AI Lending',                 href: '/lend'     },
-    { label: 'Yield Operations Hub',       href: '/treasury' },
-    { label: 'Stealth Execution Suite',    href: '/shadow'   },
+    { label: 'Invoice',              href: '/invoice'  },
+    { label: 'Credit Passport',      href: '/credit'   },
+    { label: 'Family Vault',         href: '/legacy'   },
+    { label: 'Agent Co-ordinator',   href: '/agents'   },
+    { label: 'Private Vault',        href: '/vault'    },
+    { label: 'Bill Split',           href: '/split'    },
+    { label: 'AI Lending',           href: '/lend'     },
+    { label: 'Yield Operations Hub', href: '/treasury' },
+    { label: 'Stealth Execution Suite', href: '/shadow' },
   ],
   CHAINS: [
-    { label: 'Arbitrum Mainnet',  href: 'https://mainnet.qie.info',                          external: true },
-    { label: 'Arbitrum Sepolia',       href: 'https://explorer.solana.com/?cluster=devnet',       external: true },
-    { label: 'Arbitrum',      href: 'https://stellar.expert/explorer/testnet',           external: true },
-    { label: 'Ethereum L2',  href: 'https://arbiscan.io',                               external: true },
+    { label: 'Arbitrum Sepolia', href: 'https://sepolia.arbiscan.io', external: true },
+    { label: 'Arbitrum',         href: 'https://arbiscan.io',        external: true },
+    { label: 'Ethereum',         href: 'https://etherscan.io',       external: true },
   ],
   RESOURCES: [
     { label: 'Smart Contracts', href: '/protocols'    },
@@ -924,23 +672,16 @@ function Footer() {
   return (
     <footer id="company" style={{ position: 'relative', background: '#0A0F2E', color: '#fff' }}>
       <div style={{ position: 'absolute', inset: '0 0 auto', height: 1, background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.4), transparent)' }} />
-      <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: 600, height: 200, opacity: 0.3, filter: 'blur(48px)', background: 'radial-gradient(ellipse, #8B5CF6 0%, transparent 60%)', pointerEvents: 'none' }} />
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '80px 24px 40px', position: 'relative' }}>
-        {/* Top bar */}
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 24, paddingBottom: 48, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             <span style={{ width: 32, height: 32, borderRadius: 10, display: 'grid', placeItems: 'center', fontSize: 16, fontWeight: 900, color: '#fff', background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6 55%, #EC4899)' }}>K</span>
             <span style={{ fontSize: 20, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Kubryx</span>
           </Link>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-            <Link href="/dashboard" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, borderRadius: 999, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontWeight: 600, padding: '10px 20px', fontSize: 14, textDecoration: 'none' }}>
-              Launch App <ArrowRight size={15} strokeWidth={2.4} />
-            </Link>
-
-          </div>
+          <Link href="/invoice" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, borderRadius: 999, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontWeight: 600, padding: '10px 20px', fontSize: 14, textDecoration: 'none' }}>
+            Create Invoice <ArrowRight size={15} strokeWidth={2.4} />
+          </Link>
         </div>
-
-        {/* Links grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 40, padding: '56px 0' }}>
           {Object.entries(FOOTER_COLS).map(([title, links]) => (
             <div key={title}>
@@ -964,27 +705,14 @@ function Footer() {
             </div>
           ))}
         </div>
-
-        {/* Giant wordmark */}
         <div style={{ padding: '40px 0', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-          <div style={{
-            fontSize: 'clamp(60px, 14vw, 220px)',
-            fontWeight: 900, letterSpacing: '-0.06em', lineHeight: 1,
-            WebkitBackgroundClip: 'text', backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02))',
-            userSelect: 'none',
-          }}>
+          <div style={{ fontSize: 'clamp(60px, 14vw, 220px)', fontWeight: 900, letterSpacing: '-0.06em', lineHeight: 1, WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02))', userSelect: 'none' }}>
             Kubryx
           </div>
         </div>
-
-        {/* Bottom bar */}
         <div style={{ paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: 12, lineHeight: 1.6, color: 'rgba(148,163,184,0.7)', display: 'flex', flexDirection: 'column', gap: 12, textAlign: 'center', maxWidth: 960, margin: '0 auto' }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: '#fff', marginBottom: 4 }}>© 2026 vsrupeshkumar. All Rights Reserved.</div>
           <p style={{ margin: 0 }}>This platform, including its source code, system architecture, infrastructure design, backend systems, frontend implementation, APIs, databases, UI/UX, production workflows, and all related intellectual property, was independently designed and developed by vsrupeshkumar as Founder, Architect, System Designer, Frontend Developer, Backend Developer, and Production Engineer.</p>
-          <p style={{ margin: 0 }}>Unauthorized copying, reproduction, modification, redistribution, reverse engineering, resale, or commercial use of this platform or any portion of its codebase or architecture is strictly prohibited without explicit prior written permission from the author.</p>
-          <p style={{ margin: 0 }}>Any unauthorized use may result in legal action under applicable copyright and intellectual property laws.</p>
         </div>
       </div>
     </footer>
@@ -1009,43 +737,6 @@ function CookieBanner() {
         Okay
       </button>
     </div>
-  )
-}
-
-function ChatButton() {
-  const [open, setOpen] = useState(false)
-  return (
-    <>
-      <motion.button
-        whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}
-        onClick={() => setOpen(v => !v)}
-        aria-label="Chat"
-        className="btn-gradient"
-        style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 60, width: 56, height: 56, borderRadius: '50%', border: 'none', cursor: 'pointer', display: 'grid', placeItems: 'center', boxShadow: '0 18px 40px -10px rgba(139,92,246,0.55)', color: '#fff' }}
-      >
-        {open ? <X size={22} strokeWidth={2.4} /> : <MessageCircle size={22} strokeWidth={2.4} />}
-      </motion.button>
-      <div style={{ position: 'fixed', bottom: 96, right: 24, zIndex: 60, width: 320, background: '#fff', border: '1px solid #E2E8F0', borderRadius: 20, overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', transform: open ? 'scale(1)' : 'scale(0.95)', opacity: open ? 1 : 0, pointerEvents: open ? 'auto' : 'none', transition: 'all 0.2s', transformOrigin: 'bottom right' }}>
-        <div style={{ padding: 16, background: 'linear-gradient(135deg,#3B5BFA,#8B5CF6 55%,#EC4899)', color: '#fff' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'grid', placeItems: 'center' }}>✨</span>
-            <div>
-              <div style={{ fontSize: 14, fontWeight: 800 }}>Ask Kubryx</div>
-              <div style={{ fontSize: 11.5, opacity: 0.8 }}>Average reply ~3 min</div>
-            </div>
-          </div>
-        </div>
-        <div style={{ padding: '16px 16px 4px', fontSize: 13.5, color: '#64748B' }}>Questions about a specific tool, chain, or the API? Drop a note.</div>
-        <div style={{ padding: '8px 16px 16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, border: '1px solid #E2E8F0', borderRadius: 999, padding: '8px 12px' }}>
-            <input style={{ flex: 1, fontSize: 13.5, border: 'none', outline: 'none', background: 'transparent' }} placeholder="Type a message..." />
-            <button className="btn-gradient" style={{ width: 32, height: 32, borderRadius: '50%', border: 'none', cursor: 'pointer', display: 'grid', placeItems: 'center', color: '#fff', flexShrink: 0 }}>
-              <ArrowRight size={14} strokeWidth={2.4} />
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
   )
 }
 
@@ -1076,17 +767,13 @@ export default function Home() {
       <Navbar />
       <Hero />
       <TrustBar />
-      <Stats />
-      <Tools />
-      <Features />
-      <Chains />
+      <HowItWorks />
+      <StatsBar />
+      <Ecosystem />
       <DashboardPreview />
-      <Testimonials />
-      <Pricing />
       <FinalCTA />
       <Footer />
       <CookieBanner />
-      <ChatButton />
       <ScrollTop />
     </div>
   )

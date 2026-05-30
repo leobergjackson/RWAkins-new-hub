@@ -24,6 +24,7 @@ export type NetworkConfig = (typeof NETWORKS)[NetworkKey]
 
 // Which route uses which network (All Arbitrum Sepolia now)
 export const TOOL_NETWORKS: Record<string, NetworkKey> = {
+  '/invoice':   'ARBITRUM_SEPOLIA',
   '/dashboard': 'ARBITRUM_SEPOLIA',
   '/credit':    'ARBITRUM_SEPOLIA',
   '/legacy':    'ARBITRUM_SEPOLIA',
@@ -37,7 +38,7 @@ export const TOOL_NETWORKS: Record<string, NetworkKey> = {
 
 // EVM tools (use MetaMask)
 export const EVM_TOOLS = [
-  '/dashboard', '/credit', '/legacy', '/vault', '/split', '/lend', '/agents', '/treasury', '/shadow'
+  '/invoice', '/dashboard', '/credit', '/legacy', '/vault', '/split', '/lend', '/agents', '/treasury', '/shadow'
 ]
 
 // Solana tools (use Phantom)
