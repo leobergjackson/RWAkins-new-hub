@@ -3,7 +3,16 @@ import { logTelemetryError } from '../telemetry'
 import { validateEnvironment } from '../security-isolation'
 import { trackRPCFailure } from '../observability'
 
-export type ChainType = 'QIE' | 'SOLANA' | 'STELLAR' | 'ARBITRUM'
+export type ChainType =
+  | 'QIE' | 'SOLANA' | 'STELLAR' | 'ARBITRUM'
+  | 'ETHEREUM' | 'POLYGON' | 'BSC' | 'OPTIMISM'
+
+// EVM chains share the same JSON-RPC method set (eth_getBalance, eth_blockNumber…),
+// so generic reads can treat any of these uniformly.
+export const EVM_CHAINS: ChainType[] = ['QIE', 'ARBITRUM', 'ETHEREUM', 'POLYGON', 'BSC', 'OPTIMISM']
+export function isEvmChain(chain: ChainType): boolean {
+  return EVM_CHAINS.includes(chain)
+}
 
 export interface RPCNode {
   url: string
@@ -39,6 +48,22 @@ export const RPC_NODES: Record<ChainType, RPCNode[]> = {
   ARBITRUM: [
     { url: process.env.NEXT_PUBLIC_ARBITRUM_RPC || 'https://arb1.arbitrum.io/rpc', latency: 0, healthy: true },
     { url: 'https://arbitrum.meowrpc.com', latency: 0, healthy: true }
+  ],
+  ETHEREUM: [
+    { url: process.env.NEXT_PUBLIC_ETHEREUM_RPC || 'https://eth.llamarpc.com', latency: 0, healthy: true },
+    { url: 'https://ethereum-rpc.publicnode.com', latency: 0, healthy: true }
+  ],
+  POLYGON: [
+    { url: process.env.NEXT_PUBLIC_POLYGON_RPC || 'https://polygon.llamarpc.com', latency: 0, healthy: true },
+    { url: 'https://polygon-bor-rpc.publicnode.com', latency: 0, healthy: true }
+  ],
+  BSC: [
+    { url: process.env.NEXT_PUBLIC_BSC_RPC || 'https://bsc-dataseed.binance.org', latency: 0, healthy: true },
+    { url: 'https://bsc-rpc.publicnode.com', latency: 0, healthy: true }
+  ],
+  OPTIMISM: [
+    { url: process.env.NEXT_PUBLIC_OPTIMISM_RPC || 'https://mainnet.optimism.io', latency: 0, healthy: true },
+    { url: 'https://optimism-rpc.publicnode.com', latency: 0, healthy: true }
   ]
 }
 

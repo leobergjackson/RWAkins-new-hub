@@ -21,6 +21,7 @@ import { useKubrykPlatform } from '@/context/KubrykPlatformContext'
 import { getCreditTier } from '@/lib/platform/scoring'
 import { PlatformModeBadge } from '@/components/ui/PlatformModeBadge'
 import LiveCrossChainPulse from '@/components/ui/LiveCrossChainPulse'
+import ChainStatePanel from '@/components/chain/ChainStatePanel'
 import DailyBriefing from '@/components/ui/DailyBriefing'
 import WalletPortfolio from '@/components/ui/WalletPortfolio'
 import ArbitrumActivity from '@/components/ui/ArbitrumActivity'
@@ -845,8 +846,13 @@ export default function DashboardPage() {
             </div>
           )}
 
+          {/* User-selectable chain state — pick any of the 8 chains, reads follow */}
+          <div style={{ margin: '20px 24px 0' }}>
+            <ChainStatePanel toolId="dashboard" theme="light" />
+          </div>
+
           {/* Live cross-chain integration pulse */}
-          <div style={{ margin: '0 24px 24px' }}>
+          <div style={{ margin: '24px 24px 24px' }}>
             <LiveCrossChainPulse theme="light" />
           </div>
 

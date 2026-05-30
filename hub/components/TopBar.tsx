@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ConnectButton } from './wallet/ConnectButton'
 import { NetworkBadge } from './wallet/NetworkBadge'
+import ChainSwitcher from './chain/ChainSwitcher'
 
 const GOLD = '#F5C518'
 const BG = '#080808'
@@ -96,6 +97,10 @@ export default function TopBar({ onMobileToggle, isMobile }: Props) {
 
       {/* Right side */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+
+        {/* Global chain preference — sets the default chain every tool follows
+            unless it has its own per-tool override. */}
+        <ChainSwitcher compact={isMobile} />
 
         {/* Live network badge — reflects the wallet's actual chain */}
         {!isMobile && <NetworkBadge />}

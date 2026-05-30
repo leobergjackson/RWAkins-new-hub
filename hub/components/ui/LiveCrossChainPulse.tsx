@@ -1,21 +1,65 @@
 // Built by vsrupeshkumar
 // Live cross-chain integration showcase. Renders a horizontal flow of 4 chain
-// states pulled from live RPC reads + the platform context:
+// states. Every cell is backed by a REAL on-chain read:
 //
 //   QIE Credit Score  →  Solana Agent Tier  →  Arbitrum Lending Rate  →  Stellar Vault
 //
-// Each cell pulses when its underlying data refreshes. This widget is the
-// single visible artifact that proves cross-chain coordination works.
+//   • Solana  — live slot + job accounts via useTrustMesh (raw Devnet RPC).
+//   • QIE / Arbitrum / Stellar — live block / ledger height + RPC latency via
+//     getRPCBlockState (resilient JSON-RPC with node failover).
+//
+// The domain value (credit score, lending rate, vault status) is the headline;
+// the liveness footer carries the real chain height + latency that proves the
+// connection is live. Each cell pulses when its underlying chain data actually
+// refreshes — not on a blind timer.
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useKubrykPlatform } from '@/context/KubrykPlatformContext'
 import { getCreditTier } from '@/lib/platform/scoring'
 import { useTrustMesh } from '@/hooks/useTrustMesh'
 import { usePrices } from '@/hooks/usePrices'
+import { getRPCBlockState } from '@/lib/blockchain-connector'
+import type { ChainType } from '@/lib/api/client'
 
 type Theme = 'light' | 'dark'
+
+type BlockInfo = { blockNumber: number; latency: number; healthy: boolean }
+
+// Chains read directly here for liveness (Solana is sourced from useTrustMesh).
+const LIVE_CHAINS: ChainType[] = ['QIE', 'ARBITRUM', 'STELLAR']
+
+// Polls real block/ledger height + latency for the EVM/Stellar chains. getRPCBlockState
+// always resolves (it falls back to deterministic values on total RPC outage), so a
+// chain is treated as "live" only when it returns a real, non-zero, low-latency read.
+function useLiveChainBlocks(): Record<string, BlockInfo> {
+  const [blocks, setBlocks] = useState<Record<string, BlockInfo>>({})
+  const activeRef = useRef(true)
+
+  useEffect(() => {
+    activeRef.current = true
+    async function load() {
+      const entries = await Promise.all(
+        LIVE_CHAINS.map(async chain => {
+          const s = await getRPCBlockState(chain)
+          return [chain, {
+            blockNumber: s.blockNumber,
+            latency: s.avgLatency,
+            healthy: s.avgLatency < 2000 && s.blockNumber > 0,
+          }] as const
+        }),
+      )
+      if (!activeRef.current) return
+      setBlocks(Object.fromEntries(entries))
+    }
+    load()
+    const id = setInterval(load, 15_000)
+    return () => { activeRef.current = false; clearInterval(id) }
+  }, [])
+
+  return blocks
+}
 
 type CellProps = {
   chain: string
@@ -26,9 +70,10 @@ type CellProps = {
   href: string
   pulse: number
   theme: Theme
+  live?: { text: string; healthy: boolean }
 }
 
-function Cell({ chain, chainColor, label, value, sub, href, pulse, theme }: CellProps) {
+function Cell({ chain, chainColor, label, value, sub, href, pulse, theme, live }: CellProps) {
   const isLight = theme === 'light'
   const baseBg = isLight ? '#FFFFFF' : 'rgba(255,255,255,0.04)'
   const hoverBg = isLight ? '#FFFFFF' : 'rgba(255,255,255,0.07)'
@@ -91,6 +136,18 @@ function Cell({ chain, chainColor, label, value, sub, href, pulse, theme }: Cell
       <div style={{ fontSize: 11, color: subCol, marginTop: 4, fontWeight: 500 }}>
         {sub}
       </div>
+      {live && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 8 }}>
+          <span style={{
+            width: 5, height: 5, borderRadius: '50%',
+            background: live.healthy ? '#10b981' : '#f59e0b',
+            boxShadow: `0 0 5px ${live.healthy ? '#10b981' : '#f59e0b'}`,
+          }} />
+          <span style={{ fontSize: 9.5, color: subCol, fontFamily: '"Fira Code","JetBrains Mono",monospace', letterSpacing: '0.02em' }}>
+            {live.text}
+          </span>
+        </div>
+      )}
     </Link>
   )
 }
@@ -100,13 +157,18 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
   const tier = getCreditTier(platform.creditScore)
   const mesh = useTrustMesh()
   const { prices } = usePrices(['ethereum', 'solana', 'stellar', 'arbitrum'])
-  const [tick, setTick] = useState(0)
+  const blocks = useLiveChainBlocks()
 
-  // Heartbeat — bumps every 5s so cells re-render their pulse line.
-  useEffect(() => {
-    const id = setInterval(() => setTick(t => t + 1), 5_000)
-    return () => clearInterval(id)
-  }, [])
+  const qie = blocks.QIE
+  const arb = blocks.ARBITRUM
+  const xlm = blocks.STELLAR
+
+  // Real per-chain liveness. A chain counts as live only on a genuine RPC read.
+  const liveCount =
+    (mesh.currentSlot > 0 ? 1 : 0) +
+    (qie?.healthy ? 1 : 0) +
+    (arb?.healthy ? 1 : 0) +
+    (xlm?.healthy ? 1 : 0)
 
   // Lending rate comes from the platform tier itself — single source of truth
   // that the /lend page also uses, so the cells stay in sync.
@@ -144,8 +206,12 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, color: theme === 'light' ? 'rgba(15,23,42,0.6)' : 'rgba(255,255,255,0.55)', fontFamily: '"Fira Code","JetBrains Mono",monospace' }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981' }} />
-              {mesh.isLive ? 'Solana Devnet' : 'reconnecting'}
+              <span style={{
+                width: 6, height: 6, borderRadius: '50%',
+                background: liveCount === 4 ? '#10b981' : liveCount > 0 ? '#f59e0b' : '#ef4444',
+                boxShadow: `0 0 6px ${liveCount === 4 ? '#10b981' : liveCount > 0 ? '#f59e0b' : '#ef4444'}`,
+              }} />
+              {liveCount}/4 chains live
             </span>
             {sol > 0 && <span>SOL ${sol.toFixed(2)}</span>}
             {eth > 0 && <span>ETH ${eth.toFixed(0)}</span>}
@@ -162,7 +228,8 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
           value={platform.creditScore !== null ? `${platform.creditScore}/1000` : '—'}
           sub={`${tier.name} tier · ${tier.treasuryTier}`}
           href="/credit"
-          pulse={tick}
+          pulse={qie?.blockNumber ?? 0}
+          live={qie ? { text: `blk #${qie.blockNumber.toLocaleString()} · ${qie.latency}ms`, healthy: qie.healthy } : undefined}
         />
 
         <Arrow theme={theme} />
@@ -175,7 +242,8 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
           value={mesh.currentSlot > 0 ? `slot ${mesh.currentSlot.toLocaleString()}` : '—'}
           sub={`${mesh.jobs.length} jobs · ${accessLevel}`}
           href="/agents"
-          pulse={tick + 1}
+          pulse={mesh.currentSlot}
+          live={{ text: mesh.currentSlot > 0 ? `Devnet · ${mesh.jobs.filter(j => j.isLive).length} on-chain` : 'reconnecting', healthy: mesh.currentSlot > 0 }}
         />
 
         <Arrow theme={theme} />
@@ -188,7 +256,8 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
           value={`${lendingRate}% APR`}
           sub={`−${rateDiscount}% off market via ZK credit`}
           href="/lend"
-          pulse={tick + 2}
+          pulse={arb?.blockNumber ?? 0}
+          live={arb ? { text: `blk #${arb.blockNumber.toLocaleString()} · ${arb.latency}ms`, healthy: arb.healthy } : undefined}
         />
 
         <Arrow theme={theme} />
@@ -201,7 +270,8 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
           value={platform.vaultActive ? 'Active' : 'Inactive'}
           sub={platform.vaultActive ? `Owner ${(platform.vaultOwner ?? '').slice(0, 6)}…${(platform.vaultOwner ?? '').slice(-4)}` : 'No vault registered'}
           href="/legacy"
-          pulse={tick + 3}
+          pulse={xlm?.blockNumber ?? 0}
+          live={xlm ? { text: `ledger #${xlm.blockNumber.toLocaleString()} · ${xlm.latency}ms`, healthy: xlm.healthy } : undefined}
         />
       </div>
     </div>

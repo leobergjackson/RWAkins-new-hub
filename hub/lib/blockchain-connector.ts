@@ -1,5 +1,5 @@
 // Built by vsrupeshkumar
-import { rpcClient, ChainType } from './api/client'
+import { rpcClient, ChainType, isEvmChain } from './api/client'
 import { logTelemetryError } from './telemetry'
 
 export interface BlockchainValidator {
@@ -18,11 +18,15 @@ export interface RPCBlockState {
 }
 
 // Deterministic default backups for complete network resilience
-const DEFAULT_BALANCES: Record<string, number> = {
+const DEFAULT_BALANCES: Record<ChainType, number> = {
   QIE: 120500.42,
   SOLANA: 24.8,
   STELLAR: 1480.9,
-  ARBITRUM: 8.42
+  ARBITRUM: 8.42,
+  ETHEREUM: 3.14,
+  POLYGON: 4210.5,
+  BSC: 12.6,
+  OPTIMISM: 5.07
 }
 
 export async function fetchBlockchainBalance(
@@ -34,18 +38,17 @@ export async function fetchBlockchainBalance(
   }
 
   try {
+    // All EVM chains (QIE, Arbitrum, Ethereum, Polygon, BSC, Optimism) read the
+    // native balance identically via eth_getBalance.
+    if (isEvmChain(chain)) {
+      const fallbackHex = '0x' + Math.round(DEFAULT_BALANCES[chain] * 1e18).toString(16)
+      const hexBal = await rpcClient.read<string>(chain, 'eth_getBalance', [address, 'latest'], fallbackHex)
+      return parseInt(hexBal, 16) / 1e18
+    }
     switch (chain) {
-      case 'QIE': {
-        const hexBal = await rpcClient.read<string>('QIE', 'eth_getBalance', [address, 'latest'], '0x10368147d34bc000')
-        return parseInt(hexBal, 16) / 1e18
-      }
       case 'SOLANA': {
         const solResult = await rpcClient.read<{ value: number }>('SOLANA', 'getBalance', [address], { value: DEFAULT_BALANCES.SOLANA * 1e9 })
         return solResult.value / 1e9
-      }
-      case 'ARBITRUM': {
-        const arbBal = await rpcClient.read<string>('ARBITRUM', 'eth_getBalance', [address, 'latest'], '0x754be6058e0c00')
-        return parseInt(arbBal, 16) / 1e18
       }
       case 'STELLAR': {
         // Stellar Horizon / Soroban Testnet details
@@ -67,17 +70,15 @@ export async function fetchBlockchainBalance(
 export async function getRPCBlockState(chain: ChainType): Promise<RPCBlockState> {
   const start = Date.now()
   try {
-    switch (chain) {
-      case 'QIE':
-      case 'ARBITRUM': {
-        const method = 'eth_blockNumber'
-        const hexBlock = await rpcClient.read<string>(chain, method, [], '0x1042')
-        return {
-          blockNumber: parseInt(hexBlock, 16),
-          syncing: false,
-          avgLatency: Date.now() - start
-        }
+    if (isEvmChain(chain)) {
+      const hexBlock = await rpcClient.read<string>(chain, 'eth_blockNumber', [], '0x1042')
+      return {
+        blockNumber: parseInt(hexBlock, 16),
+        syncing: false,
+        avgLatency: Date.now() - start
       }
+    }
+    switch (chain) {
       case 'SOLANA': {
         const slot = await rpcClient.read<number>('SOLANA', 'getSlot', [], 1054238)
         return {
