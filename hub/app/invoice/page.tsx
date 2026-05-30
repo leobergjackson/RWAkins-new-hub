@@ -147,38 +147,40 @@ export default function InvoicePage() {
     isValidAddress(freelancerWallet);
 
   return (
-    <div style={{ minHeight: 'calc(100vh - 56px)', background: '#080808', color: '#fff' }}>
+    <div style={{
+      minHeight: 'calc(100vh - 56px)',
+      background: 'radial-gradient(60% 55% at 70% 40%, rgba(252,231,243,0.6) 0%, transparent 60%), radial-gradient(50% 50% at 25% 60%, rgba(237,233,254,0.6) 0%, transparent 60%), linear-gradient(180deg, #F8FAFC 0%, #F1F5FF 100%)',
+      color: '#0A0F2E',
+    }}>
 
       {/* Header */}
       <div style={{
-        padding: '24px 32px',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: 16,
+        padding: '20px 32px',
+        borderBottom: '1px solid rgba(10,15,46,0.08)',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        flexWrap: 'wrap', gap: 16,
+        background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(12px)',
       }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
             <div style={{
               width: 32, height: 32, borderRadius: 8,
-              background: 'linear-gradient(135deg, #C8FF00, #86efac)',
+              background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6)',
               display: 'grid', placeItems: 'center',
             }}>
-              <FileText size={16} color="#000" />
+              <FileText size={16} color="#fff" />
             </div>
-            <h1 style={{ fontSize: 20, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', margin: 0 }}>
+            <h1 style={{ fontSize: 20, fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.02em', margin: 0 }}>
               Invoice
             </h1>
             <span style={{
               fontSize: 10, fontWeight: 700, letterSpacing: '0.12em',
               padding: '2px 8px', borderRadius: 999,
-              background: 'rgba(200,255,0,0.1)', color: '#C8FF00',
-              border: '1px solid rgba(200,255,0,0.2)',
+              background: 'rgba(59,91,250,0.08)', color: '#3B5BFA',
+              border: '1px solid rgba(59,91,250,0.2)',
             }}>LIVE · ARBITRUM SEPOLIA</span>
           </div>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>
+          <p style={{ fontSize: 13, color: '#64748B', margin: 0 }}>
             AI-parsed USDC invoicing · Get paid in seconds
           </p>
         </div>
@@ -191,21 +193,21 @@ export default function InvoicePage() {
         {/* LEFT — Input */}
         <div style={{
           flex: 1, overflowY: 'auto',
-          borderRight: '1px solid rgba(255,255,255,0.06)',
+          borderRight: '1px solid rgba(10,15,46,0.08)',
           padding: '32px',
           maxWidth: 560,
         }}>
 
           {/* Paste area */}
           <div style={{ marginBottom: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <label style={{ fontFamily: MONO, fontSize: 10, color: '#C8FF00', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 700 }}>
+            <label style={{ fontFamily: MONO, fontSize: 10, color: '#3B5BFA', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 700 }}>
               Invoice Text
             </label>
             <button
               onClick={loadSample}
               style={{
-                fontFamily: MONO, fontSize: 10, color: 'rgba(255,255,255,0.4)',
-                background: 'none', border: '1px solid rgba(255,255,255,0.1)',
+                fontFamily: MONO, fontSize: 10, color: '#64748B',
+                background: 'none', border: '1px solid rgba(10,15,46,0.12)',
                 borderRadius: 6, padding: '3px 10px', cursor: 'pointer',
                 letterSpacing: '0.08em',
               }}
@@ -216,10 +218,11 @@ export default function InvoicePage() {
           <textarea
             style={{
               width: '100%', minHeight: 180,
-              background: '#0D1017', border: '1px solid rgba(255,255,255,0.08)',
+              background: '#fff', border: '1px solid rgba(10,15,46,0.1)',
               borderRadius: 12, padding: 16,
-              fontFamily: MONO, fontSize: 12, color: '#fff', lineHeight: 1.6,
+              fontFamily: MONO, fontSize: 12, color: '#0A0F2E', lineHeight: 1.6,
               outline: 'none', resize: 'vertical', boxSizing: 'border-box',
+              boxShadow: '0 2px 8px rgba(10,15,46,0.04)',
             }}
             placeholder="Paste any invoice — text from a PDF, email, or message..."
             value={invoiceText}
@@ -234,26 +237,27 @@ export default function InvoicePage() {
               borderRadius: 999, fontWeight: 700, fontSize: 14,
               cursor: parseLoading || !invoiceText.trim() ? 'not-allowed' : 'pointer',
               background: parseLoading
-                ? 'rgba(200,255,0,0.08)'
+                ? 'rgba(59,91,250,0.06)'
                 : !invoiceText.trim()
-                  ? '#1a1a1a'
-                  : '#C8FF00',
-              color: parseLoading ? '#C8FF00' : !invoiceText.trim() ? 'rgba(255,255,255,0.2)' : '#000',
+                  ? '#F1F5F9'
+                  : 'linear-gradient(135deg, #3B5BFA, #8B5CF6)',
+              color: parseLoading ? '#3B5BFA' : !invoiceText.trim() ? 'rgba(10,15,46,0.3)' : '#fff',
               fontFamily: MONO, letterSpacing: '0.05em',
-              border: parseLoading ? '1px solid rgba(200,255,0,0.2)' : 'none',
+              border: parseLoading ? '1px solid rgba(59,91,250,0.2)' : 'none',
+              boxShadow: !parseLoading && invoiceText.trim() ? '0 8px 24px rgba(59,91,250,0.3)' : 'none',
             } as React.CSSProperties}
           >
             {parseLoading ? 'Analyzing with Groq AI···' : 'Parse with AI'}
           </button>
 
           {parseError && (
-            <div style={{ marginTop: 12, padding: '10px 14px', borderRadius: 8, background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', fontFamily: MONO, fontSize: 11, color: '#f87171' }}>
+            <div style={{ marginTop: 12, padding: '10px 14px', borderRadius: 8, background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.2)', fontFamily: MONO, fontSize: 11, color: '#dc2626' }}>
               {parseError}
             </div>
           )}
 
           {fieldsFilledCount > 0 && (
-            <div style={{ marginTop: 12, padding: '8px 14px', borderRadius: 8, background: 'rgba(200,255,0,0.06)', border: '1px solid rgba(200,255,0,0.15)', fontFamily: MONO, fontSize: 10, color: '#C8FF00', letterSpacing: '0.1em' }}>
+            <div style={{ marginTop: 12, padding: '8px 14px', borderRadius: 8, background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.2)', fontFamily: MONO, fontSize: 10, color: '#059669', letterSpacing: '0.1em' }}>
               AI FILLED {fieldsFilledCount} FIELDS · REVIEW BEFORE CONTINUING
             </div>
           )}
@@ -268,7 +272,7 @@ export default function InvoicePage() {
               { label: 'Payment Due Date', value: dueDate, setter: setDueDate, type: 'date' },
             ].map(f => (
               <div key={f.label}>
-                <label style={{ display: 'block', fontFamily: MONO, fontSize: 10, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>
+                <label style={{ display: 'block', fontFamily: MONO, fontSize: 10, color: '#64748B', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>
                   {f.label}
                 </label>
                 <input
@@ -276,10 +280,11 @@ export default function InvoicePage() {
                   value={f.value}
                   onChange={e => f.setter(e.target.value)}
                   style={{
-                    width: '100%', background: '#0D1017',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    width: '100%', background: '#fff',
+                    border: '1px solid rgba(10,15,46,0.1)',
                     borderRadius: 10, padding: '10px 14px',
-                    color: '#fff', fontSize: 14, outline: 'none', boxSizing: 'border-box',
+                    color: '#0A0F2E', fontSize: 14, outline: 'none', boxSizing: 'border-box',
+                    boxShadow: '0 2px 6px rgba(10,15,46,0.04)',
                   }}
                 />
               </div>
@@ -287,13 +292,13 @@ export default function InvoicePage() {
 
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                <label style={{ fontFamily: MONO, fontSize: 10, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                <label style={{ fontFamily: MONO, fontSize: 10, color: '#64748B', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                   Your Wallet on Arbitrum
                 </label>
                 {isConnected && (
                   <button
                     onClick={useConnectedWallet}
-                    style={{ fontFamily: MONO, fontSize: 10, color: '#C8FF00', background: 'none', border: 'none', cursor: 'pointer' }}
+                    style={{ fontFamily: MONO, fontSize: 10, color: '#3B5BFA', background: 'none', border: 'none', cursor: 'pointer' }}
                   >
                     Use connected wallet
                   </button>
@@ -305,13 +310,14 @@ export default function InvoicePage() {
                 onChange={e => setFreelancerWallet(e.target.value)}
                 placeholder="0x..."
                 style={{
-                  width: '100%', background: '#0D1017',
-                  border: `1px solid ${isValidAddress(freelancerWallet) ? 'rgba(200,255,0,0.3)' : 'rgba(255,255,255,0.08)'}`,
+                  width: '100%', background: '#fff',
+                  border: `1px solid ${isValidAddress(freelancerWallet) ? 'rgba(59,91,250,0.4)' : 'rgba(10,15,46,0.1)'}`,
                   borderRadius: 10, padding: '10px 14px',
-                  color: '#fff', fontFamily: MONO, fontSize: 13, outline: 'none', boxSizing: 'border-box',
+                  color: '#0A0F2E', fontFamily: MONO, fontSize: 13, outline: 'none', boxSizing: 'border-box',
+                  boxShadow: '0 2px 6px rgba(10,15,46,0.04)',
                 }}
               />
-              <p style={{ fontFamily: MONO, fontSize: 10, color: 'rgba(255,255,255,0.2)', marginTop: 6, letterSpacing: '0.05em' }}>
+              <p style={{ fontFamily: MONO, fontSize: 10, color: '#94A3B8', marginTop: 6, letterSpacing: '0.05em' }}>
                 CLIENT PAYS DIRECTLY TO THIS ADDRESS · KUBRYX NEVER HOLDS CUSTODY
               </p>
             </div>
@@ -325,9 +331,10 @@ export default function InvoicePage() {
               width: '100%', height: 56, marginTop: 32,
               borderRadius: 999, fontWeight: 700, fontSize: 15,
               cursor: canGenerate ? 'pointer' : 'not-allowed',
-              background: canGenerate ? '#C8FF00' : '#141820',
-              color: canGenerate ? '#000' : 'rgba(255,255,255,0.2)',
-              border: canGenerate ? 'none' : '1px solid rgba(255,255,255,0.08)',
+              background: canGenerate ? 'linear-gradient(135deg, #3B5BFA, #8B5CF6 55%, #EC4899)' : '#F1F5F9',
+              color: canGenerate ? '#fff' : 'rgba(10,15,46,0.3)',
+              border: canGenerate ? 'none' : '1px solid rgba(10,15,46,0.08)',
+              boxShadow: canGenerate ? '0 10px 30px rgba(59,91,250,0.35)' : 'none',
             } as React.CSSProperties}
           >
             {canGenerate ? 'Generate Payment Link →' : 'Fill required fields'}
@@ -337,13 +344,13 @@ export default function InvoicePage() {
           {generatedURL && (
             <div style={{
               marginTop: 24, padding: 20,
-              background: '#0D1017', border: '1px solid rgba(200,255,0,0.2)',
+              background: 'rgba(59,91,250,0.04)', border: '1px solid rgba(59,91,250,0.15)',
               borderRadius: 16,
             }}>
               <div style={{
-                fontFamily: MONO, fontSize: 12, color: '#C8FF00',
+                fontFamily: MONO, fontSize: 12, color: '#3B5BFA',
                 wordBreak: 'break-all', marginBottom: 16,
-                padding: '12px 14px', background: '#080808', borderRadius: 10,
+                padding: '12px 14px', background: '#EEF2FF', borderRadius: 10,
               }}>
                 {generatedURL}
               </div>
@@ -352,8 +359,10 @@ export default function InvoicePage() {
                   onClick={handleCopy}
                   style={{
                     flex: 1, height: 44, borderRadius: 999, fontWeight: 700, fontSize: 13,
-                    background: '#C8FF00', color: '#000', border: 'none', cursor: 'pointer',
+                    background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6)', color: '#fff',
+                    border: 'none', cursor: 'pointer',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                    boxShadow: '0 6px 20px rgba(59,91,250,0.3)',
                   }}
                 >
                   <Copy size={14} />
@@ -365,9 +374,9 @@ export default function InvoicePage() {
                   rel="noreferrer"
                   style={{
                     flex: 1, height: 44, borderRadius: 999, fontWeight: 600, fontSize: 13,
-                    border: '1px solid rgba(255,255,255,0.15)', color: '#fff',
+                    border: '1px solid rgba(10,15,46,0.15)', color: '#0A0F2E',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                    textDecoration: 'none',
+                    textDecoration: 'none', background: '#fff',
                   }}
                 >
                   <ExternalLink size={14} />
@@ -379,21 +388,23 @@ export default function InvoicePage() {
         </div>
 
         {/* RIGHT — Preview */}
-        <div style={{ flex: 1, padding: '32px', background: '#05080F', overflowY: 'auto' }}>
+        <div style={{ flex: 1, padding: '32px', background: 'rgba(248,250,252,0.6)', overflowY: 'auto' }}>
 
-          {/* Preview card */}
+          {/* Preview header */}
           <div style={{ marginBottom: 24 }}>
-            <p style={{ fontFamily: MONO, fontSize: 10, color: '#C8FF00', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4 }}>
+            <p style={{ fontFamily: MONO, fontSize: 10, color: '#3B5BFA', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4 }}>
               Payment Preview
             </p>
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', margin: 0 }}>
+            <p style={{ fontSize: 12, color: '#94A3B8', margin: 0 }}>
               What your client will see
             </p>
           </div>
 
+          {/* Preview CARD — intentionally dark to show client payment experience */}
           <div style={{
             background: '#0D1017', borderRadius: 24, padding: 36,
             border: '1px solid rgba(255,255,255,0.05)',
+            boxShadow: '0 20px 60px rgba(10,15,46,0.2)',
           }}>
             <p style={{ fontFamily: MONO, fontSize: 10, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4 }}>
               Payment Request
@@ -437,7 +448,7 @@ export default function InvoicePage() {
           </div>
 
           {/* Verified badges */}
-          <div style={{ display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 10, marginTop: 20, flexWrap: 'wrap' }}>
             {[
               { label: 'Verified Smart Contract', color: '#10b981' },
               { label: 'Arbitrum Sepolia', color: '#28a0f0' },
@@ -446,8 +457,8 @@ export default function InvoicePage() {
               <div key={b.label} style={{
                 display: 'flex', alignItems: 'center', gap: 6,
                 padding: '5px 12px', borderRadius: 999, fontSize: 11, fontWeight: 600,
-                background: `${b.color}12`, color: b.color,
-                border: `1px solid ${b.color}30`,
+                background: `${b.color}10`, color: b.color,
+                border: `1px solid ${b.color}25`,
               }}>
                 <span style={{ width: 6, height: 6, borderRadius: '50%', background: b.color }} />
                 {b.label}
@@ -455,7 +466,7 @@ export default function InvoicePage() {
             ))}
           </div>
 
-          <p style={{ fontFamily: MONO, fontSize: 10, color: 'rgba(255,255,255,0.15)', marginTop: 16, textAlign: 'center', letterSpacing: '0.05em' }}>
+          <p style={{ fontFamily: MONO, fontSize: 10, color: '#94A3B8', marginTop: 16, textAlign: 'center', letterSpacing: '0.05em' }}>
             Payment data is encoded in the URL · No database · No custody
           </p>
         </div>
