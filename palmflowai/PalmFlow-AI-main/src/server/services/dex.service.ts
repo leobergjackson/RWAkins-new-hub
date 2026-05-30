@@ -1,10 +1,10 @@
 // Built by vsrupeshkumar
-import { Connection, Keypair, VersionedTransaction } from '@solana/web3.js';
+import { Connection, Keypair, VersionedTransaction } from '@arbitrum-sepolia/web3.js';
 import fetch from 'cross-fetch';
 
 export const dexService = {
   /**
-   * Execute an autonomous swap on Solana using Jupiter aggregator
+   * Execute an autonomous swap on Arbitrum Sepolia using Jupiter aggregator
    */
   async swap(
     inputMint: string,
@@ -41,7 +41,7 @@ export const dexService = {
       ).json();
 
       // 3. Deserialize and Sign
-      const connection = new Connection(process.env.NEXT_PUBLIC_SOLANA_RPC_URL!);
+      const connection = new Connection(process.env.NEXT_PUBLIC_ETHANA_RPC_URL!);
       const swapTransactionBuf = Buffer.from(swapTransaction, 'base64');
       var transaction = VersionedTransaction.deserialize(swapTransactionBuf);
 

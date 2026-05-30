@@ -3,8 +3,8 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { useWallet } from '@arbitrum-sepolia/wallet-adapter-react';
+import { WalletMultiButton } from '@arbitrum-sepolia/wallet-adapter-react-ui';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Zap, LayoutDashboard, Users, ShoppingCart, Shield, MessageSquare, Cpu, TrendingUp, BarChart3 } from 'lucide-react';
 

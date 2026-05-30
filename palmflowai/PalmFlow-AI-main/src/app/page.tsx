@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useWallet } from '@arbitrum-sepolia/wallet-adapter-react';
 import { useRouter } from 'next/navigation';
 import { LandingPage } from '@/components/landing/LandingPage';
 

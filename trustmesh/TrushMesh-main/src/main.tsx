@@ -2,9 +2,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
-import type { WalletAdapter } from "@solana/wallet-adapter-base";
-import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+import { ConnectionProvider, WalletProvider } from "@arbitrum-sepolia/wallet-adapter-react";
+import type { WalletAdapter } from "@arbitrum-sepolia/wallet-adapter-base";
+import { WalletModalProvider } from "@arbitrum-sepolia/wallet-adapter-react-ui";
 import { Buffer } from "buffer";
 import { App } from "./App";
 import { runtimeConfig } from "./lib/runtimeConfig";
@@ -12,7 +12,7 @@ import { getEffectiveRpcEndpoint } from "./lib/settings";
 import { ThemeProvider, initializeThemeOnLoad } from "./components/ThemeProvider";
 import { useSettingsStore } from "./stores/settingsStore";
 import "./styles.css";
-import "@solana/wallet-adapter-react-ui/styles.css";
+import "@arbitrum-sepolia/wallet-adapter-react-ui/styles.css";
 
 if (typeof window !== "undefined") {
   try {
@@ -39,14 +39,14 @@ function AppProviders() {
   const rpcPreset = useSettingsStore((state) => state.rpcPreset);
   const customRpcUrl = useSettingsStore((state) => state.customRpcUrl);
   const autoConnectWallet = useSettingsStore((state) => state.autoConnectWallet);
-  const endpoint = getEffectiveRpcEndpoint({ rpcPreset, customRpcUrl }, runtimeConfig.solanaRpcUrl);
+  const endpoint = getEffectiveRpcEndpoint({ rpcPreset, customRpcUrl }, runtimeConfig.arbitrum-sepoliaRpcUrl);
 
   React.useEffect(() => {
     let cancelled = false;
 
     const loadWallets = async () => {
       try {
-        const { PhantomWalletAdapter } = await import("@solana/wallet-adapter-phantom");
+        const { PhantomWalletAdapter } = await import("@arbitrum-sepolia/wallet-adapter-phantom");
         if (!cancelled) {
           setWallets([new PhantomWalletAdapter()]);
         }

@@ -18,7 +18,7 @@ import {
 import { cn } from '@/lib/utils';
 import { StealthRouteMap } from './StealthRouteMap';
 import { trpc } from '@/lib/trpc';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useWallet } from '@arbitrum-sepolia/wallet-adapter-react';
 
 export function CommandCenter() {
   const [isShielded, setIsShielded] = useState(true);
@@ -75,7 +75,7 @@ export function CommandCenter() {
         <div className="grid grid-cols-3 gap-6">
           <StatCard 
             title="Shielded Treasury" 
-            value={publicKey ? `${(walletBalance || 0).toFixed(2)} SOL` : treasury ? `${(treasury.balance / 200).toFixed(2)} SOL` : "0.00 SOL"} 
+            value={publicKey ? `${(walletBalance || 0).toFixed(2)} ETH` : treasury ? `${(treasury.balance / 200).toFixed(2)} ETH` : "0.00 ETH"} 
             change={publicKey ? "LIVE WALLET" : "+12.4%"} 
             icon={Wallet} 
             color="cyan" 
@@ -122,7 +122,7 @@ export function CommandCenter() {
                   action="ON-CHAIN SETTLEMENT" 
                   status={tx.success ? "CONFIRMED" : "FAILED"} 
                   time={tx.timestamp ? new Date(tx.timestamp).toLocaleTimeString() : 'RECENT'} 
-                  detail={`SIG: ${tx.signature.slice(0, 12)}... | AMOUNT: ${tx.amount.toFixed(4)} SOL`}
+                  detail={`SIG: ${tx.signature.slice(0, 12)}... | AMOUNT: ${tx.amount.toFixed(4)} ETH`}
                 />
               ))
             ) : (

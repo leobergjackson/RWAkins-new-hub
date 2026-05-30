@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import { transactionService } from '@/server/services/transaction.service';
 import { agentService } from '@/server/services/agent.service';
-import { solanaService } from '@/server/services/solana.service';
+import { arbitrum-sepoliaService } from '@/server/services/arbitrum-sepolia.service';
 import { policyService } from '@/server/services/policy.service';
 import { generateAgentResponse } from '@/lib/ai/OpenAIProvider';
 
@@ -36,11 +36,11 @@ export async function POST(req: Request) {
         });
       }
 
-      // 4. Execute Actions (REAL SOLANA TRANSACTIONS)
+      // 4. Execute Actions (REAL ETHANA TRANSACTIONS)
       // Execute REAL on-chain payment
       const recipient = agent.walletAddress || 'FRnaJo8MyEzt7Hd6XRHaYeid71JyaACEVVWkvjp4G8wv';
       
-      txHash = await solanaService.executePayment(recipient, aiResponse.amount);
+      txHash = await arbitrum-sepoliaService.executePayment(recipient, aiResponse.amount);
 
       await transactionService.createTransaction({
         amount: aiResponse.amount,

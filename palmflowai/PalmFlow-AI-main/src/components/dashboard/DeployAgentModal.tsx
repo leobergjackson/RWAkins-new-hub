@@ -168,7 +168,7 @@ export const DeployAgentModal = ({ isOpen, onClose }: DeployAgentModalProps) => 
                       <Zap className="w-4 h-4 text-indigo-400 fill-current" />
                     </div>
                     <p className="text-[11px] text-neutral-400 leading-relaxed font-medium">
-                      Initializing this neural identity will generate a <span className="text-white font-bold">unique Solana vault</span>. 5% of the allocated budget will be transferred immediately for autonomous operations.
+                      Initializing this neural identity will generate a <span className="text-white font-bold">unique Arbitrum Sepolia vault</span>. 5% of the allocated budget will be transferred immediately for autonomous operations.
                     </p>
                   </div>
 
@@ -210,7 +210,7 @@ export const DeployAgentModal = ({ isOpen, onClose }: DeployAgentModalProps) => 
                   <div className="space-y-3">
                     <h3 className="text-2xl font-semibold text-white tracking-tight leading-none">Agent Deployed</h3>
                     <p className="text-neutral-500 text-sm font-medium leading-relaxed max-w-[300px] mx-auto">
-                      Neural identity successfully injected. The autonomous wallet is now live on <span className="text-white font-black uppercase">Solana Devnet</span>.
+                      Neural identity successfully injected. The autonomous wallet is now live on <span className="text-white font-black uppercase">Arbitrum Sepolia Devnet</span>.
                     </p>
                   </div>
                   <button 

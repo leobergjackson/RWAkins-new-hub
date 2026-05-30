@@ -1,7 +1,7 @@
 // Built by vsrupeshkumar
-import { solanaService } from './solana.service';
-import { Connection, clusterApiUrl, PublicKey } from '@solana/web3.js';
-import { getAccount, getAssociatedTokenAddress } from '@solana/spl-token';
+import { arbitrum-sepoliaService } from './arbitrum-sepolia.service';
+import { Connection, clusterApiUrl, PublicKey } from '@arbitrum-sepolia/web3.js';
+import { getAccount, getAssociatedTokenAddress } from '@arbitrum-sepolia/spl-token';
 
 const USDC_MINT = "Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr"; // Devnet USDC Mock
 
@@ -13,11 +13,11 @@ export const tokenService = {
     const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
     const pubkey = new PublicKey(walletAddress);
 
-    // 1. Fetch SOL Balance
+    // 1. Fetch ETH Balance
     const solBalance = await connection.getBalance(pubkey);
 
     // 2. Fetch PUSD Balance
-    const pusdBalance = await solanaService.getPUSDBalance(walletAddress);
+    const pusdBalance = await arbitrum-sepoliaService.getPUSDBalance(walletAddress);
 
     // 3. Fetch USDC Balance (Optional/Try)
     let usdcBalance = 0;
@@ -31,7 +31,7 @@ export const tokenService = {
     }
 
     return [
-      { symbol: 'SOL', name: 'Solana', amount: solBalance / 10**9, color: 'text-purple-400' },
+      { symbol: 'ETH', name: 'Arbitrum Sepolia', amount: solBalance / 10**9, color: 'text-purple-400' },
       { symbol: 'PUSD', name: 'Palm USD', amount: pusdBalance, color: 'text-brand-primary' },
       { symbol: 'USDC', name: 'USD Coin', amount: usdcBalance, color: 'text-blue-400' }
     ];

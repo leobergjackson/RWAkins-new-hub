@@ -7,7 +7,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import nacl from "tweetnacl";
-import { Ed25519Program, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
+import { Ed25519Program, Keypair, PublicKey, SystemProgram } from "@arbitrum-sepolia/web3.js";
 import type { Trustmesh } from "../target/types/trustmesh";
 
 const PROGRAM_ID = new PublicKey("66DXeSqBccWxWWw9S21vxe2Mvvqqkmw5KsK5jqA42quz");
@@ -32,7 +32,7 @@ describe("trustmesh", () => {
   it("initialize_job creates the PDA and stores the expected fields", async () => {
     const owner = provider.wallet.publicKey;
     const jobId = sha256(`job:${Date.now()}:initialize`);
-    const descriptionHash = sha256("Rebalance SOL/USDC to 60/40");
+    const descriptionHash = sha256("Rebalance ETH/USDC to 60/40");
     const [jobPda] = deriveJobPda(owner, jobId);
     const budgetLamports = new BN(2_500_000);
 
@@ -228,7 +228,7 @@ describe("trustmesh", () => {
       })
       .rpc();
 
-    const actionHash = sha256("Fetch SOL/USDC spot price from Jupiter API");
+    const actionHash = sha256("Fetch ETH/USDC spot price from Jupiter API");
     const signature = nacl.sign.detached(actionHash, plannerWallet.secretKey);
     const proofIx = Ed25519Program.createInstructionWithPrivateKey({
       privateKey: plannerWallet.secretKey,
@@ -257,7 +257,7 @@ describe("trustmesh", () => {
 
     const tamperedSignature = Uint8Array.from(signature);
     tamperedSignature[0] ^= 0xff;
-    const tamperedActionHash = sha256("Tampered SOL/USDC delegation");
+    const tamperedActionHash = sha256("Tampered ETH/USDC delegation");
     const [badDelegationPda] = deriveDelegationPda(jobPda, plannerAgentPda, tamperedActionHash);
 
     await expectAnchorError(
@@ -410,7 +410,7 @@ async function expectAnchorError(promise: Promise<unknown>, code: string | strin
 }
 
 function loadLocalWallet() {
-  const walletPath = process.env.ANCHOR_WALLET ?? path.join(os.homedir(), ".config/solana/id.json");
+  const walletPath = process.env.ANCHOR_WALLET ?? path.join(os.homedir(), ".config/arbitrum-sepolia/id.json");
   const secretKey = JSON.parse(fs.readFileSync(walletPath, "utf8")) as number[];
   return Keypair.fromSecretKey(Uint8Array.from(secretKey));
 }

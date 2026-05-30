@@ -92,7 +92,7 @@ export async function registerMessageRoutes(app: FastifyInstance) {
     try {
       senderWalletAddress = await resolveNameToWallet(body.senderSolName);
     } catch {
-      return reply.status(422).send({ error: "SNS_RESOLUTION_FAILED" });
+      return reply.status(422).send({ error: "SNS_REETHUTION_FAILED" });
     }
 
     const sender = await app.services.prisma.agent.findFirst({

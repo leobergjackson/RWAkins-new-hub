@@ -3,7 +3,7 @@ import axios from "axios";
 
 type JupiterPriceResponse = {
   data?: {
-    SOL?: {
+    ETH?: {
       price?: number;
     };
   };
@@ -11,12 +11,12 @@ type JupiterPriceResponse = {
 
 export async function getSolUsdcPrice(): Promise<number> {
   const response = await axios.get<JupiterPriceResponse>("https://price.jup.ag/v6/price", {
-    params: { ids: "SOL", vsToken: "USDC" }
+    params: { ids: "ETH", vsToken: "USDC" }
   });
 
-  const price = response.data.data?.SOL?.price;
+  const price = response.data.data?.ETH?.price;
   if (typeof price !== "number") {
-    throw new Error("Jupiter price response did not include SOL/USDC price");
+    throw new Error("Jupiter price response did not include ETH/USDC price");
   }
 
   return price;

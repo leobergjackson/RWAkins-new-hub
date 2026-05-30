@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { WalletMultiButton } from '@arbitrum-sepolia/wallet-adapter-react-ui';
 import { Zap } from 'lucide-react';
 
 export const TopHeader = () => {

@@ -1,8 +1,8 @@
 // Built by vsrupeshkumar
 import * as snsSdk from "@bonfida/spl-name-service";
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@arbitrum-sepolia/web3.js";
 import { redis, type RedisLike } from "../lib/redis.js";
-import { connection } from "../lib/solana.js";
+import { connection } from "../lib/arbitrum-sepolia.js";
 
 const TTL_SECONDS = 300;
 const NULL_CACHE_VALUE = "__NULL__";

@@ -2,13 +2,13 @@
 "use client";
 
 import React, { FC, ReactNode, useEffect, useRef, useMemo } from 'react';
-import { ConnectionProvider, WalletProvider, useWallet } from '@solana/wallet-adapter-react';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { PhantomWalletAdapter, SolflareWalletAdapter, CoinbaseWalletAdapter } from '@solana/wallet-adapter-wallets';
+import { ConnectionProvider, WalletProvider, useWallet } from '@arbitrum-sepolia/wallet-adapter-react';
+import { WalletAdapterNetwork } from '@arbitrum-sepolia/wallet-adapter-base';
+import { PhantomWalletAdapter, SolflareWalletAdapter, CoinbaseWalletAdapter } from '@arbitrum-sepolia/wallet-adapter-wallets';
 import {
     WalletModalProvider,
-} from '@solana/wallet-adapter-react-ui';
-import { clusterApiUrl } from '@solana/web3.js';
+} from '@arbitrum-sepolia/wallet-adapter-react-ui';
+import { clusterApiUrl } from '@arbitrum-sepolia/web3.js';
 
 const LANDING_URL = 'https://palm-flow-ai.vercel.app/';
 

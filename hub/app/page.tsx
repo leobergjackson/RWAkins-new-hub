@@ -49,19 +49,19 @@ function useCountUp(target: number, active: boolean): number {
 
 // ─── Data ────────────────────────────────────────────────────
 const TOOLS = [
-  { icon: '◈', name: 'Credit Passport', href: '/credit', tagline: 'AI Credit Scoring', desc: 'Generate your on-chain credit score as a soulbound NFT. Every DeFi protocol reads your score with a single contract call.', chain: 'QIE', chainColor: '#F5A623', badge: 'Identity' },
-  { icon: '⬟', name: 'Family Vault', href: '/legacy', tagline: 'Encrypted Inheritance', desc: 'Store your most important files with AES-GCM encryption. Heirs unlock access on-chain after validator attestation.', chain: 'QIE', chainColor: '#F5A623', badge: 'Security' },
-  { icon: '⬡', name: 'Agent Coordinator', href: '/agents', tagline: 'AI Agent Coordination', desc: 'Deploy AI agents with verified on-chain identities. Every delegation is Ed25519 signed and permanently logged.', chain: 'Solana', chainColor: '#9945FF', badge: 'AI' },
+  { icon: '◈', name: 'Credit Passport', href: '/credit', tagline: 'AI Credit Scoring', desc: 'Generate your on-chain credit score as a soulbound NFT. Every DeFi protocol reads your score with a single contract call.', chain: 'Arbitrum', chainColor: '#F5A623', badge: 'Identity' },
+  { icon: '⬟', name: 'Family Vault', href: '/legacy', tagline: 'Encrypted Inheritance', desc: 'Store your most important files with AES-GCM encryption. Heirs unlock access on-chain after validator attestation.', chain: 'Arbitrum', chainColor: '#F5A623', badge: 'Security' },
+  { icon: '⬡', name: 'Agent Coordinator', href: '/agents', tagline: 'AI Agent Coordination', desc: 'Deploy AI agents with verified on-chain identities. Every delegation is Ed25519 signed and permanently logged.', chain: 'Arbitrum Sepolia', chainColor: '#9945FF', badge: 'AI' },
   { icon: '🔐', name: 'Private Vault', href: '/vault', tagline: 'Cross-Chain Privacy', desc: 'Trade assets across chains with complete privacy. Zero transaction metadata exposed to any observer.', chain: 'Multi', chainColor: '#06B6D4', badge: 'Privacy' },
-  { icon: '◆', name: 'Bill Split', href: '/split', tagline: 'On-Chain Bill Splitting', desc: 'Split bills using smart contracts on Stellar. Multi-wallet support with automatic settlement on full payment.', chain: 'Stellar', chainColor: '#3B82F6', badge: 'Payments' },
+  { icon: '◆', name: 'Bill Split', href: '/split', tagline: 'On-Chain Bill Splitting', desc: 'Split bills using smart contracts on Arbitrum. Multi-wallet support with automatic settlement on full payment.', chain: 'Arbitrum', chainColor: '#3B82F6', badge: 'Payments' },
   { icon: '◎', name: 'AI Lending', href: '/lend', tagline: 'DeFi Loan Negotiation', desc: 'AI agents negotiate your loan terms in natural language. Zero-knowledge credit verification. L2 settlement.', chain: 'ETH L2', chainColor: '#6366F1', badge: 'DeFi' },
-  { icon: '◇', name: 'Yield Operations Hub', href: '/treasury', tagline: 'Autonomous Yield Management', desc: 'AI agents manage your treasury, stream payroll per-second, enforce governance, and optimize yield automatically.', chain: 'Solana', chainColor: '#10B981', badge: 'Yield' },
-  { icon: '▲', name: 'Stealth Execution Suite', href: '/shadow', tagline: 'Invisible Operations', desc: 'Run your entire financial organization invisibly on-chain. Seven specialized AI agents. Fully autonomous.', chain: 'Solana', chainColor: '#64748B', badge: 'Enterprise' },
+  { icon: '◇', name: 'Yield Operations Hub', href: '/treasury', tagline: 'Autonomous Yield Management', desc: 'AI agents manage your treasury, stream payroll per-second, enforce governance, and optimize yield automatically.', chain: 'Arbitrum Sepolia', chainColor: '#10B981', badge: 'Yield' },
+  { icon: '▲', name: 'Stealth Execution Suite', href: '/shadow', tagline: 'Invisible Operations', desc: 'Run your entire financial organization invisibly on-chain. Seven specialized AI agents. Fully autonomous.', chain: 'Arbitrum Sepolia', chainColor: '#64748B', badge: 'Enterprise' },
 ]
 
 const STATS = [
   { value: 8, suffix: '+', label: 'Powerful tools in one platform' },
-  { value: 4, suffix: '', label: 'Blockchains: QIE · Solana · Stellar · ETH' },
+  { value: 4, suffix: '', label: 'Blockchains: Arbitrum · Arbitrum Sepolia · Arbitrum · ETH' },
   { value: 7, suffix: '+', label: 'Live backends with on-chain data' },
 ]
 
@@ -69,28 +69,28 @@ const FEATURES = [
   { num: '01', title: 'One Wallet. Every Tool.', desc: 'Connect MetaMask, Phantom, or Freighter once per chain. Access every tool instantly without reconnecting.' },
   { num: '02', title: 'Real On-Chain Data Only', desc: 'Every number, every score, every transaction comes from live deployed smart contracts. Zero mock data.' },
   { num: '03', title: 'AI Runs Every Tool', desc: 'Credit scoring, loan negotiation, agent coordination, Yield Operations Hub management — AI powers every feature.' },
-  { num: '04', title: 'Four Chains, One Dashboard', desc: 'QIE, Solana, Stellar, and Ethereum L2 — all accessible from one unified interface without switching apps.' },
+  { num: '04', title: 'One Chain, One Dashboard', desc: 'Arbitrum, Arbitrum Sepolia, Arbitrum, and Ethereum L2 — all accessible from one unified interface without switching apps.' },
 ]
 
 const CHAINS = [
-  { name: 'QIE Mainnet', id: 'Chain ID: 1990', color: '#F5A623', glyph: '⬡', tools: 'Credit Passport · Family Vault' },
-  { name: 'Solana', id: 'Mainnet Beta', color: '#9945FF', glyph: '◎', tools: 'Agent Coordinator · Yield Operations Hub · Stealth Execution Suite' },
-  { name: 'Stellar', id: 'Soroban', color: '#3B82F6', glyph: '✦', tools: 'Bill Split' },
+  { name: 'Arbitrum Mainnet', id: 'Chain ID: 1990', color: '#F5A623', glyph: '⬡', tools: 'Credit Passport · Family Vault' },
+  { name: 'Arbitrum Sepolia', id: 'Mainnet Beta', color: '#9945FF', glyph: '◎', tools: 'Agent Coordinator · Yield Operations Hub · Stealth Execution Suite' },
+  { name: 'Arbitrum', id: 'Soroban', color: '#3B82F6', glyph: '✦', tools: 'Bill Split' },
   { name: 'Ethereum L2', id: 'Arbitrum', color: '#6366F1', glyph: '◆', tools: 'AI Lending · Private Vault' },
 ]
 
 const TESTIMONIALS = [
-  { quote: 'Credit Passport issues a soulbound NFT on QIE Mainnet. Any DeFi protocol can verify your score with a single on-chain read — no oracles, no off-chain trust.', name: 'Credit Passport', title: 'QIE Mainnet · Chain ID 1990', avatar: '◈' },
-  { quote: 'Agent Coordinator logs every AI delegation as an Ed25519-signed Solana account. Rogue or hallucinating agents cannot act without a valid on-chain proof of authority.', name: 'Agent Coordinator', title: 'Solana Devnet · TrustMesh Protocol', avatar: '⬡' },
-  { quote: 'Stealth Execution Suite runs CFO, Payroll, Compliance, Audit, Procurement, Tax and Risk agents autonomously. The entire corporate stack, invisible on-chain.', name: 'Stealth Execution Suite', title: 'Solana · 7 Autonomous AI Agents', avatar: '▲' },
+  { quote: 'Credit Passport issues a soulbound NFT on Arbitrum Mainnet. Any DeFi protocol can verify your score with a single on-chain read — no oracles, no off-chain trust.', name: 'Credit Passport', title: 'Arbitrum Mainnet · Chain ID 1990', avatar: '◈' },
+  { quote: 'Agent Coordinator logs every AI delegation as an Ed25519-signed Arbitrum Sepolia account. Rogue or hallucinating agents cannot act without a valid on-chain proof of authority.', name: 'Agent Coordinator', title: 'Arbitrum Sepolia Devnet · TrustMesh Protocol', avatar: '⬡' },
+  { quote: 'Stealth Execution Suite runs CFO, Payroll, Compliance, Audit, Procurement, Tax and Risk agents autonomously. The entire corporate stack, invisible on-chain.', name: 'Stealth Execution Suite', title: 'Arbitrum Sepolia · 7 Autonomous AI Agents', avatar: '▲' },
 ]
 
-const LOGOS = ['QIE Network', 'Solana', 'Stellar', 'Ethereum', 'Arbitrum', 'Anchor Protocol', 'Soroban', 'Groq']
+const LOGOS = ['Arbitrum Network', 'Arbitrum Sepolia', 'Arbitrum', 'Ethereum', 'Arbitrum', 'Anchor Protocol', 'Soroban', 'Groq']
 
 const CHAIN_SWATCHES: Record<string, string> = {
-  'QIE Network': 'linear-gradient(135deg,#F5C518,#FFA800)',
-  'Solana': 'linear-gradient(135deg,#9945FF,#14F195)',
-  'Stellar': 'linear-gradient(135deg,#3B82F6,#06B6D4)',
+  'Arbitrum Network': 'linear-gradient(135deg,#F5C518,#FFA800)',
+  'Arbitrum Sepolia': 'linear-gradient(135deg,#9945FF,#14F195)',
+  'Arbitrum': 'linear-gradient(135deg,#3B82F6,#06B6D4)',
   'Ethereum': 'linear-gradient(135deg,#6366F1,#8B5CF6)',
   'Arbitrum': 'linear-gradient(135deg,#2D374B,#28A0F0)',
   'Anchor Protocol': 'linear-gradient(135deg,#4A6CFE,#A5B4FC)',
@@ -203,9 +203,9 @@ function HeroShape() {
       </div>
 
       {/* Chain pills */}
-      <FloatingPill label="QIE" color="#F5C518" style={{ top: '8%', left: '-6%' }} delay={0} />
-      <FloatingPill label="Solana" color="#9945FF" style={{ top: '12%', right: '-4%' }} delay={1.2} />
-      <FloatingPill label="Stellar" color="#3B82F6" style={{ bottom: '10%', left: '2%' }} delay={2.4} />
+      <FloatingPill label="Arbitrum" color="#F5C518" style={{ top: '8%', left: '-6%' }} delay={0} />
+      <FloatingPill label="Arbitrum Sepolia" color="#9945FF" style={{ top: '12%', right: '-4%' }} delay={1.2} />
+      <FloatingPill label="Arbitrum" color="#3B82F6" style={{ bottom: '10%', left: '2%' }} delay={2.4} />
       <FloatingPill label="ETH L2" color="#6366F1" style={{ bottom: '6%', right: '-8%' }} delay={1.6} />
     </div>
   )
@@ -224,7 +224,7 @@ function Hero() {
       }}>
         {/* Left */}
         <motion.div variants={stagger} initial="hidden" animate="visible" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 28 }}>
-          <motion.div variants={fadeUp}><Eyebrow>Multi-chain AI financial super-app</Eyebrow></motion.div>
+          <motion.div variants={fadeUp}><Eyebrow>Arbitrum-native AI financial super-app</Eyebrow></motion.div>
           <motion.h1 variants={fadeUp} style={{ fontSize: 'clamp(44px, 7.4vw, 88px)', lineHeight: 1.02, fontWeight: 900, color: '#0A0F2E', letterSpacing: '-0.035em', margin: 0 }}>
             <span style={{ display: 'block' }}>The Financial OS</span>
             <span style={{ display: 'block' }}>for <span className="gradient-text">Web3</span></span>
@@ -235,7 +235,7 @@ function Hero() {
           </motion.p>
           <motion.div variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {[
-              { icon: '🔗', color: '#3B5BFA', label: '4 Blockchains' },
+              { icon: '🔗', color: '#3B5BFA', label: 'Arbitrum Network' },
               { icon: '✓', color: '#10B981', label: '100% On-Chain Data' },
               { icon: '🤖', color: '#8B5CF6', label: 'AI-Powered Tools' },
             ].map(pill => (
@@ -343,7 +343,7 @@ function LiveJobCounter() {
         <span style={{ fontSize: 'clamp(24px, 3vw, 36px)', color: '#10b981', fontWeight: 800 }}>+</span>
       </div>
       <div style={{ marginTop: 12, fontSize: 14.5, color: '#64748B', maxWidth: 240, margin: '12px auto 0', lineHeight: 1.4 }}>
-        Live agent jobs on Solana Devnet
+        Live agent jobs on Arbitrum Sepolia Devnet
         <div style={{ marginTop: 6, fontSize: 11, fontFamily: '"Fira Code","JetBrains Mono",monospace', color: mesh.isLive ? '#10b981' : '#94A3B8', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
           <span style={{ width: 6, height: 6, borderRadius: '50%', background: mesh.isLive ? '#10b981' : '#94A3B8', boxShadow: mesh.isLive ? '0 0 6px #10b981' : 'none' }} />
           {mesh.isLive && mesh.currentSlot > 0 ? `slot ${mesh.currentSlot.toLocaleString()}` : 'connecting…'}
@@ -524,7 +524,7 @@ function Chains() {
       <div style={{ position: 'absolute', inset: 0, opacity: 0.3, pointerEvents: 'none', background: 'radial-gradient(60% 60% at 80% 20%, #fce7f3, transparent 60%)' }} />
       <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative' }}>
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 48 }}>
-          <motion.div variants={fadeUp}><Eyebrow>Multi-chain</Eyebrow></motion.div>
+          <motion.div variants={fadeUp}><Eyebrow>Arbitrum-native</Eyebrow></motion.div>
           <motion.h2 variants={fadeUp} style={{ fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 800, color: '#0A0F2E', letterSpacing: '-0.03em', margin: 0, lineHeight: 1.05 }}>
             Built natively on <span className="gradient-text">4 blockchains.</span>
           </motion.h2>
@@ -646,7 +646,7 @@ function DashFrame() {
           <div style={{ marginTop: 'auto', padding: 12, borderRadius: 12, background: 'linear-gradient(135deg, rgba(139,92,246,0.3), rgba(236,72,153,0.2))', border: '1px solid rgba(139,92,246,0.2)' }}>
             <div style={{ fontSize: 10, letterSpacing: '0.16em', fontWeight: 700, textTransform: 'uppercase', color: '#C4B5FD' }}>Wallet</div>
             <div style={{ fontSize: 12.5, fontFamily: 'var(--font-mono, monospace)', color: '#fff', marginTop: 4 }}>0x9F…E3A1</div>
-            <div style={{ fontSize: 10.5, color: '#94A3B8', marginTop: 4 }}>QIE · Solana · Stellar · ETH</div>
+            <div style={{ fontSize: 10.5, color: '#94A3B8', marginTop: 4 }}>Arbitrum · Arbitrum Sepolia · Arbitrum · ETH</div>
           </div>
         </aside>
 
@@ -669,7 +669,7 @@ function DashFrame() {
 
           {/* Stat tiles */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 16 }}>
-            {[['8', 'Tools', '+2 this Q'], ['4', 'Chains', 'Multi-chain'], ['0', 'Mock Data', '100% live'], ['∞', 'Uptime', '30d streak']].map(([n, label, sub], i) => (
+            {[['8', 'Tools', '+2 this Q'], ['4', 'Chains', 'Arbitrum-native'], ['0', 'Mock Data', '100% live'], ['∞', 'Uptime', '30d streak']].map(([n, label, sub], i) => (
               <div key={i} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 12, padding: 16 }}>
                 <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#475569', fontWeight: 700 }}>{label}</div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 6 }}>
@@ -789,7 +789,7 @@ function Pricing() {
             Start building. <span className="gradient-text">Scale confidently.</span>
           </motion.h2>
           <motion.p variants={fadeUp} style={{ fontSize: 17, color: '#64748B', maxWidth: 480, margin: 0 }}>
-            Open source today. Multi-chain forever. Pick the lane that matches where you are.
+            Open source today. Arbitrum-native forever. Pick the lane that matches where you are.
           </motion.p>
         </motion.div>
 
@@ -805,7 +805,7 @@ function Pricing() {
               <div style={{ fontSize: 13.5, color: '#94A3B8', marginTop: 8 }}>Forever, for everyone</div>
             </div>
             <div style={{ flex: 1 }}>
-              {['Credit Passport tool', 'Family Vault tool', 'QIE Mainnet access', 'Read-only dashboard'].map(f => <Bullet key={f} text={f} />)}
+              {['Credit Passport tool', 'Family Vault tool', 'Arbitrum Mainnet access', 'Read-only dashboard'].map(f => <Bullet key={f} text={f} />)}
             </div>
             <GhostBtn href="#launch">Start exploring</GhostBtn>
           </motion.div>
@@ -904,9 +904,9 @@ const FOOTER_COLS: Record<string, FooterLink[]> = {
     { label: 'Stealth Execution Suite',    href: '/shadow'   },
   ],
   CHAINS: [
-    { label: 'QIE Mainnet',  href: 'https://mainnet.qie.info',                          external: true },
-    { label: 'Solana',       href: 'https://explorer.solana.com/?cluster=devnet',       external: true },
-    { label: 'Stellar',      href: 'https://stellar.expert/explorer/testnet',           external: true },
+    { label: 'Arbitrum Mainnet',  href: 'https://mainnet.qie.info',                          external: true },
+    { label: 'Arbitrum Sepolia',       href: 'https://explorer.solana.com/?cluster=devnet',       external: true },
+    { label: 'Arbitrum',      href: 'https://stellar.expert/explorer/testnet',           external: true },
     { label: 'Ethereum L2',  href: 'https://arbiscan.io',                               external: true },
   ],
   RESOURCES: [

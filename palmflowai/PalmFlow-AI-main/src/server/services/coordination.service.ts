@@ -2,7 +2,7 @@
 import { prisma } from '@/lib/prisma';
 import { agentService } from './agent.service';
 import { transactionService } from './transaction.service';
-import { solanaService } from './solana.service';
+import { arbitrum-sepoliaService } from './arbitrum-sepolia.service';
 
 export const coordinationService = {
   /**
@@ -50,8 +50,8 @@ export const coordinationService = {
       throw new Error('Wallets not configured for collaboration');
     }
 
-    // Execute real Solana transfer
-    const txHash = await solanaService.executePayment(toAgent.walletAddress, amount);
+    // Execute real Arbitrum Sepolia transfer
+    const txHash = await arbitrum-sepoliaService.executePayment(toAgent.walletAddress, amount);
 
     // Record the transfer
     await transactionService.createTransaction({

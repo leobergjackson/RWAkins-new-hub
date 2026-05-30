@@ -34,14 +34,7 @@ interface WalletState {
 
 // Chain configurations
 const CHAIN_CONFIG: Record<number, { name: string; symbol: string; rpcUrl: string; explorerUrl: string }> = {
-    1: { name: 'Ethereum Mainnet', symbol: 'ETH', rpcUrl: 'https://mainnet.infura.io/v3/', explorerUrl: 'https://etherscan.io' },
-    5: { name: 'Goerli Testnet', symbol: 'ETH', rpcUrl: 'https://goerli.infura.io/v3/', explorerUrl: 'https://goerli.etherscan.io' },
-    11155111: { name: 'Sepolia Testnet', symbol: 'ETH', rpcUrl: 'https://sepolia.infura.io/v3/', explorerUrl: 'https://sepolia.etherscan.io' },
-    137: { name: 'Polygon', symbol: 'MATIC', rpcUrl: 'https://polygon-rpc.com', explorerUrl: 'https://polygonscan.com' },
-    42161: { name: 'Arbitrum One', symbol: 'ETH', rpcUrl: 'https://arb1.arbitrum.io/rpc', explorerUrl: 'https://arbiscan.io' },
     421614: { name: 'Arbitrum Sepolia', symbol: 'ETH', rpcUrl: 'https://sepolia-rollup.arbitrum.io/rpc', explorerUrl: 'https://sepolia.arbiscan.io' },
-    10: { name: 'Optimism', symbol: 'ETH', rpcUrl: 'https://mainnet.optimism.io', explorerUrl: 'https://optimistic.etherscan.io' },
-    8453: { name: 'Base', symbol: 'ETH', rpcUrl: 'https://mainnet.base.org', explorerUrl: 'https://basescan.org' },
 };
 
 /**

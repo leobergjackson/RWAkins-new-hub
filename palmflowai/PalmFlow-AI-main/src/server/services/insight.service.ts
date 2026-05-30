@@ -1,8 +1,8 @@
 // Built by vsrupeshkumar
-import { solanaService } from './solana.service';
+import { arbitrum-sepoliaService } from './arbitrum-sepolia.service';
 import { generateAgentResponse } from '@/lib/ai/OpenAIProvider';
 import { prisma } from '@/lib/prisma';
-import { Keypair } from '@solana/web3.js';
+import { Keypair } from '@arbitrum-sepolia/web3.js';
 
 export const insightService = {
   /**
@@ -13,7 +13,7 @@ export const insightService = {
       // 1. Fetch real-time context
       const authoritySecret = JSON.parse(process.env.PUSD_AUTHORITY_KEY!);
       const authority = Keypair.fromSecretKey(Uint8Array.from(authoritySecret));
-      const balance = await solanaService.getPUSDBalance(authority.publicKey.toBase58());
+      const balance = await arbitrum-sepoliaService.getPUSDBalance(authority.publicKey.toBase58());
       
       const recentTransactions = await prisma.transaction.findMany({
         take: 5,
@@ -56,7 +56,7 @@ export const insightService = {
       console.error('Failed to generate insights:', error);
       return {
         insights: [
-          { title: "Network Stability", desc: "Solana Devnet connection is stable. Treasury pulse normal.", impact: "positive" },
+          { title: "Network Stability", desc: "Arbitrum Sepolia Devnet connection is stable. Treasury pulse normal.", impact: "positive" },
           { title: "Capital Efficiency", desc: "Yield optimization logic pending. Current capital is idle.", impact: "neutral" }
         ],
         strategicAction: "Initiate yield-routing protocols."

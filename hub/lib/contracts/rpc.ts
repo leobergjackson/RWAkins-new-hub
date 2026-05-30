@@ -3,8 +3,8 @@
 // No ethers.js — pure fetch plus a self-contained keccak-256 implementation
 // (Ethereum variant, 0x01 domain padding).
 
-const QIE_RPC_PRIMARY  = 'https://mainnet.qie.digital/api/eth-rpc'
-const QIE_RPC_FALLBACK = 'https://mainnet.qie.digital/api/v1/eth-rpc'
+const ARB_SEPOLIA_RPC_PRIMARY  = 'https://sepolia-rollup.arbitrum.io/rpc'
+const ARB_SEPOLIA_RPC_FALLBACK = 'https://sepolia-rollup.arbitrum.io/rpc'
 
 // ─── keccak-256 ──────────────────────────────────────────────────────────────
 
@@ -158,10 +158,10 @@ export async function ethCall(contractAddress: string, encodedData: string): Pro
 
   let res: Response
   try {
-    res = await rpcPost(QIE_RPC_PRIMARY, payload)
+    res = await rpcPost(ARB_SEPOLIA_RPC_PRIMARY, payload)
   } catch {
     // Primary timed out or unreachable — retry once with fallback.
-    res = await rpcPost(QIE_RPC_FALLBACK, payload)
+    res = await rpcPost(ARB_SEPOLIA_RPC_FALLBACK, payload)
   }
 
   const json = await res.json()

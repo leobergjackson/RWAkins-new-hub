@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import '@solana/wallet-adapter-react-ui/styles.css';
+import '@arbitrum-sepolia/wallet-adapter-react-ui/styles.css';
 import { Navbar } from "@/components/layout/Navbar";
 import { WalletContextProvider } from "@/components/wallet/WalletContextProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "PalmFlow AI | Autonomous Financial OS",
-  description: "Autonomous AI Treasury & Payment Network Powered by PUSD on Solana.",
+  description: "Autonomous AI Treasury & Payment Network Powered by PUSD on Arbitrum Sepolia.",
 };
 
 import { BottomDock } from "@/components/layout/BottomDock";

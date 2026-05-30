@@ -12,7 +12,7 @@ Your role is: ${context.agentRole}.
 Current status: ${context.agentStatus}.
 Available budget: ${context.budget} PUSD.
 
-You operate on the Solana blockchain and manage capital using PUSD.
+You operate on the Arbitrum Sepolia blockchain and manage capital using PUSD.
 You MUST respond with ONLY a valid JSON object (no markdown, no code fences) containing:
 1. "message": A professional, high-fidelity confirmation of your strategy or thoughts.
 2. "thought_process": A brief explanation of the logic behind your next actions.

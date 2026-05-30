@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { useIdo } from '@/hooks/useIdo';
 import { useTreasury } from '@/hooks/useTreasury';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useWallet } from '@arbitrum-sepolia/wallet-adapter-react';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, Suspense } from 'react';
 
@@ -262,7 +262,7 @@ function LaunchpadContent() {
                       required
                       value={newProject.description}
                       onChange={e => setNewProject({...newProject, description: e.target.value})}
-                      placeholder="Explain what your agent will do on Solana..."
+                      placeholder="Explain what your agent will do on Arbitrum Sepolia..."
                       className="w-full bg-neutral-950 border border-white/5 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-accent-cyan transition-all min-h-[120px]"
                     />
                   </div>

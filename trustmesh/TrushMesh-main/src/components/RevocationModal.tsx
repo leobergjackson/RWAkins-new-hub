@@ -48,7 +48,7 @@ export function RevocationModal({ agent, onConfirm, onCancel }: RevocationModalP
             </h3>
             <p className="mt-2 text-sm leading-6 text-silk-text-secondary">
               This will immediately halt this agent and all child agents. The action is recorded
-              permanently on Solana and cannot be undone.
+              permanently on Arbitrum Sepolia and cannot be undone.
             </p>
             {typeof agent.childCount === "number" && agent.childCount > 0 ? (
               <p className="mt-3 text-sm text-amber-600">

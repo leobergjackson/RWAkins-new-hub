@@ -107,7 +107,7 @@ export const DashboardPreview = () => {
                     <div className="space-y-4">
                       {[
                         { t: "Treasury Optimized", v: "+$12.4k", c: "accent-blue" },
-                        { t: "Yield Injected", v: "0.42 SOL", c: "accent-emerald" },
+                        { t: "Yield Injected", v: "0.42 ETH", c: "accent-emerald" },
                         { t: "Risk Scanned", v: "Clean", c: "white" },
                         { t: "Payment Executed", v: "$420.00", c: "accent-purple" },
                       ].map((item, i) => (

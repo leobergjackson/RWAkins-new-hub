@@ -371,23 +371,23 @@ const docPages: Record<PageKey, DocsPageDefinition> = {
         <DocsH2>What is TrustMesh?</DocsH2>
         <Paragraph>
           TrustMesh gives every AI agent a verified <code className="font-mono text-silk-primary">.sol</code> identity on
-          Solana. Every inter-agent delegation is signed with Ed25519 and logged permanently on-chain. Humans maintain
+          Arbitrum Sepolia. Every inter-agent delegation is signed with Ed25519 and logged permanently on-chain. Humans maintain
           full control with one-click revocation that cascades to all child agents.
         </Paragraph>
 
         <DocsH2>Prerequisites</DocsH2>
         <BulletList
           items={[
-            <>A Solana wallet (Phantom, Backpack, Solflare, etc.)</>,
+            <>A Arbitrum Sepolia wallet (Phantom, Backpack, Solflare, etc.)</>,
             <>
-              Devnet SOL for gas fees. Use{" "}
+              Devnet ETH for gas fees. Use{" "}
               <a
-                href="https://faucet.solana.com"
+                href="https://faucet.arbitrum-sepolia.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold text-silk-primary"
               >
-                Get Devnet SOL
+                Get Devnet ETH
               </a>
               .
             </>,
@@ -427,13 +427,13 @@ const docPages: Record<PageKey, DocsPageDefinition> = {
           items={[
             <>
               <strong>Job Description</strong>: What should your agents accomplish? For example,{" "}
-              <span className="italic">"Rebalance SOL/USDC portfolio to 60/40"</span>
+              <span className="italic">"Rebalance ETH/USDC portfolio to 60/40"</span>
             </>,
             <>
               <strong>Template</strong>: Choose from Portfolio Rebalancer, DAO Voter, or Data Fetcher.
             </>,
             <>
-              <strong>Budget</strong>: Maximum SOL this job can spend. The current deployer defaults to a small Devnet-friendly
+              <strong>Budget</strong>: Maximum ETH this job can spend. The current deployer defaults to a small Devnet-friendly
               budget.
             </>
           ]}
@@ -459,9 +459,9 @@ const docPages: Record<PageKey, DocsPageDefinition> = {
           Sub-names can only contain lowercase letters, numbers, and hyphens, and they must stay within 1-32 characters.
         </Callout>
 
-        <DocsH2>Step 5: Deploy to Solana</DocsH2>
+        <DocsH2>Step 5: Deploy to Arbitrum Sepolia</DocsH2>
         <Paragraph>
-          Click <strong>Deploy to Solana</strong>. Your wallet will prompt you to sign the job initialization transaction, then
+          Click <strong>Deploy to Arbitrum Sepolia</strong>. Your wallet will prompt you to sign the job initialization transaction, then
           TrustMesh will activate the job and reconcile the planner and executor identities.
         </Paragraph>
         <NumberedList
@@ -543,7 +543,7 @@ const docPages: Record<PageKey, DocsPageDefinition> = {
           code={`
 {
   "onchainId": "6d4e4c0f8f7bb931ef571e16db6fd0b484f80b1fcb5619392f6ab08f0f17de31",
-  "description": "Rebalance SOL/USDC portfolio to 60/40 using bounded trade size and explicit confirmation.",
+  "description": "Rebalance ETH/USDC portfolio to 60/40 using bounded trade size and explicit confirmation.",
   "template": "PORTFOLIO_REBALANCER",
   "budgetSol": 0.05,
   "plannerSubName": "planner",
@@ -569,7 +569,7 @@ const docPages: Record<PageKey, DocsPageDefinition> = {
           rows={[
             ["Description", "Minimum length and non-empty intent", "Prevents ambiguous jobs and helps audit readability."],
             ["Template", "Known enum value", "Ensures the runtime understands the workflow category."],
-            ["Budget", "0.01-100 SOL in the current deployer", "Keeps jobs bounded and prevents obvious misconfiguration."],
+            ["Budget", "0.01-100 ETH in the current deployer", "Keeps jobs bounded and prevents obvious misconfiguration."],
             ["Planner sub-name", "SNS-compatible, lowercase, digits, hyphens", "Guarantees deterministic identity creation."],
             ["Executor sub-names", "Same SNS validation as planner", "Prevents activation with unresolvable child identities."]
           ]}
@@ -592,7 +592,7 @@ const docPages: Record<PageKey, DocsPageDefinition> = {
         <NumberedList
           items={[
             <>
-              A verified <code className="font-mono text-silk-primary">.sol</code> identity registered on Solana Name Service
+              A verified <code className="font-mono text-silk-primary">.sol</code> identity registered on Arbitrum Sepolia Name Service
             </>,
             <>A unique wallet used for signing actions</>,
             <>A parent that is either a human owner or another agent</>,
@@ -610,7 +610,7 @@ const docPages: Record<PageKey, DocsPageDefinition> = {
           columns={["Type", "Role", "Example Actions"]}
           rows={[
             ["Planner", "Orchestrates strategy", "Fetch current portfolio balance; calculate optimal allocation"],
-            ["Executor", "Performs on-chain actions", "Swap 2.5 SOL for USDC; submit governance vote"],
+            ["Executor", "Performs on-chain actions", "Swap 2.5 ETH for USDC; submit governance vote"],
             ["Analyzer", "Researches and reports", "Analyze protocol risks; monitor gas prices"],
             ["Trader", "DeFi-specific execution", "Place limit order; provide liquidity"],
             ["Confirmer", "Validates results", "Verify swap completed; confirm balance updated"]
@@ -654,9 +654,9 @@ Human Owner (alice.sol)
         <Paragraph>When Agent A delegates to Agent B:</Paragraph>
         <NumberedList
           items={[
-            <>Agent A creates a message such as <span className="font-mono text-silk-primary">Fetch SOL/USDC price</span>.</>,
+            <>Agent A creates a message such as <span className="font-mono text-silk-primary">Fetch ETH/USDC price</span>.</>,
             <>Agent A signs the message with Ed25519 using its wallet.</>,
-            <>Agent A submits a delegation log transaction to Solana.</>,
+            <>Agent A submits a delegation log transaction to Arbitrum Sepolia.</>,
             <>The backend verifies the signature and stores the message.</>,
             <>The graph updates in real time via WebSocket.</>
           ]}
@@ -731,7 +731,7 @@ Human Owner (alice.sol)
     render: () => (
       <>
         <Paragraph>
-          TrustMesh uses Solana Name Service to turn wallets and agent namespaces into readable identities that operators can audit quickly.
+          TrustMesh uses Arbitrum Sepolia Name Service to turn wallets and agent namespaces into readable identities that operators can audit quickly.
         </Paragraph>
 
         <DocsH2>Identity Structure</DocsH2>
@@ -788,7 +788,7 @@ confirmer.owner.sol
   "jobId": "job_01",
   "senderSolName": "planner.alice.sol",
   "receiverSolName": "executor.alice.sol",
-  "action": "Fetch SOL/USDC spot price and prepare rebalance estimate.",
+  "action": "Fetch ETH/USDC spot price and prepare rebalance estimate.",
   "txHash": "5wzB4...kQm2",
   "signatureHex": "d2195f93bb0c..."
 }
@@ -906,7 +906,7 @@ confirmer.owner.sol
       "id": "job_01",
       "onchainId": "abc123...",
       "ownerSolName": "alice.sol",
-      "description": "Rebalance SOL/USDC portfolio",
+      "description": "Rebalance ETH/USDC portfolio",
       "template": "PORTFOLIO_REBALANCER",
       "budgetSol": "0.05",
       "status": "ACTIVE",
@@ -925,7 +925,7 @@ confirmer.owner.sol
             requestSchema={`
 {
   "onchainId": "abc123...",
-  "description": "Rebalance SOL/USDC portfolio to 60/40",
+  "description": "Rebalance ETH/USDC portfolio to 60/40",
   "template": "PORTFOLIO_REBALANCER",
   "budgetSol": 0.05,
   "plannerSubName": "planner",
@@ -969,7 +969,7 @@ confirmer.owner.sol
   "data": {
     "id": "cm4x...",
     "onchainId": "a7f3c2...",
-    "description": "Rebalance SOL/USDC to 60/40",
+    "description": "Rebalance ETH/USDC to 60/40",
     "status": "ACTIVE",
     "agents": [
       {
@@ -1031,7 +1031,7 @@ confirmer.owner.sol
         "id": "msg_01",
         "senderName": "planner.alice.sol",
         "receiverName": "executor.alice.sol",
-        "action": "Fetch SOL/USDC price",
+        "action": "Fetch ETH/USDC price",
         "verified": true
       }
     ],
@@ -1085,7 +1085,7 @@ confirmer.owner.sol
   "jobId": "cm4x...",
   "senderSolName": "planner.alice.sol",
   "receiverSolName": "executor.alice.sol",
-  "action": "Fetch SOL/USDC price",
+  "action": "Fetch ETH/USDC price",
   "txHash": "5Zx9...",
   "signatureHex": "a3f9..."
 }
@@ -1097,7 +1097,7 @@ confirmer.owner.sol
     "verified": true,
     "senderName": "planner.alice.sol",
     "receiverName": "executor.alice.sol",
-    "action": "Fetch SOL/USDC price"
+    "action": "Fetch ETH/USDC price"
   }
 }
             `}
@@ -1154,7 +1154,7 @@ confirmer.owner.sol
     "jobId": "job_01",
     "senderName": "planner.alice.sol",
     "receiverName": "executor.alice.sol",
-    "action": "Fetch SOL/USDC spot price",
+    "action": "Fetch ETH/USDC spot price",
     "txHash": "5wzB4...kQm2",
     "signatureHex": "d2195f93bb0c...",
     "verified": true,
@@ -1175,14 +1175,14 @@ confirmer.owner.sol
     render: () => (
       <>
         <Paragraph>
-          The repo includes an agent runtime package that simulates a two-agent swarm executing a portfolio rebalancing job on Solana Devnet.
+          The repo includes an agent runtime package that simulates a two-agent swarm executing a portfolio rebalancing job on Arbitrum Sepolia Devnet.
         </Paragraph>
 
         <DocsH2>What It Does Today</DocsH2>
         <BulletList
           items={[
             <>Spawns planner and executor agents on-chain.</>,
-            <>Fetches a live SOL/USDC price from Jupiter.</>,
+            <>Fetches a live ETH/USDC price from Jupiter.</>,
             <>Signs delegation messages and posts them back to the backend.</>,
             <>Keeps the frontend graph and message log current in realtime.</>
           ]}
@@ -1203,7 +1203,7 @@ confirmer.owner.sol
           title="Runtime Setup"
           code={`
 cp .env.example .env
-solana-keygen new --outfile wallet.json
+arbitrum-sepolia-keygen new --outfile wallet.json
 # set HUMAN_WALLET_KEYPAIR_PATH=./wallet.json
 # set BACKEND_JWT from browser local storage
 npm install
@@ -1225,11 +1225,11 @@ npm run demo
           columns={["Code", "Meaning", "Likely Fix"]}
           rows={[
             ["INVALID_SUB_NAME", "Planner or executor namespace failed validation", "Use lowercase letters, digits, and hyphens under a valid owner .sol domain."],
-            ["OWNER_SOL_NAME_REQUIRED", "The connected wallet does not resolve to an SNS name", "Register or reconnect the correct parent identity before deploying."],
+            ["OWNER_ETH_NAME_REQUIRED", "The connected wallet does not resolve to an SNS name", "Register or reconnect the correct parent identity before deploying."],
             ["JOB_ALREADY_ACTIVE", "A pending job was activated twice", "Refresh state and avoid replaying the activation step."],
             ["ONCHAIN_MISMATCH", "The submitted transaction does not match expected on-chain state", "Confirm cluster, program id, and transaction hash before retrying."],
             ["JOB_NOT_ACTIVE", "Message submission targeted a non-active job", "Activate the job first or stop sending runtime actions to it."],
-            ["SNS_RESOLUTION_FAILED", "A .sol identity could not be resolved to a wallet", "Check the name, cluster, and SNS configuration."],
+            ["SNS_REETHUTION_FAILED", "A .sol identity could not be resolved to a wallet", "Check the name, cluster, and SNS configuration."],
             ["AGENT_NOT_FOUND", "The requested sender or receiver was not found in the job", "Verify the runtime is targeting the correct job and agent namespace."],
             ["AGENT_REVOKED", "Sender is no longer active", "Stop dispatching actions and investigate the revocation source."],
             ["INVALID_SIGNATURE", "Ed25519 signature verification failed", "Ensure the signer wallet matches the resolved .sol identity and action payload."],
@@ -1251,7 +1251,7 @@ npm run demo
         <DocsH2>Suggested Demo Path</DocsH2>
         <NumberedList
           items={[
-            <>Connect a Devnet wallet with enough SOL for a few transactions.</>,
+            <>Connect a Devnet wallet with enough ETH for a few transactions.</>,
             <>Create a Portfolio Rebalancer job with one planner and one executor.</>,
             <>Open the job detail page in a second tab.</>,
             <>Run the agent runtime so messages stream back into the graph.</>,
@@ -1512,7 +1512,7 @@ export function Docs() {
                 TrustMesh operator docs
               </h1>
               <p className="mt-4 max-w-3xl text-base leading-8 text-silk-text-secondary">
-                Product docs, API reference, operational guides, and runtime notes for running verified agent hierarchies on Solana.
+                Product docs, API reference, operational guides, and runtime notes for running verified agent hierarchies on Arbitrum Sepolia.
               </p>
             </div>
 

@@ -2,9 +2,9 @@
 import { agentService } from './agent.service';
 import { streamService } from './stream.service';
 import { policyService } from './policy.service';
-import { solanaService } from './solana.service';
+import { arbitrum-sepoliaService } from './arbitrum-sepolia.service';
 import { transactionService } from './transaction.service';
-import { Keypair } from '@solana/web3.js';
+import { Keypair } from '@arbitrum-sepolia/web3.js';
 
 export const workflowService = {
   /**
@@ -50,7 +50,7 @@ export const workflowService = {
             // Fund the agent
             const funding = Math.min(parseFloat(step.data.budget) * 0.05, 10);
             try {
-              await solanaService.executePayment(walletAddress, funding);
+              await arbitrum-sepoliaService.executePayment(walletAddress, funding);
               await transactionService.createTransaction({
                 agentId: result.id,
                 amount: funding,
@@ -71,7 +71,7 @@ export const workflowService = {
             break;
           case 'payment':
             // Logic for a single on-chain payment
-            const signature = await solanaService.executePayment(step.data.recipient, step.data.amount);
+            const signature = await arbitrum-sepoliaService.executePayment(step.data.recipient, step.data.amount);
             result = await transactionService.createTransaction({
               amount: step.data.amount,
               type: 'payment',

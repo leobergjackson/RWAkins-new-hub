@@ -9,7 +9,7 @@ const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
   title: "Stealth Executive Suite Nexus | Autonomous Invisible Financial OS",
-  description: "Autonomous invisible financial operating system for Web3 organizations using Cloak SDK on Solana.",
+  description: "Autonomous invisible financial operating system for Web3 organizations using Cloak SDK on Arbitrum Sepolia.",
 };
 
 export default function RootLayout({

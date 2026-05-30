@@ -2,7 +2,7 @@
 import { randomBytes } from "node:crypto";
 import * as ed from "@noble/ed25519";
 import bs58 from "bs58";
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@arbitrum-sepolia/web3.js";
 import nacl from "tweetnacl";
 
 const encoder = new TextEncoder();
@@ -19,14 +19,14 @@ export function buildSiwsMessage(input: {
   domain: string;
 }) {
   return [
-    `${input.domain} wants you to sign in with your Solana account:`,
+    `${input.domain} wants you to sign in with your Arbitrum Sepolia account:`,
     input.walletAddr,
     "",
     "Sign in to TrustMesh.",
     "",
     `URI: ${input.domain}`,
     "Version: 1",
-    "Chain ID: solana",
+    "Chain ID: arbitrum-sepolia",
     `Nonce: ${input.nonce}`,
     `Issued At: ${input.issuedAt.toISOString()}`,
     `Expiration Time: ${input.expiresAt.toISOString()}`

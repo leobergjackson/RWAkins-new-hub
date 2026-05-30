@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useConnection, useWallet, type WalletContextState } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet, type WalletContextState } from "@arbitrum-sepolia/wallet-adapter-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnchorProvider, BN, Program, type Idl, type Wallet as AnchorWallet } from "@coral-xyz/anchor";
-import { Keypair, PublicKey, SystemProgram, Transaction, VersionedTransaction } from "@solana/web3.js";
+import { Keypair, PublicKey, SystemProgram, Transaction, VersionedTransaction } from "@arbitrum-sepolia/web3.js";
 import confetti from "canvas-confetti";
 import { z } from "zod";
 import { Buffer } from "buffer";
@@ -343,7 +343,7 @@ export function Deploy() {
             Deploy Agent
           </h1>
           <p className="mt-3 text-base text-silk-text-secondary">
-            Initialize a new autonomous coordination mesh on Solana
+            Initialize a new autonomous coordination mesh on Arbitrum Sepolia
           </p>
         </div>
 
@@ -419,7 +419,7 @@ export function Deploy() {
 
                   <div>
                     <label className="mb-3 block text-sm font-medium text-silk-text-secondary">
-                      Budget in SOL
+                      Budget in ETH
                     </label>
                     <input
                       type="number"
@@ -541,7 +541,7 @@ export function Deploy() {
                     </p>
                     <div className="mt-6 grid gap-3 text-sm text-silk-text-secondary">
                       <div>Template: {formatTemplateLabel(form.getValues("template"))}</div>
-                      <div>Budget: {safeNumber(form.getValues("budgetSol"))} SOL</div>
+                      <div>Budget: {safeNumber(form.getValues("budgetSol"))} ETH</div>
                       <div>Planner: {fullPlannerName}</div>
                       <div>Executors: {executorNames.join(", ")}</div>
                     </div>
@@ -553,7 +553,7 @@ export function Deploy() {
                         Gas estimate
                       </div>
                       <div className="mt-3 text-2xl font-semibold text-silk-primary">
-                        {gasEstimateQuery.isLoading ? "..." : `${gasEstimateQuery.data ?? "0.002"} SOL`}
+                        {gasEstimateQuery.isLoading ? "..." : `${gasEstimateQuery.data ?? "0.002"} ETH`}
                       </div>
                     </div>
                     <div className="tm-shell-card p-5">
@@ -591,7 +591,7 @@ export function Deploy() {
                 </button>
               ) : (
                 <button type="submit" className="tm-button-primary gap-2" disabled={deploying}>
-                  <span>{deploying ? "Deploying..." : "Deploy to Solana"}</span>
+                  <span>{deploying ? "Deploying..." : "Deploy to Arbitrum Sepolia"}</span>
                   <RocketIcon className="h-4 w-4" />
                 </button>
               )}
@@ -637,7 +637,7 @@ export function Deploy() {
 
               <div className="mt-8 border-t border-white/60 pt-6">
                 <div className="flex items-center justify-between text-sm text-silk-text-secondary">
-                  <span>Estimated Rent (SOL)</span>
+                  <span>Estimated Rent (ETH)</span>
                   <span className="font-mono font-semibold text-silk-text-primary">~0.0125</span>
                 </div>
                 <div className="mt-3 flex items-center justify-between text-sm text-silk-text-secondary">

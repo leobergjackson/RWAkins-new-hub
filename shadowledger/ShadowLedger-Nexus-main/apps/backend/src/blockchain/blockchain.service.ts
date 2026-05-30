@@ -1,6 +1,6 @@
 // Built by vsrupeshkumar
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { Connection, PublicKey, clusterApiUrl, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { Connection, PublicKey, clusterApiUrl, LAMPORTS_PER_ETH } from '@arbitrum-sepolia/web3.js';
 
 @Injectable()
 export class BlockchainService implements OnModuleInit {
@@ -8,10 +8,10 @@ export class BlockchainService implements OnModuleInit {
   private readonly logger = new Logger(BlockchainService.name);
 
   onModuleInit() {
-    // Connect to Solana Devnet (or custom RPC)
-    const rpcUrl = process.env.SOLANA_RPC_URL || 'https://api.devnet.solana.com';
+    // Connect to Arbitrum Sepolia Devnet (or custom RPC)
+    const rpcUrl = process.env.ETHANA_RPC_URL || 'https://api.devnet.arbitrum-sepolia.com';
     this.connection = new Connection(rpcUrl, 'confirmed');
-    this.logger.log(`Connected to Solana: ${rpcUrl}`);
+    this.logger.log(`Connected to Arbitrum Sepolia: ${rpcUrl}`);
   }
 
   async getBalance(address: string): Promise<number> {
@@ -21,7 +21,7 @@ export class BlockchainService implements OnModuleInit {
       }
       const pubkey = new PublicKey(address);
       const balance = await this.connection.getBalance(pubkey);
-      return balance / LAMPORTS_PER_SOL;
+      return balance / LAMPORTS_PER_ETH;
     } catch (error) {
       this.logger.error(`Error fetching balance for ${address}: ${error.message}`);
       return 0;
@@ -45,7 +45,7 @@ export class BlockchainService implements OnModuleInit {
               signature: s.signature,
               timestamp: s.blockTime ? new Date(s.blockTime * 1000).toISOString() : null,
               success: !tx?.meta?.err,
-              amount: ((tx?.meta?.postBalances[0] || 0) - (tx?.meta?.preBalances[0] || 0)) / LAMPORTS_PER_SOL,
+              amount: ((tx?.meta?.postBalances[0] || 0) - (tx?.meta?.preBalances[0] || 0)) / LAMPORTS_PER_ETH,
               detail: 'On-chain Op'
             };
           } catch (e) {
@@ -61,7 +61,7 @@ export class BlockchainService implements OnModuleInit {
   }
 
   async sendStealthTransaction(from: string, to: string, amount: number) {
-    this.logger.log(`Initiating stealth transaction: ${amount} SOL from ${from} to ${to} via Cloak SDK`);
+    this.logger.log(`Initiating stealth transaction: ${amount} ETH from ${from} to ${to} via Cloak SDK`);
     
     // Simulate Cloak SDK fragmenting and routing
     const fragments = Math.floor(Math.random() * 5) + 3;

@@ -30,7 +30,7 @@ const envSchema = z.object({
     "dev-secret-not-for-production-please-rotate-32c",
     32
   ),
-  SOLANA_RPC_URL: optionalUrl("https://api.devnet.solana.com"),
+  ETHANA_RPC_URL: optionalUrl("https://api.devnet.arbitrum-sepolia.com"),
   ANCHOR_PROGRAM_ID: optionalString(
     "66DXeSqBccWxWWw9S21vxe2Mvvqqkmw5KsK5jqA42quz",
     32

@@ -1,7 +1,7 @@
 // Built by vsrupeshkumar
 import { createHash } from "node:crypto";
 import * as ed25519 from "@noble/ed25519";
-import { Keypair } from "@solana/web3.js";
+import { Keypair } from "@arbitrum-sepolia/web3.js";
 
 export function sha256Buffer(value: string | Uint8Array): Buffer {
   return createHash("sha256").update(value).digest();

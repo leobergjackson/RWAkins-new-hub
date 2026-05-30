@@ -59,7 +59,7 @@ export default function SimulationsPage() {
               <div className="space-y-6">
                 <div>
                   <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest block mb-3">
-                    Transaction Value (SOL)
+                    Transaction Value (ETH)
                   </label>
                   <input 
                     type="number"

@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Cpu, Globe, Zap, Wallet } from 'lucide-react';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { useWalletModal } from '@arbitrum-sepolia/wallet-adapter-react-ui';
 
 export const Hero = () => {
   const { setVisible } = useWalletModal();
@@ -48,7 +48,7 @@ export const Hero = () => {
           className="text-base text-white/45 font-normal max-w-xl mx-auto leading-relaxed mb-10"
         >
           PalmFlow AI is the world's first neural operating system for autonomous treasury
-          management, payroll, cross-border payments, and DeFi yield — all powered by PUSD on Solana.
+          management, payroll, cross-border payments, and DeFi yield — all powered by PUSD on Arbitrum Sepolia.
         </motion.p>
 
         {/* Connect Wallet CTA */}

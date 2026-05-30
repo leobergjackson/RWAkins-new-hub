@@ -103,7 +103,7 @@ export function NodeDetailPanel({ agentId, onClose }: NodeDetailPanelProps) {
                         onClick={() => {
                           if (agent.spawnTxHash) {
                             window.open(
-                              `https://explorer.solana.com/tx/${agent.spawnTxHash}`,
+                              `https://explorer.arbitrum-sepolia.com/tx/${agent.spawnTxHash}`,
                               "_blank",
                               "noopener,noreferrer"
                             );

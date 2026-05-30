@@ -5,7 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { WalletMultiButton } from '@arbitrum-sepolia/wallet-adapter-react-ui';
 import { 
   LayoutDashboard, 
   Wallet, 

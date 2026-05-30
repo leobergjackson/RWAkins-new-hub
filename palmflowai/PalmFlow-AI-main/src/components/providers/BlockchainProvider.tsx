@@ -2,9 +2,9 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { PublicKey } from '@solana/web3.js';
-import { getAssociatedTokenAddress } from '@solana/spl-token';
+import { useConnection, useWallet } from '@arbitrum-sepolia/wallet-adapter-react';
+import { PublicKey } from '@arbitrum-sepolia/web3.js';
+import { getAssociatedTokenAddress } from '@arbitrum-sepolia/spl-token';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface BlockchainContextType {
@@ -34,7 +34,7 @@ export const BlockchainProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       try {
         const treasuryAta = await getAssociatedTokenAddress(PUSD_MINT, TREASURY_PUBKEY);
         
-        console.log('--- Establishing Neural Link to Solana ---');
+        console.log('--- Establishing Neural Link to Arbitrum Sepolia ---');
         
         subscriptionId = connection.onAccountChange(
           treasuryAta,

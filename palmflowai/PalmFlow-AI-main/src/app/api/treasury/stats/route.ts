@@ -1,7 +1,7 @@
 // Built by vsrupeshkumar
 import { NextResponse } from 'next/server';
-import { solanaService } from '@/server/services/solana.service';
-import { Keypair } from '@solana/web3.js';
+import { arbitrum-sepoliaService } from '@/server/services/arbitrum-sepolia.service';
+import { Keypair } from '@arbitrum-sepolia/web3.js';
 
 export async function GET() {
   try {
@@ -10,7 +10,7 @@ export async function GET() {
     const authority = Keypair.fromSecretKey(Uint8Array.from(authoritySecret));
     const treasuryAddress = authority.publicKey.toBase58();
 
-    const balance = await solanaService.getPUSDBalance(treasuryAddress);
+    const balance = await arbitrum-sepoliaService.getPUSDBalance(treasuryAddress);
 
     return NextResponse.json({
       address: treasuryAddress,

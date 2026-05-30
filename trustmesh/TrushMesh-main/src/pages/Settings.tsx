@@ -48,18 +48,18 @@ const rpcPresetOptions: Array<{ value: RpcPreset; label: string; help: string }>
     help: "Uses the endpoint configured for this environment."
   },
   {
-    value: "solana-devnet",
-    label: "Solana Devnet",
+    value: "arbitrum-sepolia-devnet",
+    label: "Arbitrum Sepolia Devnet",
     help: "Recommended for testing deployments and identity flows."
   },
   {
-    value: "solana-mainnet",
-    label: "Solana Mainnet Beta",
+    value: "arbitrum-sepolia-mainnet",
+    label: "Arbitrum Sepolia Mainnet Beta",
     help: "Use live network state for production operations."
   },
   {
-    value: "solana-testnet",
-    label: "Solana Testnet",
+    value: "arbitrum-sepolia-testnet",
+    label: "Arbitrum Sepolia Testnet",
     help: "Useful for protocol and validator integration checks."
   },
   {
@@ -279,7 +279,7 @@ export function Settings() {
     ]
   );
 
-  const effectiveRpcEndpoint = getEffectiveRpcEndpoint(settingsSnapshot, runtimeConfig.solanaRpcUrl);
+  const effectiveRpcEndpoint = getEffectiveRpcEndpoint(settingsSnapshot, runtimeConfig.arbitrum-sepoliaRpcUrl);
   const customRpcError =
     rpcPreset === "custom" && customRpcUrl.trim().length > 0 && !isValidRpcEndpoint(customRpcUrl)
       ? "Enter a valid HTTP(S) or WS(S) RPC endpoint. We will keep using the runtime default until this is fixed."
@@ -504,7 +504,7 @@ export function Settings() {
             <SectionCard
               id="network"
               title="Network / RPC Settings"
-              description="Tune your Solana connection target and how quickly the explorer falls back to polling when realtime transport is unavailable."
+              description="Tune your Arbitrum Sepolia connection target and how quickly the explorer falls back to polling when realtime transport is unavailable."
               sectionRef={(element) => {
                 sectionRefs.current.network = element;
               }}

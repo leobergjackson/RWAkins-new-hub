@@ -9,9 +9,9 @@ type StorageLike = {
 
 export const RPC_PRESET_ENDPOINTS = {
   "runtime-default": "",
-  "solana-devnet": "https://api.devnet.solana.com",
-  "solana-mainnet": "https://api.mainnet-beta.solana.com",
-  "solana-testnet": "https://api.testnet.solana.com",
+  "arbitrum-sepolia-devnet": "https://api.devnet.arbitrum-sepolia.com",
+  "arbitrum-sepolia-mainnet": "https://api.mainnet-beta.arbitrum-sepolia.com",
+  "arbitrum-sepolia-testnet": "https://api.testnet.arbitrum-sepolia.com",
   custom: ""
 } as const;
 

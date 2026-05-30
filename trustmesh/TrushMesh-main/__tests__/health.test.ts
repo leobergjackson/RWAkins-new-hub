@@ -6,7 +6,7 @@ describe('TrustMesh API', () => {
 
   beforeAll(async () => {
     process.env.PORT = '3098'
-    process.env.SOLANA_RPC_URL = 'https://api.devnet.solana.com'
+    process.env.ETHANA_RPC_URL = 'https://api.devnet.arbitrum-sepolia.com'
     process.env.JWT_SECRET = 'test-secret-for-ci'
     process.env.DATABASE_URL = 'postgresql://test:test@localhost:5432/test'
     process.env.REDIS_URL = 'redis://localhost:6379'

@@ -35,7 +35,7 @@ export const sentinelService = {
       status: 'secure', 
       message: 'All systems nominal.',
       auditTime: new Date().toISOString(),
-      logs: logs.length > 0 ? logs : ['No threats detected.', 'Solana Devnet sync stable.']
+      logs: logs.length > 0 ? logs : ['No threats detected.', 'Arbitrum Sepolia Devnet sync stable.']
     };
   },
 

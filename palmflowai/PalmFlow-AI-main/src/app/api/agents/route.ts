@@ -1,8 +1,8 @@
 // Built by vsrupeshkumar
 import { NextResponse } from 'next/server';
 import { agentService } from '@/server/services/agent.service';
-import { solanaService } from '@/server/services/solana.service';
-import { Keypair } from '@solana/web3.js';
+import { arbitrum-sepoliaService } from '@/server/services/arbitrum-sepolia.service';
+import { Keypair } from '@arbitrum-sepolia/web3.js';
 import { prisma } from '@/lib/prisma';
 
 export async function GET() {
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
   try {
     const { name, role, budget } = await req.json();
 
-    // 1. Generate a unique Solana wallet for the new agent
+    // 1. Generate a unique Arbitrum Sepolia wallet for the new agent
     const agentKeypair = Keypair.generate();
     const walletAddress = agentKeypair.publicKey.toBase58();
 
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     const initialFunding = Math.min(parseFloat(budget) * 0.05, 10); // Max 10 PUSD for init
     
     try {
-      await solanaService.executePayment(walletAddress, initialFunding);
+      await arbitrum-sepoliaService.executePayment(walletAddress, initialFunding);
     } catch (solError) {
       console.warn('Initial funding failed, agent created but wallet unfunded:', solError);
     }

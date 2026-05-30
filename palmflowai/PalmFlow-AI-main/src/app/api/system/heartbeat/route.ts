@@ -1,11 +1,11 @@
 // Built by vsrupeshkumar
 import { NextResponse } from 'next/server';
-import { Keypair } from '@solana/web3.js';
+import { Keypair } from '@arbitrum-sepolia/web3.js';
 import { streamService } from '@/server/services/stream.service';
 import { sentinelService } from '@/server/services/sentinel.service';
 import { reputationService } from '@/server/services/reputation.service';
 import { yieldService } from '@/server/services/yield.service';
-import { solanaService } from '@/server/services/solana.service';
+import { arbitrum-sepoliaService } from '@/server/services/arbitrum-sepolia.service';
 import { prisma } from '@/lib/prisma';
 
 export async function POST() {
@@ -27,7 +27,7 @@ export async function POST() {
     // 4. Yield Optimization (Auto-route idle funds if balance > 5000)
     const authoritySecret = JSON.parse(process.env.PUSD_AUTHORITY_KEY!);
     const authority = Keypair.fromSecretKey(Uint8Array.from(authoritySecret));
-    const treasury = await solanaService.getPUSDBalance(authority.publicKey.toBase58());
+    const treasury = await arbitrum-sepoliaService.getPUSDBalance(authority.publicKey.toBase58());
     if (treasury > 5000) {
       await yieldService.routeToYield(treasury * 0.1);
     }

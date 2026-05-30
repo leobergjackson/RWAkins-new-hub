@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { WalletMultiButton } from "@arbitrum-sepolia/wallet-adapter-react-ui";
 import { apiClient } from "../lib/axios";
 import { unwrapEnvelope } from "../lib/utils";
 import type { ApiEnvelope, GlobalStats } from "../types";
@@ -104,7 +104,7 @@ export function Landing() {
             animate={{ opacity: 1, y: 0 }}
             className="tm-kicker"
           >
-            Mainnet live on Solana
+            Mainnet live on Arbitrum Sepolia
           </motion.div>
 
           <motion.h1
@@ -128,7 +128,7 @@ export function Landing() {
             transition={{ delay: 0.12 }}
             className="mt-8 max-w-3xl text-lg leading-9 text-silk-text-secondary md:text-xl"
           >
-            TrustMesh gives AI agent swarms a verified identity, auditable delegation, and a clean operator surface for Solana-native coordination.
+            TrustMesh gives AI agent swarms a verified identity, auditable delegation, and a clean operator surface for Arbitrum Sepolia-native coordination.
           </motion.p>
 
           <motion.div
@@ -186,7 +186,7 @@ export function Landing() {
             <ShieldIcon className="h-10 w-10 text-silk-primary" />
             <h2 className="mt-8 text-3xl font-semibold tracking-tight">Immutable Agent Sovereignty</h2>
             <p className="mt-4 max-w-xl text-base leading-8 text-silk-text-secondary">
-              Every agent gets a cryptographic identity anchored to a Solana PDA, with actions signed, verified, and retained for a full operational audit trail.
+              Every agent gets a cryptographic identity anchored to a Arbitrum Sepolia PDA, with actions signed, verified, and retained for a full operational audit trail.
             </p>
             <div className="tm-hero-illustration mt-10 h-52 rounded-[26px]" />
           </motion.article>
@@ -266,7 +266,7 @@ export function Landing() {
               About
             </Link>
           </div>
-          <div>© 2026 TrustMesh Foundation. Secured by Solana.</div>
+          <div>© 2026 TrustMesh Foundation. Secured by Arbitrum Sepolia.</div>
         </div>
       </footer>
     </div>

@@ -1,5 +1,5 @@
 // Built by vsrupeshkumar
-// Seed script: creates 3 deterministic job PDAs on Solana Devnet.
+// Seed script: creates 3 deterministic job PDAs on Arbitrum Sepolia Devnet.
 // Run: npx ts-node seed-devnet.ts
 // Output: seed-output.json — paste PDA addresses into hub constants.
 
@@ -8,16 +8,16 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { Keypair, PublicKey, SystemProgram, Connection } from "@solana/web3.js";
+import { Keypair, PublicKey, SystemProgram, Connection } from "@arbitrum-sepolia/web3.js";
 
 const PROGRAM_ID = new PublicKey("66DXeSqBccWxWWw9S21vxe2Mvvqqkmw5KsK5jqA42quz");
-const DEVNET_URL = "https://api.devnet.solana.com";
+const DEVNET_URL = "https://api.devnet.arbitrum-sepolia.com";
 
 // Fixed seeds — sha256 of constant strings so PDAs are always the same.
 const JOBS = [
   {
     seedKey: "kubryx:trustmesh:job:portfolio-rebalancer-v1",
-    description: "Rebalance SOL/USDC portfolio to 60/40 target allocation",
+    description: "Rebalance ETH/USDC portfolio to 60/40 target allocation",
     template: 0, // PORTFOLIO_REBALANCER
     budgetSol: 0.05,
     ownerSolName: "alice.sol",
@@ -52,7 +52,7 @@ function deriveJobPda(owner: PublicKey, jobId: Buffer) {
 function loadWallet(): Keypair {
   const walletPath =
     process.env.ANCHOR_WALLET ??
-    path.join(os.homedir(), ".config", "solana", "id.json");
+    path.join(os.homedir(), ".config", "arbitrum-sepolia", "id.json");
   const raw = JSON.parse(fs.readFileSync(walletPath, "utf8")) as number[];
   return Keypair.fromSecretKey(Uint8Array.from(raw));
 }
@@ -76,7 +76,7 @@ async function main() {
 
   console.log(`\nOwner wallet : ${owner.toBase58()}`);
   const bal = await connection.getBalance(owner);
-  console.log(`Balance      : ${(bal / 1e9).toFixed(4)} SOL`);
+  console.log(`Balance      : ${(bal / 1e9).toFixed(4)} ETH`);
   console.log(`Program      : ${PROGRAM_ID.toBase58()}\n`);
 
   const output: Record<string, unknown>[] = [];

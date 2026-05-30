@@ -27,7 +27,7 @@ export default function CoordinationPage() {
   // Custom Task Input State
   const [newTaskTitle, setNewTaskTitle] = useState('')
   const [newTaskRole, setNewTaskRole] = useState<any>('Yield Operations Hub Agent')
-  const [newTaskChain, setNewTaskChain] = useState('QIE Mainnet')
+  const [newTaskChain, setNewTaskChain] = useState('Arbitrum Mainnet')
 
   const activeOrg = organizations.find(o => o.id === currentOrgId) || organizations[0]
   const activeWorkspace = activeOrg.workspaces.find(w => w.id === currentWorkspaceId) || activeOrg.workspaces[0]
@@ -63,7 +63,7 @@ export default function CoordinationPage() {
     { time: '00ms', text: 'Task dispatched to agent economy mesh.' },
     { time: '12ms', text: 'Consensus verified by Zero-Knowledge signature certificates.' },
     { time: '45ms', text: 'Multichain state sync block emitted.' },
-    { time: '180ms', text: 'Stellar transaction ledger successfully split payout.' },
+    { time: '180ms', text: 'Arbitrum transaction ledger successfully split payout.' },
     { time: '340ms', text: 'EVM Mainnet lock verified.' }
   ]
 
@@ -128,7 +128,7 @@ export default function CoordinationPage() {
             <div>
               <strong style={{ color: '#EF4444', fontSize: 13 }}>SLA BOTTLENECK DETECTED</strong>
               <p style={{ margin: '2px 0 0', fontSize: 11, color: '#ccc' }}>
-                Multi-chain synchronization latency has degraded past critical thresholds. Cache failover loops activated.
+                Arbitrum-native synchronization latency has degraded past critical thresholds. Cache failover loops activated.
               </p>
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function CoordinationPage() {
           <article className="card" style={{ padding: 18 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700 }}>🌐 Multi-Chain Communication Mesh</h3>
+                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700 }}>🌐 Arbitrum-native Communication Mesh</h3>
                 <p style={{ margin: '2px 0 0', fontSize: 12, color: '#888' }}>
                   Interactive dependency graph mapping agent propagation paths across mainnet nodes.
                 </p>
@@ -179,9 +179,9 @@ export default function CoordinationPage() {
 
                 {/* Core Nodes */}
                 {[
-                  { id: 'node-qie', x: 80, y: 140, name: 'QIE Gateway', color: '#10B981' },
-                  { id: 'node-sol', x: 250, y: 60, name: 'Solana Devnet', color: bottleneckDetected ? '#EF4444' : '#10B981' },
-                  { id: 'node-stellar', x: 250, y: 220, name: 'Stellar Testnet', color: '#10B981' },
+                  { id: 'node-qie', x: 80, y: 140, name: 'Arbitrum Gateway', color: '#10B981' },
+                  { id: 'node-sol', x: 250, y: 60, name: 'Arbitrum Sepolia Devnet', color: bottleneckDetected ? '#EF4444' : '#10B981' },
+                  { id: 'node-stellar', x: 250, y: 220, name: 'Arbitrum Testnet', color: '#10B981' },
                   { id: 'node-arb', x: 420, y: 140, name: 'Arbitrum One', color: '#10B981' }
                 ].map((node) => {
                   const isHovered = selectedNode === node.id
@@ -232,7 +232,7 @@ export default function CoordinationPage() {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
                     <strong style={{ color: '#F5C518' }}>
-                      {selectedNode === 'node-qie' ? 'QIE Mainnet' : selectedNode === 'node-sol' ? 'Solana Devnet' : selectedNode === 'node-stellar' ? 'Stellar Testnet' : 'Arbitrum One'}
+                      {selectedNode === 'node-qie' ? 'Arbitrum Mainnet' : selectedNode === 'node-sol' ? 'Arbitrum Sepolia Devnet' : selectedNode === 'node-stellar' ? 'Arbitrum Testnet' : 'Arbitrum One'}
                     </strong>
                     <button onClick={() => setSelectedNode(null)} style={{ background: 'none', border: 'none', color: '#EF4444', fontSize: 10, cursor: 'pointer' }}>Close</button>
                   </div>
@@ -245,7 +245,7 @@ export default function CoordinationPage() {
 
           {/* Cross-Chain Operational Sync Matrix */}
           <article className="card" style={{ padding: 18 }}>
-            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>📊 Multi-Chain Synchronization Matrix</h3>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>📊 Arbitrum-native Synchronization Matrix</h3>
             <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
               Real-time synchronization status monitoring across distinct ledger topologies.
             </p>
@@ -337,7 +337,7 @@ export default function CoordinationPage() {
           <article className="card" style={{ padding: 18 }}>
             <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>⚙️ Propagate Operational Task</h3>
             <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-              Delegate multi-chain telemetry tasks statefully to autonomous registries.
+              Delegate Arbitrum-native telemetry tasks statefully to autonomous registries.
             </p>
 
             <form onSubmit={handleCreateTask} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -390,9 +390,9 @@ export default function CoordinationPage() {
                     outline: 'none'
                   }}
                 >
-                  <option value="QIE Mainnet">QIE Mainnet</option>
-                  <option value="Solana Devnet">Solana Devnet</option>
-                  <option value="Stellar Testnet">Stellar Testnet</option>
+                  <option value="Arbitrum Mainnet">Arbitrum Mainnet</option>
+                  <option value="Arbitrum Sepolia Devnet">Arbitrum Sepolia Devnet</option>
+                  <option value="Arbitrum Testnet">Arbitrum Testnet</option>
                   <option value="Arbitrum One">Arbitrum One</option>
                 </select>
               </div>

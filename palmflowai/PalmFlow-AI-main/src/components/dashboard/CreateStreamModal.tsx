@@ -122,11 +122,11 @@ export const CreateStreamModal = ({ isOpen, onClose }: CreateStreamModalProps) =
                           type="text"
                           value={walletAddress}
                           onChange={(e) => setWalletAddress(e.target.value)}
-                          placeholder="Solana wallet address"
+                          placeholder="Arbitrum Sepolia wallet address"
                           className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-accent-indigo/50 transition-all text-sm font-mono"
                         />
                       </div>
-                      <p className="text-[10px] text-white/20 ml-1">Base58-encoded Solana public key</p>
+                      <p className="text-[10px] text-white/20 ml-1">Base58-encoded Arbitrum Sepolia public key</p>
                     </div>
                   </div>
 

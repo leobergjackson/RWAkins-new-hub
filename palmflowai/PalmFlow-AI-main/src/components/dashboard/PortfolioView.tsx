@@ -20,7 +20,7 @@ export function PortfolioView() {
   const PUSD_MINT = process.env.NEXT_PUBLIC_PUSD_MINT ?? '';
   const tokens: any[] = portfolio?.tokens ?? [];
   const assets = [
-    { symbol: 'SOL', name: 'Solana', amount: portfolio?.sol ?? 0, color: '#9945FF' },
+    { symbol: 'ETH', name: 'Arbitrum Sepolia', amount: portfolio?.sol ?? 0, color: '#9945FF' },
     { symbol: 'PUSD', name: 'PalmFlow USD', amount: tokens.find((t) => t.mint === PUSD_MINT)?.amount ?? 0, color: '#00e5cc' },
     ...tokens
       .filter((t) => t.mint !== PUSD_MINT)
@@ -49,7 +49,7 @@ export function PortfolioView() {
           <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all group">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: `${asset.color}15` }}>
-                {asset.symbol === 'SOL' ? (
+                {asset.symbol === 'ETH' ? (
                   <TrendingUp className="w-4 h-4" style={{ color: asset.color }} />
                 ) : (
                   <CircleDollarSign className="w-4 h-4" style={{ color: asset.color }} />

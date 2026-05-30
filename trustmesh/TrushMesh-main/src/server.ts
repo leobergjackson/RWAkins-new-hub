@@ -121,7 +121,7 @@ export async function buildServer(options: BuildServerOptions = {}) {
 
   app.get('/health', async () => ({ status: 'ok', service: 'trustmesh' }));
 
-  interface SolanaAgent {
+  interface Arbitrum SepoliaAgent {
     id: string;
     name: string;
     role: string;
@@ -129,18 +129,18 @@ export async function buildServer(options: BuildServerOptions = {}) {
     lastAction: string;
   }
 
-  interface SolanaActivity {
+  interface Arbitrum SepoliaActivity {
     id: string;
     action: string;
     signature: string;
     timestamp: string;
   }
 
-  // Stateful registries for Solana Agents Mesh
-  const userAgents = new Map<string, SolanaAgent[]>();
-  const userActivities = new Map<string, SolanaActivity[]>();
+  // Stateful registries for Arbitrum Sepolia Agents Mesh
+  const userAgents = new Map<string, Arbitrum SepoliaAgent[]>();
+  const userActivities = new Map<string, Arbitrum SepoliaActivity[]>();
 
-  const getOrCreateAgents = (pubkey: string): SolanaAgent[] => {
+  const getOrCreateAgents = (pubkey: string): Arbitrum SepoliaAgent[] => {
     if (!pubkey) return [];
     if (!userAgents.has(pubkey)) {
       userAgents.set(pubkey, [
@@ -156,13 +156,13 @@ export async function buildServer(options: BuildServerOptions = {}) {
     return userAgents.get(pubkey)!;
   };
 
-  const getOrCreateActivity = (pubkey: string): SolanaActivity[] => {
+  const getOrCreateActivity = (pubkey: string): Arbitrum SepoliaActivity[] => {
     if (!pubkey) return [];
     if (!userActivities.has(pubkey)) {
       userActivities.set(pubkey, [
         {
           id: 'act-1',
-          action: 'Deployed Liquidity Arb Scout on Solana Devnet',
+          action: 'Deployed Liquidity Arb Scout on Arbitrum Sepolia Devnet',
           signature: '5k8eWn9PhantomInitSignature8z7a9b',
           timestamp: new Date().toISOString()
         }
@@ -177,7 +177,7 @@ export async function buildServer(options: BuildServerOptions = {}) {
     const agentsList = getOrCreateAgents(owner);
     const activityList = getOrCreateActivity(owner);
     
-    const newAgent: SolanaAgent = {
+    const newAgent: Arbitrum SepoliaAgent = {
       id: `agent-${Date.now()}`,
       name: body.name || 'Unnamed Agent',
       role: body.role || 'General tasks',

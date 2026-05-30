@@ -4,7 +4,7 @@ import type { AppServices } from "../server.js";
 import { SNS_REFRESH_QUEUE } from "../lib/constants.js";
 import { createRedisConnection } from "../services/redis.js";
 
-export const REFRESH_SOL_NAMES = "REFRESH_SOL_NAMES";
+export const REFRESH_ETH_NAMES = "REFRESH_ETH_NAMES";
 
 export function createSnsRefreshQueue() {
   return new Queue(SNS_REFRESH_QUEUE, {
@@ -16,7 +16,7 @@ export function createSnsRefreshWorker(services: AppServices) {
   return new Worker(
     SNS_REFRESH_QUEUE,
     async (job) => {
-      if (job.name !== REFRESH_SOL_NAMES) {
+      if (job.name !== REFRESH_ETH_NAMES) {
         return;
       }
       await refreshSolNames(services);
@@ -35,7 +35,7 @@ export async function scheduleSnsRefresh(queue = createSnsRefreshQueue()) {
     removeOnFail: 20
   };
 
-  await queue.add(REFRESH_SOL_NAMES, {}, { ...repeat, jobId: "refresh-sol-names" });
+  await queue.add(REFRESH_ETH_NAMES, {}, { ...repeat, jobId: "refresh-sol-names" });
 }
 
 async function refreshSolNames(services: AppServices) {

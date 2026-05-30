@@ -15,7 +15,7 @@ import {
   SYSVAR_INSTRUCTIONS_PUBKEY,
   SystemProgram,
   type TransactionInstruction
-} from "@solana/web3.js";
+} from "@arbitrum-sepolia/web3.js";
 import { trustmeshIdl, type TrustmeshIdl } from "../../src/idl/trustmesh.js";
 
 type TrustmeshProgram = Program<Idl>;

@@ -1,9 +1,9 @@
 // Built by vsrupeshkumar
 import { AnchorProvider, Program, Wallet } from "@coral-xyz/anchor";
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@arbitrum-sepolia/web3.js";
 import { env } from "../lib/env.js";
 import { logger } from "../lib/logger.js";
-import { connection } from "../lib/solana.js";
+import { connection } from "../lib/arbitrum-sepolia.js";
 import { trustmeshIdl } from "../idl/trustmesh.js";
 
 const idl = {

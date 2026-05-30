@@ -150,7 +150,7 @@ export async function registerJobRoutes(app: FastifyInstance) {
     }
 
     if (!ownerSolName) {
-      return reply.status(400).send({ error: "OWNER_SOL_NAME_REQUIRED" });
+      return reply.status(400).send({ error: "OWNER_ETH_NAME_REQUIRED" });
     }
 
     const job = await app.services.prisma.$transaction(async (tx) => {

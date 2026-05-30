@@ -128,7 +128,7 @@ export const StorySections = () => {
             viewport={{ once: true }}
             className="text-accent-emerald text-[10px] font-black uppercase tracking-[0.4em]"
           >
-            03 — THE SOLUTION
+            03 — THE ETHUTION
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 30 }}

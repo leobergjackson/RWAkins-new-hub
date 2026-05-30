@@ -368,7 +368,7 @@ function CoordinationLog({
                   className="mt-3 font-mono text-[11px] text-silk-primary"
                   onClick={() =>
                     window.open(
-                      `https://explorer.solana.com/tx/${message.txHash}`,
+                      `https://explorer.arbitrum-sepolia.com/tx/${message.txHash}`,
                       "_blank",
                       "noopener,noreferrer"
                     )

@@ -15,7 +15,7 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
 import { NETWORKS, type NetworkKey } from '@/lib/networks'
 
-const DEFAULT_GLOBAL_CHAIN: NetworkKey = 'QIE'
+const DEFAULT_GLOBAL_CHAIN: NetworkKey = 'ARBITRUM_SEPOLIA'
 
 type StoredPrefs = {
   global: NetworkKey

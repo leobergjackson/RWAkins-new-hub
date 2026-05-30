@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { cn } from '@/lib/utils';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useWallet } from '@arbitrum-sepolia/wallet-adapter-react';
 
 export default function TreasuryPage() {
   const { publicKey } = useWallet();
@@ -41,14 +41,14 @@ export default function TreasuryPage() {
 
   const handleStealthTransfer = async () => {
     const amount = 0.5; // Simulated amount
-    const recipient = 'SOL_DEST_ABC...';
+    const recipient = 'ETH_DEST_ABC...';
     try {
       await transferMutation.mutateAsync({
         recipient,
         amount,
         orgId: 'default-org'
       });
-      alert(`Stealth Transfer of ${amount} SOL initiated!`);
+      alert(`Stealth Transfer of ${amount} ETH initiated!`);
     } catch (err) {
       console.error(err);
     }
@@ -111,7 +111,7 @@ export default function TreasuryPage() {
                   <h2 className="text-7xl font-bold tracking-tighter font-mono">
                     {publicKey ? (balance || 0).toFixed(2) : (treasury?.balance / 200).toFixed(2)}
                   </h2>
-                  <span className="text-3xl font-bold text-muted-foreground">SOL</span>
+                  <span className="text-3xl font-bold text-muted-foreground">ETH</span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-8 pt-10 border-t border-white/5">
@@ -238,7 +238,7 @@ export default function TreasuryPage() {
                 Asset Distribution
               </h3>
               <div className="space-y-4">
-                <AssetItem symbol="SOL" name="Solana" percent={85} amount="12,402.91" />
+                <AssetItem symbol="ETH" name="Arbitrum Sepolia" percent={85} amount="12,402.91" />
                 <AssetItem symbol="USDC" name="USD Coin" percent={10} amount="420,000.00" />
                 <AssetItem symbol="BONK" name="Bonk" percent={5} amount="1.2B" />
               </div>

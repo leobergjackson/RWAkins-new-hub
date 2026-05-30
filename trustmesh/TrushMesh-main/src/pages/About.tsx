@@ -129,7 +129,7 @@ export function About() {
               <span className="neo-pill flex h-11 w-11 items-center justify-center px-0 py-0 text-silk-primary">
                 <ShieldIcon className="h-5 w-5" />
               </span>
-              <h2 className="text-2xl font-semibold tracking-tight text-silk-text-primary">Why Solana</h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-silk-text-primary">Why Arbitrum Sepolia</h2>
             </div>
             <div className="mt-5 space-y-3 text-sm leading-7 text-silk-text-secondary">
               <div className="rounded-[22px] bg-white/60 px-4 py-4">
@@ -190,13 +190,13 @@ export function About() {
         >
           <h2 className="text-2xl font-semibold tracking-tight text-silk-text-primary">What is TrustMesh?</h2>
           <p className="mt-4 text-sm leading-8 text-silk-text-secondary">
-            TrustMesh is the first on-chain identity and audit platform for multi-agent AI systems on Solana. When AI agents coordinate to execute complex tasks — rebalancing a DeFi portfolio, voting in a DAO, or running automated workflows — there is currently no way to verify which agent made which decision. If something goes wrong, protocols have no audit trail.
+            TrustMesh is the first on-chain identity and audit platform for multi-agent AI systems on Arbitrum Sepolia. When AI agents coordinate to execute complex tasks — rebalancing a DeFi portfolio, voting in a DAO, or running automated workflows — there is currently no way to verify which agent made which decision. If something goes wrong, protocols have no audit trail.
           </p>
           <p className="mt-3 text-sm leading-8 text-silk-text-secondary">TrustMesh solves this with three core primitives:</p>
           <div className="mt-5 space-y-3">
             {[
-              { n: "1", title: "Verified .sol identities", body: "Every agent gets a unique sub-name anchored to Solana Name Service, making authority paths human-readable." },
-              { n: "2", title: "On-chain delegation logs", body: "Every inter-agent message is signed with Ed25519 and permanently logged on Solana — tamper-proof and auditable." },
+              { n: "1", title: "Verified .sol identities", body: "Every agent gets a unique sub-name anchored to Arbitrum Sepolia Name Service, making authority paths human-readable." },
+              { n: "2", title: "On-chain delegation logs", body: "Every inter-agent message is signed with Ed25519 and permanently logged on Arbitrum Sepolia — tamper-proof and auditable." },
               { n: "3", title: "Cascade revocation", body: "Humans can halt any agent in one transaction; the system automatically revokes all descendants in the tree." }
             ].map(({ n, title, body }) => (
               <div key={n} className="neo-inset flex gap-4 rounded-[22px] px-5 py-4">
@@ -250,9 +250,9 @@ export function About() {
 │     Backend  (Fastify + TS)     │  REST API · Ed25519 verification
 │  PostgreSQL · Redis · BullMQ    │  SNS resolution · WebSocket events
 └──────────────┬──────────────────┘
-               │ Solana RPC
+               │ Arbitrum Sepolia RPC
 ┌──────────────▼──────────────────┐
-│   Solana Devnet                 │  On-chain program state
+│   Arbitrum Sepolia Devnet                 │  On-chain program state
 │   Anchor Program + SNS Program  │  Delegation records · Event logs
 └─────────────────────────────────┘`}</pre>
           </div>
@@ -278,14 +278,14 @@ export function About() {
             <tbody>
               {[
                 ["Smart Contract", "Rust + Anchor 0.30"],
-                ["Blockchain", "Solana Devnet + SNS"],
+                ["Blockchain", "Arbitrum Sepolia Devnet + SNS"],
                 ["Backend", "Fastify + TypeScript"],
                 ["Database", "PostgreSQL 16 + Prisma ORM"],
                 ["Cache / Queue", "Redis 7 + BullMQ"],
                 ["Frontend", "React 18 + Vite + Tailwind"],
                 ["Visualization", "D3.js v7 (force graph + tree)"],
                 ["Real-time", "WebSocket + Zustand"],
-                ["Wallet", "@solana/wallet-adapter"],
+                ["Wallet", "@arbitrum-sepolia/wallet-adapter"],
                 ["Design System", "Silk (Neomorphic UI)"]
               ].map(([layer, tech], i) => (
                 <tr key={layer} className={`border-b border-white/10 last:border-0 ${i % 2 === 0 ? "bg-white/40" : "bg-white/60"}`}>
@@ -305,7 +305,7 @@ export function About() {
           className="tm-shell-card p-6"
         >
           <h2 className="text-2xl font-semibold tracking-tight text-silk-text-primary">What Makes This Novel</h2>
-          <p className="mt-3 text-sm text-silk-text-secondary">No one on Solana has built:</p>
+          <p className="mt-3 text-sm text-silk-text-secondary">No one on Arbitrum Sepolia has built:</p>
           <div className="mt-4 space-y-3">
             {[
               "Hierarchical agent identity using SNS sub-domains — .sol names aren't just for humans anymore.",
@@ -320,7 +320,7 @@ export function About() {
             ))}
           </div>
           <p className="mt-5 text-sm leading-7 text-silk-text-secondary">
-            Existing projects focus on human identity or simple agent wallets. TrustMesh is the first <strong className="text-silk-text-primary">agent lineage and accountability layer</strong> native to Solana.
+            Existing projects focus on human identity or simple agent wallets. TrustMesh is the first <strong className="text-silk-text-primary">agent lineage and accountability layer</strong> native to Arbitrum Sepolia.
           </p>
         </motion.section>
 
@@ -361,7 +361,7 @@ export function About() {
               Documentation
             </Link>
             <a
-              href="https://solana.com"
+              href="https://arbitrum-sepolia.com"
               target="_blank"
               rel="noopener noreferrer"
               className="neo-button flex items-center gap-2 px-5 py-3 text-sm font-semibold text-silk-primary"
@@ -377,7 +377,7 @@ export function About() {
         {/* License */}
         <div className="py-4 text-center">
           <p className="text-xs text-silk-text-tertiary">Open source under the MIT License</p>
-          <p className="mt-1 text-xs text-silk-text-tertiary">Built with ❤️ for the Solana ecosystem</p>
+          <p className="mt-1 text-xs text-silk-text-tertiary">Built with ❤️ for the Arbitrum Sepolia ecosystem</p>
         </div>
       </div>
     </div>

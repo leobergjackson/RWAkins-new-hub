@@ -258,7 +258,7 @@ export default function AnalyticsPage() {
             <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
               <p className="text-sm font-semibold text-yellow-500 mb-1">Liquidity Warning</p>
               <p className="text-xs text-muted-foreground">
-                SOL exit liquidity adequate but recommend diversification.
+                ETH exit liquidity adequate but recommend diversification.
               </p>
             </div>
 

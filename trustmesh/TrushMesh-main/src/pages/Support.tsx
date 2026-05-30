@@ -257,7 +257,7 @@ export function Support() {
   const attachmentInputId = useId();
   const effectiveRpcEndpoint = getEffectiveRpcEndpoint(
     { rpcPreset, customRpcUrl },
-    runtimeConfig.solanaRpcUrl
+    runtimeConfig.arbitrum-sepoliaRpcUrl
   );
   const themeLabel = themeOptions.find((option) => option.id === resolvedTheme)?.label ?? resolvedTheme;
   const filteredActions = useMemo(

@@ -24,5 +24,5 @@ export const runtimeConfig = {
   webSocketUrl: import.meta.env.VITE_WS_BASE_URL ?? getDefaultWebSocketUrl(),
   enableRealtime: coerceBoolean(import.meta.env.VITE_ENABLE_WEBSOCKETS, defaultRealtime),
   pollingIntervalMs: Number(import.meta.env.VITE_POLLING_INTERVAL_MS ?? "10000"),
-  solanaRpcUrl: import.meta.env.VITE_SOLANA_RPC_URL ?? "https://api.devnet.solana.com"
+  arbitrum-sepoliaRpcUrl: import.meta.env.VITE_ETHANA_RPC_URL ?? "https://api.devnet.arbitrum-sepolia.com"
 };

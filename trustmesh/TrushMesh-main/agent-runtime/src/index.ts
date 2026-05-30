@@ -7,9 +7,9 @@ import axios from "axios";
 import {
   Connection,
   Keypair,
-  LAMPORTS_PER_SOL,
+  LAMPORTS_PER_ETH,
   type Commitment
-} from "@solana/web3.js";
+} from "@arbitrum-sepolia/web3.js";
 import { initializeJobTx, spawnAgentTx, logDelegationTx, completeJobTx } from "./anchor.js";
 import { backend } from "./backend.js";
 import { getSolUsdcPrice } from "./jupiter.js";
@@ -17,19 +17,19 @@ import { signActionHash, signUtf8Message, sha256Buffer } from "./sign.js";
 import { sleep } from "./sleep.js";
 
 const COMMITMENT: Commitment = "confirmed";
-const AIRDROP_LAMPORTS = Math.round(0.1 * LAMPORTS_PER_SOL);
-const JOB_BUDGET_LAMPORTS = Math.round(0.05 * LAMPORTS_PER_SOL);
+const AIRDROP_LAMPORTS = Math.round(0.1 * LAMPORTS_PER_ETH);
+const JOB_BUDGET_LAMPORTS = Math.round(0.05 * LAMPORTS_PER_ETH);
 const TEMPLATE_PORTFOLIO_REBALANCER = 0;
 const AGENT_TYPE_PLANNER = 0;
 const AGENT_TYPE_EXECUTOR = 1;
-const DEMO_DESCRIPTION = "Rebalance SOL/USDC to 60/40";
+const DEMO_DESCRIPTION = "Rebalance ETH/USDC to 60/40";
 const { BN } = anchor;
 
 type StepError = Error & {
   cause?: unknown;
 };
 
-function requireEnv(name: "BACKEND_URL" | "BACKEND_JWT" | "ANCHOR_PROGRAM_ID" | "HUMAN_WALLET_KEYPAIR_PATH" | "SOLANA_RPC_URL") {
+function requireEnv(name: "BACKEND_URL" | "BACKEND_JWT" | "ANCHOR_PROGRAM_ID" | "HUMAN_WALLET_KEYPAIR_PATH" | "ETHANA_RPC_URL") {
   const value = process.env[name];
   if (!value) {
     throw new Error(`Missing required env var: ${name}`);
@@ -43,7 +43,7 @@ function loadKeypairFromFile(filePath: string): Keypair {
 }
 
 function explorerTxUrl(signature: string) {
-  return `https://explorer.solana.com/tx/${signature}?cluster=devnet`;
+  return `https://explorer.arbitrum-sepolia.com/tx/${signature}?cluster=devnet`;
 }
 
 function formatErrorMessage(error: unknown): string {
@@ -181,7 +181,7 @@ async function main() {
   requireEnv("BACKEND_JWT");
   requireEnv("ANCHOR_PROGRAM_ID");
   const walletPath = requireEnv("HUMAN_WALLET_KEYPAIR_PATH");
-  const rpcUrl = requireEnv("SOLANA_RPC_URL");
+  const rpcUrl = requireEnv("ETHANA_RPC_URL");
 
   const connection = new Connection(rpcUrl, COMMITMENT);
 
@@ -339,7 +339,7 @@ async function main() {
   await sleep(3);
 
   await runStep(4, async () => {
-    const action = "Fetch SOL/USDC spot price from Jupiter API";
+    const action = "Fetch ETH/USDC spot price from Jupiter API";
     const actionHash = sha256Buffer(action);
     const onchainSignature = await signActionHash(actionHash, plannerKeypair);
 
@@ -374,14 +374,14 @@ async function main() {
 
   const price = await runStep(5, async () => {
     const currentPrice = await getSolUsdcPrice();
-    console.log(`  SOL/USDC price: $${currentPrice.toFixed(2)}`);
+    console.log(`  ETH/USDC price: $${currentPrice.toFixed(2)}`);
     return currentPrice;
   });
 
   await sleep(4);
 
   await runStep(6, async () => {
-    const action = `Swap 2.5 SOL for USDC at $${price.toFixed(2)} (simulated)`;
+    const action = `Swap 2.5 ETH for USDC at $${price.toFixed(2)} (simulated)`;
     const actionHash = sha256Buffer(action);
     const onchainSignature = await signActionHash(actionHash, executorKeypair);
 
@@ -408,7 +408,7 @@ async function main() {
       fallbackSigner: humanWallet
     });
 
-    console.log(`→ Executor logged swap: 2.5 SOL → USDC at $${price.toFixed(2)}`);
+    console.log(`→ Executor logged swap: 2.5 ETH → USDC at $${price.toFixed(2)}`);
   });
 
   await sleep(3);

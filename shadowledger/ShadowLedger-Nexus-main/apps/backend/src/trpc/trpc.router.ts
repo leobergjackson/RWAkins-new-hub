@@ -225,7 +225,7 @@ export class TrpcRouter implements OnModuleInit {
             type: 'STEALTH_TRANSFER',
             status: 'CONFIRMED',
             metadata: JSON.stringify({ 
-              detail: `Transferred ${input.amount} SOL to ${input.recipient} (fragmented)`,
+              detail: `Transferred ${input.amount} ETH to ${input.recipient} (fragmented)`,
               recipient: input.recipient
             })
           }

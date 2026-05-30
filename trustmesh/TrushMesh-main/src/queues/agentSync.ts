@@ -1,6 +1,6 @@
 // Built by vsrupeshkumar
 import { Queue, Worker } from "bullmq";
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@arbitrum-sepolia/web3.js";
 import type { AppServices } from "../server.js";
 import { AGENT_SYNC_QUEUE, jobChannel } from "../lib/constants.js";
 import { createRedisConnection, redisPublisher } from "../lib/redis.js";

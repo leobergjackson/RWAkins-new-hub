@@ -1,5 +1,5 @@
 // Built by vsrupeshkumar
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@arbitrum-sepolia/web3.js";
 import { z } from "zod";
 import { JOB_TEMPLATES } from "./constants.js";
 
@@ -10,7 +10,7 @@ export const walletAddressSchema = z.string().refine((value) => {
   } catch {
     return false;
   }
-}, "Invalid Solana wallet address");
+}, "Invalid Arbitrum Sepolia wallet address");
 
 export const cuidSchema = z.string().min(8);
 

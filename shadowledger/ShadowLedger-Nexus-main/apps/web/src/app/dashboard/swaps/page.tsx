@@ -22,7 +22,7 @@ import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function SwapsPage() {
-  const [fromAsset, setFromAsset] = useState('SOL');
+  const [fromAsset, setFromAsset] = useState('ETH');
   const [toAsset, setToAsset] = useState('USDC');
   const [amount, setAmount] = useState('100');
   const [isSuccess, setIsSuccess] = useState(false);
@@ -71,7 +71,7 @@ export default function SwapsPage() {
               <div className="p-8 bg-white/5 rounded-[2rem] border border-white/5 space-y-4">
                 <div className="flex justify-between items-center text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                   <span>You Sell</span>
-                  <span>Balance: 12,402.91 SOL</span>
+                  <span>Balance: 12,402.91 ETH</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <input 
@@ -82,7 +82,7 @@ export default function SwapsPage() {
                   />
                   <button className="flex items-center gap-2 bg-black/40 px-4 py-2 rounded-xl border border-white/10 hover:bg-black/60 transition-all">
                     <div className="w-6 h-6 rounded-lg bg-cyan-glow/20 flex items-center justify-center text-[10px] font-bold text-cyan-glow">S</div>
-                    <span className="font-bold">SOL</span>
+                    <span className="font-bold">ETH</span>
                     <ChevronDown size={16} className="text-muted-foreground" />
                   </button>
                 </div>
@@ -113,7 +113,7 @@ export default function SwapsPage() {
             <div className="mt-8 space-y-4">
               <div className="flex justify-between text-xs font-medium">
                 <span className="text-muted-foreground uppercase tracking-widest">Exchange Rate</span>
-                <span className="font-mono">1 SOL ≈ 200 USDC</span>
+                <span className="font-mono">1 ETH ≈ 200 USDC</span>
               </div>
               <div className="flex justify-between text-xs font-medium">
                 <span className="text-muted-foreground uppercase tracking-widest">Slippage Tolerance</span>

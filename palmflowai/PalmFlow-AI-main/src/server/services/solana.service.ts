@@ -6,21 +6,21 @@ import {
   Keypair, 
   Transaction,
   sendAndConfirmTransaction 
-} from '@solana/web3.js';
+} from '@arbitrum-sepolia/web3.js';
 import {
   getAccount,
   getAssociatedTokenAddress,
   createTransferInstruction,
   createAssociatedTokenAccountIdempotentInstruction,
   getMint
-} from '@solana/spl-token';
+} from '@arbitrum-sepolia/spl-token';
 
-const RPC_URL = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || clusterApiUrl('devnet');
+const RPC_URL = process.env.NEXT_PUBLIC_ETHANA_RPC_URL || clusterApiUrl('devnet');
 const connection = new Connection(RPC_URL, 'confirmed');
 const PUSD_MINT_ADDRESS = process.env.NEXT_PUBLIC_PUSD_MINT || "11111111111111111111111111111111";
 const PUSD_MINT = new PublicKey(PUSD_MINT_ADDRESS);
 
-export const solanaService = {
+export const arbitrum-sepoliaService = {
   /**
    * Get the live on-chain balance of PUSD for a given wallet
    */
@@ -39,13 +39,13 @@ export const solanaService = {
   },
 
   /**
-   * Get the full portfolio of SOL and SPL tokens for a wallet
+   * Get the full portfolio of ETH and SPL tokens for a wallet
    */
   async getPortfolio(walletAddress: string) {
     try {
       const publicKey = new PublicKey(walletAddress);
       
-      // 1. Get SOL Balance
+      // 1. Get ETH Balance
       const solBalance = await connection.getBalance(publicKey);
       
       // 2. Get SPL Token Accounts

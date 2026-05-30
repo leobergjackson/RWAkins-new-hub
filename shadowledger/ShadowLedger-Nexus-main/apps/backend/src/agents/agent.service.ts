@@ -77,7 +77,7 @@ export class AgentService {
       
       this.nexusGateway.broadcastAgentLog(orgId, {
         agent: 'ORCHESTRATOR',
-        message: `Context retrieved. Treasury Balance: ${treasuryBalance} SOL.`,
+        message: `Context retrieved. Treasury Balance: ${treasuryBalance} ETH.`,
         timestamp: new Date().toISOString(),
       });
 
@@ -88,7 +88,7 @@ Your role:
 - Coordinate 7 specialized AI agents: Treasury, Payroll, Compliance, Risk, Strategy, Execution, Market
 - Make financial decisions with surgical precision
 - Prioritize privacy, efficiency, and sustainability
-- Execute autonomous financial operations invisibly on Solana
+- Execute autonomous financial operations invisibly on Arbitrum Sepolia
 
 Agent Responsibilities:
 - **Treasury Agent**: Manages balances, liquidity, and asset allocation.
@@ -96,12 +96,12 @@ Agent Responsibilities:
 - **Compliance Agent**: Ensures operations meet regulatory requirements while preserving privacy.
 - **Risk Agent**: Monitors for depegs, exposure, and cluster correlation risks.
 - **Strategy Agent**: Formulates long-term financial roadmaps.
-- **Execution Agent**: Interfaces with Solana to finalize transactions via stealth paths.
+- **Execution Agent**: Interfaces with Arbitrum Sepolia to finalize transactions via stealth paths.
 - **Market Agent**: Monitors real-time price feeds.
 
 Current Context:
 - Organization: ${org.name}
-- Treasury Balance: ${treasuryBalance} SOL
+- Treasury Balance: ${treasuryBalance} ETH
 - Treasury Address: ${treasury.address}
 - Active Payrolls: ${org.payrolls.length}
 - Total Recipients: ${org.payrolls.reduce((sum, p) => sum + p.recipients.length, 0)}

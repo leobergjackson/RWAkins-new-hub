@@ -1,10 +1,10 @@
 // Built by vsrupeshkumar
 import { prisma } from '@/lib/prisma';
 import { auditorService } from './auditor.service';
-import { solanaService } from './solana.service';
+import { arbitrum-sepoliaService } from './arbitrum-sepolia.service';
 import { transactionService } from './transaction.service';
 import { agentService } from './agent.service';
-import { Keypair } from '@solana/web3.js';
+import { Keypair } from '@arbitrum-sepolia/web3.js';
 
 export const idoService = {
   /**
@@ -141,7 +141,7 @@ export const idoService = {
 
     // 4. Initial funding transfer (on-chain simulation)
     try {
-      await solanaService.executePayment(walletAddress, project.raisedAmount * 0.1); // Transfer 10% for initial ops
+      await arbitrum-sepoliaService.executePayment(walletAddress, project.raisedAmount * 0.1); // Transfer 10% for initial ops
     } catch (err) {
       console.warn('Initial project funding failed:', err);
     }

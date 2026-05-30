@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { WalletMultiButton, useWalletModal } from "@solana/wallet-adapter-react-ui";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton, useWalletModal } from "@arbitrum-sepolia/wallet-adapter-react-ui";
+import { useWallet } from "@arbitrum-sepolia/wallet-adapter-react";
 import { apiClient } from "../lib/axios";
 import { cx, getJwtFromLocalStorage, truncateMiddle, unwrapEnvelope } from "../lib/utils";
 import type { ApiEnvelope, AuthUser } from "../types";
@@ -154,7 +154,7 @@ function WalletStatus() {
             onClick={() => {
               if (wallet.publicKey) {
                 window.open(
-                  `https://explorer.solana.com/address/${wallet.publicKey.toBase58()}`,
+                  `https://explorer.arbitrum-sepolia.com/address/${wallet.publicKey.toBase58()}`,
                   "_blank",
                   "noopener,noreferrer"
                 );

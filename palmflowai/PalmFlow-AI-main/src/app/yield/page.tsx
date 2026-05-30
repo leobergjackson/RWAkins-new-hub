@@ -32,7 +32,7 @@ const strategies = [
     apy: 14.2,
     risk: 'Low',
     riskColor: '#00e5cc',
-    desc: 'Optimal risk-return. Diversified across top-performing yield protocols on Solana.',
+    desc: 'Optimal risk-return. Diversified across top-performing yield protocols on Arbitrum Sepolia.',
     protocols: ['Raydium LP', 'Kamino', 'Jito LST'],
     color: '#00e5cc',
   },
@@ -79,7 +79,7 @@ export default function YieldPage() {
           </div>
           <h1 className="text-xl font-semibold text-white tracking-tight">AI Yield Optimizer</h1>
           <p className="text-sm text-white/40 font-normal mt-1 max-w-xl">
-            Neural algorithms continuously maximize risk-adjusted returns across verified Solana yield protocols.
+            Neural algorithms continuously maximize risk-adjusted returns across verified Arbitrum Sepolia yield protocols.
           </p>
         </div>
         {/* Auto-Optimize Toggle */}

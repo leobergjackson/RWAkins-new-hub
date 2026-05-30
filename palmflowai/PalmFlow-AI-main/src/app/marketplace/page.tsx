@@ -25,7 +25,7 @@ const agentTemplates = [
   {
     id: 'arb-hunter', name: 'Arbitrage Hunter', role: 'DeFi Specialist', category: 'DeFi',
     rating: 4.9, price: 'Free', icon: Zap, color: '#00e5cc',
-    desc: 'Scans Solana DEXs for price discrepancies and executes low-risk atomic trades in real-time.',
+    desc: 'Scans Arbitrum Sepolia DEXs for price discrepancies and executes low-risk atomic trades in real-time.',
     efficiency: 98, complexity: 'High',
   },
   {
@@ -37,7 +37,7 @@ const agentTemplates = [
   {
     id: 'flash-loan', name: 'Flash Loan Executor', role: 'DeFi Arbitrageur', category: 'DeFi',
     rating: 4.6, price: '200 PUSD/mo', icon: DollarSign, color: '#00e5cc',
-    desc: 'Executes risk-free flash loan arbitrage across Solana DEXs in sub-second windows using atomic transactions.',
+    desc: 'Executes risk-free flash loan arbitrage across Arbitrum Sepolia DEXs in sub-second windows using atomic transactions.',
     efficiency: 91, complexity: 'Expert',
   },
   // Security

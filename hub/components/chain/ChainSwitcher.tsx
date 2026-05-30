@@ -42,7 +42,7 @@ export default function ChainSwitcher({ toolId, theme = 'dark', compact = false 
   const isLight = theme === 'light'
   const isTool = Boolean(toolId)
   const activeKey: NetworkKey = isTool ? resolveChain(toolId) : globalChain
-  const active = NETWORKS[activeKey]
+  const active = NETWORKS[activeKey] || NETWORKS.ARBITRUM_SEPOLIA
   const usingOverride = isTool && hasOverride(toolId!)
 
   // Close on outside click.
@@ -127,7 +127,7 @@ export default function ChainSwitcher({ toolId, theme = 'dark', compact = false 
               }}
             >
               <span style={{ width: 8 }}>{!usingOverride ? '✓' : ''}</span>
-              Use default ({NETWORKS[globalChain].shortName})
+              Use default ({(NETWORKS[globalChain] || NETWORKS.ARBITRUM_SEPOLIA).shortName})
             </button>
           )}
 

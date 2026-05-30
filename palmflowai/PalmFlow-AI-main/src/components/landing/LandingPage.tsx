@@ -6,7 +6,7 @@ import { Hero } from './Hero';
 import { AgentSystem } from './AgentSystem';
 import { Ecosystem } from './Ecosystem';
 import { motion } from 'framer-motion';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { useWalletModal } from '@arbitrum-sepolia/wallet-adapter-react-ui';
 import {
   DollarSign, Layers, GitBranch, ShieldCheck, TrendingUp,
   Users, Zap, Globe, Lock, ArrowRight, Coins, Activity,
@@ -42,7 +42,7 @@ const HowItWorks = () => (
         style={{ background: 'linear-gradient(90deg, transparent, rgba(0,229,204,0.3), transparent)' }} />
       {[
         { step: '01', title: 'Connect Your Wallet', color: '#00e5cc', icon: Lock,
-          desc: 'Link any Solana wallet — Phantom, Solflare, Backpack. Your keys stay yours; PalmFlow only reads on-chain state.' },
+          desc: 'Link any Arbitrum Sepolia wallet — Phantom, Solflare, Backpack. Your keys stay yours; PalmFlow only reads on-chain state.' },
         { step: '02', title: 'Deploy AI Agents', color: '#6366f1', icon: Cpu,
           desc: 'Choose from Neural Advisor, Risk Sentinel, Flow Master, or the full suite. Each agent operates autonomously within your policy rules.' },
         { step: '03', title: 'Watch It Run', color: '#ec4899', icon: BarChart2,
@@ -82,15 +82,15 @@ const Features = () => (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
       {[
         { icon: DollarSign, color: '#00e5cc', title: 'Autonomous Treasury',
-          desc: 'AI-driven rebalancing across SOL, USDC, PUSD, and protocol tokens. Set rules, let agents execute.' },
+          desc: 'AI-driven rebalancing across ETH, USDC, PUSD, and protocol tokens. Set rules, let agents execute.' },
         { icon: Users, color: '#6366f1', title: 'AI Workforce',
           desc: 'Deploy specialized agents for yield, risk, payroll, compliance, and analytics — each with auditable actions.' },
         { icon: Zap, color: '#ec4899', title: 'Streaming Payroll',
           desc: 'Continuous real-time salary streams to contributors worldwide. No more monthly batches or wire delays.' },
         { icon: Globe, color: '#10b981', title: 'Cross-Border Payments',
-          desc: 'Sub-second settlement powered by Solana and PUSD stablecoin rails. Zero FX friction.' },
+          desc: 'Sub-second settlement powered by Arbitrum Sepolia and PUSD stablecoin rails. Zero FX friction.' },
         { icon: TrendingUp, color: '#f59e0b', title: 'Yield Optimization',
-          desc: 'Auto-compounding vaults scan Solana DeFi for the best risk-adjusted yields and rotate positions daily.' },
+          desc: 'Auto-compounding vaults scan Arbitrum Sepolia DeFi for the best risk-adjusted yields and rotate positions daily.' },
         { icon: ShieldCheck, color: '#8b5cf6', title: 'Risk Sentinel',
           desc: 'Real-time protocol threat detection. Whitelists, spending caps, and circuit breakers enforced on-chain.' },
         { icon: GitBranch, color: '#00e5cc', title: 'Policy Engine',
@@ -132,7 +132,7 @@ const PUSDSection = () => (
             The money layer of the autonomous economy
           </h2>
           <p className="text-sm text-white/45 leading-relaxed">
-            PUSD is a USD-pegged stablecoin issued natively on Solana and used as the primary settlement
+            PUSD is a USD-pegged stablecoin issued natively on Arbitrum Sepolia and used as the primary settlement
             currency across the PalmFlow protocol. Every payroll stream, cross-border transfer, and
             yield position is denominated in PUSD — giving your treasury a single stable unit of account.
           </p>
@@ -140,7 +140,7 @@ const PUSDSection = () => (
             {[
               'Fully collateralised and auditable on-chain',
               'Permissionless mint & burn via protocol vaults',
-              'Instant streaming to any Solana wallet',
+              'Instant streaming to any Arbitrum Sepolia wallet',
               'Earns yield automatically when idle in vaults',
             ].map((pt, i) => (
               <div key={i} className="flex items-start gap-3">
@@ -248,7 +248,7 @@ const FinalCTA = () => {
             <span className="text-gradient-cyan">autonomous treasury?</span>
           </h2>
           <p className="text-sm text-white/40 max-w-md mx-auto mb-8 leading-relaxed">
-            Connect your Solana wallet to access the full PalmFlow AI platform — no sign-up, no custody, no compromise.
+            Connect your Arbitrum Sepolia wallet to access the full PalmFlow AI platform — no sign-up, no custody, no compromise.
           </p>
           <button
             onClick={() => setVisible(true)}
