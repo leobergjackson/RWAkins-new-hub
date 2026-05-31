@@ -36,18 +36,18 @@ export const NETWORKS = {
 export type NetworkKey = keyof typeof NETWORKS
 export type NetworkConfig = (typeof NETWORKS)[NetworkKey]
 
-// Which route uses which network (All Arbitrum now)
 export const TOOL_NETWORKS: Record<string, NetworkKey> = {
-  '/invoice':   'ARBITRUM',
-  '/dashboard': 'ARBITRUM',
-  '/credit':    'ARBITRUM',
-  '/legacy':    'ARBITRUM',
-  '/agents':    'ARBITRUM',
-  '/vault':     'ARBITRUM',
-  '/split':     'ARBITRUM',
-  '/lend':      'ARBITRUM',
-  '/treasury':  'ARBITRUM',
-  '/shadow':    'ARBITRUM',
+  '/invoice':   'ARBITRUM_SEPOLIA',
+  '/dashboard': 'ARBITRUM_SEPOLIA',
+  '/credit':    'ARBITRUM_SEPOLIA',
+  '/legacy':    'ARBITRUM_SEPOLIA',
+  '/agents':    'ARBITRUM_SEPOLIA',
+  '/vault':     'ARBITRUM_SEPOLIA',
+  '/split':     'ARBITRUM_SEPOLIA',
+  '/lend':      'ARBITRUM_SEPOLIA',
+  '/treasury':  'ARBITRUM_SEPOLIA',
+  '/shadow':    'ARBITRUM_SEPOLIA',
+  '/ext':       'ARBITRUM_SEPOLIA',
 }
 
 // EVM tools (use MetaMask)
@@ -63,10 +63,9 @@ export function getWalletTypeForRoute(route: string): 'evm' | 'solana' {
   return 'evm'
 }
 
-// Get network config for a route
 export function getNetworkForRoute(route: string): NetworkConfig {
-  const key = TOOL_NETWORKS[route] || 'ARBITRUM'
-  return NETWORKS[key as NetworkKey] || NETWORKS.ARBITRUM
+  const key = TOOL_NETWORKS[route] || 'ARBITRUM_SEPOLIA'
+  return NETWORKS[key as NetworkKey] || NETWORKS.ARBITRUM_SEPOLIA
 }
 
 // Find an EVM network config by its decimal chain id
