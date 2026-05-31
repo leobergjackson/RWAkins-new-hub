@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
-import { parseUnits, toHex, stringToHex, pad } from 'viem';
-import ReciboArtifact from '@/lib/invoice/Recibo.json';
+import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { encodeInvoice } from '@/lib/invoice/invoiceCodec';
+import { saveInvoice } from '@/lib/invoice/invoiceStore';
 import { v4 as uuidv4 } from 'uuid';
 import Link from 'next/link';
 import { ArrowRight, FileText, Zap, CheckCircle2, Copy, ExternalLink } from 'lucide-react';
@@ -29,8 +29,6 @@ Payment terms: Net 30
 Please pay in USDC to the provided wallet address.`;
 
 const MONO = '"Fira Code","JetBrains Mono",monospace';
-
-const RECIBO_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}` || '0xe7f1725e7734ce288f8367e1bb143e90bb3f0512';
 
 function isValidAddress(addr: string): boolean {
   return /^0x[a-fA-F0-9]{40}$/.test(addr);
@@ -103,32 +101,39 @@ export default function InvoicePage() {
     ? BigInt(Math.round(parseFloat(amountUSD) * 1_000_000)).toString()
     : '0';
 
-  
-  const { writeContract, data: txHash, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash: txHash });
-
   const handleGenerate = useCallback(() => {
     if (!description || !amountUSD || !isValidAddress(freelancerWallet)) return;
 
-    // Convert string ID to bytes32 compatible
-    const rawId = uuidv4().replace(/-/g, '').slice(0, 32);
-    const invoiceId = pad(stringToHex(rawId), { size: 32 });
-    const amountBigInt = parseUnits(amountUSD, 6); // USDC has 6 decimals
-    const dueTimestamp = dueDate ? BigInt(new Date(dueDate).getTime() / 1000) : BigInt(0);
+    const id = uuidv4();
+    const payload = {
+      id,
+      to: freelancerWallet,
+      amount: amountUSDC6,
+      amountDisplay: `$${parseFloat(amountUSD).toFixed(2)}`,
+      desc: description.slice(0, 80),
+      client: clientName || 'Client',
+      due: dueDate || '',
+    };
 
-    writeContract({
-      address: RECIBO_ADDRESS,
-      abi: ReciboArtifact.abi,
-      functionName: 'createInvoice',
-      args: [invoiceId, clientName || 'Client', amountBigInt, description.slice(0, 80), dueTimestamp],
-    }, {
-      onSuccess: () => {
-        const url = `${window.location.origin}/invoice/pay?id=${rawId}`;
-        setGeneratedURL(url);
-      }
+    const encoded = encodeInvoice(payload);
+    const url = `${window.location.origin}/invoice/pay?d=${encoded}`;
+
+    saveInvoice({
+      id,
+      clientName: clientName || '',
+      clientEmail: clientEmail || '',
+      description,
+      amountUSD: parseFloat(amountUSD),
+      amountUSDC: amountUSDC6,
+      dueDate,
+      freelancerAddress: freelancerWallet,
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      paymentURL: url,
     });
-  }, [description, amountUSD, freelancerWallet, clientName, dueDate, writeContract]);
 
+    setGeneratedURL(url);
+  }, [description, amountUSD, freelancerWallet, amountUSDC6, clientName, clientEmail, dueDate]);
 
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(generatedURL);
@@ -321,7 +326,7 @@ export default function InvoicePage() {
           {/* Generate button */}
           <button
             onClick={handleGenerate}
-            disabled={!canGenerate || isPending || isConfirming}
+            disabled={!canGenerate}
             style={{
               width: '100%', height: 56, marginTop: 32,
               borderRadius: 999, fontWeight: 700, fontSize: 15,
@@ -332,7 +337,7 @@ export default function InvoicePage() {
               boxShadow: canGenerate ? '0 10px 30px rgba(59,91,250,0.35)' : 'none',
             } as React.CSSProperties}
           >
-            {isPending ? 'Confirming in Wallet...' : isConfirming ? 'Waiting for block...' : canGenerate ? 'Create On-Chain Invoice →' : 'Fill required fields'}
+            {canGenerate ? 'Generate Payment Link →' : 'Fill required fields'}
           </button>
 
           {/* Generated link */}

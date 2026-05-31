@@ -39,7 +39,7 @@ contract ReentrantToken {
     function transferFrom(address from, address to, uint256 amount) external returns (bool) {
         if (shouldReenter) {
             shouldReenter = false;
-            target.payInvoice(reenterInvoiceId, reenterFreelancer, reenterAmount);
+            target.payInvoice(reenterInvoiceId);
         }
 
         if (allowance[from][msg.sender] < amount || balanceOf[from] < amount) return false;
