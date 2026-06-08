@@ -59,7 +59,7 @@ const INFO_CARDS = [
 ]
 
 export default function TokenizationPage() {
-  // Wallet state now comes from the global wallet context (EVM / QIE Mainnet).
+  // Wallet state now comes from the global wallet context (EVM / Mantle Network).
   const { address } = useWalletForTool()
   const wallet = address ?? ''
   const [tokenAddress, setTokenAddress] = useState('')
@@ -169,7 +169,7 @@ export default function TokenizationPage() {
                 disabled={saving || !wallet}
               />
               <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', margin: '5px 0 0' }}>
-                The ERC-20 or native token contract on QIE Mainnet.
+                The ERC-20 or native token contract on Mantle Network.
               </p>
             </div>
 
@@ -240,7 +240,7 @@ export default function TokenizationPage() {
       {/* Wallet info */}
       {wallet && (
         <p style={{ fontSize: 12, fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)' }}>
-          {truncateAddress(wallet)} · QIE Mainnet
+          {truncateAddress(wallet)} · Mantle Network
         </p>
       )}
 
@@ -253,7 +253,7 @@ export default function TokenizationPage() {
         marginTop: 20,
       }}>
         <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', margin: 0, lineHeight: 1.7 }}>
-          🪙 QIEDEX is the native decentralised exchange of the QIE Mainnet ecosystem. Token profile data is stored server-side, linked to your DID, and shared only with verified heirs once legacy is activated.
+          🪙 QIEDEX is the native decentralised exchange of the Mantle Network ecosystem. Token profile data is stored server-side, linked to your DID, and shared only with verified heirs once legacy is activated.
         </p>
       </div>
 

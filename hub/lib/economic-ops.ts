@@ -113,19 +113,19 @@ export function simulateLiquidityFlow(poolName: string, destinationChain: string
 
   const updatedPools = economicState.pools.map(p => {
     if (p.poolName === poolName) {
-      // Simulate shift from Solana to QIE or vice-versa
+      // Simulate shift from Mantle to Mantle or vice-versa
       let sol = p.solanaDevnetBalance
       let qie = p.qieMainnetBalance
       let stellar = p.stellarTestnetBalance
       let arb = p.arbitrumSepoliaBalance
 
-      if (destinationChain === 'QIE Mainnet' && sol >= amount) {
+      if (destinationChain === 'Mantle Network' && sol >= amount) {
         sol -= amount
         qie += amount
-      } else if (destinationChain === 'Solana Devnet' && qie >= amount) {
+      } else if (destinationChain === 'Mantle Sepolia' && qie >= amount) {
         qie -= amount
         sol += amount
-      } else if (destinationChain === 'Stellar Testnet' && arb >= amount) {
+      } else if (destinationChain === 'Mantle Sepolia' && arb >= amount) {
         arb -= amount
         stellar += amount
       } else {

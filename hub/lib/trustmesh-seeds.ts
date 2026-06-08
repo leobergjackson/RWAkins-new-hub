@@ -1,5 +1,5 @@
 // Built by vsrupeshkumar
-// Real Solana Devnet job PDAs created 2026-05-23.
+// Real Mantle Sepolia job PDAs created 2026-05-23.
 // Owner wallet: ge6xBg6ScAVWyN1TK6WKk2DcPD46oemCjMcu6vXMWfX
 // Program:      66DXeSqBccWxWWw9S21vxe2Mvvqqkmw5KsK5jqA42quz
 // Seed key pattern: sha256("kubryx:trustmesh:job:<name>-v1")
@@ -7,12 +7,12 @@
 
 export const TRUSTMESH_PROGRAM_ID = "66DXeSqBccWxWWw9S21vxe2Mvvqqkmw5KsK5jqA42quz"
 export const TRUSTMESH_OWNER_WALLET = "ge6xBg6ScAVWyN1TK6WKk2DcPD46oemCjMcu6vXMWfX"
-export const TRUSTMESH_DEVNET_URL = "https://api.devnet.solana.com"
+export const TRUSTMESH_DEVNET_URL = "https://rpc.sepolia.mantle.xyz"
 
 export const DEVNET_JOB_PDAS = [
   {
     pda: "4wMGzQYHWVMLNjkGDPeTdveqLAzQXYfZNhQseWrfyQDq",
-    description: "Rebalance SOL/USDC portfolio to 60/40 target allocation",
+    description: "Rebalance MNT/USDC portfolio to 60/40 target allocation",
     template: "PORTFOLIO_REBALANCER",
     budgetSol: "0.05",
     ownerSolName: "alice.sol",
@@ -26,7 +26,7 @@ export const DEVNET_JOB_PDAS = [
   },
   {
     pda: "J9TmfXdbkEuS85p6A6KihSBUn2WEKsCabAPArjK63GbM",
-    description: "Monitor and compound USDC yield on Kamino Finance",
+    description: "Monitor and compound USDC yield on Lendle Finance",
     template: "DATA_FETCHER",
     budgetSol: "0.08",
     ownerSolName: "carol.sol",

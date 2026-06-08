@@ -1,10 +1,10 @@
 // Built by vsrupeshkumar
-// Public-key-only Stellar Horizon client — no secret key used anywhere.
+// Public-key-only Mantle Horizon client — no secret key used anywhere.
 // Add NEXT_PUBLIC_STELLAR_PUBLIC_KEY and NEXT_PUBLIC_STELLAR_HORIZON_URL
 // to Vercel environment variables for production.
 
 const HORIZON_URL =
-  process.env.NEXT_PUBLIC_STELLAR_HORIZON_URL || 'https://horizon-testnet.stellar.org'
+  process.env.NEXT_PUBLIC_STELLAR_HORIZON_URL || 'https://rpc.sepolia.mantle.xyz'
 
 export interface StellarAccount {
   balance: string
@@ -96,7 +96,7 @@ export async function fetchStellarPayments(
     amount: ((r.amount ?? r.starting_balance ?? '0') as string),
     assetType:
       r.asset_type === 'native'
-        ? 'XLM'
+        ? 'MNT'
         : ((r.asset_code ?? r.asset_type ?? 'Unknown') as string),
     from: (r.from ?? r.funder ?? r.source_account ?? '') as string,
     to: (r.to ?? r.account ?? publicKey) as string,

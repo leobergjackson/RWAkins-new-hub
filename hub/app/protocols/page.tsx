@@ -27,9 +27,9 @@ export default function ProtocolsPage() {
     {
       id: 'ncrd-staking',
       name: 'CreditBlocks Staking Stream',
-      chain: 'QIE Mainnet',
+      chain: 'Mantle Network',
       address: '0x8892...f812',
-      explorer: 'https://mainnet.qie.info/address/0x8892e210141f893d9382103f19102928812f812',
+      explorer: 'https://explorer.sepolia.mantle.xyz/address/0x8892e210141f893d9382103f19102928812f812',
       tvl: '$4.82M',
       utilization: '64.2%',
       health: 'Nominal',
@@ -38,10 +38,10 @@ export default function ProtocolsPage() {
     },
     {
       id: 'solana-agent-registry',
-      name: 'Solana Autonomous Agent Registry',
-      chain: 'Solana Devnet',
+      name: 'Mantle Autonomous Agent Registry',
+      chain: 'Mantle Sepolia',
       address: 'Ag3M...92Jk',
-      explorer: 'https://explorer.solana.com/address/Ag3M928310f81a8c9288301828381928310192Jk?cluster=devnet',
+      explorer: 'https://explorer.sepolia.mantle.xyz/address/Ag3M928310f81a8c9288301828381928310192Jk?cluster=devnet',
       tvl: '$1.45M',
       utilization: activeScenario === 'loan_risk_escalation' ? '92.4%' : '48.6%',
       health: activeScenario === 'loan_risk_escalation' ? 'Exposure Warning' : 'Nominal',
@@ -51,9 +51,9 @@ export default function ProtocolsPage() {
     {
       id: 'stellar-billsplit-vault',
       name: 'Bill Split Settlement Desk',
-      chain: 'Stellar Testnet',
+      chain: 'Mantle Sepolia',
       address: 'GBB3...O8R4',
-      explorer: 'https://stellar.expert/explorer/testnet/account/GBB32831828381029381028301823018GBB3O8R4',
+      explorer: 'https://explorer.sepolia.mantle.xyz/account/GBB32831828381029381028301823018GBB3O8R4',
       tvl: '$920K',
       utilization: activeScenario === 'chain_congestion' ? '88.6%' : '31.2%',
       health: activeScenario === 'chain_congestion' ? 'Mempool Backlog' : 'Nominal',
@@ -63,9 +63,9 @@ export default function ProtocolsPage() {
     {
       id: 'arbitrum-Protocol Borrow Engine-desk',
       name: 'Protocol Borrow Engine High-Yield Desk',
-      chain: 'Arbitrum One',
+      chain: 'Mantle Network',
       address: '0x99A3...B840',
-      explorer: 'https://arbiscan.io/address/0x99A32101238491028382910283012838192B840',
+      explorer: 'https://mantlescan.xyz/address/0x99A32101238491028382910283012838192B840',
       tvl: '$2.18M',
       utilization: activeScenario === 'degraded_rpc' ? '12.4%' : '78.2%',
       health: activeScenario === 'degraded_rpc' ? 'Degraded RPC' : 'Nominal',
@@ -134,10 +134,10 @@ export default function ProtocolsPage() {
       {/* Network Metrics Row */}
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12, marginBottom: 24 }}>
         {[
-          { key: 'qie', name: 'QIE Mainnet', badge: '1990', explorer: CHAIN_REGISTRY.qie.explorerUrl },
-          { key: 'solana', name: 'Solana Devnet', badge: 'SVM', explorer: CHAIN_REGISTRY.solana.explorerUrl },
-          { key: 'stellar', name: 'Stellar Testnet', badge: 'Soroban', explorer: CHAIN_REGISTRY.stellar.explorerUrl },
-          { key: 'arbitrum', name: 'Arbitrum One', badge: 'EVM L2', explorer: CHAIN_REGISTRY.arbitrum.explorerUrl }
+          { key: 'qie', name: 'Mantle Network', badge: '1990', explorer: CHAIN_REGISTRY.qie.explorerUrl },
+          { key: 'solana', name: 'Mantle Sepolia', badge: 'SVM', explorer: CHAIN_REGISTRY.solana.explorerUrl },
+          { key: 'stellar', name: 'Mantle Sepolia', badge: 'Mantle', explorer: CHAIN_REGISTRY.stellar.explorerUrl },
+          { key: 'arbitrum', name: 'Mantle Network', badge: 'EVM L2', explorer: CHAIN_REGISTRY.arbitrum.explorerUrl }
         ].map((chain) => {
           const stats = getRpcStatus(chain.key)
           const isDanger = parseFloat(stats.quality) < 85
@@ -206,7 +206,7 @@ export default function ProtocolsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', height: 420 }}>
           <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>⛓ Multi-Chain Coordination Topology</h3>
           <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-            Visualizes real-time autonomous routing pathways and epoch sync layers managed by Ruphex.
+            Visualizes real-time autonomous routing pathways and epoch sync layers managed by Kubryx.
           </p>
 
           <div style={{ flex: 1, position: 'relative', background: '#040404', borderRadius: 8, border: '1px solid rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -246,47 +246,47 @@ export default function ProtocolsPage() {
                 padding: 6
               }}
             >
-              <strong style={{ fontSize: 9, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ruphex</strong>
+              <strong style={{ fontSize: 9, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Kubryx</strong>
               <span style={{ fontSize: 8, color: '#F5C518', fontWeight: 800 }}>CORE v8.0</span>
             </div>
 
-            {/* Node 1: QIE (Top-Left) */}
+            {/* Node 1: Mantle (Top-Left) */}
             <div style={{ position: 'absolute', left: '12%', top: '15%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
               <div style={{ width: 44, height: 44, borderRadius: 8, background: '#0a0a0a', border: '1px solid rgba(245,197,24,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
                 👑
               </div>
-              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>QIE EVM</span>
+              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Mantle EVM</span>
               <span style={{ fontSize: 8, color: '#10B981' }}>● SYNCHRONIZED</span>
             </div>
 
-            {/* Node 2: Solana Devnet (Top-Right) */}
+            {/* Node 2: Mantle Sepolia (Top-Right) */}
             <div style={{ position: 'absolute', right: '12%', top: '15%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
               <div style={{ width: 44, height: 44, borderRadius: 8, background: '#0a0a0a', border: `1px solid ${activeScenario === 'degraded_rpc' ? '#EF4444' : 'rgba(168,85,247,0.4)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
                 👻
               </div>
-              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Solana SVM</span>
+              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Mantle SVM</span>
               <span style={{ fontSize: 8, color: activeScenario === 'degraded_rpc' ? '#EF4444' : '#10B981' }}>
                 {activeScenario === 'degraded_rpc' ? '● DEGRADED' : '● SYNCHRONIZED'}
               </span>
             </div>
 
-            {/* Node 3: Stellar Soroban (Bottom-Left) */}
+            {/* Node 3: Mantle (Bottom-Left) */}
             <div style={{ position: 'absolute', left: '12%', bottom: '15%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
               <div style={{ width: 44, height: 44, borderRadius: 8, background: '#0a0a0a', border: `1px solid ${activeScenario === 'chain_congestion' ? '#F5C518' : 'rgba(59,130,246,0.4)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
                 🚀
               </div>
-              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Stellar</span>
+              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Mantle</span>
               <span style={{ fontSize: 8, color: activeScenario === 'chain_congestion' ? '#F5C518' : '#10B981' }}>
                 {activeScenario === 'chain_congestion' ? '● MEMPOOL LAG' : '● SYNCHRONIZED'}
               </span>
             </div>
 
-            {/* Node 4: Arbitrum One (Bottom-Right) */}
+            {/* Node 4: Mantle Network (Bottom-Right) */}
             <div style={{ position: 'absolute', right: '12%', bottom: '15%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
               <div style={{ width: 44, height: 44, borderRadius: 8, background: '#0a0a0a', border: '1px solid rgba(236,72,153,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
                 🍭
               </div>
-              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Arbitrum L2</span>
+              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Mantle L2</span>
               <span style={{ fontSize: 8, color: '#10B981' }}>● SYNCHRONIZED</span>
             </div>
 
@@ -303,7 +303,7 @@ export default function ProtocolsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', height: 420 }}>
           <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>📋 Verified Multi-Chain Contract Registry</h3>
           <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-            List of certified corporate protocol smart contracts managed directly via Ruphex secure key stores.
+            List of certified corporate protocol smart contracts managed directly via Kubryx secure key stores.
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, overflowY: 'auto' }}>
@@ -366,9 +366,9 @@ export default function ProtocolsPage() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {[
-            { time: '14:38:12', chain: 'Solana Devnet', event: 'Autonomous Worker Signature Verified', hash: '5sJk...92La', link: 'https://explorer.solana.com/tx/5sJk28310f81829a?cluster=devnet' },
-            { time: '14:37:44', chain: 'QIE Mainnet', event: 'Bill Split Settlement Multi-Party Stream Opened', hash: '0x38...892e', link: 'https://mainnet.qie.info/tx/0x38283818291028a3819c9e8e2c01928' },
-            { time: '14:36:20', chain: 'Arbitrum One', event: 'Staking Exposure Allocation Balanced', hash: '0x81...012e', link: 'https://arbiscan.io/tx/0x812e9283181829c38182103f191029' }
+            { time: '14:38:12', chain: 'Mantle Sepolia', event: 'Autonomous Worker Signature Verified', hash: '5sJk...92La', link: 'https://explorer.sepolia.mantle.xyz/tx/5sJk28310f81829a?cluster=devnet' },
+            { time: '14:37:44', chain: 'Mantle Network', event: 'Bill Split Settlement Multi-Party Stream Opened', hash: '0x38...892e', link: 'https://explorer.sepolia.mantle.xyz/tx/0x38283818291028a3819c9e8e2c01928' },
+            { time: '14:36:20', chain: 'Mantle Network', event: 'Staking Exposure Allocation Balanced', hash: '0x81...012e', link: 'https://mantlescan.xyz/tx/0x812e9283181829c38182103f191029' }
           ].map((item, idx) => (
             <div 
               key={idx}

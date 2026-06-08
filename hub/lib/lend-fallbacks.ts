@@ -49,7 +49,7 @@ export const FALLBACK_AI_ACTIVITY = [
   { detail: 'Negotiated 4.2% APR (market: 6.8%) · Saved $284/yr', time: '2m ago' },
   { detail: 'Extended loan term by 30 days · 0x9c...44ab',         time: '8m ago' },
   { detail: 'Unlocked Tier 2 rate (score: 847)',                   time: '15m ago' },
-  { detail: 'Collateral rebalance: -0.4 ETH, +180 SOL',            time: '1h ago' },
+  { detail: 'Collateral rebalance: -0.4 ETH, +180 MNT',            time: '1h ago' },
   { detail: 'ZK proof submitted for credit upgrade',               time: '2h ago' },
 ]
 

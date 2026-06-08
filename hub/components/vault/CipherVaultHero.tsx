@@ -31,7 +31,7 @@ export default function CipherVaultHero({
       padding: '24px 28px',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: MUTED2, fontFamily: MONO, marginBottom: 14 }}>
-        <span>Ruphex</span>
+        <span>Kubryx</span>
         <span>›</span>
         <span style={{ color: ACCENT }}>Private vault</span>
       </div>
@@ -56,7 +56,7 @@ export default function CipherVaultHero({
           </div>
 
           <p style={{ fontSize: 13, color: MUTED, maxWidth: 640, marginTop: 10, marginBottom: 14, lineHeight: 1.6 }}>
-            Deposit collateral across BTC, ETH, and SOL. Register MPC-secured dWallets.
+            Deposit collateral across BTC, ETH, and MNT. Register MPC-secured dWallets.
             Execute private FHE-encrypted trades.
           </p>
 

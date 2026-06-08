@@ -119,7 +119,7 @@ function HeirDecryptModal({ file, onClose }: { file: VaultFile; onClose: () => v
 
 // ─── Page ──────────────────────────────────────────────────────
 export default function HeirPage() {
-  // Wallet state now comes from the global wallet context (EVM / QIE Mainnet).
+  // Wallet state now comes from the global wallet context (EVM / Mantle Network).
   const { address } = useWalletForTool()
   const wallet = address ?? ''
   const [ownerDid, setOwnerDid] = useState('')
@@ -163,7 +163,7 @@ export default function HeirPage() {
     try {
       const res = await registerHeir(registerAddr.trim())
       setRegisterResult(res.txHash)
-      toast.success('Heir registered on QIE Mainnet')
+      toast.success('Heir registered on Mantle Network')
     } catch (err: any) {
       toast.error(err?.message || 'Registration failed')
     } finally {
@@ -198,7 +198,7 @@ export default function HeirPage() {
 
       {wallet && (
         <p style={{ fontSize: 12, fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)', marginBottom: 20 }}>
-          Heir wallet: {truncateAddress(wallet)} · QIE Mainnet
+          Heir wallet: {truncateAddress(wallet)} · Mantle Network
         </p>
       )}
 

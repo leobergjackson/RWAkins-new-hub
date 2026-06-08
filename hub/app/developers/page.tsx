@@ -32,9 +32,9 @@ const ENDPOINTS: DevEndpoint[] = [
     method: 'GET',
     path: '/api/score/{walletAddress}',
     tool: 'CreditBlocks',
-    description: 'Calculates the dynamic QIE multi-chain Creditblocks rating of a wallet.',
+    description: 'Calculates the dynamic Mantle multi-chain Creditblocks rating of a wallet.',
     params: [
-      { name: 'walletAddress', type: 'string', required: true, description: 'EVM public wallet address on QIE Mainnet' }
+      { name: 'walletAddress', type: 'string', required: true, description: 'EVM public wallet address on Mantle Network' }
     ],
     requestBody: {},
     responseBody: {
@@ -53,9 +53,9 @@ const ENDPOINTS: DevEndpoint[] = [
     method: 'POST',
     path: '/api/agents/deploy',
     tool: 'Agent Coordinator',
-    description: 'Verifies Phantom signatures and deploys stateful, autonomous worker agents on Solana.',
+    description: 'Verifies Phantom signatures and deploys stateful, autonomous worker agents on Mantle.',
     params: [
-      { name: 'wallet', type: 'string', required: true, description: 'Solana wallet address' },
+      { name: 'wallet', type: 'string', required: true, description: 'Mantle wallet address' },
       { name: 'agentType', type: 'string', required: true, description: 'Agent class, e.g. Yield Operations HubGuard, RiskEscalator' },
       { name: 'parameters', type: 'object', required: true, description: 'Runtime frequency and trigger configurations' }
     ],
@@ -63,7 +63,7 @@ const ENDPOINTS: DevEndpoint[] = [
       wallet: '8xJ25Kq8p5wLz9vK2...',
       agentType: 'Yield Operations HubGuard',
       parameters: {
-        alertThreshold: '150 SOL',
+        alertThreshold: '150 MNT',
         frequencySeconds: 60
       }
     },
@@ -72,7 +72,7 @@ const ENDPOINTS: DevEndpoint[] = [
       agentId: 'sol-agent-88402',
       status: 'deployed',
       signatureVerified: true,
-      explorerUrl: 'https://explorer.solana.com/address/sol-agent-88402?cluster=devnet',
+      explorerUrl: 'https://explorer.sepolia.mantle.xyz/address/sol-agent-88402?cluster=devnet',
       txHash: '5xRp9KqL2zWpM1nB9wLp3kMp...'
     }
   },
@@ -88,8 +88,8 @@ const ENDPOINTS: DevEndpoint[] = [
       { name: 'amount', type: 'number', required: true, description: 'Asset quantum to trade' }
     ],
     requestBody: {
-      fromChain: 'QIE Mainnet',
-      toChain: 'Solana Devnet',
+      fromChain: 'Mantle Network',
+      toChain: 'Mantle Sepolia',
       asset: 'USDC',
       amount: 1500,
       recipient: '8xJ25Kq8p5wLz9vK2...'
@@ -109,20 +109,20 @@ const ENDPOINTS: DevEndpoint[] = [
     tool: 'Yield Operations Hub',
     description: 'Deploys a multi-sig smart flow that streams real-time payroll balances to employee wallets.',
     params: [
-      { name: 'recipient', type: 'string', required: true, description: 'Solana payout address' },
-      { name: 'ratePerSec', type: 'number', required: true, description: 'SOL streams rate per second' }
+      { name: 'recipient', type: 'string', required: true, description: 'Mantle payout address' },
+      { name: 'ratePerSec', type: 'number', required: true, description: 'MNT streams rate per second' }
     ],
     requestBody: {
       recipient: 'Ge8pKq7zWp8xLz9vK...',
       ratePerSec: 0.00045,
-      token: 'SOL',
+      token: 'MNT',
       title: 'Senior Protocol Contributor Payroll Stream'
     },
     responseBody: {
       success: true,
       streamId: 'stream-8849',
       active: true,
-      explorerUrl: 'https://explorer.solana.com/tx/3hKq7zWp...devnet',
+      explorerUrl: 'https://explorer.sepolia.mantle.xyz/tx/3hKq7zWp...devnet',
       streamParameters: {
         recipient: 'Ge8pKq7zWp8xLz9vK...',
         ratePerSec: 0.00045
@@ -139,7 +139,7 @@ const WEBHOOK_SCHEMAS: WebhookSchema[] = [
       event: 'telemetry.rpc_anomaly',
       timestamp: '2026-05-17T19:34:17Z',
       data: {
-        source: 'Solana Devnet',
+        source: 'Mantle Sepolia',
         measuredLatencyMs: 980,
         status: 'degraded',
         failoverActivated: true
@@ -342,7 +342,7 @@ export default function DevelopersPage() {
             <span style={{ fontSize: 13, color: '#aaa' }}>Developer Portal</span>
           </div>
           <h1 style={{ margin: '6px 0 0', fontSize: 28, fontWeight: 800, letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span>🛠️</span> Ruphex Developer Platform
+            <span>🛠️</span> Kubryx Developer Platform
           </h1>
         </div>
       </header>
@@ -767,7 +767,7 @@ export default function DevelopersPage() {
               <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: 12 }}>
                 <h2 style={{ fontSize: 18, margin: 0, color: '#fff' }}>Unified Event Schema Browser</h2>
                 <p style={{ margin: '6px 0 0', fontSize: 13, color: '#ccc' }}>
-                  Ruphex orchestrates cross-tool states using standard structured schemas. Review specifications.
+                  Kubryx orchestrates cross-tool states using standard structured schemas. Review specifications.
                 </p>
               </div>
 
@@ -781,7 +781,7 @@ export default function DevelopersPage() {
                   {
                     title: 'Cross-Tool Intelligence OS State Action',
                     desc: 'Fired chronologically when organizational operations trigger automation rules across tools.',
-                    schema: `{\n  "id": "os-evt-171597...",\n  "tool": "Stealth Execution Suite",\n  "action": "Triggered CFO bot allocation review",\n  "wallet": "0x08DA91C8...",\n  "chain": "QIE Mainnet",\n  "timestamp": "2026-05-17T19:34:17.000Z",\n  "explorerUrl": "https://mainnet.qie.info/address/..."\n}`
+                    schema: `{\n  "id": "os-evt-171597...",\n  "tool": "Stealth Execution Suite",\n  "action": "Triggered CFO bot allocation review",\n  "wallet": "0x08DA91C8...",\n  "chain": "Mantle Network",\n  "timestamp": "2026-05-17T19:34:17.000Z",\n  "explorerUrl": "https://explorer.sepolia.mantle.xyz/address/..."\n}`
                   }
                 ].map((sch) => (
                   <div key={sch.title} style={{ padding: 12, background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 8 }}>

@@ -1,5 +1,5 @@
 // Built by vsrupeshkumar
-// Raw JSON-RPC client for Solana Devnet — no @solana/web3.js dependency.
+// Raw JSON-RPC client for Mantle Sepolia — no @solana/web3.js dependency.
 // Uses fetch + AbortController only.
 
 import { DEVNET_JOB_PDAS, TRUSTMESH_DEVNET_URL } from '../trustmesh-seeds'
@@ -93,7 +93,7 @@ function decodeJobAccount(b64: string): Omit<OnChainJobAccount, 'pda' | 'descrip
   return { owner, templateId, budgetLamports, budgetSol, status, agentCount, createdAt, isLive: true }
 }
 
-// Minimal base58 encoder for Solana pubkey display
+// Minimal base58 encoder for Mantle pubkey display
 const BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 function encodeBase58(bytes: Uint8Array): string {
   let n = BigInt(0)

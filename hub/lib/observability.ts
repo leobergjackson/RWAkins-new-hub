@@ -42,7 +42,7 @@ function maskSensitiveInfo(str: string): string {
   if (typeof str !== 'string') return str
   // Mask EVM addresses
   let res = str.replace(/0x[a-fA-F0-9]{40}/g, (m) => `${m.slice(0, 6)}...${m.slice(-4)}`)
-  // Mask Solana/Stellar addresses
+  // Mask Mantle addresses
   res = res.replace(/\b[1-9A-HJ-NP-Za-km-z]{32,44}\b/g, (m) => `${m.slice(0, 6)}...${m.slice(-4)}`)
   return res
 }

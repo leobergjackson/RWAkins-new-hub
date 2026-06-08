@@ -18,10 +18,10 @@ const STRATEGIES = [
     apy: '8.4%',
     risk: 'Low',
     riskColor: '#22C55E',
-    desc: 'Stable yield via Kamino lending. Capital preservation priority.',
+    desc: 'Stable yield via Lendle lending. Capital preservation priority.',
     allocation: [
-      { protocol: 'Kamino Lending', pct: 70, color: '#22C55E' },
-      { protocol: 'Jito Staking', pct: 20, color: '#60A5FA' },
+      { protocol: 'Lendle Lending', pct: 70, color: '#22C55E' },
+      { protocol: 'Init Capital Staking', pct: 20, color: '#60A5FA' },
       { protocol: 'Reserve', pct: 10, color: '#6B7280' },
     ],
   },
@@ -31,11 +31,11 @@ const STRATEGIES = [
     apy: '14.2%',
     risk: 'Medium',
     riskColor: '#F59E0B',
-    desc: 'Diversified across Kamino, Raydium, and Jito for optimal risk-adjusted returns.',
+    desc: 'Diversified across Lendle, Merchant Moe, and Init Capital for optimal risk-adjusted returns.',
     allocation: [
-      { protocol: 'Kamino', pct: 35, color: '#22C55E' },
-      { protocol: 'Raydium', pct: 28, color: '#60A5FA' },
-      { protocol: 'Jito', pct: 20, color: '#A855F7' },
+      { protocol: 'Lendle', pct: 35, color: '#22C55E' },
+      { protocol: 'Merchant Moe', pct: 28, color: '#60A5FA' },
+      { protocol: 'Init Capital', pct: 20, color: '#A855F7' },
       { protocol: 'Reserve', pct: 17, color: '#6B7280' },
     ],
   },
@@ -47,9 +47,9 @@ const STRATEGIES = [
     riskColor: '#EF4444',
     desc: 'High-yield LP farming with auto-compounding. Higher impermanent loss risk.',
     allocation: [
-      { protocol: 'Raydium LP', pct: 50, color: '#60A5FA' },
-      { protocol: 'Orca LP', pct: 30, color: '#A855F7' },
-      { protocol: 'Kamino', pct: 20, color: '#22C55E' },
+      { protocol: 'Merchant Moe LP', pct: 50, color: '#60A5FA' },
+      { protocol: 'Agni Finance LP', pct: 30, color: '#A855F7' },
+      { protocol: 'Lendle', pct: 20, color: '#22C55E' },
     ],
   },
 ]
@@ -80,7 +80,7 @@ export default function YieldPage() {
       <div style={{ marginBottom: 24 }}>
         <div style={{ fontSize: 11, color: TEAL, fontFamily: MONO, letterSpacing: '0.1em', marginBottom: 4 }}>YIELD OPERATIONS HUB / YIELD OPTIMIZER</div>
         <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700 }}>Yield Optimizer</h1>
-        <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Autonomous DeFi yield optimization across Solana protocols</p>
+        <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Autonomous DeFi yield optimization across Mantle protocols</p>
       </div>
 
       {/* KPIs */}

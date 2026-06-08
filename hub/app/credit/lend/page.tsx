@@ -127,7 +127,7 @@ function MiniGauge({ score }: { score: number }) {
 }
 
 export default function LendPage() {
-  // Wallet state now comes from the global wallet context (EVM / QIE Mainnet).
+  // Wallet state now comes from the global wallet context (EVM / Mantle Network).
   const { address } = useWalletForTool()
   const { disconnectEVM } = useWallet()
   const wallet = address ?? ''

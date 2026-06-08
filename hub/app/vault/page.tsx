@@ -36,7 +36,7 @@ function VaultInner() {
   const params = useSearchParams()
   const initial = (params.get('tab') as VaultTabId) || 'dashboard'
   const [tab, setTab] = useState<VaultTabId>(VALID.includes(initial) ? initial : 'dashboard')
-  // Wallet state now comes from the global wallet context (EVM / Arbitrum).
+  // Wallet state now comes from the global wallet context (EVM / Mantle).
   const { address } = useWalletForTool()
   const wallet = address ?? ''
   const platform = useKubrykPlatform()
@@ -272,7 +272,7 @@ function VaultInner() {
 
       <header className="nav-bar">
         <div className="nav-logo">
-          Ruphex <span className="sparkle-icon">◈</span> Private vault
+          Kubryx <span className="sparkle-icon">◈</span> Private vault
         </div>
         <div className="nav-links">
           <span className={healthStatus === 'live' ? 'badge-live' : 'badge-demo'}>
@@ -281,14 +281,14 @@ function VaultInner() {
           </span>
           {vaultState && (
             <span className="badge badge-live" style={{ background: '#D1FAE5', color: '#059669', border: '1px solid #A7F3D0' }}>
-              ⬤ On-Chain · QIE Mainnet
+              ⬤ On-Chain · Mantle Network
             </span>
           )}
           <span className="badge badge-private">FHE Private</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           <PriceBadge coinId="ethereum" label="ETH" />
-          <PriceBadge coinId="arbitrum" label="ARB" />
+          <PriceBadge coinId="mantle" label="MNT" />
           <ConnectButton type="evm" size="lg" />
         </div>
       </header>
@@ -325,7 +325,7 @@ function VaultInner() {
           Cross-Chain Privacy Vault
         </h1>
         <p className="page-subtitle">
-          Deposit collateral across BTC, ETH, and SOL. Register MPC-secured dWallets, and execute private FHE-encrypted trades without revealing your positions.
+          Deposit collateral across BTC, ETH, and MNT. Register MPC-secured dWallets, and execute private FHE-encrypted trades without revealing your positions.
         </p>
         
         <div className="hero-buttons">
@@ -365,7 +365,7 @@ function VaultInner() {
         )}
         {(vaultState || platform.vaultActive) && (
           <div style={{ fontSize: 12, padding: '6px 16px', borderRadius: 999, background: 'rgba(168,85,247,0.08)', border: '1px solid rgba(168,85,247,0.25)', color: '#7C3AED', fontWeight: 600, marginBottom: 12 }}>
-            🔐 Active vault → +85 pts to your Ruphex Credit Score
+            🔐 Active vault → +85 pts to your Kubryx Credit Score
           </div>
         )}
         <div style={{ marginBottom: 20 }}>
@@ -398,10 +398,10 @@ function VaultInner() {
       </div>
       <FeatureOverviewPanel 
         title="Cross-Chain Privacy Vault"
-        whatItIs="A privacy-preserving custody and trading terminal on Arbitrum. Users deposit collateral (BTC, ETH, SOL) into smart contracts, register MPC (Multi-Party Computation) secured dWallets, and execute private trades using FHE (Fully Homomorphic Encryption)."
+        whatItIs="A privacy-preserving custody and trading terminal on Mantle. Users deposit collateral (BTC, ETH, mETH) into smart contracts, register MPC (Multi-Party Computation) secured dWallets, and execute private trades using FHE (Fully Homomorphic Encryption)."
         whyUseIt="Corporate operators need to move assets and hedge positions without exposing their strategies to front-running bots, MEV (Maximal Extractable Value) searchers, or public competitor analysis. The Privacy Vault allows them to interact with DeFi with complete cryptographic confidentiality."
         whyEfficient="<ul><li><b>Client-Side PBKDF2</b>: Secures access keys before anchoring references, removing the need for a central database.</li><li><b>Inverted Dark UI Overlay</b>: The vault component is wrapped in an inverted contrast filter to signal a high-security sandboxed state.</li></ul>"
-        whyBest="Most privacy solutions (like Tornado Cash) are simple pools with high regulatory friction. The Ruphex Privacy Vault is a <b>multi-purpose execution workspace</b> combining collateral locking, secure MPC dWallets, and homomorphic trading in a unified flow."
+        whyBest="Most privacy solutions (like Tornado Cash) are simple pools with high regulatory friction. The Kubryx Privacy Vault is a <b>multi-purpose execution workspace</b> combining collateral locking, secure MPC dWallets, and homomorphic trading in a unified flow."
         themeColor="#06B6D4"
       />
     </div>

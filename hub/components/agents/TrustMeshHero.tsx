@@ -33,7 +33,7 @@ export default function TrustMeshHero({
         display: 'flex', alignItems: 'center', gap: 6,
         fontSize: 11, color: MUTED2, fontFamily: MONO, marginBottom: 14,
       }}>
-        <span>Ruphex</span>
+        <span>Kubryx</span>
         <span>›</span>
         <span style={{ color: ACCENT }}>Agent Coordinator</span>
       </div>
@@ -53,14 +53,14 @@ export default function TrustMeshHero({
                 Agent Coordinator
               </div>
               <div style={{ fontSize: 12, color: MUTED2, marginTop: 4 }}>
-                AI Agent Coordination · Solana Devnet
+                AI Agent Coordination · Mantle Sepolia
               </div>
             </div>
           </div>
 
           {/* Description */}
           <p style={{ fontSize: 13, color: MUTED, maxWidth: 640, marginTop: 10, marginBottom: 14, lineHeight: 1.6 }}>
-            Every agent. Every decision. On chain. Spawn signed Solana agents, chain delegation through a
+            Every agent. Every decision. On chain. Spawn signed Mantle agents, chain delegation through a
             verifiable mesh, and audit every message on devnet.
           </p>
 

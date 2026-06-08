@@ -20,11 +20,11 @@ export default function StoryPage() {
   const slides: NarrativeSlide[] = [
     {
       id: 'works',
-      title: 'How Ruphex Works',
+      title: 'How Kubryx Works',
       subtitle: 'A single operating system coordinating decentralized state transitions.',
       paragraphs: [
         'Corporate finance is severely bottlenecked by multi-chain friction. Individual networks are isolated silos with disparate wallet abstractions, RPC latency profiles, and non-standard contract parameters.',
-        'Ruphex resolves this by treating blockchain environments as integrated operational channels of a single unified OS. We absorb active wallet contexts reactively, allowing distinct tools to share synchronized parameters in client memory.',
+        'Kubryx resolves this by treating blockchain environments as integrated operational channels of a single unified OS. We absorb active wallet contexts reactively, allowing distinct tools to share synchronized parameters in client memory.',
         'This allows Yield Operations Hub desks, autonomous staking models, and secure vaults to collaborate seamlessly without manual bridging, complex network switches, or custom orchestration code.'
       ],
       metrics: [
@@ -38,7 +38,7 @@ export default function StoryPage() {
       subtitle: 'Where natural language orchestration meets mathematical certainty.',
       paragraphs: [
         'Conventional automation rules are rigid, fragile, and fail to adapt during volatile market conditions. Standard AI agents, conversely, lack cryptographic safety guarantees.',
-        'Ruphex blends these paradigms into a high-security coordination layer. Advanced LLM pipelines analyze complex liquidity states and negotiate rates, but every transaction must pass detached Freighter XDR or Phantom Ed25519 signature checks before execution.',
+        'Kubryx blends these paradigms into a high-security coordination layer. Advanced LLM pipelines analyze complex liquidity states and negotiate rates, but every transaction must pass detached Freighter XDR or Phantom Ed25519 signature checks before execution.',
         'This dual-engine model provides corporate operators with intuitive narrative control while guaranteeing absolute cryptographic vault isolation against external exploits or AI hallucinations.'
       ],
       metrics: [
@@ -51,7 +51,7 @@ export default function StoryPage() {
       title: 'Autonomous Infrastructure',
       subtitle: 'Self-healing SLA nodes and dynamic telemetry protection.',
       paragraphs: [
-        'Web3 regional nodes are prone to frequent packet dropouts and memory congestion. Ruphex builds systemic resilience directly into our core telemetry layer.',
+        'Web3 regional nodes are prone to frequent packet dropouts and memory congestion. Kubryx builds systemic resilience directly into our core telemetry layer.',
         'Our custom diagnostics suite monitors RPC response speeds in milliseconds. If a regional node suffers a cold restart or latency spike, a 6-second abort threshold intercepts the query and auto-routes traffic through cache failovers.',
         'This maintains continuous corporate uptime and guarantees a reliable, presentation-safe showcase under simulated latency or node outages.'
       ],
@@ -65,12 +65,12 @@ export default function StoryPage() {
       title: 'Cross-Chain Operational Intelligence',
       subtitle: 'Correlating multi-chain event buses to orchestrate liquid flows.',
       paragraphs: [
-        'Staking and lending yields fluctuate continuously across EVM L2 and Soroban environments. Retrospective periodic sweeps lock up critical capital.',
-        'Ruphex coordinates an autonomous cross-chain event bus that listens to gas limits and yields. When a staking APY spikes on QIE, the engine dispatches optimized rebalance proposals to corporate stakeholders.',
+        'Staking and lending yields fluctuate continuously across EVM L2 and Mantle environments. Retrospective periodic sweeps lock up critical capital.',
+        'Kubryx coordinates an autonomous cross-chain event bus that listens to gas limits and yields. When a staking APY spikes on Mantle, the engine dispatches optimized rebalance proposals to corporate stakeholders.',
         'These recommendations are accompanied by detailed event causality chains and confidence estimates, allowing teams to execute complex asset sweeps instantly.'
       ],
       metrics: [
-        { label: 'Supported Chains', value: 'QIE, Solana, Stellar, Arbitrum' },
+        { label: 'Supported Chains', value: 'Mantle Network, Mantle Sepolia' },
         { label: 'Cross-Chain Bus Uptime', value: '100% Core' }
       ]
     },
@@ -79,9 +79,9 @@ export default function StoryPage() {
       title: 'Future of Organizational Finance',
       subtitle: 'Next-generation digital twins and continuous yield streaming.',
       paragraphs: [
-        'Modern Yield Operations Hub assets demand continuous operational execution. Ruphex envisions a future where multi-party payroll streams, debt optimization pools, and AI nodes operate autonomously.',
-        'To stress-test these scenarios safely, Ruphex integrates an isolated Digital Twin framework. Executives can simulate heavy congestions, key compromise compromises, and RPC cascades to verify automated AI safeties in sandboxed sandboxes.',
-        'By combining physical execution with synthetic twin simulations, Ruphex empowers enterprises and DAOs with unprecedented control over digital assets and liquid flows.'
+        'Modern Yield Operations Hub assets demand continuous operational execution. Kubryx envisions a future where multi-party payroll streams, debt optimization pools, and AI nodes operate autonomously.',
+        'To stress-test these scenarios safely, Kubryx integrates an isolated Digital Twin framework. Executives can simulate heavy congestions, key compromise compromises, and RPC cascades to verify automated AI safeties in sandboxed sandboxes.',
+        'By combining physical execution with synthetic twin simulations, Kubryx empowers enterprises and DAOs with unprecedented control over digital assets and liquid flows.'
       ],
       metrics: [
         { label: 'Sandbox Simulation profiles', value: '12 Scenarios' },
@@ -94,7 +94,7 @@ export default function StoryPage() {
       subtitle: 'A decentralized, independent network governing autonomous digital resources.',
       paragraphs: [
         'Traditional infrastructure relies on centralized third-party hosting, vulnerable to administrative shifts, domain blockages, and single-point routing failures.',
-        'Ruphex introduces Operational Sovereignty by establishing a decentralized, self-governing consensus mesh. Nodes continuously verify quorum signatures, validate execution parameters, and maintain an independent operational state.',
+        'Kubryx introduces Operational Sovereignty by establishing a decentralized, self-governing consensus mesh. Nodes continuously verify quorum signatures, validate execution parameters, and maintain an independent operational state.',
         'This ensures that key corporate assets, multi-sig streams, and yield protocols remain fully resilient and sovereign against external network partitionings or centralized outages.'
       ],
       metrics: [
@@ -122,7 +122,7 @@ export default function StoryPage() {
       subtitle: 'Simulating decentralized liquidity equilibrium at protocol scale.',
       paragraphs: [
         'As protocol-scale finance scales, multi-chain liquidity must migrate dynamically to counter yield changes, gas spikes, and network congestions.',
-        'Ruphex balances these flows through our Autonomous Economic Coordination engine. The engine models dynamic pool flows and calculates coordinate rewards to incentivize healthy liquidity distributions.',
+        'Kubryx balances these flows through our Autonomous Economic Coordination engine. The engine models dynamic pool flows and calculates coordinate rewards to incentivize healthy liquidity distributions.',
         'By matching machine-speed yield balancing with mathematical equilibrium indexes, we construct a sovereign operational layer capable of serving the next generation of global DAOs and protocols.'
       ],
       metrics: [
@@ -136,7 +136,7 @@ export default function StoryPage() {
       subtitle: 'Moving past isolated cloud boxes towards synchronized global ledgers.',
       paragraphs: [
         'Static hosting model setups are vulnerable to network fragmentation, DNS blocking, and localized routing outages.',
-        'Ruphex heralds a new operational standard by establishing an independent, self-governing consensus mesh. Nodes continuously verify transaction quorums, calibrate latency targets, and maintain localized state databases.',
+        'Kubryx heralds a new operational standard by establishing an independent, self-governing consensus mesh. Nodes continuously verify transaction quorums, calibrate latency targets, and maintain localized state databases.',
         'This guarantees absolute permanence and multi-cloud resilience, allowing organizations to run digital twin payroll systems with complete operational isolation.'
       ],
       metrics: [
@@ -164,7 +164,7 @@ export default function StoryPage() {
       subtitle: 'A decentralized, independent network governing autonomous digital resources.',
       paragraphs: [
         'Conventional SaaS dashboards are passive observers, capturing retrospective data without the power to execute self-correcting transactions.',
-        'Ruphex balances resources proactively through the Autonomous Economic Coordination engine. The engine models liquidity pools dynamically and adjust reward levels to correct multi-chain yield imbalances.',
+        'Kubryx balances resources proactively through the Autonomous Economic Coordination engine. The engine models liquidity pools dynamically and adjust reward levels to correct multi-chain yield imbalances.',
         'By matching machine-speed adjustments with mathematical equilibrium scores, we present a resilient operational layer capable of serving global DAOs and protocols.'
       ],
       metrics: [
@@ -177,8 +177,8 @@ export default function StoryPage() {
       title: 'The Sovereign Coordination Layer',
       subtitle: 'Binding isolated blockchain environments into a unified state registry.',
       paragraphs: [
-        'As organizations scale across EVM, Solana, and Soroban Stellar, infrastructure data becomes highly fragmented.',
-        'Ruphex solves this by implementing our stateful Global Operations Engine, which synchronizes telemetry updates, governance votes, and transaction sweeps into a single, authoritative ledger.',
+        'As organizations scale across Mantle Network and Mantle Sepolia, infrastructure data becomes highly fragmented.',
+        'Kubryx solves this by implementing our stateful Global Operations Engine, which synchronizes telemetry updates, governance votes, and transaction sweeps into a single, authoritative ledger.',
         'This creates a resilient coordination network that allows protocols and DAOs to coordinate assets with complete operational permanence.'
       ],
       metrics: [
@@ -206,7 +206,7 @@ export default function StoryPage() {
       subtitle: 'Delegating high-throughput operations within rigorous policy constraints.',
       paragraphs: [
         'Autonomous agents excel at fast transaction execution but need safety guardrails to protect capital.',
-        'Ruphex embeds agents within our deterministic Infrastructure Policy Engine, which automatically enforces limits, checks consensus drift, and logs decision rationale in zero-knowledge decision chains.',
+        'Kubryx embeds agents within our deterministic Infrastructure Policy Engine, which automatically enforces limits, checks consensus drift, and logs decision rationale in zero-knowledge decision chains.',
         'This establishes a secure sandbox where machine intelligence performs sweeps while preserving absolute operator override control.'
       ],
       metrics: [
@@ -234,8 +234,8 @@ export default function StoryPage() {
       subtitle: 'Powering the next era of decentralized sovereign organizational operations.',
       paragraphs: [
         'We are moving past passive web dashboards towards autonomous, permanently synchronized operational networks.',
-        'Ruphex represents the pinnacle of this shift, providing enterprises, DAOs, and developers with a complete, single-product operating system.',
-        'With state-of-the-art aesthetics and absolute mathematical reliability, Ruphex is fully prepared to orchestrate the next chapter of digital finance.'
+        'Kubryx represents the pinnacle of this shift, providing enterprises, DAOs, and developers with a complete, single-product operating system.',
+        'With state-of-the-art aesthetics and absolute mathematical reliability, Kubryx is fully prepared to orchestrate the next chapter of digital finance.'
       ],
       metrics: [
         { label: 'Scale Target', value: 'Enterprise Permanent' },
@@ -262,7 +262,7 @@ export default function StoryPage() {
       subtitle: 'Unifying multi-region quorums under permanent event bus protocols.',
       paragraphs: [
         'Decentralized quorums are highly vulnerable during regional latency spikes or consensus partition attacks.',
-        'Ruphex resolves this by coordinating the Global Event Bus statefully, triggering deterministic, multi-step mitigation sequences across secondary validator zones.',
+        'Kubryx resolves this by coordinating the Global Event Bus statefully, triggering deterministic, multi-step mitigation sequences across secondary validator zones.',
         'This guarantees that transaction sweeps and payroll distributions continue executing with absolute mathematical safety.'
       ],
       metrics: [
@@ -304,7 +304,7 @@ export default function StoryPage() {
       subtitle: 'Balancing incentive curves statefully in response to live operational anomalies.',
       paragraphs: [
         'Traditional reward systems fail to adjust yield buffers dynamically when network congestion rises.',
-        'Ruphex bridges this gap by coordinating incentive sweeps in direct response to the global consensus health and regional volatility.',
+        'Kubryx bridges this gap by coordinating incentive sweeps in direct response to the global consensus health and regional volatility.',
         'The resulting self-balancing ecosystem represents the pinnacle of operational intelligence for future global protocols.'
       ],
       metrics: [
@@ -318,7 +318,7 @@ export default function StoryPage() {
       subtitle: 'Transforming sovereign nodes into a civilization-scale multi-agent operational network.',
       paragraphs: [
         'The conventional view of blockchain operations limits itself to simple REST queries, retrospective accounting, and singular wallets. As global operations scale, systems demand an infrastructure capable of coordination at the speed of thought.',
-        'Ruphex moves past these constraints by orchestrating a civilization-scale network where autonomous institutional entities coordinate, negotiate, and align statefully.',
+        'Kubryx moves past these constraints by orchestrating a civilization-scale network where autonomous institutional entities coordinate, negotiate, and align statefully.',
         'Every participant is bound by rigorous, decentralized consensus rules, creating a permanent layer of protocol trust and sovereign operational stability.'
       ],
       metrics: [
@@ -331,7 +331,7 @@ export default function StoryPage() {
       title: 'Autonomous Institutional Agents',
       subtitle: 'Decentralizing operational logic across specialized, self-governing agents.',
       paragraphs: [
-        'Monolithic operational controls are single points of failure. In Ruphex, coordination is delegated to six autonomous institutional agents.',
+        'Monolithic operational controls are single points of failure. In Kubryx, coordination is delegated to six autonomous institutional agents.',
         'The Yield Operations Hub Sovereign governs asset flows, the Governance Chancellor propagates policies, the Infrastructure Sentinel protects regions, and the Ecosystem Diplomat harmonizes protocols.',
         'Together with the Cognition Oracle and Recovery Director, they coordinate actions in real-time, matching high-throughput execution with complete logical integrity.'
       ],
@@ -345,7 +345,7 @@ export default function StoryPage() {
       title: 'Protocol Diplomacy Systems',
       subtitle: 'Negotiating asset allocations, consensus weightings, and regional quorums statefully.',
       paragraphs: [
-        'When network friction occurs, standard protocols fail back to rigid outages or human manual overrides. Ruphex introduces Protocol Diplomacy.',
+        'When network friction occurs, standard protocols fail back to rigid outages or human manual overrides. Kubryx introduces Protocol Diplomacy.',
         'Agents statefully propose, evaluate, and finalize negotiations on yield sweeps, RPC balancing, and security hardening on a centralized event stream.',
         'By weighting trust matrices and diplomatic alignments dynamically, the platform resolves inter-agent disputes before they affect core business operations.'
       ],
@@ -359,7 +359,7 @@ export default function StoryPage() {
       title: 'Distributed Sovereign Cognition',
       subtitle: 'Enforcing zero-knowledge policy boundaries across parallel multi-agent quorums.',
       paragraphs: [
-        'Machine-speed optimization without policy gating creates vulnerability. In Ruphex, all agent decisions must align with strict, zero-knowledge constraints.',
+        'Machine-speed optimization without policy gating creates vulnerability. In Kubryx, all agent decisions must align with strict, zero-knowledge constraints.',
         'The Distributed Cognition Engine continuously evaluates regional anomalies and applies rules to prevent state drifts or unauthorized balance reallocations.',
         'This Synergizes maximum logical autonomy with absolute operator control, providing premium safety for enterprise digital assets.'
       ],
@@ -373,9 +373,9 @@ export default function StoryPage() {
       title: 'Self-Governing Operational Economies',
       subtitle: 'The culmination of the single-product operational operating system.',
       paragraphs: [
-        'With permanently synchronized global engines, predictive forecasting layers, and a multi-agent civilization mesh, Ruphex completes its vision.',
+        'With permanently synchronized global engines, predictive forecasting layers, and a multi-agent civilization mesh, Kubryx completes its vision.',
         'We have transformed corporate finance from fragmented SaaS widgets into a living, resilient, sovereign operational intelligence network.',
-        'Fully optimized, certified accelerator-ready, and strategically fortified, Ruphex is prepared to govern the decentralized future.'
+        'Fully optimized, certified accelerator-ready, and strategically fortified, Kubryx is prepared to govern the decentralized future.'
       ],
       metrics: [
         { label: 'Ecosystem Status', value: 'Post-SaaS Sovereign' },

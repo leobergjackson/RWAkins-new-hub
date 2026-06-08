@@ -259,7 +259,7 @@ export default function GovernancePage() {
           </div>
 
           <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
-            <span style={{ fontSize: 10, color: '#888' }}>Hardening Soroban Bridge</span>
+            <span style={{ fontSize: 10, color: '#888' }}>Hardening Mantle Bridge</span>
             <strong style={{ display: 'block', fontSize: 18, color: '#10B981', margin: '4px 0' }}>92.8% Probability</strong>
             <span style={{ fontSize: 8, color: '#666' }}>Risk Factor: LOW</span>
           </div>
@@ -521,7 +521,7 @@ export default function GovernancePage() {
                   type="text"
                   value={propTitle}
                   onChange={(e) => setPropTitle(e.target.value)}
-                  placeholder="e.g. KIP-27: Hardening Arbitrum Bridge"
+                  placeholder="e.g. KIP-27: Hardening Mantle Bridge"
                   required
                   style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
                 />

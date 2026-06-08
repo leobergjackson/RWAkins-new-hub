@@ -64,12 +64,12 @@ export default function AnalyticsPage() {
   ])
 
   // Rolling chain TPS data
-  const [tpsData, setTpsData] = useState<{ name: string; QIE: number; Solana: number; Stellar: number; Arbitrum: number }[]>([
-    { name: '10s ago', QIE: 14, Solana: 280, Stellar: 84, Arbitrum: 48 },
-    { name: '8s ago', QIE: 15, Solana: 288, Stellar: 85, Arbitrum: 49 },
-    { name: '6s ago', QIE: 13, Solana: 284, Stellar: 82, Arbitrum: 47 },
-    { name: '4s ago', QIE: 14, Solana: 290, Stellar: 86, Arbitrum: 50 },
-    { name: 'Now', QIE: 14.5, Solana: 285.2, Stellar: 84.8, Arbitrum: 48.6 }
+  const [tpsData, setTpsData] = useState<{ name: string; Invoices: number; Vault: number; Lending: number; Agents: number }[]>([
+    { name: '10s ago', Invoices: 14, Vault: 280, Lending: 84, Agents: 48 },
+    { name: '8s ago', Invoices: 15, Vault: 288, Lending: 85, Agents: 49 },
+    { name: '6s ago', Invoices: 13, Vault: 284, Lending: 82, Agents: 47 },
+    { name: '4s ago', Invoices: 14, Vault: 290, Lending: 86, Agents: 50 },
+    { name: 'Now', Invoices: 14.5, Vault: 285.2, Lending: 84.8, Agents: 48.6 }
   ])
 
   // Rolling Coalition Stability data
@@ -84,17 +84,17 @@ export default function AnalyticsPage() {
 
   // AI distributions dataset
   const aiData = [
-    { name: 'QIE Passports', requests: 480 },
-    { name: 'Solana Streams', requests: 920 },
+    { name: 'Credit Passports', requests: 480 },
+    { name: 'Payment Streams', requests: 920 },
     { name: 'Lending Negot.', requests: 840 },
     { name: 'Shadow CFO Audit', requests: 600 }
   ]
 
   // Wallet trends dataset
   const walletData = [
-    { name: 'MetaMask (EVM)', active: 450, transactions: 1200 },
-    { name: 'Phantom (Solana)', active: 890, transactions: 2400 },
-    { name: 'Freighter (Stellar)', active: 310, transactions: 850 }
+    { name: 'MetaMask (EVM)', active: 890, transactions: 2400 },
+    { name: 'RainbowKit', active: 450, transactions: 1200 },
+    { name: 'WalletConnect', active: 310, transactions: 850 }
   ]
 
   // Dynamic updates
@@ -119,10 +119,10 @@ export default function AnalyticsPage() {
           ...prev,
           {
             name: timeStr,
-            QIE: rates['QIE Mainnet'] || 14.5,
-            Solana: rates['Solana Devnet'] || 285.2,
-            Stellar: rates['Stellar Testnet'] || 84.8,
-            Arbitrum: rates['Arbitrum'] || 48.6
+            Invoices: rates['Mantle Network'] || 14.5,
+            Vault: rates['Mantle Sepolia'] || 285.2,
+            Lending: rates['Lending'] || 84.8,
+            Agents: rates['RWA Vault'] || 48.6
           }
         ]
         return next.slice(-8)
@@ -343,9 +343,9 @@ export default function AnalyticsPage() {
 
         {/* 2. Rolling Chain activity LineChart */}
         <article className="card" style={{ height: 350, display: 'flex', flexDirection: 'column' }}>
-          <h3 style={{ margin: '0 0 4px', fontSize: 15, fontWeight: 700 }}>🌐 Multi-Chain Transaction Rates (TPS)</h3>
+          <h3 style={{ margin: '0 0 4px', fontSize: 15, fontWeight: 700 }}>🌐 On-Chain Activity Rates (Mantle)</h3>
           <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-            Rolling transactions per second processed across connected EVM, SVM, and Stellar smart nodes.
+            Rolling transactions per second across Kubryx modules settling on Mantle Network.
           </p>
           <div style={{ flex: 1, minHeight: 0 }}>
             {mounted && (
@@ -356,10 +356,10 @@ export default function AnalyticsPage() {
                 <YAxis stroke="#666" fontSize={10} />
                 <Tooltip contentStyle={{ background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 11 }} />
                 <Legend wrapperStyle={{ fontSize: 10, marginTop: 10 }} />
-                <Line type="monotone" dataKey="Solana" stroke="#A855F7" strokeWidth={2} dot={false} />
-                <Line type="monotone" dataKey="Stellar" stroke="#3B82F6" strokeWidth={2} dot={false} />
-                <Line type="monotone" dataKey="Arbitrum" stroke="#EC4899" strokeWidth={2} dot={false} />
-                <Line type="monotone" dataKey="QIE" stroke="#F5C518" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="Vault" stroke="#A855F7" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="Lending" stroke="#3B82F6" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="Agents" stroke="#EC4899" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="Invoices" stroke="#F5C518" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
               )}

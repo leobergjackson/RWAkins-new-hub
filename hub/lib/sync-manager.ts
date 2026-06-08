@@ -115,7 +115,7 @@ export function simulateWebSocketStream() {
       detail: {
         signature,
         timestamp: new Date().toISOString(),
-        gasUsed: '0.00021 SOL',
+        gasUsed: '0.00021 MNT',
         chain: Math.random() > 0.5 ? 'SOLANA' : 'QIE'
       }
     })

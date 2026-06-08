@@ -51,7 +51,7 @@ const DEFAULT_CHRONICLE: ChronicleEpoch[] = [
     sovereigntyLevel: 94.2,
     activeThreatCount: 0,
     cognitiveClarity: 90,
-    eventSummary: 'Initial bootstrapping of cryptographic keys, establishing EVM-Soroban synchronizations, and loading fallback caches.'
+    eventSummary: 'Initial bootstrapping of cryptographic keys, establishing EVM-Mantle synchronizations, and loading fallback caches.'
   },
   {
     id: 'epoch-02',

@@ -5,7 +5,7 @@ import { usePrices } from '@/hooks/usePrices'
 
 const COINS: { id: string; symbol: string }[] = [
   { id: 'ethereum', symbol: 'ETH' },
-  { id: 'solana', symbol: 'SOL' },
+  { id: 'solana', symbol: 'MNT' },
   { id: 'arbitrum', symbol: 'ARB' },
 ]
 
@@ -20,7 +20,7 @@ function formatPrice(n: number): string {
 
 /**
  * Horizontal live-price ticker for the dashboard.
- * QIE has no CoinGecko listing, so it always renders "—".
+ * Mantle has no CoinGecko listing, so it always renders "—".
  */
 export function PriceTicker() {
   const { prices, loading } = usePrices(['ethereum', 'solana', 'arbitrum'])
@@ -65,9 +65,9 @@ export function PriceTicker() {
         )
       })}
 
-      {/* QIE — no CoinGecko listing */}
+      {/* Mantle — no CoinGecko listing */}
       <div className="flex items-center gap-2">
-        <span className="text-xs font-bold text-white/70">QIE</span>
+        <span className="text-xs font-bold text-white/70">Mantle</span>
         <span className="text-sm text-white/30">—</span>
       </div>
     </div>

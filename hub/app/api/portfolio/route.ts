@@ -1,6 +1,6 @@
 // Built by vsrupeshkumar
 // Cross-chain wallet portfolio via Moralis Web3 API.
-// Returns aggregated USD value + top holdings across Arbitrum / Ethereum / Polygon.
+// Returns aggregated USD value + top holdings across Mantle / Ethereum / Polygon.
 // Server-side only so MORALIS_API_KEY never reaches the browser.
 import { NextResponse } from 'next/server'
 
@@ -11,7 +11,7 @@ const MORALIS_BASE = 'https://deep-index.moralis.io/api/v2.2'
 const FETCH_TIMEOUT_MS = 9_000
 // Chain mapping: Moralis chain id → display name + accent colour
 const CHAINS: Array<{ id: string; name: string; color: string }> = [
-  { id: 'arbitrum', name: 'Arbitrum One', color: '#28A0F0' },
+  { id: 'arbitrum', name: 'Mantle Network', color: '#28A0F0' },
   { id: 'eth',      name: 'Ethereum',     color: '#627EEA' },
   { id: 'polygon',  name: 'Polygon',      color: '#8247E5' },
 ]

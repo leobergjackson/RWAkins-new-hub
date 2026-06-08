@@ -52,7 +52,7 @@ export function dryRunSimulation(payload: SovereignTxPayload): Required<NonNulla
   }
 
   return {
-    estimatedGas: payload.targetChain === 'SOLANA' ? '0.000005 SOL' : '0.0024 QIE',
+    estimatedGas: payload.targetChain === 'SOLANA' ? '0.000005 MNT' : '0.0024 MNT',
     policyViolations: violations,
     gatingPassed: violations.length === 0
   }
@@ -120,7 +120,7 @@ export async function executeSovereignTransaction(
         await (window as any).ethereum.request({ method: 'eth_requestAccounts' })
         logs.push(`EVM signature generated successfully.`)
       } else if (txPayload.targetChain === 'STELLAR' && (window as any).freighter) {
-        logs.push(`Freighter Stellar provider found. Signing XDR envelope...`)
+        logs.push(`Freighter Mantle provider found. Signing XDR envelope...`)
         logs.push(`Freighter transaction envelope signed.`)
       } else {
         logs.push(`No client-side wallet extension detected. Utilizing isolated backup key locks...`)

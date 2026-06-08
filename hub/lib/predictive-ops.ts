@@ -30,17 +30,17 @@ export interface PredictiveOpsState {
 }
 
 const DEFAULT_OUTLOOKS: PredictiveMetrics[] = [
-  { chainName: 'QIE Mainnet', forecastLatency: [42, 45, 48, 44, 43], forecastImbalanceProbability: 2, reliabilityOutlook: 'Optimal', healthConfidenceCurve: [99.8, 99.8, 99.7, 99.8, 99.9] },
-  { chainName: 'Solana Devnet', forecastLatency: [280, 450, 920, 680, 310], forecastImbalanceProbability: 64, reliabilityOutlook: 'Unstable Forecast', healthConfidenceCurve: [98.5, 96.2, 91.4, 93.8, 97.4] },
-  { chainName: 'Stellar Testnet', forecastLatency: [110, 115, 120, 118, 114], forecastImbalanceProbability: 8, reliabilityOutlook: 'Optimal', healthConfidenceCurve: [99.9, 99.9, 99.8, 99.9, 99.9] },
-  { chainName: 'Arbitrum One', forecastLatency: [95, 180, 340, 210, 105], forecastImbalanceProbability: 25, reliabilityOutlook: 'Optimal', healthConfidenceCurve: [99.5, 98.7, 97.2, 98.5, 99.2] }
+  { chainName: 'Mantle Network', forecastLatency: [42, 45, 48, 44, 43], forecastImbalanceProbability: 2, reliabilityOutlook: 'Optimal', healthConfidenceCurve: [99.8, 99.8, 99.7, 99.8, 99.9] },
+  { chainName: 'Mantle Sepolia', forecastLatency: [280, 450, 920, 680, 310], forecastImbalanceProbability: 64, reliabilityOutlook: 'Unstable Forecast', healthConfidenceCurve: [98.5, 96.2, 91.4, 93.8, 97.4] },
+  { chainName: 'Mantle Sepolia', forecastLatency: [110, 115, 120, 118, 114], forecastImbalanceProbability: 8, reliabilityOutlook: 'Optimal', healthConfidenceCurve: [99.9, 99.9, 99.8, 99.9, 99.9] },
+  { chainName: 'Mantle Network', forecastLatency: [95, 180, 340, 210, 105], forecastImbalanceProbability: 25, reliabilityOutlook: 'Optimal', healthConfidenceCurve: [99.5, 98.7, 97.2, 98.5, 99.2] }
 ]
 
 const DEFAULT_ADVISORIES: PredictiveAdvisory[] = [
   {
     id: 'adv-201',
     category: 'Infrastructure',
-    advisoryText: 'Predictive analytics indicate Solana RPC node regional response limits may degrade by 180ms due to anticipated validators stress loads.',
+    advisoryText: 'Predictive analytics indicate Mantle RPC node regional response limits may degrade by 180ms due to anticipated validators stress loads.',
     probability: 72,
     suggestedAction: 'Divert low-priority transaction sweeps through auxiliary node relays.',
     impactLevel: 'medium'
@@ -109,7 +109,7 @@ export function triggerPredictiveRecalculation() {
     advisories.push({
       id: 'adv-rpc-fail',
       category: 'Infrastructure',
-      advisoryText: 'RPC latency spikes forecast to persist across Solana nodes. Peak response delays exceeding 2 seconds highly probable.',
+      advisoryText: 'RPC latency spikes forecast to persist across Mantle nodes. Peak response delays exceeding 2 seconds highly probable.',
       probability: 94,
       suggestedAction: 'Lock continuous routing on local cached memory fallbacks.',
       impactLevel: 'high'
@@ -117,7 +117,7 @@ export function triggerPredictiveRecalculation() {
   } else if (scenario === 'chain_congestion') {
     stress = 54
     aggregateUptime = 99.12
-    outlooks[2].forecastLatency = [120, 180, 240, 310, 450] // Stellar delays
+    outlooks[2].forecastLatency = [120, 180, 240, 310, 450] // Mantle delays
     outlooks[2].reliabilityOutlook = 'Unstable Forecast'
     outlooks[2].healthConfidenceCurve = [99.2, 98.1, 96.5, 94.2, 91.8]
 
@@ -152,9 +152,9 @@ export function triggerPredictiveRecalculation() {
     advisories.push({
       id: 'adv-imbalance',
       category: 'Liquidity',
-      advisoryText: 'Continuous stream allocations show severe balance discrepancy between Solana and EVM mainnets.',
+      advisoryText: 'Continuous stream allocations show severe balance discrepancy between Mantle and EVM mainnets.',
       probability: 91,
-      suggestedAction: 'Rebalance idle SOL treasury buffers to NCRD staking yields immediately.',
+      suggestedAction: 'Rebalance idle MNT treasury buffers to NCRD staking yields immediately.',
       impactLevel: 'medium'
     })
   } else if (scenario === 'loan_risk_escalation') {

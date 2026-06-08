@@ -42,9 +42,9 @@ export default function ArchitecturePage() {
       id: 'blockchain',
       name: '3. Blockchain Connectivity Layer',
       icon: '🔗',
-      description: 'Direct multi-chain RPC bridge for state changes. Compiles freighter XDR envelopes, Phantom signMessage payloads, and QIE MetaMask transaction pipelines.',
-      technologies: ['Freighter API', 'MetaMask Web3 Provider', 'Tweetnacl Cryptography'],
-      components: ['Soroban split contract', 'QIE Soulbound NFT', 'Solana Devnet state records'],
+      description: 'Direct Mantle RPC bridge for state changes. Builds and submits MetaMask transaction pipelines (wagmi / viem) against Mantle Sepolia smart contracts.',
+      technologies: ['MetaMask Web3 Provider', 'wagmi / viem', 'OpenZeppelin Contracts'],
+      components: ['Mantle split contract', 'Mantle Soulbound NFT', 'Mantle Sepolia state records'],
     },
     {
       id: 'telemetry',

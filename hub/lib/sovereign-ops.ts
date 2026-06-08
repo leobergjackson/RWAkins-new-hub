@@ -61,7 +61,7 @@ const DEFAULT_PROPOSALS: GovernanceProposal[] = [
   {
     id: 'prop-001',
     title: 'KIP-24: Optimize Multi-Sig Treasury Yield Splits',
-    description: 'Trigger autonomous rebalancing of 450,000 USDC from Solana devnet vault relays into high-yielding Stellar Soroban pools.',
+    description: 'Trigger autonomous rebalancing of 450,000 USDC from Mantle devnet vault relays into high-yielding Mantle pools.',
     type: 'treasury_rebalancing',
     status: 'voting',
     votesFor: 840210,
@@ -85,7 +85,7 @@ const DEFAULT_PROPOSALS: GovernanceProposal[] = [
     confidenceScore: 99,
     proposer: 'Security Agent Mesh',
     timestamp: new Date(Date.now() - 3600000 * 24).toISOString(),
-    rationale: 'Detected zero-metadata proxy anomalies on Arbitrum gateway, necessitating automated certificate revocation protocols.',
+    rationale: 'Detected zero-metadata proxy anomalies on Mantle gateway, necessitating automated certificate revocation protocols.',
     decisionLineage: ['Anomaly trigger logged by Security Console', 'Key certificates isolated', 'Consensus voting validated block lock']
   },
   {
@@ -106,10 +106,10 @@ const DEFAULT_PROPOSALS: GovernanceProposal[] = [
 ]
 
 const DEFAULT_VALIDATORS: ValidatorNode[] = [
-  { id: 'val-01', name: 'Validator-Alpha (QIE Mainnet)', trustScore: 99.8, latency: 12, syncStatus: 'synced', stakeWeight: 35 },
-  { id: 'val-02', name: 'Validator-Beta (Solana Devnet)', trustScore: 99.4, latency: 45, syncStatus: 'synced', stakeWeight: 25 },
-  { id: 'val-03', name: 'Validator-Gamma (Stellar Testnet)', trustScore: 98.9, latency: 50, syncStatus: 'synced', stakeWeight: 20 },
-  { id: 'val-04', name: 'Validator-Delta (Arbitrum L2)', trustScore: 95.2, latency: 125, syncStatus: 'lagging', stakeWeight: 15 },
+  { id: 'val-01', name: 'Validator-Alpha (Mantle Network)', trustScore: 99.8, latency: 12, syncStatus: 'synced', stakeWeight: 35 },
+  { id: 'val-02', name: 'Validator-Beta (Mantle Sepolia)', trustScore: 99.4, latency: 45, syncStatus: 'synced', stakeWeight: 25 },
+  { id: 'val-03', name: 'Validator-Gamma (Mantle Sepolia)', trustScore: 98.9, latency: 50, syncStatus: 'synced', stakeWeight: 20 },
+  { id: 'val-04', name: 'Validator-Delta (Mantle L2)', trustScore: 95.2, latency: 125, syncStatus: 'lagging', stakeWeight: 15 },
   { id: 'val-05', name: 'Validator-Epsilon (Auxiliary Relay)', trustScore: 78.4, latency: 980, syncStatus: 'lagging', stakeWeight: 5 }
 ]
 

@@ -120,7 +120,7 @@ export default function AgentAnalytics() {
               Execution Slot Latency
             </div>
             <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
-              Solana confirmation speed (ms)
+              Mantle confirmation speed (ms)
             </div>
           </div>
           {mounted && (

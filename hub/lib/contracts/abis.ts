@@ -1,6 +1,6 @@
 // Built by vsrupeshkumar
 // Contract addresses + minimal human-readable ABIs for the Credit Passport
-// suite, deployed on QIE Mainnet (Chain ID 1990).
+// suite, deployed on Mantle Network (Chain ID 1990).
 
 export const CONTRACTS = {
   CreditPassportNFT: '0xAe6A9CaF9739C661e593979386580d3d14abB502',
@@ -9,7 +9,7 @@ export const CONTRACTS = {
   NCRDToken:         '0x7427734468598674645Aa71Ef651218A9Db2be11',
 } as const
 
-// Only the functions Ruphex actually calls are included.
+// Only the functions Kubryx actually calls are included.
 
 export const CREDIT_PASSPORT_ABI = [
   // getScore returns ScoreView { uint16 score; uint8 riskBand; uint64 lastUpdated }
@@ -34,7 +34,7 @@ export const NCRD_TOKEN_ABI = [
   'function approve(address spender, uint256 amount) returns (bool)',
 ] as const
 
-// EternalVault LegacyVault — QIE Mainnet (Chain ID 1990).
+// EternalVault LegacyVault — Mantle Network (Chain ID 1990).
 // ⚠ VAULT NOT DEPLOYED — NEXT_PUBLIC_LEGACY_VAULT_ADDRESS must be set.
 export const LEGACY_VAULT_ABI = [
   'function owner() view returns (address)',

@@ -1,84 +1,116 @@
 # Kubryx OS
 
-**The Turing Test Hackathon 2026 (Mantle Network) - AI x RWA Submission**
+**The Turing Test Hackathon 2026 (Mantle Network) — AI × RWA Submission**
 
-One financial OS for Web3, built as a zero-redirection **Chrome Extension Single Page Application (SPA)**. Eight powerful tools — including 100% on-chain invoicing, private trading, DeFi lending, treasury automation, AI agents, split payments, and a unified dashboard — all deployed exclusively on **Mantle Network**.
-
----
-
-## Hackathon Context
-
-This project was built for **The Turing Test Hackathon 2026** (Mantle Network). 
-- **Core Requirement:** All features and modules run 100% on **Mantle Network** (Mantle Sepolia for testnet).
-- **Architecture Requirement:** Fully accessible directly through a browser extension without navigating to separate web pages (SPA Side Panel architecture).
-- **No Off-chain Databases:** All data, including invoice metadata and payment statuses, are stored directly on-chain via smart contracts using OpenZeppelin libraries.
+An AI × RWA financial operating system where **ERC-8004-identified AI agents negotiate, rebalance, and settle real-world-asset positions (USDY / mETH) on Mantle — verifiably on-chain.** Delivered as a zero-redirection Chrome Extension Single Page Application (SPA) with eight tools: 100% on-chain invoicing, AI-negotiated lending, RWA treasury automation, private trading, split payments, credit, agents, and a unified dashboard.
 
 ---
 
-## System Architecture
+## Why this fits the AI × RWA track
+
+| Track question | Kubryx answer |
+|---|---|
+| **What real-world asset are you bringing on-chain?** | Tokenized RWAs modeled on Ondo **USDY** (stable yield) and **mETH** (ETH-staking yield) — Mantle's flagship RWA assets. |
+| **How does AI play a role?** | An AI agent proposes treasury allocations and negotiates loan terms. The *decision* is AI; the *enforcement* is Solidity. |
+| **How is it realized on Mantle?** | Every agent decision is written and guarded on-chain: `KubryxRWAVault.rebalance()` enforces risk caps, `LendingSettlement.settleLoan()` records negotiated terms, and each agent owns an **ERC-8004 identity NFT** whose reputation is updated only by attested on-chain outcomes. |
+
+---
+
+## On-Chain Architecture (Mantle Sepolia · chain 5003)
 
 ```mermaid
 graph TD
-    User([Corporate Operator]) --> |Side Panel UI| OS[Kubryx Chrome Extension]
-    OS --> |RPC / wagmi| MNT[Mantle Network]
-    
-    MNT --> |On-Chain Registry| Invoices[Recibo Smart Contracts]
-    MNT --> |AI Negotiated Terms| Lending[DeFi Lending Markets (USDY/mETH)]
-    MNT --> |Asset Management| Treasury[Yield Operations Hub]
-    
+    User([Operator]) -->|Side Panel SPA| OS[Kubryx Chrome Extension]
+    OS -->|wagmi / viem| MNT[Mantle Sepolia]
+
+    MNT --> Recibo[Recibo.sol — 100% on-chain invoices]
+    MNT --> Vault[KubryxRWAVault.sol — USDY/mETH, on-chain risk caps]
+    MNT --> Settle[LendingSettlement.sol — AI loan settlement]
+    MNT --> Registry[AgentIdentityRegistry.sol — ERC-8004 identity + reputation]
+
+    Settle -.attests reputation.-> Registry
+
     style OS fill:#1e1e38,stroke:#3b82f6,stroke-width:2px,color:#fff
     style MNT fill:#13222e,stroke:#06b6d4,stroke-width:2px,color:#fff
 ```
 
----
+### Smart contracts (`invoices/contracts/`)
+| Contract | Role | AI-on-chain function |
+|---|---|---|
+| `AgentIdentityRegistry.sol` | **ERC-8004** soulbound identity NFT for each agent; reputation written only by authorized attestors; fully on-chain base64 metadata | `registerAgent`, `recordJob` |
+| `LendingSettlement.sol` | Settles AI-negotiated loans on-chain (rate/principal/collateral envelope), credits the agent's reputation | `settleLoan` (agent-triggered) |
+| `KubryxRWAVault.sol` | USDY/mETH RWA vault; **risk guardrails enforced in Solidity** (mETH ≤ 70%, allocation must sum to 100%) | `rebalance` (AI proposes, chain enforces) |
+| `MockRWAToken.sol` | Testnet USDY/mETH mocks with on-chain yield-rate metadata | `currentYield` |
+| `Recibo.sol` | 100% on-chain invoice registry — metadata + payment status stored as structs | `createInvoice`, `payInvoice` |
 
-## Premium Feature Guide
-
-### 1. 100% On-Chain Invoicing (Recibo)
-- **What it is:** A decentralized invoicing tool that stores all invoice metadata (client, amount, due date) directly on Mantle smart contracts.
-- **Why it is efficient:** Eliminates off-chain databases. Uses `wagmi` to read and write structs directly to the blockchain. Users can pay invoices with USDC or USDY in a single transaction.
-
-### 2. Yield Operations Hub (Treasury)
-- **What it is:** An enterprise-grade treasury console to track Mantle liquidity, manage payroll streams, perform token swaps, and optimize yield strategies across RWA assets like USDY and mETH.
-- **Why it is the best:** It is an active cockpit rather than a passive dashboard. Built-in AI advisors suggest rebalancing allocations that can be executed in one click.
-
-### 3. AI-Negotiated Lending (Lendora)
-- **What it is:** An interactive DeFi lending market targeting Mantle RWAs (USDY, mETH). Users chat with an AI agent to negotiate interest rates, terms, and collateral limits.
-- **Why it is efficient:** Conversations are managed off-chain for zero-latency interactions, while the finalized agreement envelope is cryptographically signed and settled on Mantle.
-
-### 4. Stealth Executive Suite (Shadow Sandbox)
-- **What it is:** A sandboxed simulation cockpit designed to replicate the live node and treasury environment to test risk management.
+> **No off-chain database.** Invoice metadata, vault allocations, loan envelopes, and agent reputation all live in contract state. Agent-identity NFT metadata is rendered fully on-chain as a base64 data URI (no IPFS).
 
 ---
 
-## Extension Installation (Local Testing)
+## Deploy to Mantle Sepolia
 
-Since this is a Chrome Extension SPA, you can install it locally to test the Side Panel integration:
+```bash
+cd invoices
+npm install
+# .env.local: DEPLOYER_PRIVATE_KEY=0x...   (fund with Mantle Sepolia MNT)
+#             MANTLESCAN_API_KEY=...        (for verification)
 
-1. Clone the repository and install dependencies (`npm install`).
-2. Build the Next.js frontend or run it locally (`npm run dev`).
-3. Open Chrome and navigate to `chrome://extensions/`.
-4. Enable **Developer mode** in the top right corner.
-5. Click **Load unpacked** and select the `chrome-extension/` directory in this repository.
-6. Click the extension icon in your browser to open the Kubryx Side Panel.
+# Deploys RWA tokens + vault + ERC-8004 registry + lending settlement,
+# registers the Lendora agent, and writes addresses to hub/lib/rwa-deployed.json
+npx hardhat run contracts/scripts/deploy-rwa.ts --config contracts/hardhat.config.ts --network mantleSepolia
+```
+
+The script prints `npx hardhat verify ...` commands for each contract. Run them to verify on the Mantle Explorer (required for the 20 Project Deployment Award).
+
+### Deployed Addresses (Mantle Sepolia)
+<!-- Fill in after running deploy-rwa.ts — these are read live from hub/lib/rwa-deployed.json -->
+| Contract | Address |
+|---|---|
+| AgentIdentityRegistry (ERC-8004) | `TBD` |
+| LendingSettlement | `TBD` |
+| KubryxRWAVault | `TBD` |
+| kUSDY / kMETH | `TBD` / `TBD` |
+| Recibo | `TBD` |
+
+---
+
+## Run the hub locally
+
+```bash
+cd hub
+npm install
+npm run dev        # Next.js on http://localhost:3000
+```
+
+### Install as a Chrome Extension (Side Panel SPA)
+1. `chrome://extensions/` → enable **Developer mode**
+2. **Load unpacked** → select `chrome-extension/`
+3. Click the Kubryx icon to open the Side Panel.
 
 ---
 
 ## Tech Stack
+- **Frontend:** Next.js 16, TypeScript, Tailwind v4
+- **Extension:** Chrome Side Panel API, hash routing
+- **Contracts:** Solidity 0.8.20, Hardhat 3, OpenZeppelin; self-contained ERC-8004 registry
+- **Web3:** wagmi, viem, RainbowKit — Mantle Sepolia (5003)
+- **AI:** Groq LLaMA-3.3-70B-Versatile (loan negotiation, invoice parsing, treasury advice)
 
-- **Frontend**: Next.js 16, TypeScript, Tailwind v4, Vanilla CSS
-- **Extension Wrapper**: Chrome Side Panel API, Hash Routing
-- **Smart Contracts**: Solidity ^0.8.20, Hardhat, OpenZeppelin
-- **Web3 Integration**: Wagmi, Viem, RainbowKit
-- **AI Engine**: Groq LLaMA-3.3-70B-Versatile
+---
+
+## Demo video walkthrough (≥ 2 min) — suggested script
+1. Open the Side Panel; show the dashboard live on Mantle Sepolia.
+2. **Invoicing:** paste an invoice → AI parses it → create on-chain → pay → show the tx on Mantle Explorer.
+3. **Lendora:** chat to negotiate a loan → agent calls `settleLoan` → show the loan written on-chain.
+4. **Treasury:** AI proposes a USDY/mETH allocation → `rebalance` → show an over-risk proposal **reverting** on-chain (the guardrail).
+5. **ERC-8004:** open the agent's identity NFT on the Explorer; show reputation incremented by the settled loan.
+
+---
+
+## What's not in scope
+Earlier standalone prototypes live in [`legacy-prototypes/`](legacy-prototypes/) and are **excluded** from this submission. The submission is the `hub/` app + `invoices/contracts/`.
 
 ---
 
 ## License & Attribution
-
-This platform — including source code, architecture, infrastructure, backend systems, frontend, APIs, databases, UI/UX, and production workflows — was independently designed and built by **vsrupeshkumar**.
-
-- **Founder & Developer:** vsrupeshkumar
-- **License:** Apache License 2.0
-
-All rights reserved.
+Independently designed and built by **vsrupeshkumar**. Apache License 2.0.

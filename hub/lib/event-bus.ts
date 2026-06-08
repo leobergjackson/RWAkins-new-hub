@@ -50,7 +50,7 @@ const DEFAULT_RULES: AutomationRule[] = [
     title: 'Treasury Deficit Safe Guard',
     trigger: 'treasury_liquidity_drop',
     action: 'trigger_lending_warning',
-    description: 'If treasury balances drop below 2000 SOL, trigger an automated low-interest lending credit warning via Lendora AI.',
+    description: 'If treasury balances drop below 2000 MNT, trigger an automated low-interest lending credit warning via Lendora AI.',
     active: true,
     timesTriggered: 0,
   },
@@ -59,7 +59,7 @@ const DEFAULT_RULES: AutomationRule[] = [
     title: 'NCRD APY Staking Yield Sweep',
     trigger: 'staking_apy_rise',
     action: 'suggest_treasury_rebalance',
-    description: 'If staking APY on QIE Mainnet rises above 12%, recommend a treasury sweep rebalance via the AI Command Panel.',
+    description: 'If staking APY on Mantle Network rises above 12%, recommend a treasury sweep rebalance via the AI Command Panel.',
     active: true,
     timesTriggered: 0,
   },
@@ -184,21 +184,21 @@ export function fireEvent(trigger: string, customDetails?: string) {
         memory: { ...prev.memory, suspiciousActivityFlag: true }
       }))
       updatePlatformState(() => ({ activeScenario: 'suspicious_activity' }))
-      recordOSEvent('Stealth Executive Suite', 'Triggered threat response. Rotate secure key vaults.', 'Solana')
+      recordOSEvent('Stealth Executive Suite', 'Triggered threat response. Rotate secure key vaults.', 'Mantle')
       toast.warning('Threat detected! Stealth Executive Suite has locked down the private key vaults.')
     }
     
     else if (rule.action === 'trigger_lending_warning') {
-      effectDetails = 'Treasury balances below 2000 SOL. Fired Q-Loan Lending Desk pre-approval warning.'
+      effectDetails = 'Treasury balances below 2000 MNT. Fired Q-Loan Lending Desk pre-approval warning.'
       updateIntelligenceState((prev) => ({
         profile: {
           ...prev.profile,
-          treasuryBalance: '1,420 SOL', // Drop treasury
+          treasuryBalance: '1,420 MNT', // Drop treasury
           activeLoansCount: 0 // Reset loans to prompt lending
         }
       }))
       updatePlatformState(() => ({ activeScenario: 'treasury_imbalance' }))
-      recordOSEvent('AI Lending', 'Fired Q-Loan pre-approved low-interest capital check.', 'Arbitrum')
+      recordOSEvent('AI Lending', 'Fired Q-Loan pre-approved low-interest capital check.', 'Mantle')
       toast.info('Lending Warning: Treasury liquidity drops. Open Lendora to negotiate rates.')
     }
     
@@ -207,14 +207,14 @@ export function fireEvent(trigger: string, customDetails?: string) {
       updateIntelligenceState((prev) => ({
         profile: {
           ...prev.profile,
-          treasuryBalance: '14,800 SOL' // Spike treasury balance to trigger rebalance suggestion
+          treasuryBalance: '14,800 MNT' // Spike treasury balance to trigger rebalance suggestion
         }
       }))
       updateOrgState((prev) => ({
         operationalAlerts: prev.operationalAlerts.map(a => a.id === 'al-1' ? { ...a, resolved: false, timestamp: new Date().toISOString() } : a)
       }))
-      recordOSEvent('Yield Operations Hub', 'Staking rates rise. Rebalancing recommendation dispatched.', 'Solana')
-      toast.success('Yield Spike: APY rises. Stake NCRD on QIE to secure yield.')
+      recordOSEvent('Yield Operations Hub', 'Staking rates rise. Rebalancing recommendation dispatched.', 'Mantle')
+      toast.success('Yield Spike: APY rises. Stake NCRD on Mantle to secure yield.')
     }
     
     else if (rule.action === 'trigger_diagnostics_alert') {

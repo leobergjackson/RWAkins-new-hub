@@ -11,22 +11,22 @@ type TourStep = {
 
 const TOUR_STEPS: TourStep[] = [
   {
-    title: 'Welcome to Ruphex OS',
-    description: 'Ruphex is a premium, unified blockchain operating system comprising 8 built-in financial and AI tools. Let’s take a 1-minute tour of your command center.',
+    title: 'Welcome to Kubryx OS',
+    description: 'Kubryx is a premium, unified blockchain operating system comprising 8 built-in financial and AI tools. Let’s take a 1-minute tour of your command center.',
   },
   {
     title: 'Multi-Chain Wallet Hub',
-    description: 'Connect your MetaMask (EVM), Phantom (Solana), or Freighter (Stellar) wallets instantly. Once connected, you can sign transactions cryptographically with real explorer-linked confirmations.',
+    description: 'Connect your MetaMask wallet to Mantle instantly. Once connected, you can sign transactions cryptographically with real explorer-linked confirmations.',
     highlightId: 'wallet-connector-section',
   },
   {
     title: 'The 8 Built-In Tools',
-    description: 'Launch tools like CreditBlocks, Family Vault, Bill Split, and AI Lending directly. Each card lists its respective blockchain network—from QIE Mainnet to Stellar Testnet and Solana Devnet.',
+    description: 'Launch tools like CreditBlocks, Family Vault, Bill Split, and AI Lending directly. Every tool settles on Mantle — invoices, loans, vaults, and splits all run on Mantle Sepolia.',
     highlightId: 'command-tools-grid',
   },
   {
     title: 'Live SLA & Latency Diagnostics',
-    description: 'View real-time response speeds and SLA uptime statistics for every connected backend. Ruphex measures API roundtrips dynamically.',
+    description: 'View real-time response speeds and SLA uptime statistics for every connected backend. Kubryx measures API roundtrips dynamically.',
     highlightId: 'command-tools-grid',
   },
   {
@@ -36,7 +36,7 @@ const TOUR_STEPS: TourStep[] = [
   },
   {
     title: 'Demo & Presentation Safeties',
-    description: 'Ruphex is built to be "always presentation-ready". If a backend or wallet is unavailable, the UI automatically enters Demo Mode with deterministic mock data, ensuring a flawless showcase.',
+    description: 'Kubryx is built to be "always presentation-ready". If a backend or wallet is unavailable, the UI automatically enters Demo Mode with deterministic mock data, ensuring a flawless showcase.',
   },
 ]
 
@@ -220,9 +220,9 @@ export default function OnboardingTour() {
         {step.highlightId === 'wallet-connector-section' && (
           <div style={{ padding: 10, background: 'rgba(245,197,24,0.02)', borderLeft: '3px solid #F5C518', fontSize: 11, borderRadius: '0 4px 4px 0' }}>
             💡 <strong>Wallet Tips:</strong><br />
-            • <em>MetaMask</em> asks you to confirm network switching to QIE Mainnet (1990).<br />
-            • <em>Phantom</em> signs cryptographic handshakes with ed25519 signatures.<br />
-            • <em>Freighter</em> packages splits directly into signed Soroban Transaction XDR envelopes.
+            • <em>MetaMask</em> asks you to confirm network switching to Mantle Sepolia (5003).<br />
+            • Every action is signed in your wallet and settled on-chain on Mantle.<br />
+            • Invoices, loans, and treasury moves all produce a verifiable Mantle Explorer link.
           </div>
         )}
 

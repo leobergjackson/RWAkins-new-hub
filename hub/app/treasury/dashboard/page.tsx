@@ -145,8 +145,8 @@ export default function DashboardPage() {
         const tier = getCreditTier(platform.creditScore)
         const signals = [
           platform.vaultActive     && { label: '🔐 Vault',   note: '+85 pts',        color: '#A855F7' },
-          platform.stellarPayments && { label: '⭐ Stellar', note: `${platform.stellarPayments} txns`, color: '#F472B6' },
-          platform.solanaSlot      && { label: '◎ Solana',  note: `slot #${platform.solanaSlot.toLocaleString()}`, color: '#9945FF' },
+          platform.stellarPayments && { label: '⭐ Mantle', note: `${platform.stellarPayments} txns`, color: '#F472B6' },
+          platform.solanaSlot      && { label: '◎ Mantle',  note: `slot #${platform.solanaSlot.toLocaleString()}`, color: '#9945FF' },
         ].filter(Boolean) as { label: string; note: string; color: string }[]
         return (
           <div style={{ background: `linear-gradient(135deg, ${tier.bg}, rgba(0,229,204,0.03))`, border: `1px solid ${tier.border}`, borderRadius: 12, padding: '14px 20px', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
@@ -164,7 +164,7 @@ export default function DashboardPage() {
                 <span key={s.label} style={{ fontSize: 10, padding: '2px 10px', borderRadius: 999, background: `${s.color}15`, border: `1px solid ${s.color}33`, color: s.color, fontFamily: MONO }}>
                   {s.label} · {s.note}
                 </span>
-              )) : <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>Connect vault, Stellar & Solana to boost your credit score</span>}
+              )) : <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>Connect vault, treasury & payments to boost your credit score</span>}
             </div>
             <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', fontFamily: MONO }}>{tier.treasuryTier}</div>
             <PlatformModeBadge />

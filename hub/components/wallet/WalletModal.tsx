@@ -21,7 +21,7 @@ export function WalletModal({ onClose, onConnectEVM, onConnectSolana }: Props) {
       id: 'metamask',
       name: 'MetaMask',
       emoji: '🦊',
-      description: 'Connect to QIE Mainnet, Arbitrum, Ethereum',
+      description: 'Connect to Mantle Network, Mantle, Ethereum',
       tools: ['Credit Passport', 'Family Vault', 'Private Vault', 'AI Lending', 'Bill Split'],
       color: '#F5841F',
       detected: hasMetaMask,
@@ -32,7 +32,7 @@ export function WalletModal({ onClose, onConnectEVM, onConnectSolana }: Props) {
       id: 'phantom',
       name: 'Phantom',
       emoji: '👻',
-      description: 'Connect to Solana Devnet',
+      description: 'Connect to Mantle Sepolia',
       tools: ['Agent Co-ordinator', 'Yield Operations Hub', 'Stealth Execution Suite'],
       color: '#9945ff',
       detected: hasPhantom,
@@ -125,7 +125,7 @@ export function WalletModal({ onClose, onConnectEVM, onConnectSolana }: Props) {
           <div className="px-6 pb-5 pt-1">
             <p className="text-xs text-white/20 text-center leading-relaxed">
               Your private keys never leave your wallet.
-              Ruphex only reads your public address.
+              Kubryx only reads your public address.
             </p>
           </div>
         </motion.div>

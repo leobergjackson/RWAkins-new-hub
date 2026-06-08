@@ -27,10 +27,10 @@ export const wagmiConfig = getDefaultConfig({
 
 export const MANTLE_SEPOLIA_CHAIN_ID = 5003;
 /** @deprecated Renamed during the Mantle migration. Kept so existing imports keep
- *  compiling; it now points at Mantle Sepolia (5003), not Arbitrum. */
+ *  compiling; it now points at Mantle Sepolia (5003), not Mantle. */
 export const ARBITRUM_SEPOLIA_CHAIN_ID = MANTLE_SEPOLIA_CHAIN_ID;
 
 // Token + invoice contract addresses come from env. Fallbacks are intentionally the
-// zero address (not a stale Arbitrum address) so a misconfig fails loudly on Mantle.
+// zero address (not a stale Mantle address) so a misconfig fails loudly on Mantle.
 export const USDC_ADDRESS = (process.env.NEXT_PUBLIC_USDC_ADDRESS ?? '0x0000000000000000000000000000000000000000') as `0x${string}`;
 export const CONTRACT_ADDRESS = (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '0x0000000000000000000000000000000000000000') as `0x${string}`;

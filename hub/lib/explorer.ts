@@ -1,11 +1,11 @@
 // Built by vsrupeshkumar
-export type ExplorerChain = 'qie' | 'solana' | 'stellar' | 'arbitrum'
+export type ExplorerChain = 'mantle' | 'qie' | 'solana' | 'stellar'
 
 const BASES: Record<ExplorerChain, string> = {
-  qie: 'https://mainnet.qie.digital',
-  solana: 'https://explorer.solana.com',
-  stellar: 'https://stellar.expert/explorer/testnet',
-  arbitrum: 'https://arbiscan.io',
+  mantle: 'https://explorer.sepolia.mantle.xyz',
+  qie: 'https://explorer.sepolia.mantle.xyz',
+  solana: 'https://explorer.sepolia.mantle.xyz',
+  stellar: 'https://explorer.sepolia.mantle.xyz',
 }
 
 export function getExplorerUrl(chain: ExplorerChain, type: 'address' | 'tx', value: string): string {

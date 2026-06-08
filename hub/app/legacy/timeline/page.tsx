@@ -225,7 +225,7 @@ function FileCard({
       const res = await anchorCid(file.id, did)
       setTxHash(res.txHash)
       setAnchorState('done')
-      toast.success('Anchored on QIE Mainnet')
+      toast.success('Anchored on Mantle Network')
     } catch {
       setAnchorState('idle')
       toast.error('Anchoring failed')
@@ -304,7 +304,7 @@ function FileCard({
                 fontSize: 11, fontWeight: 600, cursor: anchorState === 'busy' ? 'not-allowed' : 'pointer',
               }}
             >
-              {anchorState === 'busy' ? 'Anchoring…' : '⛓ Anchor on QIE'}
+              {anchorState === 'busy' ? 'Anchoring…' : '⛓ Anchor on Mantle'}
             </button>
           )}
           <button
@@ -352,7 +352,7 @@ function FileCard({
 
 // ─── Page ──────────────────────────────────────────────────────
 export default function TimelinePage() {
-  // Wallet state now comes from the global wallet context (EVM / QIE Mainnet).
+  // Wallet state now comes from the global wallet context (EVM / Mantle Network).
   const { address } = useWalletForTool()
   const wallet = address ?? ''
   const [files, setFiles] = useState<VaultFile[]>([])
@@ -401,7 +401,7 @@ export default function TimelinePage() {
             Connect your wallet to view your vault
           </p>
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: '0 0 24px', lineHeight: 1.6 }}>
-            Your timeline is associated with your QIE wallet address.
+            Your timeline is associated with your Mantle wallet address.
           </p>
           <ConnectButton type="evm" size="lg" />
         </div>
@@ -446,7 +446,7 @@ export default function TimelinePage() {
             marginBottom: 20, flexWrap: 'wrap', gap: 8,
           }}>
             <p style={{ fontSize: 12, fontFamily: 'monospace', color: 'rgba(255,255,255,0.35)', margin: 0 }}>
-              {truncateAddress(wallet)} · QIE Mainnet
+              {truncateAddress(wallet)} · Mantle Network
             </p>
             <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>
               {files.length} {files.length === 1 ? 'file' : 'files'}

@@ -64,16 +64,16 @@ export const PLATFORM_MODES: ModeProfile[] = [
 ]
 
 export const CHAIN_REGISTRY: Record<string, ChainMetadata> = {
-  qie: { id: 'qie', name: 'QIE Mainnet', chainId: '1990', explorerUrl: 'https://mainnet.qie.digital', rpcUrl: 'https://mainnet.qie.digital/api/eth-rpc', status: 'healthy' },
-  solana: { id: 'solana', name: 'Solana Devnet', explorerUrl: 'https://explorer.solana.com', rpcUrl: 'https://api.devnet.solana.com', status: 'healthy' },
-  stellar: { id: 'stellar', name: 'Stellar Testnet', explorerUrl: 'https://stellar.expert/explorer/testnet', rpcUrl: 'https://horizon-testnet.stellar.org', status: 'healthy' },
-  arbitrum: { id: 'arbitrum', name: 'Arbitrum One', chainId: '42161', explorerUrl: 'https://arbiscan.io', rpcUrl: 'https://arb1.arbitrum.io/rpc', status: 'healthy' },
+  qie: { id: 'qie', name: 'Mantle Network', chainId: '1990', explorerUrl: 'https://explorer.sepolia.mantle.xyz', rpcUrl: 'https://explorer.sepolia.mantle.xyz/api/eth-rpc', status: 'healthy' },
+  solana: { id: 'solana', name: 'Mantle Sepolia', explorerUrl: 'https://explorer.sepolia.mantle.xyz', rpcUrl: 'https://rpc.sepolia.mantle.xyz', status: 'healthy' },
+  stellar: { id: 'stellar', name: 'Mantle Sepolia', explorerUrl: 'https://explorer.sepolia.mantle.xyz', rpcUrl: 'https://rpc.sepolia.mantle.xyz', status: 'healthy' },
+  arbitrum: { id: 'arbitrum', name: 'Mantle Network', chainId: '42161', explorerUrl: 'https://mantlescan.xyz', rpcUrl: 'https://rpc.sepolia.mantle.xyz', status: 'healthy' },
 }
 
 export const SIMULATION_SCENARIOS: SimulationProfile[] = [
   { id: 'none', name: 'Nominal Operational State', description: 'All pipelines operate normally under production-grade SLA parameters (45ms).', symptoms: ['Optimal gateway response times', 'Zero error backoffs', 'Normal security baseline'], severity: 'low' },
-  { id: 'degraded_rpc', name: 'Degraded RPC Gateway Infrastructure', description: 'Simulates high request failure bounds on remote EVM and Solana RPC nodes.', symptoms: ['Average latency spikes to 950ms', 'Cache fallback layers activate automatically', 'Telemetry registers RETRY_BACKOFF alerts'], severity: 'medium' },
-  { id: 'chain_congestion', name: 'Chain Congestion & Mempool Saturation', description: 'Simulates severe network delay and high gas limits on Ethereum-based layers.', symptoms: ['Transaction confirmation times delayed by 180s', 'Estimated gas prices spike by 400%', 'Arbitrum bridge timeouts detected'], severity: 'medium' },
+  { id: 'degraded_rpc', name: 'Degraded RPC Gateway Infrastructure', description: 'Simulates high request failure bounds on remote EVM and Mantle RPC nodes.', symptoms: ['Average latency spikes to 950ms', 'Cache fallback layers activate automatically', 'Telemetry registers RETRY_BACKOFF alerts'], severity: 'medium' },
+  { id: 'chain_congestion', name: 'Chain Congestion & Mempool Saturation', description: 'Simulates severe network delay and high gas limits on Ethereum-based layers.', symptoms: ['Transaction confirmation times delayed by 180s', 'Estimated gas prices spike by 400%', 'Mantle bridge timeouts detected'], severity: 'medium' },
   { id: 'suspicious_activity', name: 'Suspicious Wallet Keys & Key Compromise', description: 'Simulates rapid token routing attempts from blacklisted high-risk contracts.', symptoms: ['Private Vault locks routing key locks', 'Security score falls to CRITICAL', 'Security console fires RPC_DEGRADATION warnings'], severity: 'high' },
   { id: 'treasury_imbalance', name: 'Treasury Asset Disparity & Drift Warning', description: 'Simulates severe automated payroll mismatch between active multi-sig stream balances.', symptoms: ['Treasury AI issues rebalance request', 'Debt threshold warning triggered', 'Asset allocation drift score exceeds 15%'], severity: 'medium' },
   { id: 'loan_risk_escalation', name: 'AI Lending Risk Level Escalation', description: 'Simulates massive default rate trends under sudden high yield market drops.', symptoms: ['Lendora AI triggers loan health freeze', 'Credit Passport staking requirement doubles', 'Repayment window narrows to 14 days'], severity: 'high' },
@@ -101,10 +101,10 @@ const DEFAULT_ANALYTICS: OperationalAnalytics = {
     'Private Vault': 99.96,
   },
   chainActivityRates: {
-    'QIE Mainnet': 14.5,
-    'Solana Devnet': 285.2,
-    'Stellar Testnet': 84.8,
-    'Arbitrum': 48.6,
+    'Mantle Network': 14.5,
+    'Mantle Sepolia': 285.2,
+    'RWA Vault': 84.8,
+    'Lending': 48.6,
   },
   telemetryAnomalyCount: 0,
   averageLatency: 45,
@@ -252,10 +252,10 @@ export function usePlatformState() {
             telemetryAnomalyCount: telemetryAnomalies,
             fallbackActivations: fallbackBase,
             chainActivityRates: {
-              'QIE Mainnet': mode === 'demo' ? 14.5 : Number((14.5 + Math.sin(Date.now() / 5000) * 1.5).toFixed(1)),
-              'Solana Devnet': mode === 'demo' ? 285.2 : Number((285.2 + Math.sin(Date.now() / 4000) * 20).toFixed(1)),
-              'Stellar Testnet': mode === 'demo' ? 84.8 : Number((84.8 + Math.sin(Date.now() / 6000) * 5).toFixed(1)),
-              'Arbitrum': mode === 'demo' ? 48.6 : Number((48.6 + Math.sin(Date.now() / 7000) * 3).toFixed(1)),
+              'Mantle Network': mode === 'demo' ? 14.5 : Number((14.5 + Math.sin(Date.now() / 5000) * 1.5).toFixed(1)),
+              'Mantle Sepolia': mode === 'demo' ? 285.2 : Number((285.2 + Math.sin(Date.now() / 4000) * 20).toFixed(1)),
+              'RWA Vault': mode === 'demo' ? 84.8 : Number((84.8 + Math.sin(Date.now() / 6000) * 5).toFixed(1)),
+              'Lending': mode === 'demo' ? 48.6 : Number((48.6 + Math.sin(Date.now() / 7000) * 3).toFixed(1)),
             }
           }
         }

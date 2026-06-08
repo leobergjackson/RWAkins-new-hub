@@ -45,10 +45,10 @@ export interface AgentEconomyState {
 }
 
 const DEFAULT_AGENTS: OperationalAgent[] = [
-  { id: 'agt-1', name: 'TreasurySentinel-01', role: 'Treasury Agent', status: 'Active', health: 99, trustScore: 99.8, workload: 40, tasksCompleted: 242, activeTask: 'Streaming multi-sig splits on Solana' },
+  { id: 'agt-1', name: 'TreasurySentinel-01', role: 'Treasury Agent', status: 'Active', health: 99, trustScore: 99.8, workload: 40, tasksCompleted: 242, activeTask: 'Streaming multi-sig splits on Mantle' },
   { id: 'agt-2', name: 'RiskGuardian-03', role: 'Risk Agent', status: 'Idle', health: 98, trustScore: 99.5, workload: 0, tasksCompleted: 189 },
   { id: 'agt-3', name: 'CipherLock-09', role: 'Security Agent', status: 'Active', health: 100, trustScore: 99.9, workload: 65, tasksCompleted: 512, activeTask: 'Auditing EVM ledger signature certs' },
-  { id: 'agt-4', name: 'LiquiditySwerve-05', role: 'Liquidity Agent', status: 'Active', health: 96, trustScore: 98.7, workload: 30, tasksCompleted: 115, activeTask: 'Optimizing Arbitrum lending yield spreads' },
+  { id: 'agt-4', name: 'LiquiditySwerve-05', role: 'Liquidity Agent', status: 'Active', health: 96, trustScore: 98.7, workload: 30, tasksCompleted: 115, activeTask: 'Optimizing Mantle lending yield spreads' },
   { id: 'agt-5', name: 'MeshRouter-11', role: 'Coordination Agent', status: 'Idle', health: 97, trustScore: 99.1, workload: 0, tasksCompleted: 94 },
   { id: 'agt-6', name: 'StatsOracle-07', role: 'Analytics Agent', status: 'Active', health: 99, trustScore: 99.4, workload: 50, tasksCompleted: 405, activeTask: 'Polling rollups latency performance metrics' },
   { id: 'agt-7', name: 'SoulVerifier-13', role: 'Compliance Agent', status: 'Idle', health: 100, trustScore: 100.0, workload: 0, tasksCompleted: 88 },
@@ -60,7 +60,7 @@ const DEFAULT_TASKS: AgentTask[] = [
     id: 'tsk-101',
     title: 'Audit transaction signature limits',
     assignedAgentId: 'agt-3',
-    targetChain: 'QIE Mainnet',
+    targetChain: 'Mantle Network',
     status: 'In Progress',
     urgency: 'high',
     log: ['Task propagation initialized', 'Acquiring active cryptographic state', 'Verifying Ed25519 detached payload signature']
@@ -69,16 +69,16 @@ const DEFAULT_TASKS: AgentTask[] = [
     id: 'tsk-102',
     title: 'Sweeping venture locker yields',
     assignedAgentId: 'agt-1',
-    targetChain: 'Solana Devnet',
+    targetChain: 'Mantle Sepolia',
     status: 'Completed',
     urgency: 'medium',
-    log: ['Task assigned to TreasurySentinel-01', 'Scanning self-claiming inheritance vault', 'Yield swap of 45 SOL finalized', 'State snapshot stored in local OS memory']
+    log: ['Task assigned to TreasurySentinel-01', 'Scanning self-claiming inheritance vault', 'Yield swap of 45 MNT finalized', 'State snapshot stored in local OS memory']
   },
   {
     id: 'tsk-103',
     title: 'Resolve regional server latency regression',
     assignedAgentId: 'agt-8',
-    targetChain: 'Stellar Testnet',
+    targetChain: 'Mantle Sepolia',
     status: 'In Progress',
     urgency: 'high',
     log: ['Regional RPC ping timeout intercepted', 'Cache fallback pathway instantiated', 'Exp backoff active']

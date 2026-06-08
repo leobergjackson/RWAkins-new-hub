@@ -1,10 +1,13 @@
 // Built by vsrupeshkumar
-// Raw JSON-RPC + ABI encoding helpers for QIE Mainnet contract calls.
+// Raw JSON-RPC + ABI encoding helpers for Mantle Sepolia contract calls.
 // No ethers.js — pure fetch plus a self-contained keccak-256 implementation
 // (Ethereum variant, 0x01 domain padding).
 
-const ARB_SEPOLIA_RPC_PRIMARY  = 'https://sepolia-rollup.arbitrum.io/rpc'
-const ARB_SEPOLIA_RPC_FALLBACK = 'https://sepolia-rollup.arbitrum.io/rpc'
+// Mantle Sepolia (chain 5003). Primary uses an env override when provided so a
+// rate-limited public endpoint can be swapped without a code change.
+const MANTLE_SEPOLIA_RPC_PRIMARY  =
+  process.env.NEXT_PUBLIC_MANTLE_SEPOLIA_RPC_URL ?? 'https://rpc.sepolia.mantle.xyz'
+const MANTLE_SEPOLIA_RPC_FALLBACK = 'https://mantle-sepolia.drpc.org'
 
 // ─── keccak-256 ──────────────────────────────────────────────────────────────
 
@@ -149,7 +152,7 @@ async function rpcPost(url: string, body: string): Promise<Response> {
   }
 }
 
-/** Read-only contract call against the QIE Mainnet RPC. Returns the result hex. */
+/** Read-only contract call against the Mantle Sepolia RPC. Returns the result hex. */
 export async function ethCall(contractAddress: string, encodedData: string): Promise<string> {
   const payload = JSON.stringify({
     jsonrpc: '2.0', id: 1, method: 'eth_call',
@@ -158,10 +161,10 @@ export async function ethCall(contractAddress: string, encodedData: string): Pro
 
   let res: Response
   try {
-    res = await rpcPost(ARB_SEPOLIA_RPC_PRIMARY, payload)
+    res = await rpcPost(MANTLE_SEPOLIA_RPC_PRIMARY, payload)
   } catch {
     // Primary timed out or unreachable — retry once with fallback.
-    res = await rpcPost(ARB_SEPOLIA_RPC_FALLBACK, payload)
+    res = await rpcPost(MANTLE_SEPOLIA_RPC_FALLBACK, payload)
   }
 
   const json = await res.json()

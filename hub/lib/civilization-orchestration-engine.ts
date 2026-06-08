@@ -122,7 +122,7 @@ const BASELINE_NEGOTIATIONS: InterAgentNegotiation[] = [
     id: 'neg-1',
     proposer: 'Treasury Sovereign',
     responder: 'Governance Chancellor',
-    topic: 'Automated 15% APY yield balance shift to Solana networks',
+    topic: 'Automated 15% APY yield balance shift to Mantle networks',
     consensusRequired: 90,
     currentAlignment: 94,
     status: 'agreed',

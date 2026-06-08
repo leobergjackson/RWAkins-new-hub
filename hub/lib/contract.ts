@@ -1,5 +1,5 @@
 // Built by vsrupeshkumar
-// QIE contract utilities — ABI encoding, decoding, formatting
+// Mantle contract utilities — ABI encoding, decoding, formatting
 
 export function encodeAddress(address: string): string {
   const clean = address.startsWith('0x') ? address.slice(2) : address

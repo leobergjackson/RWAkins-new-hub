@@ -108,7 +108,7 @@ export function generateStrategicRecommendations(
       estimatedGain: 4.5,
       reasoningTrail: [
         `Detected ${activeVotesCount} active KIP governance ballots.`,
-        `Evaluated liquidity reserves for Solana and EVM.`,
+        `Evaluated liquidity reserves for Mantle and EVM.`,
         `Calculated sweep APY to offset gas imbalances.`
       ]
     })

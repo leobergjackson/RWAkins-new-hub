@@ -122,7 +122,7 @@ function CountUpDecimal({ end, decimals = 1, prefix = '', suffix = '' }: { end: 
 }
 
 const STELLAR_ACCOUNT = 'GBTZHFZG4JLUQEOMOUVHZCHHLXO26UHN4JXY4T376LXNI56O2IPGIBCC'
-const STELLAR_EXPLORER = `https://stellar.expert/explorer/testnet/account/${STELLAR_ACCOUNT}`
+const STELLAR_EXPLORER = `https://explorer.sepolia.mantle.xyz/account/${STELLAR_ACCOUNT}`
 const STELLAR_SHORT = `${STELLAR_ACCOUNT.slice(0, 6)}…${STELLAR_ACCOUNT.slice(-4)}`
 
 function secsAgo(ts: number) {
@@ -141,12 +141,12 @@ function timeAgo(iso: string) {
 }
 
 export default function SyncSplitPage() {
-  // Wallet state now comes from the global wallet context (EVM / QIE Mainnet).
+  // Wallet state now comes from the global wallet context (EVM / Mantle Network).
   const { address, isConnected } = useWalletForTool()
   const wallet = address ?? ''
   const [mounted, setMounted] = useState(false)
 
-  // Stellar Horizon live data
+  // Mantle Horizon live data
   const { stats: stellarStats, isLive: stellarLive, refresh: refreshStellar } = useStellar()
   const platform = useKubrykPlatform()
   const [stellarLastUpdated, setStellarLastUpdated] = useState<number | null>(null)
@@ -305,7 +305,7 @@ export default function SyncSplitPage() {
     if (!participantInput) return
     const cleaned = participantInput.trim()
     if (cleaned.length < 15) {
-      toast.error('Please enter a valid Stellar wallet address')
+      toast.error('Please enter a valid Mantle wallet address')
       return
     }
     if (participantList.includes(cleaned)) {
@@ -360,7 +360,7 @@ export default function SyncSplitPage() {
         requestAnimationFrame(runPhase1)
       } else {
         setSubmitState('anchoring')
-        // Progress Simulation Phase 2: Anchor on Stellar Network (1000ms)
+        // Progress Simulation Phase 2: Anchor on Mantle Network (1000ms)
         let start2 = performance.now()
         const runPhase2 = (now2: number) => {
           const elapsed2 = now2 - start2
@@ -391,7 +391,7 @@ export default function SyncSplitPage() {
             }
             setSplits(prev => [newBill, ...prev])
             setSubmitState('success')
-            toast.success('✦ Soroban smart escrow deployed!')
+            toast.success('✦ on-chain smart escrow deployed!')
           }
         }
         requestAnimationFrame(runPhase2)
@@ -431,7 +431,7 @@ export default function SyncSplitPage() {
       }))
       const tx = simTx('stellar')
       toast.success('✦ Escrow payment cleared on-chain', {
-        description: `Stellar tx ${tx.short}`,
+        description: `Mantle tx ${tx.short}`,
         action: { label: 'Explorer ↗', onClick: () => window.open(tx.explorerUrl, '_blank') },
       })
     }, 1000)
@@ -1896,7 +1896,7 @@ export default function SyncSplitPage() {
           <a href="#create-bill" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('create-bill') }}>Create Bill</a>
           <a href="#active-bills" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('active-bills') }}>My Bills</a>
           <a href="#settlement" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('settlement') }}>Settlement</a>
-          <a href={getExplorerUrl('stellar', 'address', 'CCEIBX7TF3OY5CWE5GDGZPFNNTIRTLLHDYJ4NQG4YLWYTNURUZ4YGKGF')} target="_blank" rel="noopener noreferrer" className="nav-link">Stellar Network</a>
+          <a href={getExplorerUrl('stellar', 'address', 'CCEIBX7TF3OY5CWE5GDGZPFNNTIRTLLHDYJ4NQG4YLWYTNURUZ4YGKGF')} target="_blank" rel="noopener noreferrer" className="nav-link">Mantle Network</a>
         </nav>
         <div>
           <ConnectButton type="evm" size="lg" />
@@ -1920,7 +1920,7 @@ export default function SyncSplitPage() {
           Split every bill, trustlessly, on-chain.
         </h1>
         <p className="page-subtitle">
-          No more awkward reminders. No more trust issues. Bill Split uses Stellar Soroban smart contracts to lock everyone's share in escrow — and releases the full amount only when every participant has paid.
+          No more awkward reminders. No more trust issues. Bill Split uses Mantle smart contracts to lock everyone's share in escrow — and releases the full amount only when every participant has paid.
         </p>
         <div className="pull-quote">
           "Your share. Your wallet. Your chain."
@@ -1931,7 +1931,7 @@ export default function SyncSplitPage() {
         </div>
         {stellarLive && stellarStats && (
           <div style={{ fontSize: 12, padding: '6px 16px', borderRadius: 999, background: 'rgba(244,114,182,0.08)', border: '1px solid rgba(244,114,182,0.25)', color: '#BE185D', fontWeight: 600, marginBottom: 16 }}>
-            ⭐ {stellarStats.totalTransactions} Stellar payments → feeds your Ruphex Credit Score
+            ⭐ {stellarStats.totalTransactions} Mantle payments → feeds your Kubryx Credit Score
           </div>
         )}
         <div className="scroll-indicator" onClick={() => scrollTo('stats')}>
@@ -1945,7 +1945,7 @@ export default function SyncSplitPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
             <span className={(isLive || stellarLive) ? 'badge-live' : 'badge-demo'}>
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: (isLive || stellarLive) ? '#10b981' : '#f59e0b', flexShrink: 0 }} />
-              {(isLive || stellarLive) ? 'Live Data — Stellar Testnet' : 'Testnet Data — SyncSplit connecting…'}
+              {(isLive || stellarLive) ? 'Live Data — Mantle Sepolia' : 'Testnet Data — SyncSplit connecting…'}
             </span>
             <a
               href={STELLAR_EXPLORER}
@@ -1974,13 +1974,13 @@ export default function SyncSplitPage() {
             <div className="stat-number">
               {mounted ? <CountUp end={stellarLive ? stellarStats.totalTransactions : 28104} /> : '0'}
             </div>
-            <div className="stat-label">{stellarLive ? 'from Horizon' : 'on Stellar'}</div>
+            <div className="stat-label">{stellarLive ? 'from Horizon' : 'on Mantle'}</div>
           </div>
           <div className="stat-card style-2">
-            <div className="stat-eyebrow">✦ XLM Balance</div>
+            <div className="stat-eyebrow">✦ MNT Balance</div>
             <div className="stat-number" style={{ color: '#F472B6' }}>
               {stellarLive
-                ? <>{parseFloat(stellarStats.balance ?? '0').toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ fontSize: '0.55em', opacity: 0.7 }}>XLM</span></>
+                ? <>{parseFloat(stellarStats.balance ?? '0').toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ fontSize: '0.55em', opacity: 0.7 }}>MNT</span></>
                 : mounted ? <CountUpDecimal end={4.2} decimals={1} prefix="$" suffix="M" /> : '0'}
             </div>
             <div className="stat-label">{stellarLive ? 'testnet account' : 'auto-settled'}</div>
@@ -2027,7 +2027,7 @@ export default function SyncSplitPage() {
             <div className="eyebrow-cursive" style={{ color: '#2D1A26' }}>step two</div>
             <h3 className="process-title">Everyone Pays</h3>
             <p className="process-body">
-              Each participant connects their Stellar wallet and pays exactly their share into the escrow contract.
+              Each participant connects their Mantle wallet and pays exactly their share into the escrow contract.
             </p>
           </div>
           <div className="process-card left-accent">
@@ -2086,7 +2086,7 @@ export default function SyncSplitPage() {
                     onChange={(e) => setSelectedCurrency(e.target.value)}
                   >
                     <option value="USDC">USDC ▾</option>
-                    <option value="XLM">XLM ▾</option>
+                    <option value="MNT">MNT ▾</option>
                   </select>
                 </div>
               </div>
@@ -2102,7 +2102,7 @@ export default function SyncSplitPage() {
                     className="input-text input-address" 
                     value={participantInput}
                     onChange={(e) => setParticipantInput(e.target.value)}
-                    placeholder="Stellar wallet address (starts with G...)" 
+                    placeholder="Mantle wallet address (starts with G...)" 
                   />
                   <button 
                     type="button" 
@@ -2185,7 +2185,7 @@ export default function SyncSplitPage() {
               {isConnected ? (
                 <div className="btn-submit-container" onClick={handleCreateBillSubmit}>
                   <button type="submit" className="btn-submit-left">
-                    Create Bill on Stellar
+                    Create Bill on Mantle
                   </button>
                   <div className="btn-submit-right">
                     →
@@ -2196,7 +2196,7 @@ export default function SyncSplitPage() {
                   <ConnectButton type="evm" size="lg" />
                 </div>
               )}
-              <span className="secured-note">Secured by Stellar Soroban escrow contract</span>
+              <span className="secured-note">Secured by Mantle escrow contract</span>
             </form>
           )}
 
@@ -2204,7 +2204,7 @@ export default function SyncSplitPage() {
           {(submitState === 'creating' || submitState === 'anchoring') && (
             <div className="progress-overlay-container">
               <div className="progress-step-title">
-                {submitState === 'creating' ? 'Creating escrow contract...' : 'Anchoring bill on Stellar...'}
+                {submitState === 'creating' ? 'Creating escrow contract...' : 'Anchoring bill on Mantle...'}
               </div>
               <div className="progress-step-caption">
                 ✦ generating stellar soroban state
@@ -2404,17 +2404,17 @@ export default function SyncSplitPage() {
                       </span>
                     </div>
                     <div className="timeline-card-mid">
-                      {parseFloat(p.amount ?? '0').toFixed(2)} {p.assetType} · Stellar Testnet
+                      {parseFloat(p.amount ?? '0').toFixed(2)} {p.assetType} · Mantle Sepolia
                     </div>
                     <div className="timeline-card-bottom">
                       <span className="timeline-tx-hash">Tx: {p.transactionHash.slice(0, 16)}…</span>
                       <a
-                        href={`https://stellar.expert/explorer/testnet/tx/${p.transactionHash}`}
+                        href={`https://explorer.sepolia.mantle.xyz/tx/${p.transactionHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="timeline-explorer-link"
                       >
-                        View on Stellar Expert ↗
+                        View on Mantle Expert ↗
                       </a>
                     </div>
                   </div>
@@ -2430,7 +2430,7 @@ export default function SyncSplitPage() {
                       <span className="timeline-card-date">{item.date}</span>
                     </div>
                     <div className="timeline-card-mid">
-                      {item.amount} · {item.participants} participants · Stellar Soroban
+                      {item.amount} · {item.participants} participants · Mantle
                     </div>
                     <div className="timeline-card-bottom">
                       <span className="timeline-tx-hash">Tx: {item.txHash}</span>
@@ -2440,7 +2440,7 @@ export default function SyncSplitPage() {
                         rel="noopener noreferrer"
                         className="timeline-explorer-link"
                       >
-                        View on Stellar Explorer ↗
+                        View on Mantle Explorer ↗
                       </a>
                     </div>
                   </div>
@@ -2461,7 +2461,7 @@ export default function SyncSplitPage() {
 
         <div className="section-header">
           <div className="eyebrow-cursive">✦ under the hood</div>
-          <h2 className="section-title">Powered by Stellar Soroban</h2>
+          <h2 className="section-title">Powered by Mantle</h2>
           <div className="section-underline" />
         </div>
 
@@ -2471,10 +2471,10 @@ export default function SyncSplitPage() {
               <div className="tech-icon-circle">🔒</div>
               <h3 className="tech-card-title">Smart Escrow</h3>
               <p className="tech-card-body">
-                Every bill creates a dedicated Soroban smart contract. Funds are locked until all participants pay — then auto-released.
+                Every bill creates a dedicated Mantle smart contract. Funds are locked until all participants pay — then auto-released.
               </p>
             </div>
-            <span className="tech-chip-cursive">Soroban · Stellar</span>
+            <span className="tech-chip-cursive">Smart Escrow · Mantle</span>
           </div>
 
           <div className="tech-card">
@@ -2502,9 +2502,9 @@ export default function SyncSplitPage() {
           <div className="tech-card">
             <div>
               <div className="tech-icon-circle">👛</div>
-              <h3 className="tech-card-title">Any Stellar Wallet</h3>
+              <h3 className="tech-card-title">Any Mantle Wallet</h3>
               <p className="tech-card-body">
-                Participants can pay from any Stellar-compatible wallet. Freighter, Lobstr, xBull — all supported out of the box.
+                Participants can pay from any Mantle-compatible wallet. Freighter, Lobstr, xBull — all supported out of the box.
               </p>
             </div>
             <span className="tech-chip-cursive">Freighter · Lobstr</span>
@@ -2520,31 +2520,31 @@ export default function SyncSplitPage() {
               ✦ Bill Split
             </div>
             <div className="footer-tagline">
-              "Split bills. Build trust. On Stellar. ✦"
+              "Split bills. Build trust. On Mantle. ✦"
             </div>
           </div>
           <div className="footer-links-row">
             <a href="#how-it-works" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('how-it-works') }}>How it Works</a>
             <a href="#create-bill" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('create-bill') }}>Create Bill</a>
             <a href="#active-bills" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('active-bills') }}>View Bills</a>
-            <a href="https://stellar.expert/explorer/testnet" target="_blank" rel="noopener noreferrer" className="footer-link">Stellar Explorer</a>
+            <a href="https://explorer.sepolia.mantle.xyz" target="_blank" rel="noopener noreferrer" className="footer-link">Mantle Explorer</a>
           </div>
         </div>
         <div className="footer-bottom">
           <div className="footer-left-mono">
-            Built on Stellar Soroban · Soroban Testnet
+            Built on Mantle Sepolia
           </div>
           <div className="footer-right-cursive">
-            Part of the Ruphex Sovereign Operations Network • Built by vsrupeshkumar
+            Part of the Kubryx Sovereign Operations Network • Built by vsrupeshkumar
           </div>
         </div>
       </footer>
       
       <FeatureOverviewPanel 
         title="SyncSplit Escrows"
-        whatItIs="A high-speed, Soroban-powered smart escrow system on the Stellar network. Users create split-payment bills, and the smart contract securely holds all collateral. Once all participants have paid their share, the funds are automatically released to the recipient."
+        whatItIs="A high-speed, Mantle-powered smart escrow system on the Mantle network. Users create split-payment bills, and the smart contract securely holds all collateral. Once all participants have paid their share, the funds are automatically released to the recipient."
         whyUseIt="Splitting bills in crypto normally requires manual tracking, waiting for individual transfers, and trusting the collector. SyncSplit enforces this logic on-chain—if someone does not pay, the funds stay locked or revert. No counterparty risk."
-        whyEfficient="<ul><li><b>Soroban Sub-Second Finality</b>: Settles splits incredibly fast with near-zero fees compared to EVM alternatives.</li><li><b>Zero-Click Settlement</b>: The smart contract automatically executes the final payout transaction without requiring a manual 'claim' click.</li></ul>"
+        whyEfficient="<ul><li><b>Mantle Sub-Second Finality</b>: Settles splits incredibly fast with near-zero fees compared to EVM alternatives.</li><li><b>Zero-Click Settlement</b>: The smart contract automatically executes the final payout transaction without requiring a manual 'claim' click.</li></ul>"
         whyBest="It demonstrates how to wrap complex, multi-party escrow logic into a seamless, Web2-like Splitwise interface, abstracting the blockchain away while preserving trustless security."
         themeColor="#F472B6"
       />

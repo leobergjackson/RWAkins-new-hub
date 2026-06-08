@@ -44,7 +44,7 @@ const labelStyle: React.CSSProperties = {
 }
 
 export default function UploadPage() {
-  // Wallet state now comes from the global wallet context (EVM / QIE Mainnet).
+  // Wallet state now comes from the global wallet context (EVM / Mantle Network).
   const { address } = useWalletForTool()
   const wallet = address ?? ''
   const [vaultKey, setVaultKey] = useState('')
@@ -496,7 +496,7 @@ export default function UploadPage() {
           }}
         >
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
-            Connect wallet to anchor memories on QIE Mainnet
+            Connect wallet to anchor memories on Mantle Network
           </p>
           <ConnectButton type="evm" size="lg" />
         </div>
@@ -504,7 +504,7 @@ export default function UploadPage() {
 
       {wallet && (
         <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginTop: 12, fontFamily: 'monospace' }}>
-          Wallet: {truncateAddress(wallet)} · QIE Mainnet
+          Wallet: {truncateAddress(wallet)} · Mantle Network
         </p>
       )}
 

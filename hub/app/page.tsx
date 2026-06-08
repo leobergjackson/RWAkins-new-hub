@@ -110,7 +110,7 @@ function InvoiceCard() {
         <div style={{
           fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase',
           padding: '3px 10px', borderRadius: 999, background: 'rgba(59,91,250,0.08)', color: '#3B5BFA',
-        }}>Arbitrum Sepolia</div>
+        }}>Mantle Sepolia</div>
       </div>
 
       {/* Amount */}
@@ -160,13 +160,13 @@ function Hero() {
       }}>
         {/* Left */}
         <motion.div variants={stagger} initial="hidden" animate="visible" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 28 }}>
-          <motion.div variants={fadeUp}><Eyebrow>AI-powered USDC Invoice OS · Arbitrum Sepolia</Eyebrow></motion.div>
+          <motion.div variants={fadeUp}><Eyebrow>AI × RWA Financial OS · Mantle Sepolia</Eyebrow></motion.div>
           <motion.h1 variants={fadeUp} style={{ fontSize: 'clamp(44px, 7.4vw, 88px)', lineHeight: 1.02, fontWeight: 900, color: '#0A0F2E', letterSpacing: '-0.035em', margin: 0 }}>
             <span style={{ display: 'block' }}>Get Paid in</span>
             <span style={{ display: 'block' }}>USDC. <span className="gradient-text">Instantly.</span></span>
           </motion.h1>
           <motion.p variants={fadeUp} style={{ fontSize: 18, lineHeight: 1.65, color: '#475569', maxWidth: 520, margin: 0 }}>
-            Paste any invoice — AI reads it, generates a payment link, client pays in seconds. No banks. No 8% fees. Live on Arbitrum Sepolia.
+            Paste any invoice — AI reads it, generates a payment link, client pays in seconds. No banks. No 8% fees. Live on Mantle Sepolia.
           </motion.p>
           <motion.div variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {[
@@ -203,7 +203,7 @@ function Hero() {
               border: '1px solid rgba(40,160,240,0.2)',
             }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#28a0f0', display: 'inline-block' }} />
-              Live on Arbitrum Sepolia
+              Live on Mantle Sepolia
             </div>
             <div style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
@@ -232,16 +232,16 @@ function Hero() {
 }
 
 // ─── TRUST BAR ────────────────────────────────────────────────
-const LOGOS = ['Arbitrum Sepolia', 'USDC · Circle', 'Groq AI', 'Wagmi', 'RainbowKit', 'Next.js', 'Arbitrum', 'Ethereum']
+const LOGOS = ['Mantle Network', 'USDY · Ondo', 'mETH', 'Groq AI', 'Wagmi', 'RainbowKit', 'Next.js', 'ERC-8004']
 const CHAIN_SWATCHES: Record<string, string> = {
-  'Arbitrum Sepolia': 'linear-gradient(135deg,#28a0f0,#1a6bb5)',
-  'USDC · Circle': 'linear-gradient(135deg,#2775CA,#1a5fa8)',
+  'Mantle Network': 'linear-gradient(135deg,#000000,#3b4a5a)',
+  'USDY · Ondo': 'linear-gradient(135deg,#2775CA,#1a5fa8)',
+  'mETH': 'linear-gradient(135deg,#10B981,#059669)',
   'Groq AI': 'linear-gradient(135deg,#FF6B35,#F5A623)',
   'Wagmi': 'linear-gradient(135deg,#6366F1,#8B5CF6)',
   'RainbowKit': 'linear-gradient(135deg,#EC4899,#8B5CF6)',
   'Next.js': 'linear-gradient(135deg,#000,#444)',
-  'Arbitrum': 'linear-gradient(135deg,#12AAFF,#0088cc)',
-  'Ethereum': 'linear-gradient(135deg,#6366F1,#8B5CF6)',
+  'ERC-8004': 'linear-gradient(135deg,#12AAFF,#0088cc)',
 }
 
 function TrustBar() {
@@ -283,14 +283,14 @@ function HowItWorks() {
       num: '02',
       icon: <Zap size={28} color="#8B5CF6" />,
       title: 'Share Payment Link',
-      desc: 'One link. Your client pays USDC directly on Arbitrum. No fees. No middlemen. No bank delays.',
+      desc: 'One link. Your client pays USDC directly on Mantle. No fees. No middlemen. No bank delays.',
       color: '#8B5CF6',
     },
     {
       num: '03',
       icon: <Wallet size={28} color="#10B981" />,
       title: 'Get Paid Instantly',
-      desc: 'USDC lands in your wallet in seconds. Use it across the full Ruphex financial ecosystem.',
+      desc: 'USDC lands in your wallet in seconds. Use it across the full Kubryx financial ecosystem.',
       color: '#10B981',
     },
   ]
@@ -336,7 +336,7 @@ function HowItWorks() {
 // ─── STATS BAR ────────────────────────────────────────────────
 function StatsBar() {
   const items = [
-    '8 Financial Tools', '4 Chains', 'USDC Native', 'AI Powered', 'Arbitrum Sepolia', '0% Platform Fees',
+    '8 Financial Tools', 'ERC-8004 Agents', 'RWA Native (USDY/mETH)', 'AI Powered', 'Mantle Sepolia', '0% Platform Fees',
   ]
   return (
     <section style={{ background: 'linear-gradient(135deg, #F5F7FF 0%, #EEF2FF 100%)', padding: '40px 24px', borderTop: '1px solid #E0E7FF', borderBottom: '1px solid #E0E7FF' }}>
@@ -531,7 +531,7 @@ function DashFrame() {
         <aside style={{ background: '#0C1232', borderRight: '1px solid rgba(255,255,255,0.05)', padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 12, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
             <span style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#3B5BFA,#EC4899)', display: 'grid', placeItems: 'center', fontSize: 13, fontWeight: 900, color: '#fff' }}>K</span>
-            <span style={{ fontSize: 15, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Ruphex</span>
+            <span style={{ fontSize: 15, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Kubryx</span>
           </div>
           <nav style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {sideItems.map(([icon, name, active]) => (
@@ -553,11 +553,11 @@ function DashFrame() {
               <div style={{ fontSize: 22, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', marginTop: 2 }}>Create Payment Link</div>
             </div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 999, fontSize: 11.5, fontWeight: 700, border: '1px solid rgba(200,255,0,0.3)', background: 'rgba(200,255,0,0.1)', color: '#C8FF00' }}>
-              <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#C8FF00' }} /> Arbitrum Sepolia
+              <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#C8FF00' }} /> Mantle Sepolia
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 16 }}>
-            {[['$2,750', 'Invoice Amount', 'USDC'], ['< 3s', 'Settlement', 'On Arbitrum'], ['0%', 'Fees Taken', 'By Ruphex']].map(([n, label, sub], i) => (
+            {[['$2,750', 'Invoice Amount', 'USDC'], ['< 3s', 'Settlement', 'On Mantle'], ['0%', 'Fees Taken', 'By Kubryx']].map(([n, label, sub], i) => (
               <div key={i} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 12, padding: 16 }}>
                 <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#475569', fontWeight: 700 }}>{label}</div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 6 }}>
@@ -609,7 +609,7 @@ function FinalCTA() {
             <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.3fr 1fr', gap: 40, alignItems: 'center' }}>
               <div>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 12px', borderRadius: 999, background: 'rgba(255,255,255,0.2)', fontSize: 11.5, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#fff', marginBottom: 20 }}>
-                  <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#fff' }} /> Live on Arbitrum Sepolia
+                  <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: '#fff' }} /> Live on Mantle Sepolia
                 </div>
                 <h3 style={{ fontSize: 'clamp(34px, 4.5vw, 52px)', fontWeight: 800, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1.04, margin: '0 0 20px' }}>
                   Ready to get paid in USDC?
@@ -652,9 +652,9 @@ const FOOTER_COLS: Record<string, FooterLink[]> = {
     { label: 'Stealth Execution Suite', href: '/shadow' },
   ],
   CHAINS: [
-    { label: 'Arbitrum Sepolia', href: 'https://sepolia.arbiscan.io', external: true },
-    { label: 'Arbitrum',         href: 'https://arbiscan.io',        external: true },
-    { label: 'Ethereum',         href: 'https://etherscan.io',       external: true },
+    { label: 'Mantle Sepolia', href: 'https://explorer.sepolia.mantle.xyz', external: true },
+    { label: 'Mantle Network', href: 'https://explorer.mantle.xyz',         external: true },
+    { label: 'Mantlescan',     href: 'https://sepolia.mantlescan.xyz',      external: true },
   ],
   RESOURCES: [
     { label: 'Smart Contracts', href: '/protocols'    },
@@ -676,7 +676,7 @@ function Footer() {
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 24, paddingBottom: 48, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             <span style={{ width: 32, height: 32, borderRadius: 10, display: 'grid', placeItems: 'center', fontSize: 16, fontWeight: 900, color: '#fff', background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6 55%, #EC4899)' }}>K</span>
-            <span style={{ fontSize: 20, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Ruphex</span>
+            <span style={{ fontSize: 20, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Kubryx</span>
           </Link>
           <Link href="/invoice" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, borderRadius: 999, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontWeight: 600, padding: '10px 20px', fontSize: 14, textDecoration: 'none' }}>
             Create Invoice <ArrowRight size={15} strokeWidth={2.4} />
@@ -707,7 +707,7 @@ function Footer() {
         </div>
         <div style={{ padding: '40px 0', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
           <div style={{ fontSize: 'clamp(60px, 14vw, 220px)', fontWeight: 900, letterSpacing: '-0.06em', lineHeight: 1, WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02))', userSelect: 'none' }}>
-            Ruphex
+            Kubryx
           </div>
         </div>
         <div style={{ paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: 12, lineHeight: 1.6, color: 'rgba(148,163,184,0.7)', display: 'flex', flexDirection: 'column', gap: 12, textAlign: 'center', maxWidth: 960, margin: '0 auto' }}>

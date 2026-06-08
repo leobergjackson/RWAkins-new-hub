@@ -120,7 +120,7 @@ export function ConnectButton({
         </span>
         {balance && (
           <span className="text-white/40 text-xs hidden sm:inline">
-            {parseFloat(balance).toFixed(3)} {isSolana ? 'SOL' : 'ETH'}
+            {parseFloat(balance).toFixed(3)} {isSolana ? 'MNT' : 'ETH'}
           </span>
         )}
         <ChevronDown
@@ -139,7 +139,7 @@ export function ConnectButton({
               <div className="flex items-center gap-2 mb-1">
                 <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
                 <span className="text-xs text-white/40">
-                  {isSolana ? 'Phantom · Solana Devnet' : 'MetaMask · Chain ' + evm.chainId}
+                  {isSolana ? 'Phantom · Mantle Sepolia' : 'MetaMask · Chain ' + evm.chainId}
                 </span>
               </div>
               <p className="text-sm text-white break-all leading-relaxed" style={{ fontFamily: '"Fira Code", monospace' }}>
@@ -147,7 +147,7 @@ export function ConnectButton({
               </p>
               {balance && (
                 <p className="text-xs text-white/40 mt-1.5">
-                  Balance: {balance} {isSolana ? 'SOL' : 'ETH'}
+                  Balance: {balance} {isSolana ? 'MNT' : 'ETH'}
                 </p>
               )}
             </div>

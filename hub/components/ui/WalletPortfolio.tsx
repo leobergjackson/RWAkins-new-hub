@@ -99,7 +99,7 @@ export default function WalletPortfolio() {
             Connect an EVM wallet to see your portfolio
           </div>
           <div style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
-            Powered by Moralis · pulls live balances across Arbitrum, Ethereum and Polygon in one call.
+            Powered by Moralis · pulls live balances across Mantle, Ethereum and Polygon in one call.
           </div>
         </div>
       </div>
@@ -135,7 +135,7 @@ export default function WalletPortfolio() {
         gap: 12,
       }}>
         {(data?.chains ?? [
-          { chain: 'arbitrum', chainName: 'Arbitrum One', chainColor: '#28A0F0', totalUsd: 0, tokens: [] },
+          { chain: 'arbitrum', chainName: 'Mantle Network', chainColor: '#28A0F0', totalUsd: 0, tokens: [] },
           { chain: 'eth',      chainName: 'Ethereum',     chainColor: '#627EEA', totalUsd: 0, tokens: [] },
           { chain: 'polygon',  chainName: 'Polygon',      chainColor: '#8247E5', totalUsd: 0, tokens: [] },
         ] as ChainHoldings[]).map(chain => (

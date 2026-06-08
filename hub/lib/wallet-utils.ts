@@ -1,10 +1,10 @@
 // Built by vsrupeshkumar
 export const QIE_MAINNET = {
   chainId: '0x7C6',
-  chainName: 'QIE Mainnet',
-  rpcUrls: ['https://mainnet.qie.digital/api/eth-rpc'],
+  chainName: 'Mantle Network',
+  rpcUrls: ['https://explorer.sepolia.mantle.xyz/api/eth-rpc'],
   nativeCurrency: { name: 'QIE', symbol: 'QIE', decimals: 18 },
-  blockExplorerUrls: ['https://mainnet.qie.digital'],
+  blockExplorerUrls: ['https://explorer.sepolia.mantle.xyz'],
 }
 
 export const WALLET_INSTALL_LINKS = {
@@ -79,14 +79,15 @@ export function formatBalance(balance: string | null, symbol: string): string {
 export function getExplorerTxUrl(txHash: string, chainId: number): string {
   const map: Record<number, string> = {
     1:     'https://etherscan.io/tx/',
-    42161: 'https://arbiscan.io/tx/',
-    1990:  'https://mainnet.qie.digital/tx/',
+    5000:  'https://explorer.mantle.xyz/tx/',
+    5003:  'https://explorer.sepolia.mantle.xyz/tx/',
+    1990:  'https://explorer.sepolia.mantle.xyz/tx/',
   }
-  return `${map[chainId] ?? 'https://etherscan.io/tx/'}${txHash}`
+  return `${map[chainId] ?? 'https://explorer.sepolia.mantle.xyz/tx/'}${txHash}`
 }
 
 export function getSolanaExplorerUrl(txSig: string): string {
-  return `https://explorer.solana.com/tx/${txSig}?cluster=devnet`
+  return `https://explorer.sepolia.mantle.xyz/tx/${txSig}?cluster=devnet`
 }
 
 export function formatUSD(value: number): string {

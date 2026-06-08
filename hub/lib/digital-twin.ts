@@ -30,10 +30,10 @@ export const TWIN_SCENARIOS: TwinScenarioProfile[] = [
   {
     id: 'degraded_rpc',
     name: 'RPC Failure Cascade Simulation',
-    description: 'Simulates a chain-reaction response failure across EVM L2 and Solana SVM networks.',
+    description: 'Simulates a chain-reaction response failure across EVM L2 and Mantle SVM networks.',
     cascadeSteps: [
-      '00ms: Arbitrum regional gateway fails standard transaction ping.',
-      '04ms: Solana Devnet RPC latency crosses 900ms threshold.',
+      '00ms: Mantle regional gateway fails standard transaction ping.',
+      '04ms: Mantle Sepolia RPC latency crosses 900ms threshold.',
       '08ms: Gateway Cache Fallback Layer automatically assumes routing priorities.',
       '12ms: Telemetry monitors fire high-severity RETRY_BACKOFF diagnostics alerts.'
     ],
@@ -46,12 +46,12 @@ export const TWIN_SCENARIOS: TwinScenarioProfile[] = [
     name: 'Congestion & Mempool Saturation Simulation',
     description: 'Models maximum structural limits on gas prices and transaction propagation delays.',
     cascadeSteps: [
-      '00ms: Stellar Testnet block time drifts past 180s limits.',
+      '00ms: Mantle Sepolia block time drifts past 180s limits.',
       '03ms: Gas price estimates surge 400% on active EVM routing bridges.',
       '06ms: SyncSplit batch queues delay due to pool saturation.',
       '09ms: Autonomous Gas Optimizer restricts transaction pack sizes.'
     ],
-    narrativeText: 'Mempool limits saturated following multi-chain yield sprints, prompting immediate Soroban splitting adjustments.',
+    narrativeText: 'Mempool limits saturated following multi-chain yield sprints, prompting immediate Mantle splitting adjustments.',
     riskImpact: 45,
     resilienceUptime: 99.12
   },
@@ -74,9 +74,9 @@ export const TWIN_SCENARIOS: TwinScenarioProfile[] = [
     name: 'Treasury Stress Allocation Drift Simulation',
     description: 'Simulates active payroll disparity and automated yield allocation drifts.',
     cascadeSteps: [
-      '00ms: Asset allocation drift exceeds 15% between QIE and Solana desks.',
-      '02ms: Solana treasury pools hit cash flow saturation limits.',
-      '04ms: QIE Mainnet staking yields expand, prompting delta rebalance.',
+      '00ms: Asset allocation drift exceeds 15% between Mantle and Mantle desks.',
+      '02ms: Mantle treasury pools hit cash flow saturation limits.',
+      '04ms: Mantle Network staking yields expand, prompting delta rebalance.',
       '06ms: Rebalance recommendation dispatched to executive command dashboard.'
     ],
     narrativeText: 'Treasury liquidity declined after lending utilization increased, triggering delta-neutral yield re-staking optimization.',

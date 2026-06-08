@@ -14,7 +14,7 @@ const MONO   = '"Fira Code","JetBrains Mono",monospace'
 const CHAIN_COLOR: Record<string, string> = {
   BTC: '#f7931a',
   ETH: '#627eea',
-  SOL: '#9945ff',
+  MNT: '#9945ff',
 }
 
 function short(addr: string, head = 8, tail = 6) {
@@ -25,7 +25,7 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
   const [wallets, setWallets] = useState<DWallet[]>(FALLBACK_DWALLETS)
   const [copiedId, setCopiedId] = useState<number | null>(null)
 
-  const [chain, setChain] = useState<'BTC' | 'ETH' | 'SOL'>('BTC')
+  const [chain, setChain] = useState<'BTC' | 'ETH' | 'MNT'>('BTC')
   const [mpc, setMpc] = useState<'2-of-3' | '3-of-5'>('2-of-3')
   const [label, setLabel] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -47,7 +47,7 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
         ? `bc1q${Math.random().toString(36).slice(2, 38)}`
         : `0x${Math.random().toString(16).slice(2, 42)}`,
       mpcStatus: `${mpc} active`,
-      balance: chain === 'BTC' ? '0.0 BTC' : chain === 'ETH' ? '0.0 ETH' : '0.0 SOL',
+      balance: chain === 'BTC' ? '0.0 BTC' : chain === 'ETH' ? '0.0 ETH' : '0.0 MNT',
       value: '$0',
       createdAt: 'just now',
     }
@@ -170,7 +170,7 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <Field label="Chain">
                 <div style={{ display: 'flex', gap: 6 }}>
-                  {(['BTC', 'ETH', 'SOL'] as const).map(c => (
+                  {(['BTC', 'ETH', 'MNT'] as const).map(c => (
                     <button key={c} onClick={() => setChain(c)} style={{
                       flex: 1, padding: '8px 12px', borderRadius: 8,
                       background: chain === c ? `${CHAIN_COLOR[c]}20` : 'rgba(255,255,255,0.03)',

@@ -221,7 +221,7 @@ function PanelBody({
           <ArrowRight size={13} strokeWidth={2.5} />
         </Link>
         <p style={{ textAlign: 'center', fontSize: 10, color: 'rgba(255,255,255,0.2)', margin: '8px 0 0', letterSpacing: '0.04em' }}>
-          Lives inside Ruphex · same app
+          Lives inside Kubryx · same app
         </p>
       </div>
     </div>

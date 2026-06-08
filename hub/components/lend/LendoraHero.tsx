@@ -18,7 +18,7 @@ export default function LendoraHero({
   return (
     <div style={{ background: '#0C0C0C', borderBottom: `1px solid ${BORDER}`, padding: '24px 28px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: MUTED2, fontFamily: MONO, marginBottom: 14 }}>
-        <span>Ruphex</span><span>›</span><span style={{ color: A }}>Protocol Borrow Engine</span>
+        <span>Kubryx</span><span>›</span><span style={{ color: A }}>Protocol Borrow Engine</span>
       </div>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap' }}>
         <div style={{ minWidth: 0, flex: '1 1 480px' }}>
@@ -26,7 +26,7 @@ export default function LendoraHero({
             <div style={{ width: 44, height: 44, borderRadius: 12, background: `${A}25`, border: `1px solid ${A}45`, display: 'grid', placeItems: 'center', fontSize: 20, color: A, fontWeight: 800 }}>⟠</div>
             <div>
               <div style={{ fontSize: 24, fontWeight: 700, color: '#fff', fontFamily: 'Georgia, "Playfair Display", serif', letterSpacing: '-0.01em', lineHeight: 1 }}>Protocol Borrow Engine</div>
-              <div style={{ fontSize: 12, color: MUTED2, marginTop: 4 }}>AI DeFi Loan Negotiation · Arbitrum</div>
+              <div style={{ fontSize: 12, color: MUTED2, marginTop: 4 }}>AI DeFi Loan Negotiation · Mantle</div>
             </div>
           </div>
           <p style={{ fontSize: 13, color: MUTED, maxWidth: 640, marginTop: 10, marginBottom: 14, lineHeight: 1.6 }}>
@@ -36,7 +36,7 @@ export default function LendoraHero({
             <Pill color={A} label="AI Negotiation" />
             <Pill color="#06b6d4" label="ZK Credit" />
             <Pill color="#f59e0b" label="Demo Data" />
-            <Pill color={isLive ? '#10b981' : '#f59e0b'} label={isLive ? 'Arbitrum Live' : 'Arbitrum Offline'} pulse={!!isLive} />
+            <Pill color={isLive ? '#10b981' : '#f59e0b'} label={isLive ? 'Mantle Live' : 'Mantle Offline'} pulse={!!isLive} />
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>

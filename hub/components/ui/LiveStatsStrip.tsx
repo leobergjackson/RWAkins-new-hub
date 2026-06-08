@@ -1,6 +1,6 @@
 // Built by vsrupeshkumar
 // Light-themed live stats ribbon for the landing page hero.
-// Pulls real CoinGecko prices and Solana slot every few seconds so the very
+// Pulls real CoinGecko prices and Mantle slot every few seconds so the very
 // first thing a visitor sees is provably live data, not marketing copy.
 'use client'
 
@@ -40,10 +40,10 @@ export default function LiveStatsStrip() {
   const arb = prices.arbitrum
 
   const cells: Cell[] = [
-    { label: 'Solana Devnet', value: mesh.currentSlot > 0 ? `slot ${mesh.currentSlot.toLocaleString()}` : 'connecting…', sub: mesh.isLive ? `${mesh.jobs.length} on-chain jobs` : 'reconnecting', swatch: '#9945FF' },
+    { label: 'Mantle Sepolia', value: mesh.currentSlot > 0 ? `slot ${mesh.currentSlot.toLocaleString()}` : 'connecting…', sub: mesh.isLive ? `${mesh.jobs.length} on-chain jobs` : 'reconnecting', swatch: '#9945FF' },
     { label: 'ETH',           value: fmt(eth?.usd, 0), sub: change(eth?.change24h).text, swatch: '#6366F1' },
-    { label: 'SOL',           value: fmt(sol?.usd, 2), sub: change(sol?.change24h).text, swatch: '#14F195' },
-    { label: 'XLM',           value: fmt(xlm?.usd, 4), sub: change(xlm?.change24h).text, swatch: '#3B82F6' },
+    { label: 'MNT',           value: fmt(sol?.usd, 2), sub: change(sol?.change24h).text, swatch: '#14F195' },
+    { label: 'MNT',           value: fmt(xlm?.usd, 4), sub: change(xlm?.change24h).text, swatch: '#3B82F6' },
     { label: 'ARB',           value: fmt(arb?.usd, 3), sub: change(arb?.change24h).text, swatch: '#28A0F0' },
   ]
 

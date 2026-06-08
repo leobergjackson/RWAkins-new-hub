@@ -23,7 +23,7 @@ const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
 const CACHE_MS = 30 * 60 * 1_000  // 30 minutes
 const FETCH_TIMEOUT_MS = 8_000
-const UA = 'Ruphex/1.0 (briefing-aggregator)'
+const UA = 'Kubryx/1.0 (briefing-aggregator)'
 
 export type Headline = {
   title: string
@@ -123,7 +123,7 @@ async function summarizeWithGroq(headlines: Headline[]): Promise<string[]> {
         messages: [
           {
             role: 'system',
-            content: 'You are a Ruphex markets analyst. Given crypto news headlines, produce exactly 3 short bullet points capturing the most material market signals. Each bullet must be under 18 words, lead with a chain/asset/protocol name in bold-equivalent prose, and avoid speculation. Output ONLY a JSON array of 3 strings, no prose, no markdown.',
+            content: 'You are a Kubryx markets analyst. Given crypto news headlines, produce exactly 3 short bullet points capturing the most material market signals. Each bullet must be under 18 words, lead with a chain/asset/protocol name in bold-equivalent prose, and avoid speculation. Output ONLY a JSON array of 3 strings, no prose, no markdown.',
           },
           { role: 'user', content: `Today's headlines:\n${list}\n\nReturn JSON array of 3 bullets.` },
         ],

@@ -6,7 +6,7 @@ import { getChainlinkPrice } from '@/lib/chainlink'
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-const PAIRS = ['ETH', 'BTC', 'SOL', 'LINK']
+const PAIRS = ['ETH', 'BTC', 'MNT', 'LINK']
 
 export async function GET() {
   try {

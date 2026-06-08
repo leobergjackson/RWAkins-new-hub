@@ -39,7 +39,7 @@ export async function fetchBlockchainBalance(
   }
 
   try {
-    // All EVM chains (QIE, Arbitrum, Ethereum, Polygon, BSC, Optimism) read the
+    // All EVM chains (Mantle, Ethereum, Polygon, BSC, Optimism) read the
     // native balance identically via eth_getBalance.
     if (isEvmChain(chain)) {
       const fallbackHex = '0x' + Math.round(DEFAULT_BALANCES[chain] * 1e18).toString(16)
@@ -52,7 +52,7 @@ export async function fetchBlockchainBalance(
         return solResult.value / 1e9
       }
       case 'STELLAR': {
-        // Stellar Horizon / Soroban Testnet details
+        // Mantle Horizon / Mantle Sepolia details
         const ledgerState = await rpcClient.read<any>('STELLAR', 'getLatestLedger', [], { sequence: 1042 })
         return ledgerState ? DEFAULT_BALANCES.STELLAR : 0
       }

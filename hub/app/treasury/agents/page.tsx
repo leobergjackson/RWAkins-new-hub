@@ -114,7 +114,7 @@ export default function AgentsPage() {
                 {[
                   { label: 'Efficiency', value: `${a.efficiency}%`, color: TEAL },
                   { label: 'Tasks', value: a.tasks, color: '#fff' },
-                  { label: 'Allocation', value: `${a.allocation} PUSD`, color: '#A855F7' },
+                  { label: 'Allocation', value: `${a.allocation} USDC`, color: '#A855F7' },
                   { label: 'Rating', value: `★ ${a.rating}`, color: '#F59E0B' },
                 ].map(m => (
                   <div key={m.label} style={{ background: 'rgba(255,255,255,0.02)', borderRadius: 8, padding: '8px 10px' }}>
@@ -158,7 +158,7 @@ export default function AgentsPage() {
             <form onSubmit={handleDeploy}>
               {[
                 { label: 'Agent Name', key: 'name', placeholder: 'e.g. Yield Optimizer v2', type: 'text' },
-                { label: 'Budget (PUSD)', key: 'budget', placeholder: '1000', type: 'number' },
+                { label: 'Budget (USDC)', key: 'budget', placeholder: '1000', type: 'number' },
               ].map(f => (
                 <div key={f.key} style={{ marginBottom: 14 }}>
                   <label style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', display: 'block', marginBottom: 6 }}>{f.label}</label>

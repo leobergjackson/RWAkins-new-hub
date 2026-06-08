@@ -1,5 +1,5 @@
 // Built by vsrupeshkumar
-// Raw JSON-RPC reads for LegacyVault on QIE Mainnet — no ethers/viem dependency.
+// Raw JSON-RPC reads for LegacyVault on Mantle Network — no ethers/viem dependency.
 
 const QIE_RPC = 'https://rpc.qie.digital'
 const VAULT_ADDRESS = process.env.NEXT_PUBLIC_LEGACY_VAULT_ADDRESS || ''

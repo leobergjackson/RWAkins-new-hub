@@ -30,7 +30,7 @@ async function groqFallback(message: string): Promise<string> {
 }
 
 type Msg = { role: 'user' | 'ai'; text: string }
-type Asset = 'ETH' | 'BTC' | 'SOL'
+type Asset = 'ETH' | 'BTC' | 'MNT'
 type Borrow = 'USDC' | 'USDT' | 'DAI'
 
 export default function BorrowForm({
@@ -121,12 +121,12 @@ export default function BorrowForm({
   }
 
   async function accept() {
-    const tx = simTx('arbitrum')
+    const tx = simTx('mantle')
     setSuccess({
       id: `LN-${1042 + Math.floor(Math.random() * 50)}`,
       tx,
     })
-    toast.success('Loan submitted to Arbitrum')
+    toast.success('Loan submitted to Mantle')
     if (apiBase) {
       // Best-effort: log the loan against the Lendora backend if it's up.
       // Result doesn't affect the user-visible success state.
@@ -147,10 +147,10 @@ export default function BorrowForm({
             {success.id} · {borrowAmt} {borrowAsset} · {quote?.rate}% APR · {duration} days
           </p>
           <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 8, padding: 14, fontSize: 12, color: MUTED, marginBottom: 16, fontFamily: MONO, textAlign: 'left' }}>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Arbitrum Tx</div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Mantle Tx</div>
             <div style={{ wordBreak: 'break-all', color: '#fff' }}>{success.tx.hash}</div>
             <a href={success.tx.explorerUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: 8, color: '#10b981', textDecoration: 'none', fontFamily: 'inherit', fontWeight: 600 }}>
-              View on Arbiscan ↗
+              View on Mantle Explorer ↗
             </a>
           </div>
           <button onClick={() => { setSuccess(null); setQuote(null); setBorrowAmt('') }} style={primaryBtn}>Borrow Again</button>
@@ -165,7 +165,7 @@ export default function BorrowForm({
       <div style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
         <Section label="Step 1: Collateral">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 10 }}>
-            {(['ETH', 'BTC', 'SOL'] as Asset[]).map(a => (
+            {(['ETH', 'BTC', 'MNT'] as Asset[]).map(a => (
               <button key={a} onClick={() => setCollat(a)} style={{ ...card(collat === a), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, padding: '8px 12px' }}>
                 <span style={{ fontSize: 13, fontWeight: 700 }}>{a}</span>
                 <span style={{ fontSize: 10, color: collat === a ? LENDORA_ACCENT : 'rgba(255,255,255,0.4)', fontWeight: 500 }}>

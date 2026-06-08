@@ -1,5 +1,5 @@
 // Built by vsrupeshkumar
-// All network (chain) configuration for Ruphex wallet connectivity.
+// All network (chain) configuration for Kubryx wallet connectivity.
 // Updated for The Turing Test Hackathon 2026: Mantle Sepolia ONLY.
 
 export const NETWORKS = {
@@ -55,7 +55,7 @@ export const EVM_TOOLS = [
   '/invoice', '/dashboard', '/credit', '/legacy', '/vault', '/split', '/lend', '/agents', '/treasury', '/shadow'
 ]
 
-// Solana tools (use Phantom)
+// Mantle tools (use Phantom)
 export const SOLANA_TOOLS: string[] = []
 
 // Get network type for a route

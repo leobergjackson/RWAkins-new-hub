@@ -53,7 +53,7 @@ const DEFAULT_STATE: IntelligenceState = {
     creditScore: '742',
     activeVaults: 1,
     activeAgents: 1,
-    treasuryBalance: '12,480 SOL',
+    treasuryBalance: '12,480 MNT',
     ncrdStaked: 500,
     ncrdBalance: 1000,
     activeLoansCount: 1,
@@ -134,7 +134,7 @@ export function getRecommendedActions(state: IntelligenceState): RecommendationC
     cards.push({
       id: 'insight-lend-credit',
       title: 'Defi Credit Opportunity',
-      description: `Your verified Credit Passport score is high (${score} Grade A). You are pre-approved for low-interest Arbitrum loans.`,
+      description: `Your verified Credit Passport score is high (${score} Grade A). You are pre-approved for low-interest Mantle loans.`,
       type: 'opportunity',
       actionText: 'Open AI Lending Desk',
       actionHref: '/lend',
@@ -148,7 +148,7 @@ export function getRecommendedActions(state: IntelligenceState): RecommendationC
     cards.push({
       id: 'insight-treasury-staking',
       title: 'NCRD APY Rebalancing',
-      description: 'Optimize idle Treasury balances. Allocating 150 SOL to NCRD staking yields 12.5% APY in automated rewards.',
+      description: 'Optimize idle Treasury balances. Allocating 150 MNT to NCRD staking yields 12.5% APY in automated rewards.',
       type: 'opportunity',
       actionText: 'Stake NCRD Tokens',
       actionHref: '/credit',
@@ -172,7 +172,7 @@ export function getRecommendedActions(state: IntelligenceState): RecommendationC
     cards.push({
       id: 'tip-agent-vault',
       title: 'Automate Vault Safeguards',
-      description: 'No Solana agents are active. Deploy a TreasuryGuard agent to monitor EternalVault status every 60 seconds.',
+      description: 'No Mantle agents are active. Deploy a TreasuryGuard agent to monitor EternalVault status every 60 seconds.',
       type: 'tip',
       actionText: 'Configure Agent Mesh',
       actionHref: '/agents',
@@ -231,11 +231,11 @@ export const SHOWCASE_FLOW: WalkthroughStep[] = [
   {
     title: '2. Credit Passport (Soulbound NFT & APY Staking)',
     route: '/credit',
-    instructions: 'Calculate dynamic credit score grades on QIE Mainnet. Stake NCRD tokens statefully to earn auto-yield in our memory registry.',
+    instructions: 'Calculate dynamic credit score grades on Mantle Network. Stake NCRD tokens statefully to earn auto-yield in our memory registry.',
     tip: '💡 Judge Note: Connecting MetaMask verifies network parameters dynamically under Chain ID 1990.',
   },
   {
-    title: '3. Lendora AI (Negotiation & Arbitrum Loans)',
+    title: '3. Lendora AI (Negotiation & Mantle Loans)',
     route: '/lend',
     instructions: 'Communicate with the AI credit advisor. The advisor dynamically reads user credit score profiles to approve mock loans.',
     tip: '💡 Tech Focus: If backend services are offline, a secure local fallback handles natural language models seamlessly.',
@@ -243,7 +243,7 @@ export const SHOWCASE_FLOW: WalkthroughStep[] = [
   {
     title: '4. Yield Operations Hub (Treasury & Multi-Sig Streams)',
     route: '/treasury',
-    instructions: 'Monitor real-time payroll inflow/outflow streams on Solana Devnet. Use the Yield Optimizer to balance treasury assets.',
+    instructions: 'Monitor real-time payroll inflow/outflow streams on Mantle Sepolia. Use the Yield Optimizer to balance treasury assets.',
     tip: '💡 UX Polish: Features smooth micro-animations and zero layout shifts during rebalances.',
   },
   {
@@ -261,7 +261,7 @@ export const SHOWCASE_FLOW: WalkthroughStep[] = [
   {
     title: '7. Protocol Control Center',
     route: '/protocols',
-    instructions: 'Observe active synchronization states across QIE Mainnet, Solana Devnet, Stellar Testnet, and Arbitrum One in a unified visual topology.',
+    instructions: 'Observe active synchronization states across Mantle Network, Mantle Sepolia, Mantle Sepolia, and Mantle Network in a unified visual topology.',
     tip: '💡 Multichain Power: Deep-links direct queries to live block explorers for each network environment.',
   },
   {

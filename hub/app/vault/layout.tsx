@@ -1,8 +1,8 @@
 // Built by vsrupeshkumar
 import type { Metadata } from 'next'
 
-const title = 'Private Vault — Ruphex'
-const description = 'Cross-chain privacy trading on Solana'
+const title = 'Private Vault — Kubryx'
+const description = 'Cross-chain privacy trading on Mantle'
 const url = 'https://kubryx.vercel.app/vault'
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title,
   description,
   openGraph: {
-    title, description, url, siteName: 'Ruphex', type: 'website',
+    title, description, url, siteName: 'Kubryx', type: 'website',
     images: [{ url: '/og-default.svg', width: 1200, height: 630 }],
   },
   twitter: { card: 'summary_large_image', title, description, images: ['/og-default.svg'] },

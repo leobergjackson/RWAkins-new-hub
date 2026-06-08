@@ -307,7 +307,7 @@ function DetailPanel({
             <div style={{ fontSize: 17, fontWeight: 700, color: '#fff' }}>{node.name}</div>
             <div style={{ fontSize: 11, color: STATUS_COLOR[node.status], display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: STATUS_COLOR[node.status] }} />
-              {node.status} · Solana Devnet
+              {node.status} · Mantle Sepolia
             </div>
           </div>
         </div>
@@ -365,7 +365,7 @@ function DetailPanel({
 
         <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 8 }}>
           <a
-            href={`https://explorer.solana.com/address/${node.wallet}?cluster=devnet`}
+            href={`https://explorer.sepolia.mantle.xyz/address/${node.wallet}?cluster=devnet`}
             target="_blank" rel="noreferrer"
             style={{
               padding: '10px 14px', borderRadius: 8,
@@ -374,7 +374,7 @@ function DetailPanel({
               fontSize: 12, textAlign: 'center',
             }}
           >
-            View on Solana Explorer ↗
+            View on Mantle Explorer ↗
           </a>
           <Link
             href={`/agents/jobs/${node.jobId}`}

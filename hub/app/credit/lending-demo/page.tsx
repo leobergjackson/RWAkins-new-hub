@@ -168,7 +168,7 @@ function OfferCard({ offer, index, score }: { offer: NcLoanOffer; index: number;
 }
 
 export default function LendingDemoPage() {
-  // Wallet state now comes from the global wallet context (EVM / QIE Mainnet).
+  // Wallet state now comes from the global wallet context (EVM / Mantle Network).
   const { address } = useWalletForTool()
   const { disconnectEVM } = useWallet()
   const wallet = address ?? ''

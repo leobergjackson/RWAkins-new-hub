@@ -15,8 +15,8 @@ const MONO = '"JetBrains Mono","Fira Code",monospace'
 const TABS = ['Account', 'Payment', 'Security', 'Notifications', 'Advanced'] as const
 type Tab = typeof TABS[number]
 
-const NETWORKS = ['Solana', 'Ethereum', 'Arbitrum', 'Polygon', 'Base', 'Optimism']
-const ASSETS   = ['PUSD', 'SOL', 'ETH', 'USDC', 'USDT', 'DAI']
+const NETWORKS = ['Mantle', 'Ethereum', 'Polygon', 'Base', 'Optimism']
+const ASSETS   = ['USDC', 'MNT', 'ETH', 'USDC', 'USDT', 'DAI']
 
 function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -145,10 +145,10 @@ export default function SettingsPage() {
               <Toggle value={settings.paymentLimitsEnabled} onChange={v => upd('paymentLimitsEnabled', v)} />
             </Row>
             {settings.paymentLimitsEnabled && <>
-              <Row label="Daily Limit (PUSD)">
+              <Row label="Daily Limit (USDC)">
                 <input type="number" value={settings.dailyLimit} onChange={e => upd('dailyLimit', Number(e.target.value))} style={inp} />
               </Row>
-              <Row label="Single Transaction Limit (PUSD)">
+              <Row label="Single Transaction Limit (USDC)">
                 <input type="number" value={settings.singleLimit} onChange={e => upd('singleLimit', Number(e.target.value))} style={inp} />
               </Row>
             </>}

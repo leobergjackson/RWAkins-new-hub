@@ -63,9 +63,9 @@ export default function SecurityPage() {
   // Populate security feed events based on scenario selection
   useEffect(() => {
     const list: SecurityLog[] = [
-      { id: '1', timestamp: new Date(Date.now() - 60000).toISOString(), source: 'Soroban Splitter', action: 'Freighter XDR signature validation successful', status: 'passed' },
+      { id: '1', timestamp: new Date(Date.now() - 60000).toISOString(), source: 'Mantle Splitter', action: 'Freighter XDR signature validation successful', status: 'passed' },
       { id: '2', timestamp: new Date(Date.now() - 120000).toISOString(), source: 'Phantom Handshake', action: 'Ed25519 nacl detached verification verified', status: 'passed' },
-      { id: '3', timestamp: new Date(Date.now() - 180000).toISOString(), source: 'MetaMask EVM', action: 'Chain switcher validated QIE Mainnet (1990)', status: 'passed' },
+      { id: '3', timestamp: new Date(Date.now() - 180000).toISOString(), source: 'MetaMask EVM', action: 'Chain switcher validated Mantle Network (1990)', status: 'passed' },
     ]
 
     if (activeScenario === 'suspicious_activity') {
@@ -227,7 +227,7 @@ export default function SecurityPage() {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.03)', paddingBottom: 6 }}>
                 <span style={{ color: '#888' }}>Chain Integrity Confidence:</span>
-                <strong style={{ color: '#10B981' }}>QIE 99.9% • Solana 99.8% • Stellar 100%</strong>
+                <strong style={{ color: '#10B981' }}>Mantle 99.9% • Mantle 99.8% • Mantle 100%</strong>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.03)', paddingBottom: 6 }}>

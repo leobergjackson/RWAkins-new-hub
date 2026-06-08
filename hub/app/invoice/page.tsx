@@ -288,7 +288,7 @@ export default function InvoicePage() {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                 <label style={{ fontFamily: MONO, fontSize: 10, color: '#64748B', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                  Your Wallet on Arbitrum
+                  Your Wallet on Mantle
                 </label>
                 {isConnected && (
                   <button
@@ -422,7 +422,7 @@ export default function InvoicePage() {
                 ['TO', isValidAddress(freelancerWallet) ? `${freelancerWallet.slice(0, 6)}···${freelancerWallet.slice(-4)}` : '0x0000···0000'],
                 ['DESCRIPTION', description || '—'],
                 ['DUE', dueDate || '—'],
-                ['NETWORK', 'Arbitrum Sepolia'],
+                ['NETWORK', 'Mantle Sepolia'],
               ].map(([k, v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
                   <span style={{ fontFamily: MONO, fontSize: 10, color: 'rgba(255,255,255,0.25)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{k}</span>
@@ -446,7 +446,7 @@ export default function InvoicePage() {
           <div style={{ display: 'flex', gap: 10, marginTop: 20, flexWrap: 'wrap' }}>
             {[
               { label: 'Verified Smart Contract', color: '#10b981' },
-              { label: 'Arbitrum Sepolia', color: '#28a0f0' },
+              { label: 'Mantle Sepolia', color: '#28a0f0' },
               { label: 'USDC · Circle', color: '#2775CA' },
             ].map(b => (
               <div key={b.label} style={{

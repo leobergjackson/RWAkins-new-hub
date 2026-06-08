@@ -138,7 +138,7 @@ export default function PolicyPage() {
             <form onSubmit={handleCreate}>
               {[
                 { label: 'Policy Name', key: 'name', placeholder: 'Daily Spending Cap' },
-                { label: 'Description', key: 'description', placeholder: 'Max PUSD per 24 hours' },
+                { label: 'Description', key: 'description', placeholder: 'Max USDC per 24 hours' },
                 { label: 'Threshold', key: 'threshold', placeholder: '1000', type: 'number' },
               ].map(f => (
                 <div key={f.key} style={{ marginBottom: 14 }}>

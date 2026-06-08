@@ -2,8 +2,8 @@
 import type { Metadata } from 'next'
 import CreditNav from './_components/CreditNav'
 
-const title = 'Credit Passport — Ruphex'
-const description = 'AI-powered on-chain credit passport on QIE blockchain'
+const title = 'Credit Passport — Kubryx'
+const description = 'AI-powered on-chain credit passport on Mantle blockchain'
 const url = 'https://kubryx.vercel.app/credit'
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title,
     description,
     url,
-    siteName: 'Ruphex',
+    siteName: 'Kubryx',
     type: 'website',
     images: [{ url: '/og-default.svg', width: 1200, height: 630 }],
   },

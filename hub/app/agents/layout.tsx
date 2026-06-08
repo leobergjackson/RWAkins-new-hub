@@ -1,9 +1,9 @@
 // Built by vsrupeshkumar
 import type { Metadata } from 'next'
 
-const title = 'Agent Coordinator — Ruphex'
+const title = 'Agent Coordinator — Kubryx'
 const description =
-  'Every agent. Every decision. On chain. Coordinate, verify, and audit autonomous Solana agents.'
+  'Every agent. Every decision. On chain. Coordinate, verify, and audit autonomous Mantle agents.'
 const url = 'https://kubryx.vercel.app/agents'
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title,
     description,
     url,
-    siteName: 'Ruphex',
+    siteName: 'Kubryx',
     type: 'website',
     images: [{ url: '/og-default.svg', width: 1200, height: 630 }],
   },

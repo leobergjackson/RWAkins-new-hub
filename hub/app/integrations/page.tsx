@@ -27,14 +27,14 @@ interface IntegrationItem {
 const INTEGRATIONS: IntegrationItem[] = [
   {
     id: 'chain-qie',
-    name: 'QIE Mainnet',
+    name: 'Mantle Network',
     category: 'Blockchain',
     status: 'active',
     latency: '85ms',
     logo: '⬡',
     description: 'Secures high-speed L1 decentralized transaction logs and NFT minting workflows.',
     metadata: {
-      endpoint: 'https://mainnet.qie.digital/api/eth-rpc',
+      endpoint: 'https://explorer.sepolia.mantle.xyz/api/eth-rpc',
       contractAddress: '0x08DA91C81cebD27d181cA732615379f185FbFb51',
       version: 'v1.4.2',
       payloadExample: '{\n  "jsonrpc": "2.0",\n  "method": "eth_getBalance",\n  "params": ["0x...", "latest"],\n  "id": 1990\n}',
@@ -43,14 +43,14 @@ const INTEGRATIONS: IntegrationItem[] = [
   },
   {
     id: 'chain-solana',
-    name: 'Solana Devnet',
+    name: 'Mantle Sepolia',
     category: 'Blockchain',
     status: 'active',
     latency: '24ms',
     logo: '👻',
     description: 'High-speed payment streaming and autonomous agent coordination pipelines.',
     metadata: {
-      endpoint: 'https://api.devnet.solana.com',
+      endpoint: 'https://rpc.sepolia.mantle.xyz',
       version: 'v1.18.15',
       payloadExample: '{\n  "method": "getBalance",\n  "params": ["pubkeyString"]\n}',
       nodeType: 'RPC Node'
@@ -58,14 +58,14 @@ const INTEGRATIONS: IntegrationItem[] = [
   },
   {
     id: 'chain-stellar',
-    name: 'Stellar Testnet',
+    name: 'Mantle Sepolia',
     category: 'Blockchain',
     status: 'active',
     latency: '62ms',
     logo: '🚀',
-    description: 'Soroban smart contract multi-party Split billing and secure escrow settlement.',
+    description: 'Mantle smart contract multi-party Split billing and secure escrow settlement.',
     metadata: {
-      endpoint: 'https://horizon-testnet.stellar.org',
+      endpoint: 'https://rpc.sepolia.mantle.xyz',
       version: 'v20.4.0',
       payloadExample: '{\n  "_links": { "self": { "href": "https://..." } }\n}',
       nodeType: 'Horizon Gateway'
@@ -73,14 +73,14 @@ const INTEGRATIONS: IntegrationItem[] = [
   },
   {
     id: 'chain-arbitrum',
-    name: 'Arbitrum One',
+    name: 'Mantle Network',
     category: 'Blockchain',
     status: 'active',
     latency: '15ms',
     logo: '⬟',
     description: 'Low-interest decentralized L2 lending capital and collateral escrow lockers.',
     metadata: {
-      endpoint: 'https://arb1.arbitrum.io/rpc',
+      endpoint: 'https://rpc.sepolia.mantle.xyz',
       contractAddress: '0x992B95C85cebE27d181cA732615379f185FbFb51',
       version: 'nitro-v3.0',
       payloadExample: '{\n  "method": "eth_estimateGas",\n  "params": [{ "to": "0x..." }]\n}',
@@ -108,7 +108,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     status: 'active',
     latency: 'Local',
     logo: '👻',
-    description: 'Ed25519 nacl key signing buffers for Solana Yield Operations Hub streamers and agents.',
+    description: 'Ed25519 nacl key signing buffers for Mantle Yield Operations Hub streamers and agents.',
     metadata: {
       endpoint: 'window.solana',
       version: 'v24.2.1',
@@ -122,7 +122,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     status: 'active',
     latency: 'Local',
     logo: '🚀',
-    description: 'Stellar Soroban XDR transaction authorization handshake bridges.',
+    description: 'Mantle XDR transaction authorization handshake bridges.',
     metadata: {
       endpoint: 'window.freighter',
       version: 'v2.10.4',
@@ -154,7 +154,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     metadata: {
       endpoint: '/api/treasury/planner',
       version: 'llama-3.3-70b-versatile',
-      payloadExample: '{\n  "balance": "12,480 SOL",\n  "optimize": true\n}'
+      payloadExample: '{\n  "balance": "12,480 MNT",\n  "optimize": true\n}'
     }
   },
   {
@@ -220,7 +220,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     status: 'active',
     latency: '95ms',
     logo: '📜',
-    description: 'Verifies decentralized identity scorecards minted directly on QIE layers.',
+    description: 'Verifies decentralized identity scorecards minted directly on Mantle layers.',
     metadata: {
       endpoint: '0x08DA91C81cebD27d181cA732615379f185FbFb51',
       version: 'ERC-5114 (Soulbound)',
@@ -249,7 +249,7 @@ export default function IntegrationsPage() {
             latency = item.latency !== 'Local' ? `${parseInt(item.latency) * 8}ms` : 'Local'
           }
         } else if (activeScenario === 'chain_congestion') {
-          if (item.name === 'QIE Mainnet' || item.name === 'Arbitrum One') {
+          if (item.name === 'Mantle Network' || item.name === 'Mantle Network') {
             status = 'congested'
             latency = `${parseInt(item.latency) * 4}ms`
           }
@@ -372,8 +372,8 @@ export default function IntegrationsPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 140 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', textAlign: 'center', marginBottom: 4 }}>3. BACKEND & CHAINS</span>
             <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>🧠 Groq AI Orchestrator</div>
-            <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>⬡ QIE / Arbitrum</div>
-            <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>🚀 Stellar / Solana</div>
+            <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>⬡ Mantle Network</div>
+            <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>🚀 Mantle Sepolia</div>
           </div>
         </div>
       </section>

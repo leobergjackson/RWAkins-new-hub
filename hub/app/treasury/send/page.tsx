@@ -13,8 +13,8 @@ const CARD = 'rgba(255,255,255,0.03)'
 const BDR = 'rgba(255,255,255,0.07)'
 const MONO = '"JetBrains Mono","Fira Code",monospace'
 
-const ASSETS = ['PUSD','SOL','ETH','USDC','USDT','DAI','MATIC']
-const NETWORKS = ['Solana','Ethereum','Arbitrum','Polygon','Base','Optimism']
+const ASSETS = ['USDC','MNT','ETH','USDC','USDT','DAI','MATIC']
+const NETWORKS = ['Mantle','Ethereum','Polygon','Base','Optimism']
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -31,7 +31,7 @@ type SendState = { fromWallet: string; toAddress: string; asset: string; amount:
 
 export default function SendPage() {
   const [wallets, setWallets] = useState<PFWallet[]>([])
-  const [form, setForm] = useState<SendState>({ fromWallet: '', toAddress: '', asset: 'PUSD', amount: '', network: 'Solana', memo: '' })
+  const [form, setForm] = useState<SendState>({ fromWallet: '', toAddress: '', asset: 'USDC', amount: '', network: 'Mantle', memo: '' })
   const [route, setRoute] = useState<PFSwapRoute | null>(null)
   const [routeLoading, setRouteLoading] = useState(false)
   const [sending, setSending] = useState(false)
@@ -104,7 +104,7 @@ export default function SendPage() {
               </Field>
 
               <Field label="SEND TO *">
-                <input value={form.toAddress} onChange={upd('toAddress')} placeholder="0x... or Solana address or ENS name" style={inp} required />
+                <input value={form.toAddress} onChange={upd('toAddress')} placeholder="0x... or Mantle address or ENS name" style={inp} required />
               </Field>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
@@ -156,7 +156,7 @@ export default function SendPage() {
                   style={{ flex: 2, padding: '12px', borderRadius: 10, border: `1px solid ${TEAL}`, background: sending ? 'rgba(0,229,204,0.05)' : 'rgba(0,229,204,0.12)', color: TEAL, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
                   {sending ? 'Sending...' : '💸 Send Payment'}
                 </button>
-                <button type="button" onClick={() => setForm({ fromWallet:'', toAddress:'', asset:'PUSD', amount:'', network:'Solana', memo:'' })}
+                <button type="button" onClick={() => setForm({ fromWallet:'', toAddress:'', asset:'USDC', amount:'', network:'Mantle', memo:'' })}
                   style={{ flex: 1, padding: '12px', borderRadius: 10, border: `1px solid ${BDR}`, background: 'transparent', color: 'rgba(255,255,255,0.4)', fontSize: 13, cursor: 'pointer' }}>
                   Clear
                 </button>

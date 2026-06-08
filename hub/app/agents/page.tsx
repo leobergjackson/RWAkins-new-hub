@@ -28,7 +28,7 @@ function AgentsPageInner() {
   const initialTab: AgentsTabId = tabParam && VALID_TABS.includes(tabParam) ? tabParam : 'dashboard'
 
   const [activeTab, setActiveTab] = useState<AgentsTabId>(initialTab)
-  // Wallet state now comes from the global wallet context (Solana / Devnet).
+  // Wallet state now comes from the global wallet context (Mantle / Devnet).
   const { address } = useWalletForTool()
   const wallet = address ?? ''
 
@@ -369,11 +369,11 @@ function AgentsPageInner() {
           Agent <span>Coordination</span>
         </h1>
         <p className="page-subtitle">
-          Deploy, manage, and scale AI agents on the Solana network. Experience seamless on-chain execution with our premium orchestration layer.
+          Deploy, manage, and scale AI agents on the Mantle network. Experience seamless on-chain execution with our premium orchestration layer.
         </p>
         
         <div style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <PriceBadge coinId="solana" label="SOL" />
+          <PriceBadge coinId="solana" label="MNT" />
           <ConnectButton type="solana" size="lg" />
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', marginTop: 16, flexWrap: 'wrap' }}>
@@ -417,10 +417,10 @@ function AgentsPageInner() {
       </div>
       <FeatureOverviewPanel 
         title="Agent Coordination Protocol"
-        whatItIs="A high-throughput execution environment on Solana where AI agents can be deployed as autonomous smart nodes. Users deploy agent binaries to the registry and fund them with SOL to execute high-frequency tasks like arbitrage, portfolio rebalancing, and data scraping."
-        whyUseIt="Running AI agents locally or on centralized servers introduces latency and trust issues. Deploying them directly via a Solana-based coordination protocol ensures 400ms block execution times and cryptographically verifiable state transitions."
-        whyEfficient="<ul><li><b>Zero-Knowledge Audits</b>: Agents provide ZK proofs of their runtime integrity, ensuring they haven't been tampered with or front-run by node operators.</li><li><b>Parallel Execution</b>: Solana's Sealevel runtime allows thousands of agents to operate concurrently without network congestion.</li></ul>"
-        whyBest="Ruphex does not just run code; it manages the entire lifecycle—funding, monitoring, rate-limiting, and slashing malicious agents—all visible through this elegant command center."
+        whatItIs="A high-throughput execution environment on Mantle where AI agents can be deployed as autonomous smart nodes. Users deploy agent binaries to the registry and fund them with MNT to execute high-frequency tasks like arbitrage, portfolio rebalancing, and data scraping."
+        whyUseIt="Running AI agents locally or on centralized servers introduces latency and trust issues. Deploying them directly via a Mantle-based coordination protocol ensures 400ms block execution times and cryptographically verifiable state transitions."
+        whyEfficient="<ul><li><b>Zero-Knowledge Audits</b>: Agents provide ZK proofs of their runtime integrity, ensuring they haven't been tampered with or front-run by node operators.</li><li><b>Parallel Execution</b>: Mantle's Sealevel runtime allows thousands of agents to operate concurrently without network congestion.</li></ul>"
+        whyBest="Kubryx does not just run code; it manages the entire lifecycle—funding, monitoring, rate-limiting, and slashing malicious agents—all visible through this elegant command center."
         themeColor="#9945FF"
       />
     </div>

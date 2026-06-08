@@ -25,7 +25,7 @@ export const DASH_STAT_PLACEHOLDERS: DashStat[] = [
 export type HowStep = { title: string; description: string }
 
 export const HOW_IT_WORKS: HowStep[] = [
-  { title: 'Deploy',   description: 'Spawn a signed Anchor program on Solana devnet with an SNS identity.' },
+  { title: 'Deploy',   description: 'Spawn a signed Anchor program on Mantle devnet with an SNS identity.' },
   { title: 'Delegate', description: 'Authorize sub-agents with bounded scopes and time-locked permissions.' },
   { title: 'Verify',   description: 'Every message is Ed25519-signed and logged on-chain for full audit.' },
   { title: 'Revoke',   description: 'Pull authority instantly. Revocations propagate through the mesh.' },

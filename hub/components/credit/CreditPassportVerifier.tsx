@@ -58,10 +58,10 @@ export default function CreditPassportVerifier({ walletAddress }: { walletAddres
     const mockNFT: NFT = {
       token_address: contractAddress,
       token_id: String(Math.floor(Math.random() * 1000000)),
-      name: 'Ruphex Credit Passport',
+      name: 'Kubryx Credit Passport',
       symbol: 'KCP',
       metadata: JSON.stringify({
-        name: 'Ruphex Credit Passport',
+        name: 'Kubryx Credit Passport',
         description: 'Verified Web3 reputation and ZK credit score soulbound identity.',
         image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2832&auto=format&fit=crop'
       }),
@@ -103,7 +103,7 @@ export default function CreditPassportVerifier({ walletAddress }: { walletAddres
       {loading ? (
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '20px 0' }}>
           <div style={{ width: 24, height: 24, borderRadius: '50%', border: '2px solid rgba(245,166,35,0.2)', borderTopColor: '#F5A623', animation: 'spin 1s linear infinite' }} />
-          <span style={{ fontSize: 13, color: 'rgba(45,26,38,0.6)', fontWeight: 500 }}>Scanning Arbitrum blockchain via Moralis...</span>
+          <span style={{ fontSize: 13, color: 'rgba(45,26,38,0.6)', fontWeight: 500 }}>Scanning Mantle blockchain via Moralis...</span>
         </div>
       ) : error ? (
         <div style={{ background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 12, padding: 14, fontSize: 13, color: '#EF4444' }}>
@@ -133,7 +133,7 @@ export default function CreditPassportVerifier({ walletAddress }: { walletAddres
               </span>
             </div>
             <p style={{ fontSize: 15, fontWeight: 700, color: '#2D1A26', margin: '0 0 4px', fontFamily: "'Syne', sans-serif" }}>
-              {parsedMetadata?.name || passportNFT.name || 'Ruphex Credit Passport'}
+              {parsedMetadata?.name || passportNFT.name || 'Kubryx Credit Passport'}
             </p>
             <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.6)', margin: '0 0 12px', lineHeight: 1.5 }}>
               {parsedMetadata?.description || 'Your ZK Credit Passport has been verified using multi-chain cryptographic state proofs.'}
@@ -158,7 +158,7 @@ export default function CreditPassportVerifier({ walletAddress }: { walletAddres
               No Credit Passport found
             </div>
             <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.6)', margin: 0, maxWidth: 440 }}>
-              No passport NFT matches the official registry contract on the Arbitrum chain. Click below to mint your permanent identity.
+              No passport NFT matches the official registry contract on the Mantle chain. Click below to mint your permanent identity.
             </p>
           </div>
           <button onClick={simulateMint} disabled={minting} style={{

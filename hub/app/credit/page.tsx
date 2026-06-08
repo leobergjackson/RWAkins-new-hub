@@ -750,7 +750,7 @@ export default function CreditDashboard() {
       {/* Navigation */}
       <header className="nav-bar">
         <div className="nav-logo">
-          Ruphex <span className="sparkle-icon">✦</span>
+          Kubryx <span className="sparkle-icon">✦</span>
         </div>
         <div>
           <Link href="/dashboard" style={{
@@ -788,7 +788,7 @@ export default function CreditDashboard() {
               color: '#B47814', display: 'inline-flex', alignItems: 'center', gap: 6, fontWeight: 500
             }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#F5A623', flexShrink: 0 }} />
-              QIE Mainnet
+              Mantle Network
             </span>
             {onChain && (
               <span style={{
@@ -813,7 +813,7 @@ export default function CreditDashboard() {
           return (
             <div style={{ marginBottom: 32, padding: '20px 24px', borderRadius: 16, background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(45,26,38,0.08)', backdropFilter: 'blur(8px)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', color: 'rgba(45,26,38,0.4)', textTransform: 'uppercase' }}>Ruphex Platform Unlocks</span>
+                <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', color: 'rgba(45,26,38,0.4)', textTransform: 'uppercase' }}>Kubryx Platform Unlocks</span>
                 <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: tier.bg, border: `1px solid ${tier.border}`, color: tier.color }}>
                   {tier.name} Tier — {score}/1000
                 </span>
@@ -844,7 +844,7 @@ export default function CreditDashboard() {
               {totalBoost > 0 && (
                 <div style={{ marginTop: 14, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {vBoost > 0 && <span style={{ fontSize: 10, padding: '3px 10px', borderRadius: 20, background: 'rgba(20,184,166,0.08)', border: '1px solid rgba(20,184,166,0.2)', color: '#0D9488', fontWeight: 600 }}>🔐 Vault active +{vBoost} pts</span>}
-                  {sBoost > 0 && <span style={{ fontSize: 10, padding: '3px 10px', borderRadius: 20, background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)', color: '#2563EB', fontWeight: 600 }}>◆ {platform.stellarPayments} Stellar payments +{sBoost} pts</span>}
+                  {sBoost > 0 && <span style={{ fontSize: 10, padding: '3px 10px', borderRadius: 20, background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)', color: '#2563EB', fontWeight: 600 }}>◆ {platform.stellarPayments} Mantle payments +{sBoost} pts</span>}
                   {tBoost > 0 && <span style={{ fontSize: 10, padding: '3px 10px', borderRadius: 20, background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)', color: '#059669', fontWeight: 600 }}>◇ Treasury ${(platform.treasuryValue ?? 0).toLocaleString()} +{tBoost} pts</span>}
                 </div>
               )}
@@ -874,7 +874,7 @@ export default function CreditDashboard() {
             }}>🧠</div>
             <p style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, fontFamily: "'Syne', sans-serif" }}>Connect your wallet</p>
             <p style={{ fontSize: 14, color: 'rgba(45,26,38,0.5)', marginBottom: 28, maxWidth: 360, margin: '0 auto 28px' }}>
-              Connect MetaMask on {expectedNetwork?.name ?? 'QIE Mainnet'} (Chain ID{' '}
+              Connect MetaMask on {expectedNetwork?.name ?? 'Mantle Network'} (Chain ID{' '}
               {expectedNetwork?.chainIdDecimal ?? 1990}) to generate your credit score.
             </p>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -926,10 +926,10 @@ export default function CreditDashboard() {
                     No Credit Passport Found
                   </p>
                   <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.65)', margin: 0, lineHeight: 1.7, maxWidth: 560 }}>
-                    Your wallet does not yet have a Credit Passport NFT minted on QIE Mainnet.
-                    Passports are issued by the Ruphex backend after sufficient on-chain activity is detected —
+                    Your wallet does not yet have a Credit Passport NFT minted on Mantle Network.
+                    Passports are issued by the Kubryx backend after sufficient on-chain activity is detected —
                     the score shown below is a <strong>demo preview</strong> until your passport is minted.
-                    Interact with QIE Mainnet DeFi protocols to become eligible.
+                    Interact with Mantle Network DeFi protocols to become eligible.
                   </p>
                 </div>
               </div>
@@ -1067,7 +1067,7 @@ export default function CreditDashboard() {
                 </p>
                 <ProgressBar label="Base Score" value={breakdown.baseScore ?? 0} max={1000} color="#2D1A26" displayValue={String(breakdown.baseScore ?? 0)} tooltip="Your foundational score derived from on-chain activity including transaction volume, wallet age, and DeFi interactions." />
                 <ProgressBar label="Staking Boost" value={breakdown.stakingBoost ?? 0} max={300} color="#16A34A" displayValue={`+${breakdown.stakingBoost ?? 0}`} tooltip="Bonus points earned by staking NCRD tokens. Higher stake = higher boost (max +300). Encourages long-term protocol participation." />
-                <ProgressBar label="Oracle Penalty" value={breakdown.oraclePenalty ?? 0} max={200} color="#EF4444" displayValue={(breakdown.oraclePenalty ?? 0) === 0 ? '0' : `-${breakdown.oraclePenalty ?? 0}`} tooltip="Deduction applied when the QIE oracle price is below threshold or when anomalous on-chain behavior is detected." />
+                <ProgressBar label="Oracle Penalty" value={breakdown.oraclePenalty ?? 0} max={200} color="#EF4444" displayValue={(breakdown.oraclePenalty ?? 0) === 0 ? '0' : `-${breakdown.oraclePenalty ?? 0}`} tooltip="Deduction applied when the Mantle oracle price is below threshold or when anomalous on-chain behavior is detected." />
 
                 <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(45,26,38,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: 14, color: 'rgba(45,26,38,0.5)', fontWeight: 500 }}>
@@ -1140,7 +1140,7 @@ export default function CreditDashboard() {
 
                 {!prediction && !predicting && (
                   <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.4)', marginTop: 20, textAlign: 'center' }}>
-                    Select a scenario to see how on-chain actions affect your QIE credit rating.
+                    Select a scenario to see how on-chain actions affect your Mantle credit rating.
                   </p>
                 )}
               </div>
@@ -1211,7 +1211,7 @@ export default function CreditDashboard() {
                       Verified On-Chain Digital Identity
                     </p>
                     <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.5)', margin: 0 }}>
-                      Pulls and verifies Soulbound NFTs & digital assets via live Moralis Web3 NFT API across Arbitrum, Polygon, and Ethereum.
+                      Pulls and verifies Soulbound NFTs & digital assets via live Moralis Web3 NFT API across Mantle, Polygon, and Ethereum.
                     </p>
                   </div>
                   <span style={{
@@ -1233,7 +1233,7 @@ export default function CreditDashboard() {
                   <div style={{ textAlign: 'center', padding: '40px 20px', background: 'rgba(45,26,38,0.02)', borderRadius: 16, border: '1px dashed rgba(45,26,38,0.1)' }}>
                     <span style={{ fontSize: 32, display: 'block', marginBottom: 12 }}>🖼️</span>
                     <p style={{ fontSize: 14, fontWeight: 600, color: 'rgba(45,26,38,0.6)', margin: '0 0 4px' }}>No NFTs Found</p>
-                    <p style={{ fontSize: 12, color: 'rgba(45,26,38,0.4)', margin: 0 }}>No external digital identity NFTs found on Arbitrum, Polygon, or Ethereum for this wallet.</p>
+                    <p style={{ fontSize: 12, color: 'rgba(45,26,38,0.4)', margin: 0 }}>No external digital identity NFTs found on Mantle, Polygon, or Ethereum for this wallet.</p>
                   </div>
                 ) : (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
@@ -1287,10 +1287,10 @@ export default function CreditDashboard() {
       </div>
       <FeatureOverviewPanel 
         title="Credit Passport"
-        whatItIs="A decentralized reputation scoring registry. It aggregates a user's cross-chain transaction history, staking records, and vault balances to mint a Soulbound NFT (SB-NFT) on QIE Mainnet representing their creditworthiness."
+        whatItIs="A decentralized reputation scoring registry. It aggregates a user's cross-chain transaction history, staking records, and vault balances to mint a Soulbound NFT (SB-NFT) on Mantle Network representing their creditworthiness."
         whyUseIt="In Web3, lending is almost entirely over-collateralized (e.g., you must deposit $150 to borrow $100) because there is no identity or credit mechanism. The Credit Passport allows users to leverage their historical reputation to unlock under-collateralized loans."
         whyEfficient="<ul><li><b>Rolling Score Estimator</b>: The client computes score projections locally before dispatching the on-chain minting tx, saving gas costs.</li><li><b>Dynamic Tiering</b>: The UI automatically shifts colors and badges based on the active score tier, providing instant user feedback.</li></ul>"
-        whyBest="It is not just a static badge. The Credit Passport <b>actively unlocks benefits across other Ruphex modules</b>, including lower AI Lending APRs, higher Privacy Vault LTVs, and priority Treasury routing."
+        whyBest="It is not just a static badge. The Credit Passport <b>actively unlocks benefits across other Kubryx modules</b>, including lower AI Lending APRs, higher Privacy Vault LTVs, and priority Treasury routing."
         themeColor="#F5A623"
       />
     </div>

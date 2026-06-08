@@ -5,7 +5,7 @@ import { ethers } from 'ethers'
 const FEEDS: Record<string, string> = {
   ETH: '0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612',
   BTC: '0x6ce185860a4963106506C203335A2910413708e9',
-  SOL: '0x24ceA4b8ce57cdA33e5C2197d3aAE4313DE5a5f0',
+  MNT: '0x24ceA4b8ce57cdA33e5C2197d3aAE4313DE5a5f0',
   LINK: '0x86E53CF1B873D1676110dac36195fD6C52B02c72',
 }
 
@@ -37,7 +37,7 @@ export async function getChainlinkPrice(pair: string): Promise<number> {
   } catch (err) {
     console.error(`[chainlink] Error fetching price for ${pair}:`, err)
     // Return standard mock/fallback if RPC or query fails
-    const fallbacks: Record<string, number> = { ETH: 3125.50, BTC: 64250.00, SOL: 142.20, LINK: 13.80 }
+    const fallbacks: Record<string, number> = { ETH: 3125.50, BTC: 64250.00, MNT: 142.20, LINK: 13.80 }
     return fallbacks[symbol] || 0
   }
 }

@@ -45,7 +45,7 @@ const ROLES = [
 ]
 
 export default function ValidatorPage() {
-  // Wallet state now comes from the global wallet context (EVM / QIE Mainnet).
+  // Wallet state now comes from the global wallet context (EVM / Mantle Network).
   const { address } = useWalletForTool()
   const wallet = address ?? ''
   const [registering, setRegistering] = useState(false)
@@ -58,7 +58,7 @@ export default function ValidatorPage() {
     try {
       const res = await registerValidator(wallet)
       setTxHash(res.txHash)
-      toast.success('Registered as validator on QIE Mainnet')
+      toast.success('Registered as validator on Mantle Network')
     } catch (err: any) {
       toast.error(err?.message || 'Registration failed')
     } finally {
@@ -101,7 +101,7 @@ export default function ValidatorPage() {
         {!wallet ? (
           <>
             <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: '0 0 16px', lineHeight: 1.5 }}>
-              Connect your QIE wallet to register your address in LegacyVault.sol as a trusted validator.
+              Connect your Mantle wallet to register your address in LegacyVault.sol as a trusted validator.
             </p>
             <ConnectButton type="evm" size="lg" />
           </>
@@ -118,7 +118,7 @@ export default function ValidatorPage() {
               <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>
                 {truncateAddress(wallet)}
               </span>
-              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>· QIE Mainnet</span>
+              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>· Mantle Network</span>
             </div>
 
             {txHash ? (
@@ -134,7 +134,7 @@ export default function ValidatorPage() {
                   TX: {txHash}
                 </p>
                 <a
-                  href={`https://mainnet.qie.digital/tx/${txHash}`}
+                  href={`https://explorer.sepolia.mantle.xyz/tx/${txHash}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ fontSize: 11, color: '#F5C518', marginTop: 8, display: 'inline-block' }}

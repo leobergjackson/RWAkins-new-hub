@@ -121,7 +121,7 @@ function TierOrb({ tier }: { tier: StakingTier | string }) {
 }
 
 export default function StakePage() {
-  // Wallet state now comes from the global wallet context (EVM / QIE Mainnet).
+  // Wallet state now comes from the global wallet context (EVM / Mantle Network).
   const { address } = useWalletForTool()
   const { disconnectEVM } = useWallet()
   const wallet = address ?? ''
@@ -158,7 +158,7 @@ export default function StakePage() {
       const apiData = (d as any).data ? (d as any).data : d
       setData({ ...fallbackStaking, ...apiData })
 
-      // Overlay real on-chain staking state from NeuroCredStaking (QIE Mainnet):
+      // Overlay real on-chain staking state from NeuroCredStaking (Mantle Network):
       // stakedAmount(address) for the amount, integrationTier(address) for the
       // tier. Promise.all is wrapped in catch so a flaky RPC never aborts both.
       const [amtStr, tierIdx] = await Promise.all([
@@ -296,7 +296,7 @@ export default function StakePage() {
           <div style={{ fontSize: 40, marginBottom: 12 }}>🛡</div>
           <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 6 }}>Connect wallet to stake</p>
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 20 }}>
-            Connect MetaMask on QIE Mainnet to stake NCRD tokens.
+            Connect MetaMask on Mantle Network to stake NCRD tokens.
           </p>
           <ConnectButton type="evm" size="lg" />
         </div>

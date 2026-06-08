@@ -30,7 +30,7 @@ const FEATURES = [
     icon: '🔄',
     title: 'Seamless Swaps',
     desc: 'Multi-chain DEX integration with intelligent route optimization.',
-    detail: 'Raydium, Jupiter, Orca, Uniswap — instant price quotes',
+    detail: 'Merchant Moe, FusionX, Agni Finance, Uniswap — instant price quotes',
     color: '#8B5CF6',
   },
   {
@@ -50,9 +50,9 @@ const STATS = [
 ]
 
 const SUPPORTED = [
-  { name:'Solana',   symbol:'SOL',   color:'#6366F1' },
+  { name:'Mantle',   symbol:'MNT',   color:'#6366F1' },
   { name:'Ethereum', symbol:'ETH',   color:'#60A5FA' },
-  { name:'Arbitrum', symbol:'ARB',   color:'#06B6D4' },
+  { name:'Mantle', symbol:'ARB',   color:'#06B6D4' },
   { name:'Polygon',  symbol:'MATIC', color:'#8B5CF6' },
   { name:'Base',     symbol:'BASE',  color:'#3B82F6' },
   { name:'Optimism', symbol:'OP',    color:'#EF4444' },
@@ -599,7 +599,7 @@ export default function TreasuryLanding() {
 
             {/* CTAs */}
             <div className="hero-buttons">
-              <PriceBadge coinId="solana" label="SOL" />
+              <PriceBadge coinId="solana" label="MNT" />
               <ConnectButton type="solana" size="lg" toolColor="#3B82F6" />
               <Link href="/treasury/dashboard">
                 <motion.button
@@ -635,8 +635,8 @@ export default function TreasuryLanding() {
                   animation: trustmesh.isLive ? 'tPulse 1.4s ease-in-out infinite' : 'none',
                 }} />
                 {trustmesh.isLive
-                  ? `Live · Solana Devnet · Block ${trustmesh.currentSlot.toLocaleString()}`
-                  : 'Testnet Data — Connecting to Solana Devnet…'}
+                  ? `Live · Mantle Sepolia · Block ${trustmesh.currentSlot.toLocaleString()}`
+                  : 'Testnet Data — Connecting to Mantle Sepolia…'}
               </span>
               {trustmesh.isLive && (
                 <button
@@ -670,11 +670,11 @@ export default function TreasuryLanding() {
             {STATS.map((s, idx) => {
               let displayValue = s.value
               if (trustmesh.isLive) {
-                if (idx === 0) displayValue = `◎ ${totalBudgetSol.toFixed(3)} SOL`
+                if (idx === 0) displayValue = `◎ ${totalBudgetSol.toFixed(3)} MNT`
                 if (idx === 1) displayValue = String(activeJobCount)
                 if (idx === 3) displayValue = `#${trustmesh.currentSlot.toLocaleString()}`
               }
-              const displayLabel = trustmesh.isLive && idx === 3 ? 'Solana Devnet Slot' : s.label
+              const displayLabel = trustmesh.isLive && idx === 3 ? 'Mantle Sepolia Slot' : s.label
               const isLong = displayValue.length > 8
               return (
                 <div key={s.label} className="stat-card">

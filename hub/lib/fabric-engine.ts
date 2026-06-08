@@ -39,10 +39,10 @@ const DEFAULT_REGIONS: DeploymentRegion[] = [
 ]
 
 const DEFAULT_COMPATIBILITY: CompatibilityItem[] = [
-  { protocolName: 'EVM JSON-RPC (QIE)', readinessState: 'certified', trustWeight: 99.8, lastAudited: '1 hour ago' },
-  { protocolName: 'Phantom Ed25519 (Solana)', readinessState: 'certified', trustWeight: 99.4, lastAudited: '4 hours ago' },
-  { protocolName: 'Stellar Soroban XDR', readinessState: 'compatible', trustWeight: 98.5, lastAudited: '12 hours ago' },
-  { protocolName: 'Arbitrum Rollups L2', readinessState: 'compatible', trustWeight: 96.2, lastAudited: '24 hours ago' },
+  { protocolName: 'EVM JSON-RPC (Mantle)', readinessState: 'certified', trustWeight: 99.8, lastAudited: '1 hour ago' },
+  { protocolName: 'Phantom Ed25519 (Mantle)', readinessState: 'certified', trustWeight: 99.4, lastAudited: '4 hours ago' },
+  { protocolName: 'Mantle XDR', readinessState: 'compatible', trustWeight: 98.5, lastAudited: '12 hours ago' },
+  { protocolName: 'Mantle Rollups L2', readinessState: 'compatible', trustWeight: 96.2, lastAudited: '24 hours ago' },
   { protocolName: 'ZK-SNARK Gateway', readinessState: 'experimental', trustWeight: 84.8, lastAudited: '3 days ago' }
 ]
 

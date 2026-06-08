@@ -40,10 +40,10 @@ export default function InvoiceEcosystemSidebar({ selectedId, onSelect }: Props)
           paddingBottom: 10,
         }}
       >
-        {/* Ruphex K logo */}
+        {/* Kubryx K logo */}
         <a
           href="/"
-          title="Ruphex"
+          title="Kubryx"
           style={{ display: 'block', marginBottom: 10, textDecoration: 'none' }}
         >
           <div style={{

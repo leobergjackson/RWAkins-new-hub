@@ -85,7 +85,7 @@ export default function DeployWizard({ walletAddress }: { walletAddress?: string
         agents: [{ role: 'planner', name: `${snsSubdomain}.kubryx.sol`, type: 'planner' }],
       })
       const tx = simTx('solana')
-      toast.success('Deployment submitted to Solana Devnet', {
+      toast.success('Deployment submitted to Mantle Sepolia', {
         description: `Tx ${tx.short}`,
         action: { label: 'Explorer ↗', onClick: () => window.open(tx.explorerUrl, '_blank') },
       })
@@ -118,7 +118,7 @@ export default function DeployWizard({ walletAddress }: { walletAddress?: string
             Agent Deployed Successfully!
           </h2>
           <p style={{ color: MUTED, fontSize: 13, margin: '0 0 24px' }}>
-            Your agent is live on Solana devnet and ready to receive jobs.
+            Your agent is live on Mantle devnet and ready to receive jobs.
           </p>
           <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 8, padding: 14, textAlign: 'left', marginBottom: 20 }}>
             <DetailLine label="Transaction" value={result.tx.short} mono />
@@ -126,7 +126,7 @@ export default function DeployWizard({ walletAddress }: { walletAddress?: string
             <DetailLine label="SNS"         value={result.sns} />
             <div style={{ marginTop: 10, paddingTop: 10, borderTop: `1px solid ${BORDER}` }}>
               <a href={result.tx.explorerUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#10b981', textDecoration: 'none', fontSize: 12, fontWeight: 600 }}>
-                View transaction on Solana Explorer ↗
+                View transaction on Mantle Explorer ↗
               </a>
             </div>
           </div>
@@ -306,8 +306,8 @@ export default function DeployWizard({ walletAddress }: { walletAddress?: string
               <DetailLine label="SNS Name"     value={`${snsSubdomain}.kubryx.sol`} />
               <DetailLine label="Max Depth"    value={String(maxDepth)} />
               <DetailLine label="Capacity"     value={`${capacity} jobs`} />
-              <DetailLine label="Network"      value="Solana Devnet" />
-              <DetailLine label="Estimated Fee" value="0.002 SOL" />
+              <DetailLine label="Network"      value="Mantle Sepolia" />
+              <DetailLine label="Estimated Fee" value="0.002 MNT" />
               <DetailLine label="Wallet"       value={wallet ? `${wallet.slice(0, 6)}…${wallet.slice(-4)}` : 'Not connected'} />
             </div>
 

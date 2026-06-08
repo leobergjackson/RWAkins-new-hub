@@ -95,7 +95,7 @@ export default function KubrykSidebar({ collapsed, onToggle, mobileOpen, onMobil
           }}>K</div>
           {(!collapsed || isMobile) && (
             <div>
-              <div style={{ fontSize: 16, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>Ruphex</div>
+              <div style={{ fontSize: 16, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>Kubryx</div>
               <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.14em', marginTop: 2, fontFamily: MONO }}>FINANCIAL OS</div>
             </div>
           )}
@@ -199,10 +199,10 @@ export default function KubrykSidebar({ collapsed, onToggle, mobileOpen, onMobil
                 padding: '4px 8px', marginBottom: 4, fontFamily: MONO,
               }}>Networks</div>
               {[
-                { name: 'QIE Mainnet', color: '#6366f1' },
-                { name: 'Solana',      color: '#9945FF' },
-                { name: 'Stellar',     color: '#3B9BF5' },
-                { name: 'Arbitrum',    color: '#12AAFF' },
+                { name: 'Mantle Network', color: '#6366f1' },
+                { name: 'Mantle',      color: '#9945FF' },
+                { name: 'Mantle',     color: '#3B9BF5' },
+                { name: 'Mantle',    color: '#12AAFF' },
               ].map(n => (
                 <div key={n.name} style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',

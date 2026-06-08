@@ -58,7 +58,7 @@ export const fallbackDeathStatus = {
   deceased: false,
   markedAt: null as string | null,
   txHash: null as string | null,
-  chain: 'QIE Mainnet',
+  chain: 'Mantle Network',
 }
 
 export const fallbackUnlockResult = {

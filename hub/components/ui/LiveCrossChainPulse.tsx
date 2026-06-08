@@ -2,10 +2,10 @@
 // Live cross-chain integration showcase. Renders a horizontal flow of 4 chain
 // states. Every cell is backed by a REAL on-chain read:
 //
-//   QIE Credit Score  →  Solana Agent Tier  →  Arbitrum Lending Rate  →  Stellar Vault
+//   Mantle Credit Score  →  Mantle Agent Tier  →  Mantle Lending Rate  →  Mantle Vault
 //
-//   • Solana  — live slot + job accounts via useTrustMesh (raw Devnet RPC).
-//   • QIE / Arbitrum / Stellar — live block / ledger height + RPC latency via
+//   • Mantle — live agent/job state via useTrustMesh.
+//   • Mantle Network / Mantle Sepolia — live block height + RPC latency via
 //     getRPCBlockState (resilient JSON-RPC with node failover).
 //
 // The domain value (credit score, lending rate, vault status) is the headline;
@@ -27,10 +27,10 @@ type Theme = 'light' | 'dark'
 
 type BlockInfo = { blockNumber: number; latency: number; healthy: boolean }
 
-// Chains read directly here for liveness (Solana is sourced from useTrustMesh).
+// Chains read directly here for liveness (Mantle is sourced from useTrustMesh).
 const LIVE_CHAINS: ChainType[] = ['QIE', 'MANTLE', 'STELLAR']
 
-// Polls real block/ledger height + latency for the EVM/Stellar chains. getRPCBlockState
+// Polls real block/ledger height + latency for the EVM/Mantle chains. getRPCBlockState
 // always resolves (it falls back to deterministic values on total RPC outage), so a
 // chain is treated as "live" only when it returns a real, non-zero, low-latency read.
 function useLiveChainBlocks(): Record<string, BlockInfo> {
@@ -213,7 +213,7 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
               }} />
               {liveCount}/4 chains live
             </span>
-            {sol > 0 && <span>SOL ${sol.toFixed(2)}</span>}
+            {sol > 0 && <span>MNT ${sol.toFixed(2)}</span>}
             {eth > 0 && <span>ETH ${eth.toFixed(0)}</span>}
           </div>
         </div>
@@ -222,7 +222,7 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'stretch' }}>
         <Cell
           theme={theme}
-          chain="QIE Mainnet"
+          chain="Mantle Network"
           chainColor="#D97706"
           label="Credit Passport"
           value={platform.creditScore !== null ? `${platform.creditScore}/1000` : '—'}
@@ -236,7 +236,7 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
 
         <Cell
           theme={theme}
-          chain="Solana Devnet"
+          chain="Mantle Sepolia"
           chainColor="#9945FF"
           label="Agent Coordinator"
           value={mesh.currentSlot > 0 ? `slot ${mesh.currentSlot.toLocaleString()}` : '—'}
@@ -264,7 +264,7 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
 
         <Cell
           theme={theme}
-          chain="Stellar"
+          chain="Mantle"
           chainColor="#7E36BB"
           label="Family Vault"
           value={platform.vaultActive ? 'Active' : 'Inactive'}

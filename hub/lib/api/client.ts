@@ -34,11 +34,11 @@ export const API_ENDPOINTS = {
 // 2. RPC Nodes with Native Failovers
 export const RPC_NODES: Record<ChainType, RPCNode[]> = {
   QIE: [
-    { url: process.env.NEXT_PUBLIC_QIE_RPC || 'https://mainnet.qie.digital/api/eth-rpc', latency: 0, healthy: true },
-    { url: 'https://mainnet.qie.digital/api/v1/eth-rpc', latency: 0, healthy: true },
+    { url: process.env.NEXT_PUBLIC_QIE_RPC || 'https://explorer.sepolia.mantle.xyz/api/eth-rpc', latency: 0, healthy: true },
+    { url: 'https://explorer.sepolia.mantle.xyz/api/v1/eth-rpc', latency: 0, healthy: true },
   ],
   SOLANA: [
-    { url: process.env.NEXT_PUBLIC_SOLANA_RPC || 'https://api.devnet.solana.com', latency: 0, healthy: true },
+    { url: process.env.NEXT_PUBLIC_SOLANA_RPC || 'https://rpc.sepolia.mantle.xyz', latency: 0, healthy: true },
     { url: 'https://api.mainnet-beta.solana.com', latency: 0, healthy: true }
   ],
   STELLAR: [

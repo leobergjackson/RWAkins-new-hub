@@ -84,8 +84,8 @@ const DEFAULT_ORGS: Organization[] = [
 ]
 
 const DEFAULT_TEAM_ACTIVITIES: TeamActivity[] = [
-  { id: 'act-1', user: 'Alice', role: 'Treasury Manager', action: 'initiated a $120k yield sweep on QIE Mainnet', timestamp: new Date(Date.now() - 4 * 60000).toISOString(), orgId: 'org-acme', workspaceId: 'ws-acme-treasury' },
-  { id: 'act-2', user: 'Bob', role: 'Operations', action: 'matched payroll streams on Solana Devnet', timestamp: new Date(Date.now() - 15 * 60000).toISOString(), orgId: 'org-acme', workspaceId: 'ws-acme-treasury' },
+  { id: 'act-1', user: 'Alice', role: 'Treasury Manager', action: 'initiated a $120k yield sweep on Mantle Network', timestamp: new Date(Date.now() - 4 * 60000).toISOString(), orgId: 'org-acme', workspaceId: 'ws-acme-treasury' },
+  { id: 'act-2', user: 'Bob', role: 'Operations', action: 'matched payroll streams on Mantle Sepolia', timestamp: new Date(Date.now() - 15 * 60000).toISOString(), orgId: 'org-acme', workspaceId: 'ws-acme-treasury' },
   { id: 'act-3', user: 'Charlie', role: 'Risk Analyst', action: 'approved LTV threshold transition to 78% on Lendora', timestamp: new Date(Date.now() - 32 * 60000).toISOString(), orgId: 'org-acme', workspaceId: 'ws-acme-treasury' },
   { id: 'act-4', user: 'David', role: 'Admin', action: 'revised private key verification thresholds', timestamp: new Date(Date.now() - 2 * 3600000).toISOString(), orgId: 'org-acme', workspaceId: 'ws-acme-audits' },
   { id: 'act-5', user: 'Emma', role: 'Auditor', action: 'extracted zero-metadata bridge audit logs', timestamp: new Date(Date.now() - 5 * 3600000).toISOString(), orgId: 'org-acme', workspaceId: 'ws-acme-audits' },
@@ -99,9 +99,9 @@ const DEFAULT_TEAM_ACTIVITIES: TeamActivity[] = [
 ]
 
 const DEFAULT_ALERTS: OperationalAlert[] = [
-  { id: 'al-1', title: 'Rebalance Opportunity', description: 'Acme Protocol: Treasury APY rebalance recommended. Allocate 150 SOL to NCRD staking to capture 12.5% APY.', severity: 'warning', orgId: 'org-acme', timestamp: new Date(Date.now() - 10 * 60000).toISOString(), resolved: false },
+  { id: 'al-1', title: 'Rebalance Opportunity', description: 'Acme Protocol: Treasury APY rebalance recommended. Allocate 150 MNT to NCRD staking to capture 12.5% APY.', severity: 'warning', orgId: 'org-acme', timestamp: new Date(Date.now() - 10 * 60000).toISOString(), resolved: false },
   { id: 'al-2', title: 'Unauthorized Connection Detected', description: 'Stealth Executive Suite DAO: Monitored suspicious routing attempts from an unauthorized RPC. Lock zero-metadata routing keys.', severity: 'critical', orgId: 'org-shadow', timestamp: new Date(Date.now() - 2 * 60000).toISOString(), resolved: false },
-  { id: 'al-3', title: 'Staking Verification', description: 'Acme Protocol: Active QIE Mainnet staking pools updated. Verify smart contract parameters.', severity: 'info', orgId: 'org-acme', timestamp: new Date(Date.now() - 50 * 60000).toISOString(), resolved: false },
+  { id: 'al-3', title: 'Staking Verification', description: 'Acme Protocol: Active Mantle Network staking pools updated. Verify smart contract parameters.', severity: 'info', orgId: 'org-acme', timestamp: new Date(Date.now() - 50 * 60000).toISOString(), resolved: false },
   { id: 'al-4', title: 'Yield Stream Optimization', description: 'Eternal Fund: Staking APY risen to 14.5% — consider sweeping venture vaults.', severity: 'info', orgId: 'org-eternal', timestamp: new Date(Date.now() - 30 * 60000).toISOString(), resolved: false },
 ]
 

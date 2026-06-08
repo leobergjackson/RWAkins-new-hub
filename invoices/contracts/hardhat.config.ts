@@ -12,6 +12,7 @@ const config: HardhatUserConfig = {
   solidity: "0.8.20",
   networks: {
     mantleSepolia: {
+      type: "http",
       url: "https://rpc.sepolia.mantle.xyz",
       chainId: 5003,
       accounts: DEPLOYER_KEY ? [DEPLOYER_KEY] : [],

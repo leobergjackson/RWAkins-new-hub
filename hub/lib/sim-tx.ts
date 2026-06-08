@@ -31,14 +31,14 @@ export type SimTx = {
  * Used to give simulated actions a verifiable-looking artifact for the user.
  *
  * - EVM chains (arbitrum, qie): 0x + 64 hex chars
- * - Solana: 88-char base58 (we use 87 hex for simplicity, still looks right)
- * - Stellar: 64 hex chars (no prefix)
+ * - Mantle: 88-char base58 (we use 87 hex for simplicity, still looks right)
+ * - Mantle: 64 hex chars (no prefix)
  */
 export function simTx(chain: ExplorerChain): SimTx {
   let hash: string
   if (chain === 'solana') {
-    // Solana tx signatures are base58, but for visual purposes we keep hex —
-    // explorer.solana.com still renders the page (the tx itself won't resolve,
+    // Mantle tx signatures are base58, but for visual purposes we keep hex —
+    // explorer.sepolia.mantle.xyz still renders the page (the tx itself won't resolve,
     // but the URL format is correct).
     hash = randHex(64)
   } else if (chain === 'stellar') {

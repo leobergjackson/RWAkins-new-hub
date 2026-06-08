@@ -109,12 +109,12 @@ function DefiLlamaWidget() {
   )
 }
 
-// Live collateral market prices (ETH primary collateral, ARB for L2 context).
+// Live collateral market prices (ETH primary collateral, MNT for Mantle gas context).
 function LendMarketRow() {
-  const { prices } = usePrices(['ethereum', 'arbitrum'])
+  const { prices } = usePrices(['ethereum', 'mantle'])
   const items = [
     { id: 'ethereum', label: 'ETH', note: 'Primary collateral' },
-    { id: 'arbitrum', label: 'ARB', note: 'Arbitrum L2' },
+    { id: 'mantle', label: 'MNT', note: 'Mantle gas token' },
   ]
   return (
     <div style={{
@@ -538,12 +538,12 @@ function LendInner() {
       <header className="nav-bar">
         <div className="nav-logo">
           <span className="sparkle-icon">✧</span>
-          Ruphex Lend
+          Kubryx Lend
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#6366F1', fontWeight: 600 }}>
             <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981' }} />
-            AI Engine Live · Arbitrum One
+            AI Engine Live · Mantle Network
           </div>
           <ConnectButton type="evm" size="lg" />
         </div>

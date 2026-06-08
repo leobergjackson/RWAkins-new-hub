@@ -125,7 +125,7 @@ function DashSidebar({
             display: 'grid', placeItems: 'center',
             fontSize: 14, fontWeight: 900, color: '#fff',
           }}>K</div>
-          <span style={{ fontSize: 16, fontWeight: 800, color: INK, letterSpacing: '-0.02em' }}>Ruphex</span>
+          <span style={{ fontSize: 16, fontWeight: 800, color: INK, letterSpacing: '-0.02em' }}>Kubryx</span>
         </div>
 
         {/* Nav items */}
@@ -223,7 +223,7 @@ function DashSidebar({
                 : '0x9F3C…E3A1'}
             </div>
             <div style={{ fontSize: 11, color: MUTED2, marginBottom: 10 }}>
-              QIE • Solana • Stellar • ETH
+              Mantle • Mantle • Mantle • ETH
             </div>
             <button
               onClick={onDisconnect}
@@ -719,7 +719,7 @@ export default function DashboardPage() {
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-              }}>Ruphex</span>.
+              }}>Kubryx</span>.
             </h1>
             <p style={{ fontSize: 14, color: MUTED, margin: '8px 0 0', maxWidth: 580, lineHeight: 1.5 }}>
               {platform.creditScore !== null
@@ -728,7 +728,7 @@ export default function DashboardPage() {
             </p>
           </section>
 
-          {/* Wrong-network warning (dashboard expects QIE Mainnet) */}
+          {/* Wrong-network warning (dashboard expects Mantle Network) */}
           <WrongNetworkBanner />
 
           {/* Live market price ticker */}
@@ -830,7 +830,7 @@ export default function DashboardPage() {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1, minWidth: 240, position: 'relative' }}>
                 <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.16em', color: MUTED2, textTransform: 'uppercase' }}>
-                  Credit Identity · Soulbound on QIE Mainnet
+                  Credit Identity · Soulbound on Mantle Network
                 </div>
                 <div style={{ fontSize: 15, fontWeight: 700, color: INK, lineHeight: 1.3 }}>
                   {creditTier.treasuryTier}
@@ -840,9 +840,9 @@ export default function DashboardPage() {
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', flex: 1 }}>
                 {[
                   platform.vaultActive      && { icon: '🔐', label: 'Vault',    note: '+85 pts', color: '#A855F7' },
-                  platform.stellarPayments  && { icon: '⭐', label: 'Stellar',  note: `${platform.stellarPayments} txns`, color: '#F472B6' },
+                  platform.stellarPayments  && { icon: '⭐', label: 'Mantle',  note: `${platform.stellarPayments} txns`, color: '#F472B6' },
                   platform.treasuryValue    && { icon: '💰', label: 'Treasury', note: `$${(platform.treasuryValue/1000).toFixed(0)}k`, color: '#00E5CC' },
-                  platform.solanaSlot       && { icon: '◎',  label: 'Solana',   note: `slot #${platform.solanaSlot.toLocaleString()}`, color: '#9945FF' },
+                  platform.solanaSlot       && { icon: '◎',  label: 'Mantle',   note: `slot #${platform.solanaSlot.toLocaleString()}`, color: '#9945FF' },
                 ].filter(Boolean).map((s) => {
                   const sig = s as { icon: string; label: string; note: string; color: string }
                   return (
@@ -912,7 +912,7 @@ export default function DashboardPage() {
           {/* Cross-chain wallet portfolio (Moralis) */}
           <WalletPortfolio />
 
-          {/* Recent Arbitrum activity (Arbiscan) */}
+          {/* Recent Mantle activity (Mantle Explorer) */}
           <ArbitrumActivity />
 
           {/* Daily briefing — AI markets pulse */}

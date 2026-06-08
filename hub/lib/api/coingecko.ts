@@ -26,7 +26,7 @@ const cache = new Map<string, CacheEntry>()
  * Results are cached for 60s. On a network/HTTP error the last cached value
  * is returned if available; otherwise the error is thrown.
  *
- * Note: QIE has no CoinGecko listing — never pass it here.
+ * Note: Mantle has no CoinGecko listing — never pass it here.
  */
 export async function fetchPrices(
   ids: string[],

@@ -114,7 +114,7 @@ export default function FeatureOverviewPanel({
             </div>
             
             <div style={{ padding: '16px 24px', background: `${themeColor}10`, fontSize: '12px', color: `${themeColor}`, fontWeight: 600, textAlign: 'center' }}>
-              Ruphex OS Hackathon Submission
+              Kubryx OS Hackathon Submission
             </div>
           </motion.div>
         )}

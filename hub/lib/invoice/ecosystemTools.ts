@@ -24,7 +24,7 @@ export const ECO_TOOLS: EcoTool[] = [
     stats: [
       { label: 'Score Range', value: '300–850' },
       { label: 'NFT Type', value: 'Soulbound' },
-      { label: 'Chain', value: 'QIE Mainnet' },
+      { label: 'Chain', value: 'Mantle Network' },
     ],
     connects: 'Invoice payments build your credit score',
   },
@@ -52,9 +52,9 @@ export const ECO_TOOLS: EcoTool[] = [
     color: '#8B5CF6',
     href: '/split',
     previewTitle: 'Split Any Invoice Instantly',
-    previewDesc: 'Working with multiple clients? Split the invoice amount automatically via Stellar smart contracts.',
+    previewDesc: 'Working with multiple clients? Split the invoice amount automatically via Mantle smart contracts.',
     stats: [
-      { label: 'Network', value: 'Stellar' },
+      { label: 'Network', value: 'Mantle' },
       { label: 'Settlement', value: 'Instant' },
       { label: 'Parties', value: 'Up to 10' },
     ],
@@ -72,7 +72,7 @@ export const ECO_TOOLS: EcoTool[] = [
     stats: [
       { label: 'Avg APY', value: '8–15%' },
       { label: 'Strategy', value: 'Auto' },
-      { label: 'Chain', value: 'Solana Devnet' },
+      { label: 'Chain', value: 'Mantle Sepolia' },
     ],
     connects: 'Auto-compound USDC after receiving payment',
   },
@@ -87,7 +87,7 @@ export const ECO_TOOLS: EcoTool[] = [
     previewDesc: 'Store and protect your USDC earnings in a private vault with zero transaction metadata exposed.',
     stats: [
       { label: 'Encryption', value: 'AES-GCM' },
-      { label: 'Chain', value: 'Arbitrum One' },
+      { label: 'Chain', value: 'Mantle Network' },
       { label: 'Privacy', value: 'Full' },
     ],
     connects: 'Secure your USDC earnings privately',
@@ -103,7 +103,7 @@ export const ECO_TOOLS: EcoTool[] = [
     previewDesc: 'Deploy AI agents that automatically manage your invoices, follow up on payments, and optimize your DeFi positions.',
     stats: [
       { label: 'Active', value: '3 Agents' },
-      { label: 'Network', value: 'Solana' },
+      { label: 'Network', value: 'Mantle' },
       { label: 'Actions', value: 'On-chain' },
     ],
     connects: 'Agents auto-follow-up on unpaid invoices',

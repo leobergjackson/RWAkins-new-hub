@@ -63,7 +63,7 @@ export default function AgentDashboard() {
     return () => { cancelled = true }
   }, [])
 
-  // Write live Solana slot to platform context for cross-module use
+  // Write live Mantle slot to platform context for cross-module use
   useEffect(() => {
     if (trustmesh.isLive && trustmesh.currentSlot > 0) {
       platform.setSolanaSlot(trustmesh.currentSlot)
@@ -95,7 +95,7 @@ export default function AgentDashboard() {
               On-Chain Job Accounts
             </div>
             <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
-              Solana Devnet · Program{' '}
+              Mantle Sepolia · Program{' '}
               <span style={{ fontFamily: MONO, fontSize: 11, color: ACCENT }}>66DXeS…42quz</span>
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function AgentDashboard() {
               color: trustmesh.isLive ? '#10b981' : '#f59e0b',
               fontFamily: MONO,
             }}>
-              {trustmesh.isLive ? '⬤ Verified On-Chain · Solana Devnet' : '◎ Demo Data'}
+              {trustmesh.isLive ? '⬤ Verified On-Chain · Mantle Sepolia' : '◎ Demo Data'}
             </span>
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function AgentDashboard() {
               <span style={{ fontSize: 16, flexShrink: 0 }}>⚠️</span>
               <div>
                 <p style={{ fontSize: 12, color: '#ef4444', fontWeight: 700, margin: '0 0 4px' }}>
-                  Solana RPC Unreachable
+                  Mantle RPC Unreachable
                 </p>
                 <p style={{ fontSize: 11, color: MUTED2, margin: 0, lineHeight: 1.5 }}>
                   {trustmesh.error} — Showing demo data. Last attempt: {new Date().toLocaleTimeString()}
@@ -180,11 +180,11 @@ export default function AgentDashboard() {
                   {/* Budget */}
                   {live ? (
                     <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 6, background: 'rgba(255,255,255,0.05)', color: MUTED, fontWeight: 600 }}>
-                      ◎ {live.budgetSol} SOL
+                      ◎ {live.budgetSol} MNT
                     </span>
                   ) : (
                     <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 6, background: 'rgba(255,255,255,0.05)', color: MUTED, fontWeight: 600 }}>
-                      ◎ {job.budgetSol ?? '—'} SOL
+                      ◎ {job.budgetSol ?? '—'} MNT
                     </span>
                   )}
 
@@ -205,7 +205,7 @@ export default function AgentDashboard() {
 
                   {/* Explorer link */}
                   <a
-                    href={`https://explorer.solana.com/address/${job.pda}?cluster=devnet`}
+                    href={`https://explorer.sepolia.mantle.xyz/address/${job.pda}?cluster=devnet`}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ fontSize: 10, color: ACCENT, textDecoration: 'none', fontWeight: 600 }}

@@ -64,8 +64,8 @@ export default function PerformancePage() {
   useEffect(() => {
     const list = [
       { id: 'perf-1', time: new Date().toLocaleTimeString(), event: 'Initial route hydration completed', duration: `${hydrationTime}ms` },
-      { id: 'perf-2', time: new Date(Date.now() - 3000).toLocaleTimeString(), event: 'QIE passport metadata cache hit', duration: '1.2ms' },
-      { id: 'perf-3', time: new Date(Date.now() - 8000).toLocaleTimeString(), event: 'Soroban multi-party escrow checkup', duration: '62ms' },
+      { id: 'perf-2', time: new Date(Date.now() - 3000).toLocaleTimeString(), event: 'Mantle passport metadata cache hit', duration: '1.2ms' },
+      { id: 'perf-3', time: new Date(Date.now() - 8000).toLocaleTimeString(), event: 'Mantle multi-party escrow checkup', duration: '62ms' },
       { id: 'perf-4', time: new Date(Date.now() - 15000).toLocaleTimeString(), event: 'Groq Credit Desk chat session negotiated', duration: '340ms' }
     ]
     

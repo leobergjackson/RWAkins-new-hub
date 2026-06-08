@@ -10,7 +10,7 @@ const MORALIS_BASE = 'https://deep-index.moralis.io/api/v2.2'
 const FETCH_TIMEOUT_MS = 9_000
 
 const CHAINS = [
-  { id: 'arbitrum', name: 'Arbitrum One' },
+  { id: 'arbitrum', name: 'Mantle Network' },
   { id: 'polygon',  name: 'Polygon'      },
   { id: 'eth',      name: 'Ethereum'     },
 ]
@@ -77,7 +77,7 @@ export async function GET(req: Request) {
     const allNfts = results.flat()
 
     // Detect if a Credit Passport soulbound NFT exists
-    // We check NFT name, symbol, or metadata name for "Credit Passport" or "Ruphex Credit"
+    // We check NFT name, symbol, or metadata name for "Credit Passport" or "Kubryx Credit"
     const creditPassportNft = allNfts.find(n => {
       const name = (n.name ?? '').toLowerCase()
       const symbol = (n.symbol ?? '').toLowerCase()
@@ -97,7 +97,7 @@ export async function GET(req: Request) {
       creditPassport: creditPassportNft ? {
         tokenAddress: creditPassportNft.token_address,
         tokenId: creditPassportNft.token_id,
-        name: creditPassportNft.name || 'Ruphex Credit Passport',
+        name: creditPassportNft.name || 'Kubryx Credit Passport',
         symbol: creditPassportNft.symbol || 'KCP',
         chainName: creditPassportNft.chainName,
         metadata: creditPassportNft.normalized_metadata,

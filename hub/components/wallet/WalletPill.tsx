@@ -42,14 +42,14 @@ export function WalletPill() {
       </div>
       {balance && (
         <p className="text-xs text-white/30 pl-4">
-          {parseFloat(balance).toFixed(3)} {isSolana ? 'SOL' : 'ETH'}
+          {parseFloat(balance).toFixed(3)} {isSolana ? 'MNT' : 'ETH'}
         </p>
       )}
       <p
         className="text-xs text-white/20 pl-4 mt-0.5"
         style={{ fontFamily: '"Fira Code", monospace' }}
       >
-        {isSolana ? 'Solana Devnet' : (expectedNetwork?.name ?? 'EVM Network')}
+        {isSolana ? 'Mantle Sepolia' : (expectedNetwork?.name ?? 'EVM Network')}
       </p>
     </div>
   )

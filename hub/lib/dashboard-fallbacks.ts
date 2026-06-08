@@ -103,7 +103,7 @@ export type FeedItem = {
 export const FALLBACK_ACTIVITY_FEED: FeedItem[] = [
   { id: 'f1',  protocol: 'Agent Co-ordinator',      protocolColor: '#6366f1', action: 'Agent deployed',      detail: 'Alpha-7 Node',        address: '0x3f…8a2b', timestamp: '2s ago',  type: 'deploy'  },
   { id: 'f2',  protocol: 'Private Vault',            protocolColor: '#14b8a6', action: 'Collateral deposit',  detail: '2.4 ETH locked',      address: '0xab…12cd', timestamp: '8s ago',  type: 'deposit' },
-  { id: 'f3',  protocol: 'Yield Operations Hub',     protocolColor: '#10b981', action: 'AI route executed',   detail: 'SOL → USDC swap',     address: '0x7e…f3a1', timestamp: '15s ago', type: 'swap'    },
+  { id: 'f3',  protocol: 'Yield Operations Hub',     protocolColor: '#10b981', action: 'AI route executed',   detail: 'MNT → USDC swap',     address: '0x7e…f3a1', timestamp: '15s ago', type: 'swap'    },
   { id: 'f4',  protocol: 'AI Lending',               protocolColor: '#f59e0b', action: 'Loan negotiated',     detail: '$12,400 at 4.2%',     address: '0x9c…2b44', timestamp: '23s ago', type: 'loan'    },
   { id: 'f5',  protocol: 'Credit Passport',          protocolColor: '#06b6d4', action: 'Credit score update', detail: 'Score: 847 (+12)',     address: '0x1d…77cc', timestamp: '41s ago', type: 'credit'  },
   { id: 'f6',  protocol: 'Family Vault',             protocolColor: '#f43f5e', action: 'Legacy file anchored',detail: 'CID: Qm3f…8a2b',      address: '0x44…9e12', timestamp: '1m ago',  type: 'legacy'  },
@@ -128,14 +128,14 @@ export type ToolCard = {
 }
 
 export const FALLBACK_TOOLS: ToolCard[] = [
-  { name: 'Agent Co-ordinator',      href: '/agents',   description: 'AI Agent Coordination on Solana', color: '#6366f1', status: 'live', stats: [{ label: 'Agents',    value: '847'     }, { label: 'TVL',       value: '$284M'    }] },
+  { name: 'Agent Co-ordinator',      href: '/agents',   description: 'AI Agent Coordination on Mantle', color: '#6366f1', status: 'live', stats: [{ label: 'Agents',    value: '847'     }, { label: 'TVL',       value: '$284M'    }] },
   { name: 'Private Vault',           href: '/vault',    description: 'Cross-Chain Privacy Vault',       color: '#14b8a6', status: 'live', stats: [{ label: 'Locked',    value: '$1.2B'   }, { label: 'dWallets',  value: '12.4K'    }] },
-  { name: 'Bill Split',              href: '/split',    description: 'Bill Splitting on Stellar',       color: '#3b82f6', status: 'live', stats: [{ label: 'Bills',     value: '28.1K'   }, { label: 'Settled',   value: '$4.2M'    }] },
+  { name: 'Bill Split',              href: '/split',    description: 'Bill Splitting on Mantle',       color: '#3b82f6', status: 'live', stats: [{ label: 'Bills',     value: '28.1K'   }, { label: 'Settled',   value: '$4.2M'    }] },
   { name: 'AI Lending',              href: '/lend',     description: 'AI DeFi Loan Negotiation',        color: '#f59e0b', status: 'live', stats: [{ label: 'Loans',     value: '3,291'   }, { label: 'TVL',       value: '$180M'    }] },
-  { name: 'Credit Passport',         href: '/credit',   description: 'Credit Passport on QIE',          color: '#06b6d4', status: 'beta', stats: [{ label: 'Passports', value: '9,847'   }, { label: 'Avg Score', value: '724'      }] },
-  { name: 'Family Vault',            href: '/legacy',   description: 'Digital Legacy Vault on QIE',     color: '#f43f5e', status: 'beta', stats: [{ label: 'Vaults',    value: '2,104'   }, { label: 'Assets',    value: '$8.9M'    }] },
+  { name: 'Credit Passport',         href: '/credit',   description: 'Credit Passport on Mantle',       color: '#06b6d4', status: 'beta', stats: [{ label: 'Passports', value: '9,847'   }, { label: 'Avg Score', value: '724'      }] },
+  { name: 'Family Vault',            href: '/legacy',   description: 'Digital Legacy Vault on Mantle',  color: '#f43f5e', status: 'beta', stats: [{ label: 'Vaults',    value: '2,104'   }, { label: 'Assets',    value: '$8.9M'    }] },
   { name: 'Yield Operations Hub',    href: '/treasury', description: 'Autonomous Financial OS',         color: '#10b981', status: 'live', stats: [{ label: 'Routed',    value: '$920M'   }, { label: 'Agents',    value: '7 active' }] },
-  { name: 'Stealth Execution Suite', href: '/shadow',   description: 'Invisible Operations on Solana',  color: '#8b5cf6', status: 'live', stats: [{ label: 'Ops',       value: '2.1K'    }, { label: 'Chain',     value: 'Solana'   }] },
+  { name: 'Stealth Execution Suite', href: '/shadow',   description: 'Invisible Operations on Mantle',  color: '#8b5cf6', status: 'live', stats: [{ label: 'Ops',       value: '2.1K'    }, { label: 'Chain',     value: 'Mantle'   }] },
 ]
 
 /* 1-day (24 hourly points) */

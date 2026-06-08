@@ -273,12 +273,12 @@ export async function askAdvisor(question: string, context?: unknown): Promise<s
   } catch (e: any) {
     logTelemetryError('FETCH_ERROR', 'PF askAdvisor', e?.message, e)
     const q = question.toLowerCase()
-    if (q.includes('balance') || q.includes('treasury')) return 'Treasury balance is $1,245,678.90 with 5.2% 24h growth. Capital allocation: 80.3% PUSD, 2.4% ETH, 1% SOL. All pools operating within normal parameters.'
+    if (q.includes('balance') || q.includes('treasury')) return 'Treasury balance is $1,245,678.90 with 5.2% 24h growth. Capital allocation: 80.3% USDC, 2.4% ETH, 1% MNT. All pools operating within normal parameters.'
     if (q.includes('agent') || q.includes('perform')) return 'All 7 neural agents (Aegis, Nomad, Sentinel, Wraith, Oracle, Phantom, Echo) are online at 100% efficiency. Nomad has optimized 3,201 routes today.'
-    if (q.includes('yield') || q.includes('apy')) return 'Balanced strategy is yielding 14.2% APY. Kamino (35%) and Raydium (28%) are top performers. Consider Aggressive for 28.6% APY if risk tolerance allows.'
+    if (q.includes('yield') || q.includes('apy')) return 'Balanced strategy is yielding 14.2% APY. Lendle (35%) and Merchant Moe (28%) are top performers. Consider Aggressive for 28.6% APY if risk tolerance allows.'
     if (q.includes('risk')) return 'Risk assessment: LOW. Emergency lock is active per Neural Sentinel. Aegis monitoring 247 transactions/min. All transactions cryptographically validated by Policy Enforcer.'
-    if (q.includes('swap') || q.includes('route')) return 'Nomad agent recommends Raydium for SOL→USDC (0.2% impact, $0.50 fee). Orca is 10% cheaper but 15s slower. Bridge routes available for cross-chain swaps.'
-    if (q.includes('send') || q.includes('payment')) return 'AI routing will optimize your payment for minimum cost. Current best route: direct Solana transfer, ~$0.01 fee, finality in <2s. Phantom agent is ready to execute.'
+    if (q.includes('swap') || q.includes('route')) return 'Nomad agent recommends Merchant Moe for MNT→USDC (0.2% impact, $0.50 fee). Agni Finance is 10% cheaper but 15s slower. Bridge routes available for cross-chain swaps.'
+    if (q.includes('send') || q.includes('payment')) return 'AI routing will optimize your payment for minimum cost. Current best route: direct Mantle transfer, ~$0.01 fee, finality in <2s. Phantom agent is ready to execute.'
     return 'PalmFlow AI: Treasury is healthy at $1,245,678.90. All 7 agents operational. Balanced yield strategy returning 14.2% APY. AI routing saving ~23% on gas costs. Recommend initiating yield-routing protocols to maximize Q3 returns.'
   }
 }

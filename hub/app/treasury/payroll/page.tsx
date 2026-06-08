@@ -11,10 +11,10 @@ const CARD = 'rgba(255,255,255,0.03)'
 const BDR = 'rgba(255,255,255,0.07)'
 const MONO = '"JetBrains Mono","Fira Code",monospace'
 
-const TOKENS = ['PUSD', 'SOL', 'USDC']
+const TOKENS = ['USDC', 'MNT', 'USDC']
 const ROLES = ['Engineer', 'Designer', 'Marketing', 'Operations', 'Researcher', 'Full Stack Developer', 'Product Manager']
 
-const RATE = 0.015 // PUSD streamed per second (demo)
+const RATE = 0.015 // USDC streamed per second (demo)
 
 export default function PayrollPage() {
   const [streams, setStreams] = useState<PFStream[]>([])
@@ -23,7 +23,7 @@ export default function PayrollPage() {
   const [showCreate, setShowCreate] = useState(false)
   const [creating, setCreating] = useState(false)
   const [streamed, setStreamed] = useState(469.8547)
-  const [form, setForm] = useState({ recipientName: '', role: ROLES[0], wallet: '', ratePerHour: '', token: 'PUSD' })
+  const [form, setForm] = useState({ recipientName: '', role: ROLES[0], wallet: '', ratePerHour: '', token: 'USDC' })
 
   useEffect(() => {
     fetchStreams('demo').then(s => { setStreams(s); setLoading(false) })
@@ -70,7 +70,7 @@ export default function PayrollPage() {
         <div>
           <div style={{ fontSize: 11, color: TEAL, fontFamily: MONO, letterSpacing: '0.1em', marginBottom: 4 }}>YIELD OPERATIONS HUB / PAYROLL</div>
           <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700 }}>Payroll Streaming</h1>
-          <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Real-time autonomous payroll on Solana</p>
+          <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Real-time autonomous payroll on Mantle</p>
         </div>
         <button
           onClick={() => setShowCreate(true)}
@@ -85,8 +85,8 @@ export default function PayrollPage() {
         {[
           { label: 'Active Streams', value: streams.filter(s => s.status === 'active').length, color: '#22C55E' },
           { label: 'Total Streams', value: streams.length, color: '#fff' },
-          { label: 'Total Streamed', value: `${streamed.toFixed(4)} PUSD`, color: TEAL },
-          { label: 'Avg Rate', value: streams.length ? `${(streams.reduce((s, st) => s + st.ratePerHour, 0) / streams.length).toFixed(0)} PUSD/hr` : '—', color: '#A855F7' },
+          { label: 'Total Streamed', value: `${streamed.toFixed(4)} USDC`, color: TEAL },
+          { label: 'Avg Rate', value: streams.length ? `${(streams.reduce((s, st) => s + st.ratePerHour, 0) / streams.length).toFixed(0)} USDC/hr` : '—', color: '#A855F7' },
         ].map(s => (
           <div key={s.label} style={{ background: CARD, border: `1px solid ${BDR}`, borderRadius: 10, padding: '14px 16px' }}>
             <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginBottom: 6 }}>{s.label}</div>
@@ -157,7 +157,7 @@ export default function PayrollPage() {
               {[
                 { label: 'Recipient Name', key: 'recipientName', placeholder: 'Alex Rivera' },
                 { label: 'Wallet Address', key: 'wallet', placeholder: '7xKp...9mQZ' },
-                { label: 'Rate (PUSD/hr)', key: 'ratePerHour', placeholder: '54', type: 'number' },
+                { label: 'Rate (USDC/hr)', key: 'ratePerHour', placeholder: '54', type: 'number' },
               ].map(f => (
                 <div key={f.key} style={{ marginBottom: 14 }}>
                   <label style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', display: 'block', marginBottom: 6 }}>{f.label}</label>

@@ -354,7 +354,7 @@ function PaymentContent() {
       {/* Contract badge */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap' }}>
         <a
-          href={`https://sepolia.arbiscan.io/address/${CONTRACT_ADDRESS}`}
+          href={`https://sepolia.mantlescan.xyz/address/${CONTRACT_ADDRESS}`}
           target="_blank" rel="noreferrer"
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 12px',
@@ -373,7 +373,7 @@ function PaymentContent() {
           fontFamily: MONO,
         }}>
           <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#28a0f0' }} />
-          Arbitrum Sepolia
+          Mantle Sepolia
         </div>
       </div>
 
@@ -427,7 +427,7 @@ function PaymentContent() {
           {approveTxHash && (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontFamily: MONO, fontSize: 10, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Approve TX</span>
-              <a href={`https://sepolia.arbiscan.io/tx/${approveTxHash}`} target="_blank" rel="noreferrer" style={{ fontFamily: MONO, fontSize: 11, color: '#C8FF00', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: 4 }}>
+              <a href={`https://sepolia.mantlescan.xyz/tx/${approveTxHash}`} target="_blank" rel="noreferrer" style={{ fontFamily: MONO, fontSize: 11, color: '#C8FF00', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: 4 }}>
                 {approveTxHash.slice(0, 10)}···{approveTxHash.slice(-8)} <ExternalLink size={10} />
               </a>
             </div>
@@ -435,7 +435,7 @@ function PaymentContent() {
           {payTxHash && (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontFamily: MONO, fontSize: 10, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Payment TX</span>
-              <a href={`https://sepolia.arbiscan.io/tx/${payTxHash}`} target="_blank" rel="noreferrer" style={{ fontFamily: MONO, fontSize: 11, color: '#C8FF00', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: 4 }}>
+              <a href={`https://sepolia.mantlescan.xyz/tx/${payTxHash}`} target="_blank" rel="noreferrer" style={{ fontFamily: MONO, fontSize: 11, color: '#C8FF00', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: 4 }}>
                 {payTxHash.slice(0, 10)}···{payTxHash.slice(-8)} <ExternalLink size={10} />
               </a>
             </div>

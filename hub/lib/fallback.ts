@@ -63,18 +63,18 @@ export const fallbackTreasury = {
   outflow30d: 1800.0,
   yield: 6.8,
   streams: [
-    { recipient: 'Dev Team', ratePerSecond: 0.00023, token: 'SOL', active: true },
-    { recipient: 'Marketing', ratePerSecond: 0.00011, token: 'SOL', active: true },
+    { recipient: 'Dev Team', ratePerSecond: 0.00023, token: 'MNT', active: true },
+    { recipient: 'Marketing', ratePerSecond: 0.00011, token: 'MNT', active: true },
   ],
 }
 
 export const fallbackShadowAgents = [
   { type: 'CFO',        status: 'active', lastAction: 'Treasury rebalanced',      time: '2m ago' },
-  { type: 'Payroll',    status: 'active', lastAction: 'Streamed 0.42 SOL',        time: '1m ago' },
+  { type: 'Payroll',    status: 'active', lastAction: 'Streamed 0.42 MNT',        time: '1m ago' },
   { type: 'Compliance', status: 'active', lastAction: 'All checks passed',        time: '5m ago' },
   { type: 'Audit',      status: 'active', lastAction: '47 txns logged',           time: '3m ago' },
   { type: 'Procurement',status: 'idle',   lastAction: 'Awaiting approval',        time: '12m ago' },
-  { type: 'Tax',        status: 'active', lastAction: 'Liability: 0.08 SOL',      time: '8m ago' },
+  { type: 'Tax',        status: 'active', lastAction: 'Liability: 0.08 MNT',      time: '8m ago' },
   { type: 'Risk',       status: 'active', lastAction: 'No anomalies detected',    time: '1m ago' },
 ]
 
@@ -82,7 +82,7 @@ export const fallbackSplits = [
   {
     id: 'split-demo-1',
     amount: 100,
-    currency: 'XLM',
+    currency: 'MNT',
     participants: ['G...AAA', 'G...BBB', 'G...CCC'],
     sharePerPerson: 33.33,
     status: 'pending',

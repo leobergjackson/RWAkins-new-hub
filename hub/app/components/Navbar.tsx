@@ -59,7 +59,7 @@ export default function Navbar() {
               <span style={{ position: 'relative' }}>K</span>
             </span>
             <span style={{ fontWeight: 800, fontSize: 18, color: '#0A0F2E', letterSpacing: '-0.02em' }}>
-              Ruphex
+              Kubryx
             </span>
           </Link>
 

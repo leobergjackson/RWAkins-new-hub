@@ -31,9 +31,9 @@ export default function LoanPortfolio({ isConnected = false }: { isConnected?: b
   }
 
   function announce(label: string) {
-    const tx = simTx('arbitrum')
+    const tx = simTx('mantle')
     toast.success(
-      `${label} · Arbitrum tx ${tx.short}`,
+      `${label} · Mantle tx ${tx.short}`,
       { description: tx.explorerUrl, action: { label: 'View ↗', onClick: () => window.open(tx.explorerUrl, '_blank') } }
     )
     return tx
@@ -114,7 +114,7 @@ export default function LoanPortfolio({ isConnected = false }: { isConnected?: b
                             <Det label="Liquidation Price" v={`${l.liqPrice} (current: ${l.currentPrice})`} />
                             <Det label="AI Negotiated" v={`Yes · Rate ${l.apr}`} />
                             <Det label="ZK Credit" v={l.zkProof} />
-                            <Det label="Arbitrum Tx" v={l.tx} />
+                            <Det label="Mantle Tx" v={l.tx} />
                           </div>
                         </td>
                       </tr>

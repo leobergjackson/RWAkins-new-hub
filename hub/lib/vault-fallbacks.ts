@@ -20,7 +20,7 @@ export type ChainBreakdown = {
 export const FALLBACK_CHAIN_BREAKDOWN: ChainBreakdown[] = [
   { chain: 'Bitcoin',  symbol: 'BTC', value: '$620M', numericValue: 620, pct: 50, color: '#f7931a' },
   { chain: 'Ethereum', symbol: 'ETH', value: '$440M', numericValue: 440, pct: 35, color: '#627eea' },
-  { chain: 'Solana',   symbol: 'SOL', value: '$180M', numericValue: 180, pct: 15, color: '#9945ff' },
+  { chain: 'Mantle',   symbol: 'MNT', value: '$180M', numericValue: 180, pct: 15, color: '#9945ff' },
 ]
 
 export type VaultStat = {
@@ -38,7 +38,7 @@ export const FALLBACK_VAULT_STATS: VaultStat[] = [
 ]
 
 export type MyAssetPosition = {
-  asset: 'BTC' | 'ETH' | 'SOL'
+  asset: 'BTC' | 'ETH' | 'MNT'
   amount: number
   value: number
 }
@@ -46,12 +46,12 @@ export type MyAssetPosition = {
 export const FALLBACK_MY_POSITIONS: MyAssetPosition[] = [
   { asset: 'BTC', amount: 1.2,   value: 51408 },
   { asset: 'ETH', amount: 4.8,   value: 10963 },
-  { asset: 'SOL', amount: 220.0, value: 21604 },
+  { asset: 'MNT', amount: 220.0, value: 21604 },
 ]
 
 export type DWallet = {
   id: number
-  chain: 'BTC' | 'ETH' | 'SOL'
+  chain: 'BTC' | 'ETH' | 'MNT'
   address: string
   mpcStatus: string
   balance: string
@@ -65,7 +65,7 @@ export const FALLBACK_DWALLETS: DWallet[] = [
 ]
 
 export type AssetMeta = {
-  symbol: 'BTC' | 'ETH' | 'SOL'
+  symbol: 'BTC' | 'ETH' | 'MNT'
   name: string
   price: number
   icon: string
@@ -75,7 +75,7 @@ export type AssetMeta = {
 export const FALLBACK_ASSET_META: AssetMeta[] = [
   { symbol: 'BTC', name: 'Bitcoin',  price: 42840, icon: '₿', balance: 2.841 },
   { symbol: 'ETH', name: 'Ethereum', price: 2284,  icon: '♦', balance: 12.41 },
-  { symbol: 'SOL', name: 'Solana',   price: 98.2,  icon: '◎', balance: 1240  },
+  { symbol: 'MNT', name: 'Mantle',   price: 98.2,  icon: '◎', balance: 1240  },
 ]
 
 export type HistoryRow = {
@@ -94,7 +94,7 @@ export type HistoryRow = {
 
 const types: HistoryRow['type'][] = ['DEP', 'DEP', 'TRD', 'WDR', 'REG', 'DEP', 'TRD', 'WDR', 'DEP', 'TRD',
                                      'REG', 'DEP', 'TRD', 'WDR', 'DEP', 'TRD', 'DEP', 'WDR', 'TRD', 'REG']
-const assets = ['BTC', 'ETH', 'SOL', 'BTC/ETH', 'ETH/SOL', 'SOL/BTC']
+const assets = ['BTC', 'ETH', 'MNT', 'BTC/ETH', 'ETH/MNT', 'MNT/BTC']
 
 function hex(n: number) {
   let out = ''

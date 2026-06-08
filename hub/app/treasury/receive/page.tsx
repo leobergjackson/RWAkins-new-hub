@@ -12,8 +12,8 @@ const CARD = 'rgba(255,255,255,0.03)'
 const BDR = 'rgba(255,255,255,0.07)'
 const MONO = '"JetBrains Mono","Fira Code",monospace'
 
-const ASSETS = ['PUSD','SOL','ETH','USDC','USDT','DAI']
-const NETWORKS = ['Solana','Ethereum','Arbitrum','Polygon']
+const ASSETS = ['USDC','MNT','ETH','USDC','USDT','DAI']
+const NETWORKS = ['Mantle','Ethereum','Polygon']
 
 function CopyBtn({ text }: { text: string }) {
   const [copied, setCopied] = useState(false)
@@ -55,7 +55,7 @@ export default function ReceivePage() {
   const [loading, setLoading] = useState(true)
   const [creating, setCreating] = useState(false)
   const [created, setCreated] = useState<PFPaymentRequest | null>(null)
-  const [form, setForm] = useState({ amount: '', asset: 'USDC', network: 'Solana', description: '', expiryDate: '' })
+  const [form, setForm] = useState({ amount: '', asset: 'USDC', network: 'Mantle', description: '', expiryDate: '' })
   const [expandedQR, setExpandedQR] = useState<string | null>(null)
 
   useEffect(() => {

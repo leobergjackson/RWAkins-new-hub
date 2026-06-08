@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useGlobalOperations, RuphexEventType } from '../../lib/global-operations-engine'
+import { useGlobalOperations, KubryxEventType } from '../../lib/global-operations-engine'
 import { useStrategicIntelligence } from '../../lib/strategic-intelligence-engine'
 import { useCivilizationOrchestration, InstitutionalAgent, InterAgentNegotiation } from '../../lib/civilization-orchestration-engine'
 import { toast } from '../../lib/toast'
@@ -100,7 +100,7 @@ export default function EcosystemPage() {
 
   // Simulator Inputs
   const [customPayload, setCustomPayload] = useState('{\n  "status": "nominal",\n  "active": true\n}')
-  const [customEventType, setCustomEventType] = useState<RuphexEventType>('kubryx_ecosystem_alert')
+  const [customEventType, setCustomEventType] = useState<KubryxEventType>('kubryx_ecosystem_alert')
   const [customEventDesc, setCustomEventDesc] = useState('Custom ecosystem webhook telemetry dispatch.')
 
   // Strategic Explorer State
@@ -468,7 +468,7 @@ export default function EcosystemPage() {
                   <label style={{ display: 'block', fontSize: 11, color: '#888', marginBottom: 4 }}>Select Target Event Type</label>
                   <select
                     value={customEventType}
-                    onChange={(e) => setCustomEventType(e.target.value as RuphexEventType)}
+                    onChange={(e) => setCustomEventType(e.target.value as KubryxEventType)}
                     style={{ width: '100%', padding: '6px 10px', background: '#040404', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: 11, borderRadius: 6, outline: 'none' }}
                   >
                     <option value="kubryx_ecosystem_alert">kubryx_ecosystem_alert</option>

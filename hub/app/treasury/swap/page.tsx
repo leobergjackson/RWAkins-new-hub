@@ -14,17 +14,17 @@ const CARD = 'rgba(255,255,255,0.03)'
 const BDR = 'rgba(255,255,255,0.07)'
 const MONO = '"JetBrains Mono","Fira Code",monospace'
 
-const ASSETS = ['SOL','ETH','USDC','USDT','DAI','MATIC','PUSD']
-const NETWORKS = ['Solana','Ethereum','Arbitrum','Polygon']
+const ASSETS = ['MNT','ETH','USDC','USDT','DAI','MATIC','USDC']
+const NETWORKS = ['Mantle','Ethereum','Polygon']
 
-const MOCK_PRICES: Record<string, number> = { SOL:124.82, ETH:2984, USDC:1, USDT:1, DAI:1, MATIC:0.99, PUSD:1 }
+const MOCK_PRICES: Record<string, number> = { MNT:0.65, ETH:2984, USDC:1, USDT:1, DAI:1, MATIC:0.99, USDY:1.08 }
 
 export default function SwapPage() {
-  const [fromAsset, setFromAsset] = useState('SOL')
+  const [fromAsset, setFromAsset] = useState('MNT')
   const [toAsset, setToAsset]   = useState('USDC')
   const [fromAmount, setFromAmount] = useState('10')
-  const [fromNetwork, setFromNetwork] = useState('Solana')
-  const [toNetwork, setToNetwork] = useState('Solana')
+  const [fromNetwork, setFromNetwork] = useState('Mantle')
+  const [toNetwork, setToNetwork] = useState('Mantle')
   const [slippage, setSlippage] = useState('0.5')
   const [routes, setRoutes] = useState<PFSwapRoute[]>(PF_SWAP_ROUTES)
   const [selectedRoute, setSelectedRoute] = useState<PFSwapRoute>(PF_SWAP_ROUTES[0])
@@ -73,7 +73,7 @@ export default function SwapPage() {
         <div style={{ marginBottom: 24 }}>
           <div style={{ fontSize: 11, color: TEAL, fontFamily: MONO, letterSpacing: '0.1em', marginBottom: 4 }}>YIELD OPERATIONS HUB / SWAP</div>
           <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700 }}>Swap Assets</h1>
-          <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>AI-optimized DEX routing across Solana, Ethereum and more</p>
+          <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>AI-optimized DEX routing across Mantle, Ethereum and more</p>
         </div>
 
         {txHash && (

@@ -22,7 +22,7 @@ const DEFAULT_POLICIES: PolicyItem[] = [
   { id: 'pol-01', name: 'SLA-Escalation-900', category: 'Telemetry Escalation', description: 'If RPC response exceeds 900ms, immediately isolate node and redirect standard queries to regional relays.', status: 'active', lastViolated: 'Never', conflictDetected: false },
   { id: 'pol-02', name: 'Agent-Guardrail-USDC', category: 'AI Constraint', description: 'Prevents AI agents from moving more than 50,000 USDC per single block without manual operator co-signatures.', status: 'active', lastViolated: '24 hours ago', conflictDetected: false },
   { id: 'pol-03', name: 'Zero-Metadata-Routing', category: 'Resilience Enforcement', description: 'Force zero-metadata routing key locks on bridge signatures matching suspicious addresses.', status: 'active', lastViolated: 'Never', conflictDetected: false },
-  { id: 'pol-04', name: 'Max-Drift-Payroll-15', category: 'Yield Operations Hub Governance', description: 'Automated alarm triggered if drift between Solana and QIE multi-sig balances exceeds 15%.', status: 'active', lastViolated: '3 hours ago', conflictDetected: true },
+  { id: 'pol-04', name: 'Max-Drift-Payroll-15', category: 'Yield Operations Hub Governance', description: 'Automated alarm triggered if drift between Mantle and Mantle multi-sig balances exceeds 15%.', status: 'active', lastViolated: '3 hours ago', conflictDetected: true },
   { id: 'pol-05', name: 'Twin-Isolation-Sandbox', category: 'Simulation Safety', description: 'Enforce complete simulation state isolation to prevent synthetic anomalies from writing to live production databases.', status: 'active', lastViolated: 'Never', conflictDetected: false }
 ]
 
@@ -261,7 +261,7 @@ export default function PoliciesPage() {
                   type="text"
                   value={newPolicyName}
                   onChange={(e) => setNewPolicyName(e.target.value)}
-                  placeholder="e.g. Max-Gas-Cap-QIE"
+                  placeholder="e.g. Max-Gas-Cap-Mantle"
                   required
                   style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
                 />

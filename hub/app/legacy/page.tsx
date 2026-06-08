@@ -292,7 +292,7 @@ export default function LegacyLandingPage() {
               color: '#16A34A', display: 'inline-flex', alignItems: 'center', gap: 6, fontWeight: 600
             }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#16A34A' }} />
-              QIE Mainnet
+              Mantle Network
             </span>
             <span style={{
               fontSize: 12, padding: '6px 16px', borderRadius: 20,
@@ -327,7 +327,7 @@ export default function LegacyLandingPage() {
             Where Identity <br/> <i style={{ color: '#D97706' }}>Meets Eternity.</i>
           </h1>
           <p style={{ fontSize: 18, color: 'rgba(26,26,26,0.6)', lineHeight: 1.6, maxWidth: 640, margin: '0 auto 40px' }}>
-            Encrypt your memories client-side, anchor them on QIE Mainnet, and empower your heirs to access them only when the time is right.
+            Encrypt your memories client-side, anchor them on Mantle Network, and empower your heirs to access them only when the time is right.
           </p>
 
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 32 }}>
@@ -365,7 +365,7 @@ export default function LegacyLandingPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24, marginBottom: 80 }}>
           {[
             { icon: '🔒', title: 'Client-Side Encryption', desc: 'AES-GCM-256 with PBKDF2. Your passphrase never leaves your browser.', color: '#2563EB' },
-            { icon: '⛓', title: 'On-Chain Anchoring', desc: 'File references anchored on QIE Mainnet. Tamper-proof audit trail.', color: '#16A34A' },
+            { icon: '⛓', title: 'On-Chain Anchoring', desc: 'File references anchored on Mantle Network. Tamper-proof audit trail.', color: '#16A34A' },
             { icon: '👨‍👩‍👧‍👦', title: 'Heir Governance', desc: 'Register heirs and validators on-chain. Access unlocks only when activated.', color: '#D97706' },
             { icon: '🧬', title: 'AI Legacy Stories', desc: 'AI generates a personal narrative from your metadata for heirs to cherish.', color: '#9333EA' },
           ].map((feat) => (
@@ -426,7 +426,7 @@ export default function LegacyLandingPage() {
           <p style={{ fontSize: 13, color: 'rgba(26,26,26,0.6)', margin: 0, lineHeight: 1.6 }}>
             ⚠️ This application uses client-side encryption (AES-GCM-256) for all memories. Your vault key is your
             responsibility — back it up securely. In a full deployment,
-            connecting your QIE wallet lets you register heirs and anchor file references on-chain via
+            connecting your Mantle wallet lets you register heirs and anchor file references on-chain via
             LegacyVault.sol.
           </p>
         </div>

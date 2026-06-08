@@ -69,6 +69,6 @@ describe('fallback.ts', () => {
   it('splits have correct structure', () => {
     expect(fallbackSplits.length).toBeGreaterThan(0)
     expect(fallbackSplits[0].participants.length).toBeGreaterThan(0)
-    expect(fallbackSplits[0].currency).toBe('XLM')
+    expect(fallbackSplits[0].currency).toBe('MNT')
   })
 })

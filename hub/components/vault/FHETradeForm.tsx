@@ -27,8 +27,8 @@ const STEP_LABELS: Record<Step, string> = {
 
 const RECENT_TRADES = [
   { time: '2m ago',  pair: 'BTC/ETH', proof: 'zk-proof ✓' },
-  { time: '15m ago', pair: 'ETH/SOL', proof: 'zk-proof ✓' },
-  { time: '1h ago',  pair: 'SOL/BTC', proof: 'zk-proof ✓' },
+  { time: '15m ago', pair: 'ETH/MNT', proof: 'zk-proof ✓' },
+  { time: '1h ago',  pair: 'MNT/BTC', proof: 'zk-proof ✓' },
 ]
 
 export default function FHETradeForm({ walletAddress }: { walletAddress?: string }) {
@@ -62,7 +62,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
         body: JSON.stringify({
           asset: sellAsset.symbol,
           amount,
-          fromChain: privacy === 'full' ? 'zero-metadata' : 'Solana',
+          fromChain: privacy === 'full' ? 'zero-metadata' : 'Mantle',
           toChain: buyAsset.symbol,
         }),
       })

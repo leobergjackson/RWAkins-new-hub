@@ -27,7 +27,7 @@ export default function LendForm({ walletAddress, prefillAsset }: { walletAddres
     if (!amount) return
     setSubmitting(true)
     await new Promise(r => setTimeout(r, 900))
-    setSuccess({ amount, asset, apy: pool.apy, tx: simTx('arbitrum') })
+    setSuccess({ amount, asset, apy: pool.apy, tx: simTx('mantle') })
     setSubmitting(false)
   }
 
@@ -41,10 +41,10 @@ export default function LendForm({ walletAddress, prefillAsset }: { walletAddres
             Supplied <b>{success.amount} {success.asset}</b> · earning <b style={{ color: '#10b981' }}>{success.apy} APY</b>
           </p>
           <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 8, padding: 14, fontSize: 12, color: MUTED, marginBottom: 16, fontFamily: MONO, textAlign: 'left' }}>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Arbitrum Tx</div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Mantle Tx</div>
             <div style={{ wordBreak: 'break-all', color: '#fff' }}>{success.tx.hash}</div>
             <a href={success.tx.explorerUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: 8, color: '#10b981', textDecoration: 'none', fontWeight: 600 }}>
-              View on Arbiscan ↗
+              View on Mantle Explorer ↗
             </a>
           </div>
           <button onClick={() => { setSuccess(null); setAmount('') }} style={primaryBtn}>Supply More</button>

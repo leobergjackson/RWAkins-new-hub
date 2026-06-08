@@ -2,7 +2,10 @@
   "usdy": "",
   "meth": "",
   "vault": "",
+  "registry": "",
+  "settlement": "",
+  "lendoraAgentId": 0,
   "chainId": 5003,
   "deployedAt": null,
-  "note": "Populated by invoices/contracts/scripts/deploy-rwa.ts after deployment to Mantle Sepolia. While empty, the Treasury RWA panel renders a demo position and prompts to deploy."
+  "note": "Populated by invoices/contracts/scripts/deploy-rwa.ts after deployment to Mantle Sepolia. Deploys the RWA tokens + vault, the ERC-8004 AgentIdentityRegistry, and the LendingSettlement contract. While empty, the Treasury RWA panel renders a demo position and prompts to deploy."
 }

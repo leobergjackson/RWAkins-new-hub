@@ -1,5 +1,5 @@
 // Built by vsrupeshkumar
-// Credit Passport contract interactions (QIE Mainnet, Chain ID 1990).
+// Credit Passport contract interactions (Mantle Network, Chain ID 1990).
 // Signatures verified against the deployed source in creditblocks/contracts.
 // Every function tries the real on-chain call first and silently falls back
 // to a safe default on any error — it never throws, so the UI cannot crash.
@@ -54,7 +54,7 @@ export async function readCreditScore(address: string): Promise<number> {
 
 /**
  * Returns true if a credit passport NFT has been minted for this wallet.
- * passportIdOf returns the token id (0 = no passport yet — the Ruphex
+ * passportIdOf returns the token id (0 = no passport yet — the Kubryx
  * backend mints passports after on-chain activity is detected).
  */
 export async function readPassportExists(address: string): Promise<boolean> {

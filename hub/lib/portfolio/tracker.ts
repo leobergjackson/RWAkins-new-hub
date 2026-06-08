@@ -5,7 +5,7 @@ import type { PFTransaction, PFAsset } from '../palmflow-fallbacks'
 
 // Map display symbol → CoinGecko id for price lookups
 export const SYMBOL_TO_COINGECKO: Record<string, string> = {
-  SOL:   'solana',
+  MNT:   'solana',
   ETH:   'ethereum',
   MATIC: 'matic-network',
   ARB:   'arbitrum',
@@ -15,7 +15,7 @@ export const SYMBOL_TO_COINGECKO: Record<string, string> = {
 }
 
 // Stablecoins always trade at $1
-const STABLECOINS = new Set(['USDC','USDT','DAI','BUSD','PUSD','FRAX','TUSD','USDP'])
+const STABLECOINS = new Set(['USDC','USDT','DAI','BUSD','USDC','FRAX','TUSD','USDP'])
 
 export function isStablecoin(symbol: string) {
   return STABLECOINS.has(symbol.toUpperCase())

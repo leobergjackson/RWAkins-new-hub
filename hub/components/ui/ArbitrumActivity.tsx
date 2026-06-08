@@ -1,6 +1,6 @@
 // Built by vsrupeshkumar
-// Recent on-chain Arbitrum activity for the connected EVM wallet.
-// Sources from /api/arbitrum/txs (Arbiscan-backed), light theme.
+// Recent on-chain Mantle activity for the connected EVM wallet.
+// Sources from /api/arbitrum/txs (Mantle Explorer-backed), light theme.
 'use client'
 
 import { useEffect, useState } from 'react'

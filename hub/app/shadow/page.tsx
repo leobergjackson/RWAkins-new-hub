@@ -34,31 +34,31 @@ const BG = '#F8FAFC', MONO = '"JetBrains Mono","Fira Code","Courier New",monospa
 const CARD = 'rgba(255,255,255,0.85)', BORDER = 'rgba(255,255,255,0.6)'
 
 const DEPTS = [
-  { type:'cfo',         name:'CFO Agent',         icon:'💰', role:'Yield Operations Hub oversight, rebalancing & capital allocation', color:'#EAB308', bg:'rgba(234,179,8,0.15)',    bd:'rgba(234,179,8,0.3)',    metric:'12,480.50', unit:'SOL',    label:'Yield Operations Hub Balance',   action:'Rebalance Yield Operations Hub' },
-  { type:'payroll',     name:'Payroll Agent',      icon:'💸', role:'Real-time SOL salary streaming to team wallets',       color:'#10B981', bg:'rgba(16,185,129,0.15)',  bd:'rgba(16,185,129,0.3)',  metric:'0.00034',   unit:'SOL/s',  label:'Stream Rate',        action:'Process payroll batch' },
+  { type:'cfo',         name:'CFO Agent',         icon:'💰', role:'Yield Operations Hub oversight, rebalancing & capital allocation', color:'#EAB308', bg:'rgba(234,179,8,0.15)',    bd:'rgba(234,179,8,0.3)',    metric:'12,480.50', unit:'MNT',    label:'Yield Operations Hub Balance',   action:'Rebalance Yield Operations Hub' },
+  { type:'payroll',     name:'Payroll Agent',      icon:'💸', role:'Real-time MNT salary streaming to team wallets',       color:'#10B981', bg:'rgba(16,185,129,0.15)',  bd:'rgba(16,185,129,0.3)',  metric:'0.00034',   unit:'MNT/s',  label:'Stream Rate',        action:'Process payroll batch' },
   { type:'compliance',  name:'Compliance Agent',   icon:'⚖️', role:'Regulatory rule enforcement & AML screening',         color:'#3B82F6', bg:'rgba(59,130,246,0.15)',  bd:'rgba(59,130,246,0.3)',  metric:'347',       unit:'rules',  label:'Rules Checked',      action:'Run compliance sweep' },
   { type:'audit',       name:'Audit Agent',        icon:'🔍', role:'Immutable transaction logging & on-chain audit trail', color:'#8B5CF6', bg:'rgba(139,92,246,0.15)',  bd:'rgba(139,92,246,0.3)',  metric:'1,847',     unit:'txns',   label:'Txns Logged',        action:'Run full audit' },
   { type:'procurement', name:'Procurement Agent',  icon:'🛒', role:'Vendor management & automated purchase orders',       color:'#F97316', bg:'rgba(249,115,22,0.15)',  bd:'rgba(249,115,22,0.3)',  metric:'3',         unit:'orders', label:'Pending POs',        action:'Process pending POs' },
-  { type:'tax',         name:'Tax Agent',          icon:'📋', role:'On-chain tax liability estimation & filing prep',      color:'#F43F5E', bg:'rgba(244,63,94,0.15)',   bd:'rgba(244,63,94,0.3)',   metric:'0.082', unit:'SOL',   label:'Est. Liability',     action:'Calculate liability' },
+  { type:'tax',         name:'Tax Agent',          icon:'📋', role:'On-chain tax liability estimation & filing prep',      color:'#F43F5E', bg:'rgba(244,63,94,0.15)',   bd:'rgba(244,63,94,0.3)',   metric:'0.082', unit:'MNT',   label:'Est. Liability',     action:'Calculate liability' },
   { type:'risk',        name:'Risk Agent',         icon:'🛡',  role:'Real-time anomaly detection & threat monitoring',     color:'#EF4444', bg:'rgba(239,68,68,0.15)',   bd:'rgba(239,68,68,0.3)',   metric:'2',         unit:'/ 10',   label:'Threat Level',       action:'Run threat scan' },
 ] as const
 
 const POOL: Omit<FeedItem,'id'|'timestamp'>[] = [
-  { agentType:'CFO Agent',         action:'Yield Operations Hub rebalanced — moved 120 SOL to reserve pool' },
-  { agentType:'Payroll Agent',     action:'Streamed 0.42 SOL to 6 active recipients' },
+  { agentType:'CFO Agent',         action:'Yield Operations Hub rebalanced — moved 120 MNT to reserve pool' },
+  { agentType:'Payroll Agent',     action:'Streamed 0.42 MNT to 6 active recipients' },
   { agentType:'Compliance Agent',  action:'47 AML rules checked — 0 violations detected' },
   { agentType:'Audit Agent',       action:'Transaction audit complete: 23 txns verified' },
   { agentType:'Risk Agent',        action:'Threat scan complete — threat level: LOW (2/10)' },
-  { agentType:'Tax Agent',         action:'Q3 liability estimate updated: 0.082 SOL' },
+  { agentType:'Tax Agent',         action:'Q3 liability estimate updated: 0.082 MNT' },
   { agentType:'Procurement Agent', action:'Vendor invoice #INV-0047 queued for approval' },
   { agentType:'CFO Agent',         action:'Capital allocation: 60% operations, 40% reserve' },
   { agentType:'Compliance Agent',  action:'Wallet GxKP...8fZr flagged for manual review' },
   { agentType:'Audit Agent',       action:'Immutable log snapshot saved at block 284,392' },
   { agentType:'Risk Agent',        action:'Anomaly detected and resolved: duplicate tx attempt' },
-  { agentType:'Payroll Agent',     action:'New recipient added at 0.00012 SOL/s stream rate' },
-  { agentType:'Procurement Agent', action:'PO #PO-2024-0091 approved: 8.5 SOL disbursed' },
+  { agentType:'Payroll Agent',     action:'New recipient added at 0.00012 MNT/s stream rate' },
+  { agentType:'Procurement Agent', action:'PO #PO-2024-0091 approved: 8.5 MNT disbursed' },
   { agentType:'Tax Agent',         action:'Annual filing draft prepared — jurisdiction: US' },
-  { agentType:'CFO Agent',         action:'Yield optimization: 2,000 SOL deployed to lending' },
+  { agentType:'CFO Agent',         action:'Yield optimization: 2,000 MNT deployed to lending' },
 ]
 
 function ts() {
@@ -171,7 +171,7 @@ function AgentCard({
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function ShadowPage() {
-  // Wallet state now comes from the global wallet context (Solana / Devnet).
+  // Wallet state now comes from the global wallet context (Mantle / Devnet).
   const { address } = useWalletForTool()
   const wallet = address ?? ''
   const platform = useKubrykPlatform()
@@ -379,7 +379,7 @@ export default function ShadowPage() {
     setActivity(p => [item, ...p.slice(0, 49)])
     if (feedRef.current) feedRef.current.scrollTop = 0
     toast.success(`${type.toUpperCase()} agent triggered`, {
-      description: `Policy: ✓ within bounds · Solana tx ${tx.short}`,
+      description: `Policy: ✓ within bounds · Mantle tx ${tx.short}`,
       action: { label: 'Explorer ↗', onClick: () => window.open(tx.explorerUrl, '_blank') },
     })
   }
@@ -461,9 +461,9 @@ export default function ShadowPage() {
             <span style={{ width: 8, height: 8, borderRadius: '50%', background: isDemo ? '#f59e0b' : '#10b981', flexShrink: 0 }} />
             {isDemo ? 'Testnet Data' : 'Live'}
           </span>
-          {/* Solana */}
+          {/* Mantle */}
           <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.1)', color:'#94A3B8', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
-            <span style={{ width:6, height:6, borderRadius:'50%', background:'#64748B' }} />Solana Devnet
+            <span style={{ width:6, height:6, borderRadius:'50%', background:'#64748B' }} />Mantle Sepolia
           </span>
           {/* Health */}
           <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:health==='ok'?'rgba(16,185,129,0.12)':health==='checking'?'rgba(255,255,255,0.06)':'rgba(239,68,68,0.12)', border:`1px solid ${health==='ok'?'rgba(16,185,129,0.3)':health==='checking'?'rgba(255,255,255,0.12)':'rgba(239,68,68,0.3)'}`, color:health==='ok'?'#10B981':health==='checking'?'#94A3B8':'#EF4444', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
@@ -507,7 +507,7 @@ export default function ShadowPage() {
             🛡 Simulate Jailbreak
           </button>
           {/* Wallet */}
-          <PriceBadge coinId="solana" label="SOL" />
+          <PriceBadge coinId="solana" label="MNT" />
           <ConnectButton type="solana" size="lg" />
         </div>
       </header>
@@ -530,7 +530,7 @@ export default function ShadowPage() {
             </div>
             <h1 className="page-title">
               Autonomous Corporate AI <br/>
-              <span style={{ color: '#64748B' }}>on Solana.</span>
+              <span style={{ color: '#64748B' }}>on Mantle.</span>
             </h1>
             <p className="page-subtitle">
               Orchestrate 7 invisible AI departments across Yield Operations Hub, payroll, compliance, audit, procurement, tax and risk.
@@ -557,9 +557,9 @@ export default function ShadowPage() {
         {/* Stats Strip */}
         <div className="bento-grid" style={{ marginBottom: 40 }}>
           {[
-            { label:'Yield Operations Hub Balance',   value: stealth?'●●●●●':'12,480.50 SOL', icon:'💰', color:'#EAB308', bg:'rgba(234,179,8,0.15)' },
+            { label:'Yield Operations Hub Balance',   value: stealth?'●●●●●':'12,480.50 MNT', icon:'💰', color:'#EAB308', bg:'rgba(234,179,8,0.15)' },
             { label:'Active Agents',       value:`${agents.filter(a=>(a.status||'active')==='active').length||6} / 7`,         icon:'🤖', color:'#10B981', bg:'rgba(16,185,129,0.15)' },
-            { label:'SOL Streamed Today',  value: stealth?'●●●●●':`${streamed.toFixed(4)} SOL`, icon:'💸', color:'#3B82F6', bg:'rgba(59,130,246,0.15)' },
+            { label:'MNT Streamed Today',  value: stealth?'●●●●●':`${streamed.toFixed(4)} MNT`, icon:'💸', color:'#3B82F6', bg:'rgba(59,130,246,0.15)' },
             { label:'Threat Level',        value:'2 / 10 — LOW',                                icon:'🛡', color:'#10B981', bg:'rgba(16,185,129,0.15)' },
           ].map((s, i) => (
             <motion.div 
@@ -592,7 +592,7 @@ export default function ShadowPage() {
               </div>
               <div>
                 <label style={{ display:'block', fontSize:12, fontWeight: 700, color:'#94A3B8', marginBottom:8, letterSpacing:'0.05em' }}>ADMIN WALLET (SOLANA)</label>
-                <input value={admin} onChange={e=>setAdmin(e.target.value)} placeholder="Solana public key" style={{ width:'100%', padding:'14px 16px', background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:12, color:'#E2E8F0', fontSize:14, fontWeight: 500, fontFamily:MONO, boxSizing:'border-box', outline:'none', transition: 'border-color 0.2s' }} onFocus={e => e.target.style.borderColor = 'rgba(255,255,255,0.3)'} onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.12)'} />
+                <input value={admin} onChange={e=>setAdmin(e.target.value)} placeholder="Mantle public key" style={{ width:'100%', padding:'14px 16px', background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:12, color:'#E2E8F0', fontSize:14, fontWeight: 500, fontFamily:MONO, boxSizing:'border-box', outline:'none', transition: 'border-color 0.2s' }} onFocus={e => e.target.style.borderColor = 'rgba(255,255,255,0.3)'} onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.12)'} />
               </div>
               <button type="submit" disabled={loading} style={{ background:'linear-gradient(135deg,#4338CA,#6366F1)', color:'#fff', border:'none', borderRadius:12, padding:'14px 32px', fontSize:14, fontWeight:700, cursor:loading?'not-allowed':'pointer', whiteSpace:'nowrap', transition: 'filter 0.2s' }} onMouseOver={e => e.currentTarget.style.filter = 'brightness(1.12)'} onMouseOut={e => e.currentTarget.style.filter = 'brightness(1)'}>
                 {loading?'⟳ Saving…':'💾 Save Configuration'}
@@ -611,10 +611,10 @@ export default function ShadowPage() {
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom: 24 }}>
               {[
-                { label:'24h Inflow',      value:'+420.00 SOL', color:'#10B981', bg:'rgba(16,185,129,0.15)'  },
-                { label:'24h Outflow',     value:'-180.00 SOL', color:'#EF4444', bg:'rgba(239,68,68,0.15)'   },
-                { label:'Reserve Pool',    value:'4,992.20 SOL', color:'#EAB308', bg:'rgba(234,179,8,0.15)'  },
-                { label:'Operations Pool', value:'7,488.30 SOL', color:'#3B82F6', bg:'rgba(59,130,246,0.15)' },
+                { label:'24h Inflow',      value:'+420.00 MNT', color:'#10B981', bg:'rgba(16,185,129,0.15)'  },
+                { label:'24h Outflow',     value:'-180.00 MNT', color:'#EF4444', bg:'rgba(239,68,68,0.15)'   },
+                { label:'Reserve Pool',    value:'4,992.20 MNT', color:'#EAB308', bg:'rgba(234,179,8,0.15)'  },
+                { label:'Operations Pool', value:'7,488.30 MNT', color:'#3B82F6', bg:'rgba(59,130,246,0.15)' },
               ].map(m=>(
                 <div key={m.label} style={{ background:'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius:16, padding:'16px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
@@ -635,9 +635,9 @@ export default function ShadowPage() {
             <div style={{ padding:'20px', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.08)', borderRadius:16 }}>
               <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:12 }}>
                 <p style={{ fontSize:14, fontWeight:700, color:'#E2E8F0', margin:0 }}>💸 Active Payroll Streams</p>
-                <span style={{ fontSize:13, color:'#10B981', fontFamily:MONO, fontWeight: 700 }}>{stealth?'●●● SOL/s':`${RATE} SOL/s total`}</span>
+                <span style={{ fontSize:13, color:'#10B981', fontFamily:MONO, fontWeight: 700 }}>{stealth?'●●● MNT/s':`${RATE} MNT/s total`}</span>
               </div>
-              {[{ r:'Dev Team', v:'0.00023 SOL/s' },{ r:'Marketing', v:'0.00011 SOL/s' }].map(s=>(
+              {[{ r:'Dev Team', v:'0.00023 MNT/s' },{ r:'Marketing', v:'0.00011 MNT/s' }].map(s=>(
                 <div key={s.r} style={{ display:'flex', justifyContent:'space-between', fontSize:13, color:'#94A3B8', marginTop:8, fontWeight: 500 }}>
                   <span>{s.r}</span>
                   <span style={{ fontFamily:MONO, color: '#E2E8F0' }}>{stealth?'●●●':s.v}</span>
@@ -707,8 +707,8 @@ export default function ShadowPage() {
             <p style={{ fontSize:18, fontWeight:800, color:'#E2E8F0', margin:'0 0 24px' }}>📊 Yield Operations Hub Simulation</p>
             <div style={{ display:'flex', flexDirection:'column', gap:20, marginBottom:32 }}>
               {[
-                { label:'Yield Operations Hub Size (SOL)', min:1000, max:100000, step:500, val:simT, set:setSimT },
-                { label:'Monthly Burn (SOL)',   min:10,   max:5000,  step:10,  val:simB, set:setSimB },
+                { label:'Yield Operations Hub Size (MNT)', min:1000, max:100000, step:500, val:simT, set:setSimT },
+                { label:'Monthly Burn (MNT)',   min:10,   max:5000,  step:10,  val:simB, set:setSimB },
                 { label:'Payroll Recipients',   min:1,    max:50,    step:1,   val:simR, set:setSimR },
               ].map(s=>(
                 <div key={s.label}>

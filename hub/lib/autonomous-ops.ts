@@ -219,8 +219,8 @@ export function triggerAutonomousRecalculation() {
       tool: 'Private Vault',
       confidence: 97,
       impact: 'high',
-      reasoningSummary: 'EVM and Solana gateway nodes exceeded SLA threshold bounds. Swerving queries avoids application freezes.',
-      whyExplanation: 'SLA target is 45ms. Degraded gateway latency on Arbitrum and Solana endpoints requires immediate routing through cached read failovers to preserve client performance.',
+      reasoningSummary: 'EVM and Mantle gateway nodes exceeded SLA threshold bounds. Swerving queries avoids application freezes.',
+      whyExplanation: 'SLA target is 45ms. Degraded gateway latency on Mantle and Mantle endpoints requires immediate routing through cached read failovers to preserve client performance.',
       causalityChain: [
         'Remote JSON-RPC server failed standard ping check.',
         'Average gateway connection latency drifted above 950ms.',
@@ -237,16 +237,16 @@ export function triggerAutonomousRecalculation() {
     anomalies = 11
     recs.push({
       id: 'rec-congestion-stellar',
-      title: 'Optimize Stellar Soroban Gas Settings',
+      title: 'Optimize Mantle Gas Settings',
       description: 'Saturate batch operations into multi-party split payouts to bypass mempool backlogs on congested layers.',
       tool: 'SyncSplit',
       confidence: 91,
       impact: 'medium',
-      reasoningSummary: 'Mempool limits on Arbitrum and Stellar test networks require optimized batch sizes to guarantee inclusion.',
+      reasoningSummary: 'Mempool limits on Mantle and Mantle test networks require optimized batch sizes to guarantee inclusion.',
       whyExplanation: 'Transaction confirmation time is delayed by 180s. Optimizing batch split transactions reduces total payload footprint, lowering absolute gas price overhead by 400%.',
       causalityChain: [
         'Mempool saturation index spiked past structural boundary limit.',
-        'Arbitrum bridge routing timed out under high transaction flow.',
+        'Mantle bridge routing timed out under high transaction flow.',
         'SyncSplit payment streams delayed in soroban split queue.',
         'Automated Gas Optimizer recommended transaction pack resizing.'
       ],
@@ -268,7 +268,7 @@ export function triggerAutonomousRecalculation() {
       confidence: 99,
       impact: 'high',
       reasoningSummary: 'Rapid token transfer attempts from blacklisted EVM address match standard multi-sig drainage vectors.',
-      whyExplanation: 'Detected anomalous transaction signatures on QIE Mainnet. Placing an immediate hold on certificate signatures isolates key compromise threat, preserving multi-sig safety.',
+      whyExplanation: 'Detected anomalous transaction signatures on Mantle Network. Placing an immediate hold on certificate signatures isolates key compromise threat, preserving multi-sig safety.',
       causalityChain: [
         'Cryptographic trace matched blacklisted token routing footprint.',
         'Security posture score dropped to CRITICAL.',
@@ -285,15 +285,15 @@ export function triggerAutonomousRecalculation() {
     recs.push({
       id: 'rec-treasury-rebalance',
       title: 'Execute Multi-Chain Treasury Rebalance',
-      description: 'Initiate dynamic payroll stream adjustments to correct the 15% asset allocation drift between Solana and QIE.',
+      description: 'Initiate dynamic payroll stream adjustments to correct the 15% asset allocation drift across Mantle treasury streams.',
       tool: 'Treasury AI',
       confidence: 94,
       impact: 'high',
-      reasoningSummary: 'Moving 250 SOL to EVM pools will raise APY by 4.2% while satisfying multi-sig liquidity drift barriers.',
-      whyExplanation: 'Payroll streaming balance shows severe asset disparity between Solana and QIE. Rebalancing optimizes staking yield and prevents cash flow debt threshold warnings.',
+      reasoningSummary: 'Moving 250 MNT to EVM pools will raise APY by 4.2% while satisfying multi-sig liquidity drift barriers.',
+      whyExplanation: 'Payroll streaming balance shows severe asset disparity across Mantle treasury streams. Rebalancing optimizes staking yield and prevents cash flow debt threshold warnings.',
       causalityChain: [
         'Asset allocation drift exceeded designated 15% threshold boundary.',
-        'Solana liquidity pool saturated while QIE yield margins expanded.',
+        'Mantle liquidity pool saturated while Mantle yield margins expanded.',
         'Treasury AI issued immediate liquidity drift warning.',
         'Rebalance pipeline prepared dynamic re-staking allocation.'
       ],
@@ -365,7 +365,7 @@ export function triggerAutonomousRecalculation() {
       causalityChain: [
         'Multi-sig vault capital reserves drained by 80%.',
         'Staking loan yields triggered severe margin defaults warnings.',
-        'Emergency liquidity sweep script propagated across QIE and Solana.'
+        'Emergency liquidity sweep script propagated across Mantle and Mantle.'
       ],
       applied: false,
       dismissed: false,
@@ -410,7 +410,7 @@ export function triggerAutonomousRecalculation() {
       reasoningSummary: 'Cascading signing anomaly attempts detected from compromised zero-metadata routes.',
       whyExplanation: 'Interrupted unauthorized signature attempt matching standard drainage vectors. Zero-metadata certificates revoked, isolating all multi-sig wallets autonomously.',
       causalityChain: [
-        'Malicious transaction signature detected on Arbitrum bridge.',
+        'Malicious transaction signature detected on Mantle bridge.',
         'Global trust confidence metric dropped below 20%.',
         'Automated Key Lock engine activated certificate revocation.'
       ],
@@ -492,14 +492,14 @@ export function triggerAutonomousRecalculation() {
     recs.push({
       id: 'rec-nominal-syncsplit',
       title: 'Optimize Staking Yield Allocations',
-      description: 'Fine-tune the Stellar Soroban multi-party splits to maximize yield performance.',
+      description: 'Fine-tune the Mantle multi-party splits to maximize yield performance.',
       tool: 'SyncSplit',
       confidence: 92,
       impact: 'low',
-      reasoningSummary: 'Active EVM staking pools exhibit slight yield drifts that are corrective via Soroban split adjustments.',
-      whyExplanation: 'Stellar split streams remain highly efficient. Minor drift tweaks ensure maximum interest routing.',
+      reasoningSummary: 'Active EVM staking pools exhibit slight yield drifts that are corrective via Mantle split adjustments.',
+      whyExplanation: 'Mantle split streams remain highly efficient. Minor drift tweaks ensure maximum interest routing.',
       causalityChain: [
-        'Yield comparison index verified across Arbitrum and QIE pools.',
+        'Yield comparison index verified across Mantle and Mantle pools.',
         'SyncSplit telemetry verified optimal routing lanes.',
         'Yield Optimization trigger generated nominal split adjustment suggestion.'
       ],
@@ -508,7 +508,7 @@ export function triggerAutonomousRecalculation() {
       timestamp: new Date().toISOString()
     }, {
       id: 'rec-nominal-agents',
-      title: 'Delegate Solana Worker Nodes',
+      title: 'Delegate Mantle Worker Nodes',
       description: 'Expand the active worker mesh by 3 autonomous agents to parallelize query operations.',
       tool: 'Agent Mesh',
       confidence: 88,
@@ -516,7 +516,7 @@ export function triggerAutonomousRecalculation() {
       reasoningSummary: 'Increasing autonomous worker delegation yields 14.2% higher aggregate transaction throughput.',
       whyExplanation: 'Worker utilization metrics indicate room for transaction scaling. delegating more operations parallelizes verification steps.',
       causalityChain: [
-        'Active Solana agent mesh capacity verified below threshold.',
+        'Active Mantle agent mesh capacity verified below threshold.',
         'Pending transaction queues cleared to sub-second bounds.',
         'Worker Delegation suggested to optimize long-run transaction load.'
       ],
