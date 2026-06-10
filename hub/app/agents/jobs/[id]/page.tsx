@@ -136,7 +136,7 @@ export default function JobDetailPage() {
                 fontFamily: 'monospace',
                 fontSize: 22,
                 margin: '4px 0',
-                color: '#F5C518',
+                color: '#3B5BFA',
               }}
             >
               {detail.id}
@@ -146,7 +146,7 @@ export default function JobDetailPage() {
               <StatusBadge status={detail.status} />
               <LiveBadge isLive={isLive} />
               <span className="silver-text" style={{ fontSize: 12 }}>
-                Owner: <span style={{ color: '#F5C518' }}>{detail.owner}</span>
+                Owner: <span style={{ color: '#3B5BFA' }}>{detail.owner}</span>
               </span>
               <span className="silver-text" style={{ fontSize: 12 }}>
                 Duration: {detail.duration}
@@ -197,7 +197,7 @@ export default function JobDetailPage() {
                 style={{
                   padding: '10px 12px',
                   borderRadius: 8,
-                  background: 'rgba(255,255,255,0.02)',
+                  background: '#F8FAFC',
                   border: `1px solid ${LEVEL_COLORS[e.level]}33`,
                 }}
               >
@@ -282,7 +282,7 @@ export default function JobDetailPage() {
           style={{
             padding: '8px 16px',
             background: '#EF4444',
-            color: '#fff',
+            color: '#0A0F2E',
             border: 'none',
             borderRadius: 8,
             cursor: revoking || detail.status === 'revoked' ? 'not-allowed' : 'pointer',

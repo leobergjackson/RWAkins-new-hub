@@ -21,8 +21,8 @@ import type { VaultFile } from '../../../lib/eternavault-fallbacks'
 const SERIF = '"Playfair Display", Georgia, "Times New Roman", serif'
 
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)',
+  background: '#F8FAFC',
+  border: '1px solid #E2E8F0',
   borderRadius: 14,
   padding: '20px 22px',
 }
@@ -30,10 +30,10 @@ const card: React.CSSProperties = {
 const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '10px 14px',
-  background: 'rgba(255,255,255,0.06)',
-  border: '1px solid rgba(255,255,255,0.12)',
+  background: '#F1F5F9',
+  border: '1px solid #E2E8F0',
   borderRadius: 8,
-  color: '#fff',
+  color: '#0A0F2E',
   fontSize: 14,
   boxSizing: 'border-box',
 }
@@ -42,7 +42,7 @@ const labelStyle: React.CSSProperties = {
   display: 'block',
   fontSize: 11,
   fontWeight: 600,
-  color: 'rgba(255,255,255,0.5)',
+  color: '#64748B',
   marginBottom: 6,
   letterSpacing: '0.04em',
 }
@@ -72,15 +72,15 @@ function HeirDecryptModal({ file, onClose }: { file: VaultFile; onClose: () => v
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 100,
-        background: 'rgba(0,0,0,0.75)',
+        background: 'rgba(15,23,42,0.5)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 24,
       }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div style={{ ...card, maxWidth: 440, width: '100%', background: '#15161a', borderColor: 'rgba(245,197,24,0.2)' }}>
+      <div style={{ ...card, maxWidth: 440, width: '100%', background: '#ffffff', borderColor: 'rgba(245,197,24,0.2)' }}>
         <p style={{ fontFamily: SERIF, fontSize: 18, fontWeight: 700, margin: '0 0 6px' }}>🔓 Decrypt Inherited File</p>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: '0 0 18px' }}>
+        <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 18px' }}>
           {file.title || file.originalName || file.name}
         </p>
         <label style={labelStyle}>VAULT KEY (PROVIDED BY THE DECEASED)</label>
@@ -100,15 +100,15 @@ function HeirDecryptModal({ file, onClose }: { file: VaultFile; onClose: () => v
             disabled={busy}
             style={{
               flex: 1,
-              background: busy ? 'rgba(255,255,255,0.08)' : 'linear-gradient(135deg, #D97706, #F5C518)',
-              color: busy ? 'rgba(255,255,255,0.4)' : '#0d0e11',
+              background: busy ? '#E2E8F0' : 'linear-gradient(135deg, #D97706, #3B5BFA)',
+              color: busy ? '#64748B' : '#0d0e11',
               border: 'none', borderRadius: 8, padding: '10px 0',
               fontSize: 13, fontWeight: 700, cursor: busy ? 'not-allowed' : 'pointer',
             }}
           >
             {busy ? 'Decrypting…' : 'Decrypt & Download'}
           </button>
-          <button onClick={onClose} style={{ background: 'transparent', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 8, padding: '10px 18px', fontSize: 13, cursor: 'pointer' }}>
+          <button onClick={onClose} style={{ background: 'transparent', color: '#64748B', border: '1px solid #E2E8F0', borderRadius: 8, padding: '10px 18px', fontSize: 13, cursor: 'pointer' }}>
             Cancel
           </button>
         </div>
@@ -181,7 +181,7 @@ export default function HeirPage() {
         <h1 style={{ fontFamily: SERIF, fontSize: 28, fontWeight: 700, margin: 0, lineHeight: 1.2 }}>
           Heir Dashboard
         </h1>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 6, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 13, color: '#64748B', marginTop: 6, lineHeight: 1.6 }}>
           If you have been designated as an heir, enter the vault owner's DID to check death status and unlock access when the time is right.
         </p>
       </header>
@@ -189,7 +189,7 @@ export default function HeirPage() {
       {/* Wallet connect prompt */}
       {!wallet && installed && (
         <div style={{ ...card, marginBottom: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, padding: '14px 18px', background: 'rgba(245,197,24,0.04)', border: '1px solid rgba(245,197,24,0.15)' }}>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
+          <p style={{ fontSize: 13, color: '#64748B', margin: 0 }}>
             Connect your heir wallet to proceed
           </p>
           <ConnectButton type="evm" size="lg" />
@@ -197,7 +197,7 @@ export default function HeirPage() {
       )}
 
       {wallet && (
-        <p style={{ fontSize: 12, fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)', marginBottom: 20 }}>
+        <p style={{ fontSize: 12, fontFamily: 'monospace', color: '#94A3B8', marginBottom: 20 }}>
           Heir wallet: {truncateAddress(wallet)} · Mantle Network
         </p>
       )}
@@ -218,7 +218,7 @@ export default function HeirPage() {
               style={inputStyle}
               disabled={checking}
             />
-            <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', margin: '6px 0 0' }}>
+            <p style={{ fontSize: 11, color: '#94A3B8', margin: '6px 0 0' }}>
               The wallet address of the person whose legacy you are accessing.
             </p>
           </div>
@@ -226,8 +226,8 @@ export default function HeirPage() {
             type="submit"
             disabled={checking}
             style={{
-              background: checking ? 'rgba(255,255,255,0.08)' : 'linear-gradient(135deg, #D97706, #F5C518)',
-              color: checking ? 'rgba(255,255,255,0.4)' : '#0d0e11',
+              background: checking ? '#E2E8F0' : 'linear-gradient(135deg, #D97706, #3B5BFA)',
+              color: checking ? '#64748B' : '#0d0e11',
               border: 'none', borderRadius: 8, padding: '10px 24px',
               fontSize: 13, fontWeight: 700, cursor: checking ? 'not-allowed' : 'pointer',
             }}
@@ -249,12 +249,12 @@ export default function HeirPage() {
             {deathStatus.deceased ? '⚰️ Legacy status: ACTIVATED' : '💚 Legacy status: ACTIVE — Owner is living'}
           </p>
           {deathStatus.markedAt && (
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: '0 0 4px' }}>
+            <p style={{ fontSize: 12, color: '#64748B', margin: '0 0 4px' }}>
               Activated: {new Date(deathStatus.markedAt).toLocaleDateString()}
             </p>
           )}
           {deathStatus.txHash && (
-            <p style={{ fontSize: 11, fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)', margin: 0, wordBreak: 'break-all' }}>
+            <p style={{ fontSize: 11, fontFamily: 'monospace', color: '#94A3B8', margin: 0, wordBreak: 'break-all' }}>
               TX: {deathStatus.txHash}
             </p>
           )}
@@ -266,40 +266,40 @@ export default function HeirPage() {
         <div style={{
           ...card,
           marginBottom: 20,
-          background: unlocked.allowed ? 'rgba(245,197,24,0.05)' : 'rgba(255,255,255,0.02)',
-          border: `1px solid ${unlocked.allowed ? 'rgba(245,197,24,0.2)' : 'rgba(255,255,255,0.08)'}`,
+          background: unlocked.allowed ? 'rgba(245,197,24,0.05)' : '#F8FAFC',
+          border: `1px solid ${unlocked.allowed ? 'rgba(245,197,24,0.2)' : '#E2E8F0'}`,
         }}>
-          <p style={{ fontSize: 14, fontWeight: 700, color: unlocked.allowed ? '#F5C518' : 'rgba(255,255,255,0.5)', margin: '0 0 8px' }}>
+          <p style={{ fontSize: 14, fontWeight: 700, color: unlocked.allowed ? '#3B5BFA' : '#64748B', margin: '0 0 8px' }}>
             {unlocked.allowed ? '🔓 Access Granted' : '🔒 Access Denied'}
           </p>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: '0 0 14px' }}>
+          <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 14px' }}>
             {unlocked.message}
           </p>
           {unlocked.allowed && unlocked.files.length > 0 && (
             <>
-              <p style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.4)', margin: '0 0 10px', letterSpacing: '0.04em' }}>
+              <p style={{ fontSize: 12, fontWeight: 600, color: '#64748B', margin: '0 0 10px', letterSpacing: '0.04em' }}>
                 ACCESSIBLE FILES ({unlocked.files.length})
               </p>
               {unlocked.files.map((f) => (
                 <div key={f.id} style={{
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                   padding: '10px 14px', marginBottom: 8,
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: '#ffffff',
+                  border: '1px solid #E2E8F0',
                   borderRadius: 8, flexWrap: 'wrap', gap: 8,
                 }}>
                   <div>
-                    <p style={{ fontSize: 13, fontWeight: 600, color: '#F5C518', margin: 0 }}>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: '#3B5BFA', margin: 0 }}>
                       {f.title || f.originalName || f.name}
                     </p>
                     {f.description && (
-                      <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', margin: '2px 0 0' }}>{f.description}</p>
+                      <p style={{ fontSize: 11, color: '#64748B', margin: '2px 0 0' }}>{f.description}</p>
                     )}
                   </div>
                   <button
                     onClick={() => setSelectedFile(f)}
                     style={{
-                      background: 'rgba(245,197,24,0.1)', color: '#F5C518',
+                      background: 'rgba(245,197,24,0.1)', color: '#3B5BFA',
                       border: '1px solid rgba(245,197,24,0.25)',
                       borderRadius: 6, padding: '6px 14px',
                       fontSize: 11, fontWeight: 600, cursor: 'pointer',
@@ -319,7 +319,7 @@ export default function HeirPage() {
         <p style={{ fontFamily: SERIF, fontSize: 16, fontWeight: 700, margin: '0 0 6px' }}>
           👨‍👩‍👧‍👦 Register an Heir
         </p>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: '0 0 16px', lineHeight: 1.5 }}>
+        <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 16px', lineHeight: 1.5 }}>
           As a vault owner, register another wallet address as your heir on LegacyVault.sol.
         </p>
         <form onSubmit={handleRegister}>
@@ -338,8 +338,8 @@ export default function HeirPage() {
             type="submit"
             disabled={registering}
             style={{
-              background: registering ? 'rgba(255,255,255,0.08)' : 'rgba(245,197,24,0.12)',
-              color: registering ? 'rgba(255,255,255,0.4)' : '#F5C518',
+              background: registering ? '#E2E8F0' : 'rgba(245,197,24,0.12)',
+              color: registering ? '#64748B' : '#3B5BFA',
               border: '1px solid rgba(245,197,24,0.3)',
               borderRadius: 8, padding: '10px 22px',
               fontSize: 13, fontWeight: 600, cursor: registering ? 'not-allowed' : 'pointer',

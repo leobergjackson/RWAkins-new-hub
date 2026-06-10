@@ -12,7 +12,7 @@ import { useKubrykPlatform } from '@/context/KubrykPlatformContext'
 import { getCreditTier } from '@/lib/platform/scoring'
 import { PlatformModeBadge } from '@/components/ui/PlatformModeBadge'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -108,7 +108,7 @@ export default function DashboardPage() {
       {/* Total Value Card */}
       <motion.div
         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-        style={{ background: 'linear-gradient(135deg, rgba(0,229,204,0.06), rgba(168,85,247,0.04))', border: `1px solid rgba(0,229,204,0.2)`, borderRadius: 16, padding: '28px 32px', marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}
+        style={{ background: 'linear-gradient(135deg, rgba(59,91,250,0.06), rgba(168,85,247,0.04))', border: `1px solid rgba(59,91,250,0.2)`, borderRadius: 16, padding: '28px 32px', marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}
       >
         <div>
           <div style={{ fontSize: 12, color: '#64748B', marginBottom: 8 }}>Total Yield Operations Hub Value</div>
@@ -149,7 +149,7 @@ export default function DashboardPage() {
           platform.solanaSlot      && { label: '◎ Mantle',  note: `slot #${platform.solanaSlot.toLocaleString()}`, color: '#9945FF' },
         ].filter(Boolean) as { label: string; note: string; color: string }[]
         return (
-          <div style={{ background: `linear-gradient(135deg, ${tier.bg}, rgba(0,229,204,0.03))`, border: `1px solid ${tier.border}`, borderRadius: 12, padding: '14px 20px', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+          <div style={{ background: `linear-gradient(135deg, ${tier.bg}, rgba(59,91,250,0.03))`, border: `1px solid ${tier.border}`, borderRadius: 12, padding: '14px 20px', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: tier.color, fontFamily: MONO, letterSpacing: '0.05em' }}>
                 {tier.name.toUpperCase()} TIER
@@ -213,7 +213,7 @@ export default function DashboardPage() {
                     <td style={{ padding: '10px 8px' }}>
                       <div style={{ display: 'flex', gap: 6 }}>
                         <Link href="/treasury/swap">
-                          <button style={{ padding: '3px 10px', borderRadius: 6, border: `1px solid rgba(0,229,204,0.3)`, background: 'rgba(0,229,204,0.06)', color: TEAL, fontSize: 10, cursor: 'pointer' }}>Swap</button>
+                          <button style={{ padding: '3px 10px', borderRadius: 6, border: `1px solid rgba(59,91,250,0.3)`, background: 'rgba(255,255,255,0.06)', color: TEAL, fontSize: 10, cursor: 'pointer' }}>Swap</button>
                         </Link>
                       </div>
                     </td>

@@ -11,8 +11,8 @@ import { toast } from '../../../lib/toast'
 const SERIF = '"Playfair Display", Georgia, "Times New Roman", serif'
 
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)',
+  background: '#F8FAFC',
+  border: '1px solid #E2E8F0',
   borderRadius: 14,
   padding: '20px 22px',
 }
@@ -22,7 +22,7 @@ const ROLES = [
     icon: '⚖️',
     title: 'Confirm death events',
     desc: 'Attest on-chain that a vault owner has passed, triggering legacy unlock.',
-    color: '#F5C518',
+    color: '#3B5BFA',
   },
   {
     icon: '🔍',
@@ -76,7 +76,7 @@ export default function ValidatorPage() {
         <h1 style={{ fontFamily: SERIF, fontSize: 28, fontWeight: 700, margin: 0, lineHeight: 1.2 }}>
           Register as a Legacy Validator
         </h1>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 6, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 13, color: '#64748B', marginTop: 6, lineHeight: 1.6 }}>
           Validators form the trust layer of EternaVault. By registering on LegacyVault.sol, you can attest to death events and authorize heir access.
         </p>
       </header>
@@ -87,7 +87,7 @@ export default function ValidatorPage() {
           <div key={r.title} style={{ ...card, display: 'flex', flexDirection: 'column', gap: 8 }}>
             <span style={{ fontSize: 24 }}>{r.icon}</span>
             <p style={{ fontSize: 13, fontWeight: 700, color: r.color, margin: 0 }}>{r.title}</p>
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: 0, lineHeight: 1.5 }}>{r.desc}</p>
+            <p style={{ fontSize: 12, color: '#64748B', margin: 0, lineHeight: 1.5 }}>{r.desc}</p>
           </div>
         ))}
       </div>
@@ -100,7 +100,7 @@ export default function ValidatorPage() {
 
         {!wallet ? (
           <>
-            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: '0 0 16px', lineHeight: 1.5 }}>
+            <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 16px', lineHeight: 1.5 }}>
               Connect your Mantle wallet to register your address in LegacyVault.sol as a trusted validator.
             </p>
             <ConnectButton type="evm" size="lg" />
@@ -115,10 +115,10 @@ export default function ValidatorPage() {
               marginBottom: 16, flexWrap: 'wrap',
             }}>
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22C55E', boxShadow: '0 0 6px rgba(34,197,94,0.6)', flexShrink: 0 }} />
-              <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>
+              <span style={{ fontFamily: 'monospace', fontSize: 13, color: '#334155' }}>
                 {truncateAddress(wallet)}
               </span>
-              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>· Mantle Network</span>
+              <span style={{ fontSize: 12, color: '#94A3B8' }}>· Mantle Network</span>
             </div>
 
             {txHash ? (
@@ -130,14 +130,14 @@ export default function ValidatorPage() {
                 <p style={{ fontSize: 14, fontWeight: 700, color: '#22C55E', margin: '0 0 6px' }}>
                   ✅ Registered as Validator
                 </p>
-                <p style={{ fontSize: 11, fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', margin: 0, wordBreak: 'break-all' }}>
+                <p style={{ fontSize: 11, fontFamily: 'monospace', color: '#64748B', margin: 0, wordBreak: 'break-all' }}>
                   TX: {txHash}
                 </p>
                 <a
                   href={`https://explorer.sepolia.mantle.xyz/tx/${txHash}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ fontSize: 11, color: '#F5C518', marginTop: 8, display: 'inline-block' }}
+                  style={{ fontSize: 11, color: '#3B5BFA', marginTop: 8, display: 'inline-block' }}
                 >
                   View on Explorer ↗
                 </a>
@@ -147,8 +147,8 @@ export default function ValidatorPage() {
                 onClick={handleRegister}
                 disabled={registering}
                 style={{
-                  background: registering ? 'rgba(255,255,255,0.08)' : 'linear-gradient(135deg, #D97706, #F5C518)',
-                  color: registering ? 'rgba(255,255,255,0.4)' : '#0d0e11',
+                  background: registering ? '#E2E8F0' : 'linear-gradient(135deg, #D97706, #3B5BFA)',
+                  color: registering ? '#64748B' : '#0d0e11',
                   border: 'none', borderRadius: 8,
                   padding: '11px 26px', fontSize: 14, fontWeight: 700,
                   cursor: registering ? 'not-allowed' : 'pointer',
@@ -178,7 +178,7 @@ export default function ValidatorPage() {
         borderRadius: 12,
         padding: '16px 18px',
       }}>
-        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: 0, lineHeight: 1.7 }}>
+        <p style={{ fontSize: 12, color: '#64748B', margin: 0, lineHeight: 1.7 }}>
           ⚠️ In a production deployment, validator registration is permissioned. Validators must be vetted legal or trusted parties. This demo allows any wallet to register for testing purposes. A minimum of 2 validator signatures is required per legacy activation event.
         </p>
       </div>

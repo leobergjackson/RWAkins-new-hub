@@ -32,7 +32,7 @@ export default function TreasuryNav() {
     <nav style={{
       display:'flex', gap:4, padding:'10px 20px',
       borderBottom:'1px solid rgba(59,130,246,0.15)',
-      flexWrap:'wrap', background:'rgba(255,255,255,0.85)',
+      flexWrap:'wrap', background:'rgba(248,250,252,0.85)',
       backdropFilter:'blur(14px)', position:'sticky', top:0, zIndex:40,
       alignItems:'center',
     }}>

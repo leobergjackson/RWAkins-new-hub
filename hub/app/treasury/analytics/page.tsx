@@ -10,7 +10,7 @@ import {
 import { fetchAnalyticsData } from '@/lib/palmflow-api'
 import type { PFAnalyticsData } from '@/lib/palmflow-api'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -20,7 +20,7 @@ const DATE_RANGES = ['7d', '30d', '90d', 'all'] as const
 type DateRange = typeof DATE_RANGES[number]
 
 const CHART_TOOLTIP_STYLE = {
-  contentStyle: { background:'#ffffff', border:'1px solid rgba(0,229,204,0.2)', borderRadius:8, fontSize:11 },
+  contentStyle: { background:'#ffffff', border:'1px solid rgba(59,91,250,0.2)', borderRadius:8, fontSize:11 },
   labelStyle: { color:'#64748B' },
   itemStyle: { color: '#0A0F2E' },
 }
@@ -63,7 +63,7 @@ export default function AnalyticsPage() {
           <div style={{ display:'flex', gap:4 }}>
             {DATE_RANGES.map(r => (
               <button key={r} onClick={() => setRange(r)}
-                style={{ padding:'6px 12px', borderRadius:16, border:`1px solid ${range===r?TEAL:BDR}`, background:range===r?'rgba(0,229,204,0.1)':'transparent', color:range===r?TEAL:'#64748B', fontSize:11, cursor:'pointer' }}>
+                style={{ padding:'6px 12px', borderRadius:16, border:`1px solid ${range===r?TEAL:BDR}`, background:range===r?'rgba(59,91,250,0.1)':'transparent', color:range===r?TEAL:'#64748B', fontSize:11, cursor:'pointer' }}>
                 {r === 'all' ? 'All' : r}
               </button>
             ))}

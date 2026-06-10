@@ -192,7 +192,7 @@ function ProgressBar({
         <span style={{ color: 'rgba(45,26,38,0.6)', cursor: tooltip ? 'help' : 'default' }}>{label}{tooltip && ' ⓘ'}</span>
         <span style={{ fontWeight: 600, color: '#2D1A26' }}>{displayValue}</span>
       </div>
-      <div style={{ height: 8, background: 'rgba(45,26,38,0.06)', borderRadius: 99, overflow: 'hidden' }}>
+      <div style={{ height: 8, background: '#F1F5F9', borderRadius: 99, overflow: 'hidden' }}>
         <div
           style={{
             height: '100%',
@@ -240,7 +240,7 @@ function MarketCard() {
           ) : (
             <div className={loading ? 'skeleton-row' : ''} style={{
               height: 22, width: 140, borderRadius: 6,
-              background: 'rgba(45,26,38,0.08)', marginTop: 6,
+              background: '#E2E8F0', marginTop: 6,
             }} />
           )}
         </div>
@@ -265,7 +265,7 @@ const card: React.CSSProperties = {
 
 const btnPrimary: React.CSSProperties = {
   background: '#F5A623',
-  color: '#FFFFFF',
+  color: '#0A0F2E',
   border: 'none',
   borderRadius: 9999,
   padding: '14px 32px',
@@ -750,7 +750,7 @@ export default function CreditDashboard() {
       {/* Navigation */}
       <header className="nav-bar">
         <div className="nav-logo">
-          Kubryx <span className="sparkle-icon">✦</span>
+          RWAkins <span className="sparkle-icon">✦</span>
         </div>
         <div>
           <Link href="/dashboard" style={{
@@ -811,9 +811,9 @@ export default function CreditDashboard() {
           const tBoost = getTreasuryBoost(platform.treasuryValue)
           const totalBoost = vBoost + sBoost + tBoost
           return (
-            <div style={{ marginBottom: 32, padding: '20px 24px', borderRadius: 16, background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(45,26,38,0.08)', backdropFilter: 'blur(8px)' }}>
+            <div style={{ marginBottom: 32, padding: '20px 24px', borderRadius: 16, background: '#475569', border: '1px solid rgba(45,26,38,0.08)', backdropFilter: 'blur(8px)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', color: 'rgba(45,26,38,0.4)', textTransform: 'uppercase' }}>Kubryx Platform Unlocks</span>
+                <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', color: 'rgba(45,26,38,0.4)', textTransform: 'uppercase' }}>RWAkins Platform Unlocks</span>
                 <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: tier.bg, border: `1px solid ${tier.border}`, color: tier.color }}>
                   {tier.name} Tier — {score}/1000
                 </span>
@@ -831,7 +831,7 @@ export default function CreditDashboard() {
                   { icon: '◇', label: 'Treasury Tier', value: tier.treasuryTier,                  sub: 'AI agent routing priority',       color: '#10B981' },
                   { icon: '◆', label: 'Bill Split',    value: tier.splitTrust,                    sub: 'Escrow & settlement speed',        color: '#3B82F6' },
                 ].map(u => (
-                  <div key={u.label} style={{ padding: '12px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(45,26,38,0.06)' }}>
+                  <div key={u.label} style={{ padding: '12px 14px', borderRadius: 10, background: '#64748B', border: '1px solid rgba(45,26,38,0.06)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
                       <span style={{ fontSize: 13 }}>{u.icon}</span>
                       <span style={{ fontSize: 10, fontWeight: 700, color: u.color, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{u.label}</span>
@@ -857,7 +857,7 @@ export default function CreditDashboard() {
           <div className="bento-card" style={{ textAlign: 'center', maxWidth: 600, margin: '0 auto' }}>
             <p style={{ color: 'rgba(45,26,38,0.7)', marginBottom: 16 }}>MetaMask is required to use Credit Passport.</p>
             <a href={WALLET_INSTALL_LINKS.metamask} target="_blank" rel="noopener noreferrer" style={btnPrimary}
-              onMouseEnter={(e) => { (e.target as HTMLElement).style.backgroundColor = '#EAB308' }}
+              onMouseEnter={(e) => { (e.target as HTMLElement).style.backgroundColor = '#3B5BFA' }}
               onMouseLeave={(e) => { (e.target as HTMLElement).style.backgroundColor = '#F5A623' }}>
               Install MetaMask
             </a>
@@ -895,7 +895,7 @@ export default function CreditDashboard() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{
                   width: 36, height: 36, borderRadius: '50%', background: '#F5A623',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: '#fff'
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: '#0A0F2E'
                 }}>👤</div>
                 <span style={{ fontFamily: "monospace", fontSize: 14, color: '#2D1A26', fontWeight: 500 }}>
                   {truncateAddress(wallet)}
@@ -927,7 +927,7 @@ export default function CreditDashboard() {
                   </p>
                   <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.65)', margin: 0, lineHeight: 1.7, maxWidth: 560 }}>
                     Your wallet does not yet have a Credit Passport NFT minted on Mantle Network.
-                    Passports are issued by the Kubryx backend after sufficient on-chain activity is detected —
+                    Passports are issued by the RWAkins backend after sufficient on-chain activity is detected —
                     the score shown below is a <strong>demo preview</strong> until your passport is minted.
                     Interact with Mantle Network DeFi protocols to become eligible.
                   </p>
@@ -971,7 +971,7 @@ export default function CreditDashboard() {
 
                 <button style={{ ...btnPrimary, width: '100%', justifyContent: 'center', opacity: loading ? 0.7 : 1 }}
                   onClick={refreshScore} disabled={loading}
-                  onMouseEnter={(e) => { if (!loading) (e.target as HTMLElement).style.backgroundColor = '#EAB308' }}
+                  onMouseEnter={(e) => { if (!loading) (e.target as HTMLElement).style.backgroundColor = '#3B5BFA' }}
                   onMouseLeave={(e) => { if (!loading) (e.target as HTMLElement).style.backgroundColor = '#F5A623' }}>
                   {loading ? (
                     <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -1103,7 +1103,7 @@ export default function CreditDashboard() {
 
                 <button style={{ ...btnPrimary, width: '100%', justifyContent: 'center', opacity: !scenario || predicting ? 0.6 : 1 }}
                   onClick={runPredictor} disabled={!scenario || predicting}
-                  onMouseEnter={(e) => { if (!(!scenario || predicting)) (e.target as HTMLElement).style.backgroundColor = '#EAB308' }}
+                  onMouseEnter={(e) => { if (!(!scenario || predicting)) (e.target as HTMLElement).style.backgroundColor = '#3B5BFA' }}
                   onMouseLeave={(e) => { if (!(!scenario || predicting)) (e.target as HTMLElement).style.backgroundColor = '#F5A623' }}>
                   {predicting ? 'Simulating…' : 'Predict Score Change'}
                 </button>
@@ -1226,11 +1226,11 @@ export default function CreditDashboard() {
                 {loadingMoralis ? (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
                     {[1, 2, 3].map(i => (
-                      <div key={i} style={{ height: 160, borderRadius: 16, background: 'rgba(45,26,38,0.03)', border: '1px solid rgba(45,26,38,0.05)', animation: 'pulse 1.5s infinite' }} />
+                      <div key={i} style={{ height: 160, borderRadius: 16, background: '#ffffff', border: '1px solid rgba(45,26,38,0.05)', animation: 'pulse 1.5s infinite' }} />
                     ))}
                   </div>
                 ) : moralisNfts.length === 0 ? (
-                  <div style={{ textAlign: 'center', padding: '40px 20px', background: 'rgba(45,26,38,0.02)', borderRadius: 16, border: '1px dashed rgba(45,26,38,0.1)' }}>
+                  <div style={{ textAlign: 'center', padding: '40px 20px', background: '#F8FAFC', borderRadius: 16, border: '1px dashed rgba(45,26,38,0.1)' }}>
                     <span style={{ fontSize: 32, display: 'block', marginBottom: 12 }}>🖼️</span>
                     <p style={{ fontSize: 14, fontWeight: 600, color: 'rgba(45,26,38,0.6)', margin: '0 0 4px' }}>No NFTs Found</p>
                     <p style={{ fontSize: 12, color: 'rgba(45,26,38,0.4)', margin: 0 }}>No external digital identity NFTs found on Mantle, Polygon, or Ethereum for this wallet.</p>
@@ -1239,14 +1239,14 @@ export default function CreditDashboard() {
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
                     {moralisNfts.map((nft, idx) => (
                       <div key={idx} style={{
-                        borderRadius: 16, background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(45,26,38,0.06)',
+                        borderRadius: 16, background: '#475569', border: '1px solid rgba(45,26,38,0.06)',
                         padding: '16px', display: 'flex', flexDirection: 'column', gap: 12, transition: 'all 0.2s',
                         cursor: 'default', backdropFilter: 'blur(4px)'
                       }}
                       onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = '#F5A623'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)' }}
                       onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(45,26,38,0.06)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)' }}>
                         <div style={{
-                          height: 120, borderRadius: 10, background: 'rgba(45,26,38,0.04)', display: 'flex',
+                          height: 120, borderRadius: 10, background: '#F8FAFC', display: 'flex',
                           alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative'
                         }}>
                           {nft.image ? (
@@ -1256,7 +1256,7 @@ export default function CreditDashboard() {
                           )}
                           <span style={{
                             position: 'absolute', top: 8, right: 8, fontSize: 9, fontWeight: 700,
-                            padding: '3px 8px', borderRadius: 20, background: 'rgba(45,26,38,0.8)', color: '#fff',
+                            padding: '3px 8px', borderRadius: 20, background: '#EEF2FF', color: '#3B5BFA',
                             letterSpacing: '0.04em'
                           }}>
                             {nft.chainName}
@@ -1290,7 +1290,7 @@ export default function CreditDashboard() {
         whatItIs="A decentralized reputation scoring registry. It aggregates a user's cross-chain transaction history, staking records, and vault balances to mint a Soulbound NFT (SB-NFT) on Mantle Network representing their creditworthiness."
         whyUseIt="In Web3, lending is almost entirely over-collateralized (e.g., you must deposit $150 to borrow $100) because there is no identity or credit mechanism. The Credit Passport allows users to leverage their historical reputation to unlock under-collateralized loans."
         whyEfficient="<ul><li><b>Rolling Score Estimator</b>: The client computes score projections locally before dispatching the on-chain minting tx, saving gas costs.</li><li><b>Dynamic Tiering</b>: The UI automatically shifts colors and badges based on the active score tier, providing instant user feedback.</li></ul>"
-        whyBest="It is not just a static badge. The Credit Passport <b>actively unlocks benefits across other Kubryx modules</b>, including lower AI Lending APRs, higher Privacy Vault LTVs, and priority Treasury routing."
+        whyBest="It is not just a static badge. The Credit Passport <b>actively unlocks benefits across other RWAkins modules</b>, including lower AI Lending APRs, higher Privacy Vault LTVs, and priority Treasury routing."
         themeColor="#F5A623"
       />
     </div>

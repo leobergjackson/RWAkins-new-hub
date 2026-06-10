@@ -16,7 +16,7 @@ const SIBLING_GAP = 24
 
 const STATUS_COLOR: Record<string, string> = {
   running: '#22C55E',
-  idle: '#F5C518',
+  idle: '#3B5BFA',
   stopped: '#EF4444',
 }
 
@@ -93,8 +93,8 @@ export default function DecisionTreeSVG({ root }: { root: AgentTreeNode }) {
               width={NODE_WIDTH}
               height={NODE_HEIGHT}
               rx={10}
-              fill="rgba(8,8,8,0.85)"
-              stroke="rgba(255,255,255,0.12)"
+              fill="#ffffff"
+              stroke="#E2E8F0"
               strokeWidth={1}
             />
             <circle
@@ -106,7 +106,7 @@ export default function DecisionTreeSVG({ root }: { root: AgentTreeNode }) {
             <text
               x={26}
               y={20}
-              fill="#F5C518"
+              fill="#3B5BFA"
               fontSize={11}
               fontWeight={600}
               fontFamily="system-ui"
@@ -116,7 +116,7 @@ export default function DecisionTreeSVG({ root }: { root: AgentTreeNode }) {
             <text
               x={12}
               y={42}
-              fill="#fff"
+              fill="#0A0F2E"
               fontSize={12}
               fontFamily="system-ui"
             >
@@ -125,7 +125,7 @@ export default function DecisionTreeSVG({ root }: { root: AgentTreeNode }) {
             <text
               x={12}
               y={62}
-              fill="rgba(255,255,255,0.55)"
+              fill="#475569"
               fontSize={10}
               fontFamily="system-ui"
             >

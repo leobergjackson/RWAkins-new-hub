@@ -19,8 +19,8 @@ import type { VaultFile } from '../../../lib/eternavault-fallbacks'
 const SERIF = '"Playfair Display", Georgia, "Times New Roman", serif'
 
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)',
+  background: '#F8FAFC',
+  border: '1px solid #E2E8F0',
   borderRadius: 14,
   padding: '20px 22px',
 }
@@ -79,20 +79,20 @@ function DecryptModal({
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 100,
-        background: 'rgba(0,0,0,0.75)',
+        background: 'rgba(15,23,42,0.5)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 24,
       }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div style={{ ...card, maxWidth: 440, width: '100%', background: '#15161a', borderColor: 'rgba(245,197,24,0.2)' }}>
+      <div style={{ ...card, maxWidth: 440, width: '100%', background: '#ffffff', borderColor: 'rgba(245,197,24,0.2)' }}>
         <p style={{ fontFamily: SERIF, fontSize: 18, fontWeight: 700, margin: '0 0 6px' }}>
           🔓 Decrypt File
         </p>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: '0 0 18px' }}>
+        <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 18px' }}>
           {file.title || file.originalName || file.name}
         </p>
-        <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: 6, letterSpacing: '0.04em' }}>
+        <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#64748B', marginBottom: 6, letterSpacing: '0.04em' }}>
           VAULT ENCRYPTION KEY
         </label>
         <input
@@ -104,9 +104,9 @@ function DecryptModal({
           autoFocus
           style={{
             width: '100%', padding: '10px 14px',
-            background: 'rgba(255,255,255,0.06)',
-            border: '1px solid rgba(255,255,255,0.12)',
-            borderRadius: 8, color: '#fff', fontSize: 14,
+            background: '#F1F5F9',
+            border: '1px solid #E2E8F0',
+            borderRadius: 8, color: '#0A0F2E', fontSize: 14,
             boxSizing: 'border-box', marginBottom: 16,
           }}
           disabled={busy}
@@ -117,8 +117,8 @@ function DecryptModal({
             disabled={busy}
             style={{
               flex: 1,
-              background: busy ? 'rgba(255,255,255,0.08)' : 'linear-gradient(135deg, #D97706, #F5C518)',
-              color: busy ? 'rgba(255,255,255,0.4)' : '#0d0e11',
+              background: busy ? '#E2E8F0' : 'linear-gradient(135deg, #D97706, #3B5BFA)',
+              color: busy ? '#64748B' : '#0d0e11',
               border: 'none', borderRadius: 8, padding: '10px 0',
               fontSize: 13, fontWeight: 700, cursor: busy ? 'not-allowed' : 'pointer',
             }}
@@ -128,8 +128,8 @@ function DecryptModal({
           <button
             onClick={onClose}
             style={{
-              background: 'transparent', color: 'rgba(255,255,255,0.5)',
-              border: '1px solid rgba(255,255,255,0.12)',
+              background: 'transparent', color: '#64748B',
+              border: '1px solid #E2E8F0',
               borderRadius: 8, padding: '10px 18px',
               fontSize: 13, cursor: 'pointer',
             }}
@@ -158,17 +158,17 @@ function StoryModal({ file, onClose }: { file: VaultFile; onClose: () => void })
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 100,
-        background: 'rgba(0,0,0,0.75)',
+        background: 'rgba(15,23,42,0.5)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 24,
       }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div style={{ ...card, maxWidth: 560, width: '100%', background: '#15161a', borderColor: 'rgba(167,139,250,0.25)' }}>
+      <div style={{ ...card, maxWidth: 560, width: '100%', background: '#ffffff', borderColor: 'rgba(167,139,250,0.25)' }}>
         <p style={{ fontFamily: SERIF, fontSize: 18, fontWeight: 700, margin: '0 0 4px', color: '#A78BFA' }}>
           🧬 AI Legacy Story
         </p>
-        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', margin: '0 0 18px' }}>
+        <p style={{ fontSize: 12, color: '#94A3B8', margin: '0 0 18px' }}>
           {file.title || file.originalName || file.name}
         </p>
         {busy ? (
@@ -179,10 +179,10 @@ function StoryModal({ file, onClose }: { file: VaultFile; onClose: () => void })
               borderTop: '2px solid #A78BFA',
               borderRadius: '50%', animation: 'spin 0.8s linear infinite',
             }} />
-            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginTop: 10 }}>Generating your story…</p>
+            <p style={{ fontSize: 13, color: '#64748B', marginTop: 10 }}>Generating your story…</p>
           </div>
         ) : (
-          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, margin: '0 0 20px', whiteSpace: 'pre-wrap' }}>
+          <p style={{ fontSize: 14, color: '#334155', lineHeight: 1.7, margin: '0 0 20px', whiteSpace: 'pre-wrap' }}>
             {story}
           </p>
         )}
@@ -255,20 +255,20 @@ function FileCard({
              (file.mimeType ?? file.type ?? '').startsWith('application/pdf') ? '📄' : '📁'}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <p style={{ fontFamily: SERIF, fontSize: 15, fontWeight: 700, margin: '0 0 2px', color: '#F5C518', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <p style={{ fontFamily: SERIF, fontSize: 15, fontWeight: 700, margin: '0 0 2px', color: '#3B5BFA', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {file.title || file.originalName || file.name || 'Unnamed file'}
             </p>
             {file.description && (
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: '0 0 6px', lineHeight: 1.5 }}>
+              <p style={{ fontSize: 12, color: '#64748B', margin: '0 0 6px', lineHeight: 1.5 }}>
                 {file.description}
               </p>
             )}
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>
+              <span style={{ fontSize: 11, color: '#94A3B8' }}>
                 {file.originalName ?? file.name}
               </span>
               {file.size && (
-                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>
+                <span style={{ fontSize: 11, color: '#CBD5E1' }}>
                   {fileSizeLabel(file.size)}
                 </span>
               )}
@@ -311,7 +311,7 @@ function FileCard({
             onClick={() => setShowDecrypt(true)}
             style={{
               background: 'rgba(245,197,24,0.08)',
-              color: '#F5C518',
+              color: '#3B5BFA',
               border: '1px solid rgba(245,197,24,0.25)',
               borderRadius: 7, padding: '6px 14px',
               fontSize: 11, fontWeight: 600, cursor: 'pointer',
@@ -382,7 +382,7 @@ export default function TimelinePage() {
         <h1 style={{ fontFamily: SERIF, fontSize: 28, fontWeight: 700, margin: 0, lineHeight: 1.2 }}>
           Your encrypted memories
         </h1>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 6, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 13, color: '#64748B', marginTop: 6, lineHeight: 1.6 }}>
           All files are encrypted with your vault key. Only you can decrypt them — unless your heirs unlock the legacy.
         </p>
       </header>
@@ -400,7 +400,7 @@ export default function TimelinePage() {
           <p style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, margin: '0 0 10px' }}>
             Connect your wallet to view your vault
           </p>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: '0 0 24px', lineHeight: 1.6 }}>
+          <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 24px', lineHeight: 1.6 }}>
             Your timeline is associated with your Mantle wallet address.
           </p>
           <ConnectButton type="evm" size="lg" />
@@ -410,10 +410,10 @@ export default function TimelinePage() {
           <span style={{
             display: 'inline-block', width: 28, height: 28,
             border: '2px solid rgba(245,197,24,0.2)',
-            borderTop: '2px solid #F5C518',
+            borderTop: '2px solid #3B5BFA',
             borderRadius: '50%', animation: 'spin 0.8s linear infinite',
           }} />
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginTop: 12 }}>
+          <p style={{ fontSize: 13, color: '#64748B', marginTop: 12 }}>
             Loading vault…
           </p>
         </div>
@@ -423,13 +423,13 @@ export default function TimelinePage() {
           <p style={{ fontFamily: SERIF, fontSize: 18, fontWeight: 700, margin: '0 0 10px' }}>
             No memories yet
           </p>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: '0 0 20px' }}>
+          <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 20px' }}>
             Start by uploading your first encrypted memory.
           </p>
           <a
             href="/legacy/upload"
             style={{
-              background: 'linear-gradient(135deg, #D97706, #F5C518)',
+              background: 'linear-gradient(135deg, #D97706, #3B5BFA)',
               color: '#0d0e11', border: 'none', borderRadius: 8,
               padding: '10px 22px', fontSize: 13, fontWeight: 700,
               cursor: 'pointer', textDecoration: 'none', display: 'inline-block',
@@ -445,10 +445,10 @@ export default function TimelinePage() {
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             marginBottom: 20, flexWrap: 'wrap', gap: 8,
           }}>
-            <p style={{ fontSize: 12, fontFamily: 'monospace', color: 'rgba(255,255,255,0.35)', margin: 0 }}>
+            <p style={{ fontSize: 12, fontFamily: 'monospace', color: '#94A3B8', margin: 0 }}>
               {truncateAddress(wallet)} · Mantle Network
             </p>
-            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>
+            <span style={{ fontSize: 12, color: '#94A3B8' }}>
               {files.length} {files.length === 1 ? 'file' : 'files'}
             </span>
           </div>
@@ -456,7 +456,7 @@ export default function TimelinePage() {
           {/* Date-grouped file cards */}
           {Object.entries(groups).map(([date, group]) => (
             <div key={date} style={{ marginBottom: 28 }}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.25)', marginBottom: 10 }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: '#CBD5E1', marginBottom: 10 }}>
                 {date}
               </p>
               {group.map((f) => (

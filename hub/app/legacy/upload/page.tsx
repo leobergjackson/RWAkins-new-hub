@@ -17,8 +17,8 @@ import { ConnectButton } from '../../../components/wallet/ConnectButton'
 const SERIF = '"Playfair Display", Georgia, "Times New Roman", serif'
 
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)',
+  background: '#F8FAFC',
+  border: '1px solid #E2E8F0',
   borderRadius: 14,
   padding: '24px 26px',
 }
@@ -26,10 +26,10 @@ const card: React.CSSProperties = {
 const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '10px 14px',
-  background: 'rgba(255,255,255,0.06)',
-  border: '1px solid rgba(255,255,255,0.12)',
+  background: '#F1F5F9',
+  border: '1px solid #E2E8F0',
   borderRadius: 8,
-  color: '#fff',
+  color: '#0A0F2E',
   fontSize: 14,
   boxSizing: 'border-box',
 }
@@ -38,7 +38,7 @@ const labelStyle: React.CSSProperties = {
   display: 'block',
   fontSize: 12,
   fontWeight: 600,
-  color: 'rgba(255,255,255,0.6)',
+  color: '#475569',
   marginBottom: 6,
   letterSpacing: '0.04em',
 }
@@ -105,7 +105,7 @@ export default function UploadPage() {
       try {
         const ipfsForm = new FormData()
         ipfsForm.append('file', new Blob([encryptedBlob], { type: 'application/octet-stream' }), `${file.name}.enc`)
-        ipfsForm.append('name', `kubryx:${(title || file.name).slice(0, 60)}`)
+        ipfsForm.append('name', `rwakins:${(title || file.name).slice(0, 60)}`)
         const pin = await fetch('/api/pinata/upload', { method: 'POST', body: ipfsForm })
         if (pin.ok) {
           const data = await pin.json() as { cid: string; gatewayUrl: string }
@@ -152,9 +152,9 @@ export default function UploadPage() {
         <h1 style={{ fontFamily: SERIF, fontSize: 28, fontWeight: 700, margin: 0, lineHeight: 1.2 }}>
           Upload an encrypted memory
         </h1>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 6, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 13, color: '#64748B', marginTop: 6, lineHeight: 1.6 }}>
           Files are encrypted locally in your browser using AES-GCM-256 before being sent to the backend.{' '}
-          <strong style={{ color: 'rgba(255,255,255,0.65)' }}>The server never sees your plaintext.</strong>
+          <strong style={{ color: '#475569' }}>The server never sees your plaintext.</strong>
         </p>
       </header>
 
@@ -203,11 +203,11 @@ export default function UploadPage() {
           <p style={{ fontSize: 18, fontFamily: SERIF, fontWeight: 700, color: '#22C55E', margin: '0 0 8px' }}>
             ✅ Memory uploaded successfully!
           </p>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', margin: '0 0 4px' }}>
+          <p style={{ fontSize: 13, color: '#475569', margin: '0 0 4px' }}>
             Vault Entry ID:{' '}
-            <code style={{ fontFamily: 'monospace', color: '#F5C518', fontSize: 12 }}>{uploadId}</code>
+            <code style={{ fontFamily: 'monospace', color: '#3B5BFA', fontSize: 12 }}>{uploadId}</code>
           </p>
-          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: '0 0 16px' }}>
+          <p style={{ fontSize: 12, color: '#64748B', margin: '0 0 16px' }}>
             Your file is encrypted and stored. Only you (and your heirs, when the time comes) can decrypt it.
           </p>
 
@@ -228,12 +228,12 @@ export default function UploadPage() {
                 }}>
                   ⬢ Pinned to IPFS · via Pinata
                 </span>
-                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>
+                <span style={{ fontSize: 11, color: '#64748B' }}>
                   Permanent · content-addressed
                 </span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                <code style={{ fontFamily: 'monospace', fontSize: 11, color: '#fff', wordBreak: 'break-all', flex: 1, minWidth: 200 }}>
+                <code style={{ fontFamily: 'monospace', fontSize: 11, color: '#0A0F2E', wordBreak: 'break-all', flex: 1, minWidth: 200 }}>
                   {ipfsCid}
                 </code>
                 <a
@@ -254,7 +254,7 @@ export default function UploadPage() {
             <Link
               href="/legacy/timeline"
               style={{
-                background: 'linear-gradient(135deg, #D97706, #F5C518)',
+                background: 'linear-gradient(135deg, #D97706, #3B5BFA)',
                 color: '#0d0e11',
                 border: 'none',
                 borderRadius: 8,
@@ -274,8 +274,8 @@ export default function UploadPage() {
               onClick={reset}
               style={{
                 background: 'transparent',
-                color: 'rgba(255,255,255,0.6)',
-                border: '1px solid rgba(255,255,255,0.15)',
+                color: '#475569',
+                border: '1px solid #CBD5E1',
                 borderRadius: 8,
                 padding: '9px 18px',
                 fontSize: 13,
@@ -330,7 +330,7 @@ export default function UploadPage() {
                 onDrop={onDrop}
                 onClick={() => fileInputRef.current?.click()}
                 style={{
-                  border: `2px dashed ${dragging ? '#F5C518' : file ? 'rgba(34,197,94,0.5)' : 'rgba(255,255,255,0.15)'}`,
+                  border: `2px dashed ${dragging ? '#3B5BFA' : file ? 'rgba(34,197,94,0.5)' : '#CBD5E1'}`,
                   borderRadius: 10,
                   padding: '28px 20px',
                   textAlign: 'center',
@@ -343,16 +343,16 @@ export default function UploadPage() {
                 {file ? (
                   <>
                     <p style={{ fontSize: 14, fontWeight: 600, color: '#22C55E', margin: '0 0 4px' }}>{file.name}</p>
-                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: 0 }}>
+                    <p style={{ fontSize: 12, color: '#64748B', margin: 0 }}>
                       {(file.size / 1024).toFixed(1)} KB · {file.type || 'unknown type'}
                     </p>
                   </>
                 ) : (
                   <>
-                    <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', margin: '0 0 4px' }}>
+                    <p style={{ fontSize: 14, color: '#64748B', margin: '0 0 4px' }}>
                       Click to upload or drag and drop
                     </p>
-                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)', margin: 0 }}>
+                    <p style={{ fontSize: 12, color: '#CBD5E1', margin: 0 }}>
                       Any file type accepted — will be encrypted client-side
                     </p>
                   </>
@@ -415,8 +415,8 @@ export default function UploadPage() {
                 type="submit"
                 disabled={busy}
                 style={{
-                  background: busy ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #D97706, #F5C518)',
-                  color: busy ? 'rgba(255,255,255,0.5)' : '#0d0e11',
+                  background: busy ? '#E2E8F0' : 'linear-gradient(135deg, #D97706, #3B5BFA)',
+                  color: busy ? '#64748B' : '#0d0e11',
                   border: 'none',
                   borderRadius: 8,
                   padding: '11px 24px',
@@ -435,8 +435,8 @@ export default function UploadPage() {
                       style={{
                         width: 14,
                         height: 14,
-                        border: '2px solid rgba(255,255,255,0.3)',
-                        borderTop: '2px solid rgba(255,255,255,0.9)',
+                        border: '2px solid #94A3B8',
+                        borderTop: '2px solid #0A0F2E',
                         borderRadius: '50%',
                         animation: 'spin 0.8s linear infinite',
                         display: 'inline-block',
@@ -451,8 +451,8 @@ export default function UploadPage() {
                       style={{
                         width: 14,
                         height: 14,
-                        border: '2px solid rgba(255,255,255,0.3)',
-                        borderTop: '2px solid rgba(255,255,255,0.9)',
+                        border: '2px solid #94A3B8',
+                        borderTop: '2px solid #0A0F2E',
                         borderRadius: '50%',
                         animation: 'spin 0.8s linear infinite',
                         display: 'inline-block',
@@ -466,10 +466,10 @@ export default function UploadPage() {
               <Link
                 href="/legacy"
                 style={{
-                  color: 'rgba(255,255,255,0.5)',
+                  color: '#64748B',
                   fontSize: 13,
                   textDecoration: 'underline',
-                  textDecorationColor: 'rgba(255,255,255,0.2)',
+                  textDecorationColor: '#94A3B8',
                 }}
               >
                 Cancel
@@ -495,7 +495,7 @@ export default function UploadPage() {
             border: '1px solid rgba(245,197,24,0.15)',
           }}
         >
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
+          <p style={{ fontSize: 13, color: '#64748B', margin: 0 }}>
             Connect wallet to anchor memories on Mantle Network
           </p>
           <ConnectButton type="evm" size="lg" />
@@ -503,7 +503,7 @@ export default function UploadPage() {
       )}
 
       {wallet && (
-        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginTop: 12, fontFamily: 'monospace' }}>
+        <p style={{ fontSize: 12, color: '#94A3B8', marginTop: 12, fontFamily: 'monospace' }}>
           Wallet: {truncateAddress(wallet)} · Mantle Network
         </p>
       )}

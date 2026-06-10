@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 import { fetchTransactions } from '@/lib/palmflow-api'
 import type { PFTransaction } from '@/lib/palmflow-api'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -93,7 +93,7 @@ export default function TransactionsPage() {
           <div key={f.label} style={{ display:'flex', gap:4 }}>
             {f.opts.map(o => (
               <button key={o} onClick={() => f.set(o)}
-                style={{ padding:'6px 12px', borderRadius:16, border:`1px solid ${f.value===o?TEAL:BDR}`, background:f.value===o?'rgba(0,229,204,0.1)':'transparent', color:f.value===o?TEAL:'#64748B', fontSize:10, cursor:'pointer', textTransform:'capitalize' }}>
+                style={{ padding:'6px 12px', borderRadius:16, border:`1px solid ${f.value===o?TEAL:BDR}`, background:f.value===o?'rgba(59,91,250,0.1)':'transparent', color:f.value===o?TEAL:'#64748B', fontSize:10, cursor:'pointer', textTransform:'capitalize' }}>
                 {o}
               </button>
             ))}
@@ -153,7 +153,7 @@ export default function TransactionsPage() {
         <div style={{ display:'flex', gap:6 }}>
           <button disabled={page===1} onClick={() => setPage(p=>p-1)}
             style={{ padding:'5px 12px', borderRadius:6, border:`1px solid ${BDR}`, background:'transparent', color:page===1?'#94A3B8':'#64748B', cursor:page===1?'default':'pointer' }}>←</button>
-          <span style={{ padding:'5px 12px', borderRadius:6, background:'rgba(0,229,204,0.1)', border:`1px solid rgba(0,229,204,0.3)`, color:TEAL }}>{page}</span>
+          <span style={{ padding:'5px 12px', borderRadius:6, background:'rgba(255,255,255,0.1)', border:`1px solid rgba(59,91,250,0.3)`, color:TEAL }}>{page}</span>
           <button disabled={page*limit >= total} onClick={() => setPage(p=>p+1)}
             style={{ padding:'5px 12px', borderRadius:6, border:`1px solid ${BDR}`, background:'transparent', color:page*limit>=total?'#94A3B8':'#64748B', cursor:page*limit>=total?'default':'pointer' }}>→</button>
         </div>
@@ -162,8 +162,8 @@ export default function TransactionsPage() {
       {/* Detail modal */}
       {selected && (
         <div onClick={e => e.target === e.currentTarget && setSelected(null)}
-          style={{ position:'fixed', inset:0, background:'rgba(255,255,255,0.75)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:100 }}>
-          <div style={{ background:'#ffffff', border:`1px solid rgba(0,229,204,0.2)`, borderRadius:16, padding:32, width:480, maxWidth:'95vw' }}>
+          style={{ position:'fixed', inset:0, background:'rgba(15,23,42,0.5)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:100 }}>
+          <div style={{ background:'#ffffff', border:`1px solid rgba(59,91,250,0.2)`, borderRadius:16, padding:32, width:480, maxWidth:'95vw' }}>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:20 }}>
               <div style={{ fontSize:16, fontWeight:700 }}>Transaction Details</div>
               <button onClick={() => setSelected(null)} style={{ background:'none', border:'none', color:'#64748B', fontSize:20, cursor:'pointer' }}>×</button>

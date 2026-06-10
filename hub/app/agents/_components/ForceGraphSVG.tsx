@@ -8,7 +8,7 @@ const STATUS_COLOR: Record<string, string> = {
   active: '#22C55E',
   complete: '#3B82F6',
   revoked: '#EF4444',
-  pending: '#F5C518',
+  pending: '#3B5BFA',
   warning: '#F59E0B',
   idle: '#9CA3AF',
 }
@@ -54,7 +54,7 @@ export default function ForceGraphSVG({
         id: job.id,
         label: job.owner,
         group: 'job',
-        color: STATUS_COLOR[job.status] || '#F5C518',
+        color: STATUS_COLOR[job.status] || '#3B5BFA',
         x: jx,
         y: jy,
         href: `/agents/jobs/${job.id}`,
@@ -69,7 +69,7 @@ export default function ForceGraphSVG({
           id: agent.id,
           label: agent.name,
           group: 'agent',
-          color: STATUS_COLOR[agent.status] || '#F5C518',
+          color: STATUS_COLOR[agent.status] || '#3B5BFA',
           x: ax,
           y: ay,
           href: `/agents/jobs/${job.id}`,
@@ -203,7 +203,7 @@ export default function ForceGraphSVG({
               <circle
                 r={n.group === 'job' ? 10 : 6}
                 fill={n.color}
-                stroke="rgba(255,255,255,0.85)"
+                stroke="#1E293B"
                 strokeWidth={n.group === 'job' ? 1.5 : 1}
                 opacity={0.95}
               >
@@ -214,7 +214,7 @@ export default function ForceGraphSVG({
                 y={n.group === 'job' ? -14 : -10}
                 textAnchor="middle"
                 fontSize={n.group === 'job' ? 11 : 9}
-                fill={n.group === 'job' ? '#F5C518' : 'rgba(255,255,255,0.7)'}
+                fill={n.group === 'job' ? '#3B5BFA' : '#334155'}
                 style={{ pointerEvents: 'none', fontFamily: 'system-ui' }}
               >
                 {n.label}
@@ -231,9 +231,9 @@ const zoomBtnStyle: React.CSSProperties = {
   width: 28,
   height: 28,
   borderRadius: 6,
-  border: '1px solid rgba(255,255,255,0.15)',
-  background: 'rgba(8,8,8,0.7)',
-  color: '#fff',
+  border: '1px solid #CBD5E1',
+  background: '#F8FAFC',
+  color: '#0A0F2E',
   fontSize: 14,
   lineHeight: 1,
   cursor: 'pointer',

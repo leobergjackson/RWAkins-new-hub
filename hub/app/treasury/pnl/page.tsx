@@ -15,7 +15,7 @@ import {
   SYMBOL_TO_COINGECKO,
 } from '@/lib/portfolio/tracker'
 
-const TEAL  = '#00E5CC'
+const TEAL  = '#3B5BFA'
 const BG    = '#ffffff'
 const CARD  = '#ffffff'
 const BDR   = '#E2E8F0'
@@ -110,14 +110,14 @@ export default function PnLPage() {
           {(['7d','30d','90d','all'] as const).map(r => (
             <button key={r} onClick={() => setRange(r)} style={{
               padding: '5px 12px', borderRadius: 16, fontSize: 11, fontWeight: range === r ? 700 : 400, cursor: 'pointer',
-              background: range === r ? `rgba(0,229,204,0.12)` : 'transparent',
-              border: `1px solid ${range === r ? 'rgba(0,229,204,0.35)' : BDR}`,
+              background: range === r ? `rgba(59,91,250,0.12)` : 'transparent',
+              border: `1px solid ${range === r ? 'rgba(59,91,250,0.35)' : BDR}`,
               color: range === r ? TEAL : MUTED,
             }}>{r === 'all' ? 'All Time' : r}</button>
           ))}
           <button onClick={exportCSV} style={{
             padding: '5px 14px', borderRadius: 8, fontSize: 11, fontWeight: 600, cursor: 'pointer',
-            background: `rgba(0,229,204,0.08)`, border: `1px solid rgba(0,229,204,0.25)`, color: TEAL,
+            background: `rgba(255,255,255,0.08)`, border: `1px solid rgba(59,91,250,0.25)`, color: TEAL,
           }}>⬇ Export CSV</button>
         </div>
       </div>

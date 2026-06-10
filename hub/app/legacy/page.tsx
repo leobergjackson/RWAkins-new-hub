@@ -107,7 +107,7 @@ export default function LegacyLandingPage() {
         button:hover ~ .custom-cursor-ring {
           width: 32px;
           height: 32px;
-          border-color: #F5C518;
+          border-color: #3B5BFA;
           background-color: rgba(245, 197, 24, 0.08);
         }
 
@@ -141,7 +141,7 @@ export default function LegacyLandingPage() {
 
         .float-bubble {
           position: absolute;
-          background: linear-gradient(135deg, #F5C518, #FDE68A);
+          background: linear-gradient(135deg, #3B5BFA, #FDE68A);
           border-radius: 50%;
           animation: driftBubble linear infinite;
           z-index: 0;
@@ -185,7 +185,7 @@ export default function LegacyLandingPage() {
 
         /* ── Buttons ── */
         .btn-gold {
-          background: linear-gradient(135deg, #F5C518, #D97706);
+          background: linear-gradient(135deg, #3B5BFA, #D97706);
           color: #FFFFFF;
           border: none;
           border-radius: 9999px;

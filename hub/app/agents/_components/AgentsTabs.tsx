@@ -23,9 +23,9 @@ export default function AgentsTabs() {
         flexWrap: 'wrap',
         marginTop: 16,
         padding: 6,
-        border: '1px solid rgba(255,255,255,0.08)',
+        border: '1px solid #E2E8F0',
         borderRadius: 12,
-        background: 'rgba(255,255,255,0.02)',
+        background: '#F8FAFC',
       }}
     >
       {TABS.map((tab) => {
@@ -43,8 +43,8 @@ export default function AgentsTabs() {
               fontSize: 13,
               fontWeight: 500,
               textDecoration: 'none',
-              color: active ? '#080808' : '#fff',
-              background: active ? '#F5C518' : 'transparent',
+              color: active ? '#ffffff' : '#0A0F2E',
+              background: active ? '#3B5BFA' : 'transparent',
               transition: 'background 0.15s ease',
             }}
           >

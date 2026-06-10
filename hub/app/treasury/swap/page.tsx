@@ -8,7 +8,7 @@ import { getSwapQuote, executeSwap } from '@/lib/palmflow-api'
 import { PF_SWAP_ROUTES } from '@/lib/palmflow-fallbacks'
 import type { PFSwapRoute } from '@/lib/palmflow-api'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -98,7 +98,7 @@ export default function SwapPage() {
               ) : (
                 <>
                   <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:16, flexWrap:'wrap' }}>
-                    <span style={{ padding:'6px 12px', background:'rgba(0,229,204,0.1)', borderRadius:8, fontSize:12, fontWeight:700, color:TEAL, fontFamily:MONO }}>{fromAsset}</span>
+                    <span style={{ padding:'6px 12px', background:'rgba(255,255,255,0.1)', borderRadius:8, fontSize:12, fontWeight:700, color:TEAL, fontFamily:MONO }}>{fromAsset}</span>
                     {selectedRoute.steps.map((s, i) => (
                       <span key={i} style={{ display:'contents' }}>
                         <span style={{ color:'#94A3B8', fontSize:14 }}>→</span>
@@ -141,7 +141,7 @@ export default function SwapPage() {
               </button>
               {showRoutes && routes.map((r, i) => (
                 <div key={r.id} onClick={() => setSelectedRoute(r)}
-                  style={{ padding:'11px 12px', background: r.id === selectedRoute.id ? `rgba(0,229,204,0.06)` : '#F8FAFC', border:`1px solid ${r.id === selectedRoute.id ? 'rgba(0,229,204,0.3)' : BDR}`, borderRadius:10, marginBottom:8, cursor:'pointer' }}>
+                  style={{ padding:'11px 12px', background: r.id === selectedRoute.id ? `rgba(59,91,250,0.06)` : '#F8FAFC', border:`1px solid ${r.id === selectedRoute.id ? 'rgba(59,91,250,0.3)' : BDR}`, borderRadius:10, marginBottom:8, cursor:'pointer' }}>
                   <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
                     <span style={{ fontSize:12, fontWeight:700, color:routeColor(i) }}>{r.label}</span>
                     {r.id === selectedRoute.id && <span style={{ fontSize:9, color:TEAL }}>SELECTED</span>}
@@ -169,7 +169,7 @@ export default function SwapPage() {
                     style={{ flex:1, background:'none', border:'none', outline:'none', fontSize:28, fontWeight:700, color: '#0A0F2E', fontFamily:MONO, width:0 }} />
                   <div>
                     <select value={fromAsset} onChange={e => setFromAsset(e.target.value)}
-                      style={{ padding:'8px 12px', borderRadius:8, border:`1px solid rgba(0,229,204,0.3)`, background:'rgba(0,229,204,0.08)', color:TEAL, fontSize:13, fontWeight:700, outline:'none', cursor:'pointer' }}>
+                      style={{ padding:'8px 12px', borderRadius:8, border:`1px solid rgba(59,91,250,0.3)`, background:'rgba(255,255,255,0.08)', color:TEAL, fontSize:13, fontWeight:700, outline:'none', cursor:'pointer' }}>
                       {ASSETS.map(a => <option key={a}>{a}</option>)}
                     </select>
                     <div style={{ fontSize:10, color:'#94A3B8', textAlign:'right', marginTop:3 }}>≈ ${(Number(fromAmount||0) * fromPrice).toLocaleString()}</div>
@@ -186,7 +186,7 @@ export default function SwapPage() {
               {/* Flip button */}
               <div style={{ textAlign:'center', marginBottom:8 }}>
                 <motion.button type="button" onClick={flipAssets} whileHover={{ rotate:180 }} transition={{ duration:0.3 }}
-                  style={{ width:36, height:36, borderRadius:'50%', border:`1px solid rgba(0,229,204,0.3)`, background:'rgba(0,229,204,0.08)', color:TEAL, fontSize:18, cursor:'pointer', display:'inline-flex', alignItems:'center', justifyContent:'center' }}>
+                  style={{ width:36, height:36, borderRadius:'50%', border:`1px solid rgba(59,91,250,0.3)`, background:'rgba(255,255,255,0.08)', color:TEAL, fontSize:18, cursor:'pointer', display:'inline-flex', alignItems:'center', justifyContent:'center' }}>
                   ⇅
                 </motion.button>
               </div>
@@ -231,7 +231,7 @@ export default function SwapPage() {
                   <div style={{ display:'flex', gap:6 }}>
                     {['0.1','0.5','1.0'].map(v => (
                       <button key={v} type="button" onClick={() => setSlippage(v)}
-                        style={{ padding:'3px 9px', borderRadius:6, border:`1px solid ${slippage===v?TEAL:BDR}`, background:slippage===v?'rgba(0,229,204,0.1)':'transparent', color:slippage===v?TEAL:'#64748B', fontSize:10, cursor:'pointer' }}>
+                        style={{ padding:'3px 9px', borderRadius:6, border:`1px solid ${slippage===v?TEAL:BDR}`, background:slippage===v?'rgba(59,91,250,0.1)':'transparent', color:slippage===v?TEAL:'#64748B', fontSize:10, cursor:'pointer' }}>
                         {v}%
                       </button>
                     ))}
@@ -241,7 +241,7 @@ export default function SwapPage() {
 
               <motion.button type="submit" disabled={executing || !fromAmount}
                 whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                style={{ width:'100%', padding:'14px', borderRadius:12, border:`1px solid ${TEAL}`, background:executing?'rgba(0,229,204,0.05)':'rgba(0,229,204,0.12)', color:TEAL, fontWeight:800, fontSize:15, cursor:'pointer' }}>
+                style={{ width:'100%', padding:'14px', borderRadius:12, border:`1px solid ${TEAL}`, background:executing?'rgba(59,91,250,0.05)':'rgba(59,91,250,0.12)', color:TEAL, fontWeight:800, fontSize:15, cursor:'pointer' }}>
                 {executing ? 'Executing Swap...' : `🔄 Swap ${fromAsset} → ${toAsset}`}
               </motion.button>
             </form>

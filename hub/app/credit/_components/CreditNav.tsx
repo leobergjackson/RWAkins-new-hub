@@ -20,9 +20,9 @@ export default function CreditNav() {
         display: 'flex',
         gap: 6,
         padding: '14px 24px',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        borderBottom: '1px solid #F1F5F9',
         flexWrap: 'wrap',
-        background: 'rgba(0,0,0,0.3)',
+        background: '#94A3B8',
         backdropFilter: 'blur(10px)',
         position: 'sticky',
         top: 0,
@@ -55,8 +55,8 @@ export default function CreditNav() {
               fontWeight: isActive ? 600 : 400,
               textDecoration: 'none',
               background: isActive ? 'rgba(139,92,246,0.15)' : 'transparent',
-              border: `1px solid ${isActive ? 'rgba(139,92,246,0.5)' : 'rgba(255,255,255,0.08)'}`,
-              color: isActive ? '#A78BFA' : 'rgba(255,255,255,0.55)',
+              border: `1px solid ${isActive ? 'rgba(139,92,246,0.5)' : '#E2E8F0'}`,
+              color: isActive ? '#A78BFA' : '#475569',
               transition: 'all 0.2s',
             }}
           >

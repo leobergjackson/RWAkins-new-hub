@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { fetchYieldData, setYieldStrategy } from '@/lib/palmflow-api'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -105,14 +105,14 @@ export default function YieldPage() {
           {STRATEGIES.map(s => {
             const isActive = yieldData.strategy === s.key
             return (
-              <div key={s.key} style={{ background: isActive ? 'rgba(0,229,204,0.05)' : CARD, border: `1px solid ${isActive ? 'rgba(0,229,204,0.3)' : BDR}`, borderRadius: 12, padding: '20px', cursor: 'pointer', transition: 'all 0.2s' }}>
+              <div key={s.key} style={{ background: isActive ? 'rgba(59,91,250,0.05)' : CARD, border: `1px solid ${isActive ? 'rgba(59,91,250,0.3)' : BDR}`, borderRadius: 12, padding: '20px', cursor: 'pointer', transition: 'all 0.2s' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
                   <div>
-                    <div style={{ fontSize: 16, fontWeight: 700, color: isActive ? TEAL : '#fff' }}>{s.name}</div>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: isActive ? TEAL : '#0A0F2E' }}>{s.name}</div>
                     <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>{s.desc}</div>
                   </div>
                   {isActive && (
-                    <span style={{ fontSize: 10, padding: '3px 8px', borderRadius: 20, background: 'rgba(0,229,204,0.1)', border: '1px solid rgba(0,229,204,0.3)', color: TEAL }}>ACTIVE</span>
+                    <span style={{ fontSize: 10, padding: '3px 8px', borderRadius: 20, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(59,91,250,0.3)', color: TEAL }}>ACTIVE</span>
                   )}
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
@@ -141,7 +141,7 @@ export default function YieldPage() {
                 <button
                   onClick={() => handleStrategy(s.key)}
                   disabled={isActive || switching === s.key}
-                  style={{ width: '100%', padding: '9px', borderRadius: 8, border: `1px solid ${isActive ? 'rgba(0,229,204,0.3)' : BDR}`, background: isActive ? 'rgba(0,229,204,0.08)' : 'transparent', color: isActive ? TEAL : '#475569', fontSize: 12, fontWeight: isActive ? 700 : 400, cursor: isActive ? 'default' : 'pointer' }}
+                  style={{ width: '100%', padding: '9px', borderRadius: 8, border: `1px solid ${isActive ? 'rgba(59,91,250,0.3)' : BDR}`, background: isActive ? 'rgba(59,91,250,0.08)' : 'transparent', color: isActive ? TEAL : '#475569', fontSize: 12, fontWeight: isActive ? 700 : 400, cursor: isActive ? 'default' : 'pointer' }}
                 >
                   {isActive ? '✓ Active Strategy' : switching === s.key ? 'Switching...' : 'Switch to ' + s.name}
                 </button>
@@ -161,7 +161,7 @@ export default function YieldPage() {
         </div>
         <div
           onClick={() => { setAutoOpt(p => !p); toast.success(autoOpt ? 'Auto-optimization disabled' : 'Auto-optimization enabled') }}
-          style={{ width: 48, height: 26, borderRadius: 13, background: autoOpt ? 'rgba(0,229,204,0.3)' : '#E2E8F0', border: `1px solid ${autoOpt ? TEAL : BDR}`, cursor: 'pointer', position: 'relative', transition: 'all 0.2s' }}
+          style={{ width: 48, height: 26, borderRadius: 13, background: autoOpt ? 'rgba(59,91,250,0.3)' : '#E2E8F0', border: `1px solid ${autoOpt ? TEAL : BDR}`, cursor: 'pointer', position: 'relative', transition: 'all 0.2s' }}
         >
           <div style={{ position: 'absolute', top: 3, left: autoOpt ? 24 : 3, width: 18, height: 18, borderRadius: '50%', background: autoOpt ? TEAL : '#666', transition: 'left 0.2s' }} />
         </div>

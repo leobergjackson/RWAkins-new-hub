@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { fetchHistory, type PFHistoryItem } from '@/lib/palmflow-api'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -71,7 +71,7 @@ export default function HistoryPage() {
           <button
             key={t}
             onClick={() => setTypeFilter(t)}
-            style={{ padding: '7px 14px', borderRadius: 20, border: `1px solid ${typeFilter === t ? TEAL : BDR}`, background: typeFilter === t ? 'rgba(0,229,204,0.1)' : 'transparent', color: typeFilter === t ? TEAL : '#64748B', fontSize: 11, cursor: 'pointer', textTransform: 'capitalize' }}
+            style={{ padding: '7px 14px', borderRadius: 20, border: `1px solid ${typeFilter === t ? TEAL : BDR}`, background: typeFilter === t ? 'rgba(59,91,250,0.1)' : 'transparent', color: typeFilter === t ? TEAL : '#64748B', fontSize: 11, cursor: 'pointer', textTransform: 'capitalize' }}
           >
             {t}
           </button>

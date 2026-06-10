@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 import { fetchWallets, fetchPaymentRequests, createPaymentRequest } from '@/lib/palmflow-api'
 import type { PFWallet, PFPaymentRequest } from '@/lib/palmflow-api'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -19,7 +19,7 @@ function CopyBtn({ text }: { text: string }) {
   const [copied, setCopied] = useState(false)
   function copy() { navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1600) }) }
   return (
-    <button onClick={copy} style={{ padding:'4px 10px', borderRadius:6, border:`1px solid ${copied ? TEAL : BDR}`, background:copied?'rgba(0,229,204,0.08)':'transparent', color:copied?TEAL:'#64748B', fontSize:10, cursor:'pointer' }}>
+    <button onClick={copy} style={{ padding:'4px 10px', borderRadius:6, border:`1px solid ${copied ? TEAL : BDR}`, background:copied?'rgba(59,91,250,0.08)':'transparent', color:copied?TEAL:'#64748B', fontSize:10, cursor:'pointer' }}>
       {copied ? '✓ Copied' : '⎘ Copy'}
     </button>
   )
@@ -33,14 +33,14 @@ function QRPlaceholder({ data }: { data: string }) {
       alt="QR Code"
       width={140}
       height={140}
-      style={{ borderRadius: 10, border: `1px solid rgba(0,229,204,0.2)` }}
+      style={{ borderRadius: 10, border: `1px solid rgba(59,91,250,0.2)` }}
       onError={(e) => {
         const el = e.currentTarget
         el.style.display = 'none'
         const parent = el.parentElement
         if (parent) {
           const fb = document.createElement('div')
-          fb.style.cssText = 'width:140px;height:140px;border-radius:10px;border:1px solid rgba(0,229,204,0.2);display:flex;align-items:center;justify-content:center;font-size:11px;color:#94A3B8;text-align:center;padding:10px;box-sizing:border-box'
+          fb.style.cssText = 'width:140px;height:140px;border-radius:10px;border:1px solid rgba(59,91,250,0.2);display:flex;align-items:center;justify-content:center;font-size:11px;color:#94A3B8;text-align:center;padding:10px;box-sizing:border-box'
           fb.textContent = 'QR Code'
           parent.appendChild(fb)
         }
@@ -105,7 +105,7 @@ export default function ReceivePage() {
                       <button onClick={() => setExpandedQR(null)} style={{ display:'block', margin:'8px auto 0', background:'none', border:'none', color:TEAL, fontSize:10, cursor:'pointer' }}>Close</button>
                     </div>
                   ) : (
-                    <button onClick={() => setExpandedQR(w.id)} style={{ width:48, height:48, borderRadius:8, border:`1px solid rgba(0,229,204,0.2)`, background:'rgba(0,229,204,0.05)', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', fontSize:18 }}>
+                    <button onClick={() => setExpandedQR(w.id)} style={{ width:48, height:48, borderRadius:8, border:`1px solid rgba(59,91,250,0.2)`, background:'rgba(255,255,255,0.05)', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', fontSize:18 }}>
                       ⬛
                     </button>
                   )}
@@ -165,7 +165,7 @@ export default function ReceivePage() {
                 style={{ width:'100%', padding:'10px 12px', borderRadius:8, border:`1px solid ${BDR}`, background:'#F8FAFC', color: '#0A0F2E', fontSize:13, outline:'none', boxSizing:'border-box' }} />
             </div>
             <button type="submit" disabled={creating}
-              style={{ width:'100%', padding:'12px', borderRadius:10, border:`1px solid ${TEAL}`, background:'rgba(0,229,204,0.1)', color:TEAL, fontWeight:700, fontSize:14, cursor:'pointer' }}>
+              style={{ width:'100%', padding:'12px', borderRadius:10, border:`1px solid ${TEAL}`, background:'rgba(255,255,255,0.1)', color:TEAL, fontWeight:700, fontSize:14, cursor:'pointer' }}>
               {creating ? 'Creating...' : '📋 Generate Payment Request'}
             </button>
           </form>
@@ -174,7 +174,7 @@ export default function ReceivePage() {
         {/* Created request result */}
         <div>
           {created && (
-            <div style={{ background:'rgba(0,229,204,0.04)', border:`1px solid rgba(0,229,204,0.25)`, borderRadius:14, padding:'22px', marginBottom:16 }}>
+            <div style={{ background:'rgba(255,255,255,0.04)', border:`1px solid rgba(59,91,250,0.25)`, borderRadius:14, padding:'22px', marginBottom:16 }}>
               <div style={{ fontSize:13, fontWeight:700, color:TEAL, marginBottom:14 }}>✅ Payment Request Created</div>
               <div style={{ display:'flex', gap:16, alignItems:'flex-start', marginBottom:14, flexWrap:'wrap' }}>
                 <QRPlaceholder data={created.shareLink} />

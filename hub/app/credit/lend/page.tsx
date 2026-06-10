@@ -27,15 +27,15 @@ const GAUGE_ARC = GAUGE_CIRC * 0.75
 
 // ─── Style helpers ────────────────────────────────────────────
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)',
+  background: '#F8FAFC',
+  border: '1px solid #E2E8F0',
   borderRadius: 14,
   padding: '20px 22px',
 }
 
 const btnPrimary: React.CSSProperties = {
   background: 'linear-gradient(135deg, #8B5CF6, #3B5BFA)',
-  color: '#fff',
+  color: '#0A0F2E',
   border: 'none',
   borderRadius: 8,
   padding: '10px 18px',
@@ -72,7 +72,7 @@ function MiniGauge({ score }: { score: number }) {
           </defs>
           <circle
             cx={GAUGE_CX} cy={GAUGE_CY} r={GAUGE_R}
-            fill="none" stroke="rgba(255,255,255,0.06)"
+            fill="none" stroke="#F1F5F9"
             strokeWidth={10}
             strokeDasharray={`${GAUGE_ARC} 999`}
             strokeLinecap="round"
@@ -98,11 +98,11 @@ function MiniGauge({ score }: { score: number }) {
           }}
         >
           <p style={{ fontSize: 26, fontWeight: 800, margin: 0, lineHeight: 1 }}>{score}</p>
-          <p style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', margin: '1px 0 0' }}>/ 1000</p>
+          <p style={{ fontSize: 9, color: '#94A3B8', margin: '1px 0 0' }}>/ 1000</p>
         </div>
       </div>
       <div>
-        <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', margin: '0 0 6px', fontWeight: 700, letterSpacing: '0.07em' }}>
+        <p style={{ fontSize: 11, color: '#94A3B8', margin: '0 0 6px', fontWeight: 700, letterSpacing: '0.07em' }}>
           CREDIT SCORE
         </p>
         <div
@@ -120,7 +120,7 @@ function MiniGauge({ score }: { score: number }) {
           <span style={{ width: 7, height: 7, borderRadius: '50%', background: color, boxShadow: `0 0 6px ${color}`, flexShrink: 0 }} />
           <span style={{ fontSize: 12, fontWeight: 600, color }}>{label}</span>
         </div>
-        <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', margin: 0 }}>Score retrieved from blockchain</p>
+        <p style={{ fontSize: 11, color: '#94A3B8', margin: 0 }}>Score retrieved from blockchain</p>
       </div>
     </div>
   )
@@ -194,7 +194,7 @@ export default function LendPage() {
           AI LENDING
         </p>
         <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, lineHeight: 1.2 }}>Credit Passport: AI-Negotiated Lending</h1>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 4 }}>
+        <p style={{ fontSize: 13, color: '#64748B', marginTop: 4 }}>
           Chat with AI to get personalized loan terms based on your Credit Passport score
         </p>
       </header>
@@ -202,7 +202,7 @@ export default function LendPage() {
       {/* No MetaMask */}
       {!installed && (
         <div style={{ ...card, textAlign: 'center', marginBottom: 20 }}>
-          <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>MetaMask is required for wallet-linked loans.</p>
+          <p style={{ color: '#334155', marginBottom: 12 }}>MetaMask is required for wallet-linked loans.</p>
           <a href={WALLET_INSTALL_LINKS.metamask} target="_blank" rel="noopener noreferrer"
             style={{ ...btnPrimary, textDecoration: 'none', display: 'inline-flex' }}>
             Install MetaMask
@@ -220,19 +220,19 @@ export default function LendPage() {
 
           {installed && !wallet ? (
             <div style={{ ...card, textAlign: 'center' }}>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginBottom: 12 }}>
+              <p style={{ fontSize: 13, color: '#64748B', marginBottom: 12 }}>
                 Connect wallet for personalized rates
               </p>
               <ConnectButton type="evm" size="lg" />
             </div>
           ) : wallet ? (
             <div style={{ ...card, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px' }}>
-              <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>
+              <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#475569' }}>
                 {truncateAddress(wallet)}
               </span>
               <button
                 onClick={disconnectWallet}
-                style={{ background: 'transparent', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 6, padding: '5px 12px', fontSize: 11, cursor: 'pointer' }}
+                style={{ background: 'transparent', color: '#64748B', border: '1px solid #E2E8F0', borderRadius: 6, padding: '5px 12px', fontSize: 11, cursor: 'pointer' }}
               >
                 Disconnect
               </button>
@@ -240,7 +240,7 @@ export default function LendPage() {
           ) : null}
 
           <div style={{ ...card, padding: '14px 16px' }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', color: 'rgba(255,255,255,0.3)', margin: '0 0 8px' }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', color: '#94A3B8', margin: '0 0 8px' }}>
               HOW IT WORKS
             </p>
             {[
@@ -268,7 +268,7 @@ export default function LendPage() {
                 >
                   {i + 1}
                 </span>
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0, lineHeight: 1.4 }}>{step}</p>
+                <p style={{ fontSize: 12, color: '#64748B', margin: 0, lineHeight: 1.4 }}>{step}</p>
               </div>
             ))}
           </div>
@@ -289,7 +289,7 @@ export default function LendPage() {
           <div
             style={{
               padding: '16px 20px',
-              borderBottom: '1px solid rgba(255,255,255,0.06)',
+              borderBottom: '1px solid #F1F5F9',
               display: 'flex',
               alignItems: 'center',
               gap: 10,
@@ -342,7 +342,7 @@ export default function LendPage() {
             className="hide-scrollbar"
           >
             {msgs.length === 0 && (
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: 40 }}>
+              <p style={{ fontSize: 13, color: '#94A3B8', textAlign: 'center', marginTop: 40 }}>
                 Starting conversation…
               </p>
             )}
@@ -364,16 +364,16 @@ export default function LendPage() {
                     background:
                       m.role === 'user'
                         ? 'rgba(139,92,246,0.15)'
-                        : 'rgba(255,255,255,0.05)',
-                    border: `1px solid ${m.role === 'user' ? 'rgba(139,92,246,0.3)' : 'rgba(255,255,255,0.08)'}`,
+                        : '#F8FAFC',
+                    border: `1px solid ${m.role === 'user' ? 'rgba(139,92,246,0.3)' : '#E2E8F0'}`,
                     fontSize: 14,
                     lineHeight: 1.5,
-                    color: m.role === 'user' ? '#E9D5FF' : 'rgba(255,255,255,0.85)',
+                    color: m.role === 'user' ? '#E9D5FF' : '#1E293B',
                   }}
                 >
                   {m.content}
                 </div>
-                <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)', margin: '4px 4px 0' }}>
+                <p style={{ fontSize: 10, color: '#94A3B8', margin: '4px 4px 0' }}>
                   {m.ts.toLocaleTimeString()}
                 </p>
               </div>
@@ -382,8 +382,8 @@ export default function LendPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <div
                   style={{
-                    background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
                     borderRadius: '14px 14px 14px 4px',
                     padding: '10px 16px',
                     display: 'flex',
@@ -398,7 +398,7 @@ export default function LendPage() {
                         width: 6,
                         height: 6,
                         borderRadius: '50%',
-                        background: 'rgba(255,255,255,0.4)',
+                        background: '#64748B',
                         animation: `bounce 0.9s ease-in-out ${d}s infinite`,
                         display: 'inline-block',
                       }}
@@ -414,7 +414,7 @@ export default function LendPage() {
           <div
             style={{
               padding: '14px 16px',
-              borderTop: '1px solid rgba(255,255,255,0.06)',
+              borderTop: '1px solid #F1F5F9',
               display: 'flex',
               gap: 10,
             }}
@@ -427,10 +427,10 @@ export default function LendPage() {
               style={{
                 flex: 1,
                 padding: '10px 14px',
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.12)',
+                background: '#F1F5F9',
+                border: '1px solid #E2E8F0',
                 borderRadius: 8,
-                color: '#fff',
+                color: '#0A0F2E',
                 fontSize: 14,
               }}
               disabled={sending}

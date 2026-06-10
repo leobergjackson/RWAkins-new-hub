@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 import { fetchSettings, updateSettings, fetchWallets } from '@/lib/palmflow-api'
 import type { PFSettings, PFWallet } from '@/lib/palmflow-api'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -21,7 +21,7 @@ const ASSETS   = ['USDC', 'MNT', 'ETH', 'USDC', 'USDT', 'DAI']
 function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
   return (
     <div onClick={() => onChange(!value)}
-      style={{ width:44, height:24, borderRadius:12, background:value?'rgba(0,229,204,0.25)':'#E2E8F0', border:`1px solid ${value?TEAL:BDR}`, cursor:'pointer', position:'relative', transition:'all 0.2s', flexShrink:0 }}>
+      style={{ width:44, height:24, borderRadius:12, background:value?'rgba(59,91,250,0.25)':'#E2E8F0', border:`1px solid ${value?TEAL:BDR}`, cursor:'pointer', position:'relative', transition:'all 0.2s', flexShrink:0 }}>
       <div style={{ position:'absolute', top:3, left:value?22:3, width:16, height:16, borderRadius:'50%', background:value?TEAL:'#555', transition:'left 0.2s' }} />
     </div>
   )
@@ -83,7 +83,7 @@ export default function SettingsPage() {
         <div style={{ display:'flex', gap:4, marginBottom:24, background:'#F8FAFC', borderRadius:10, padding:4, flexWrap:'wrap' }}>
           {TABS.map(t => (
             <button key={t} onClick={() => setActiveTab(t)}
-              style={{ flex:1, minWidth:80, padding:'8px 14px', borderRadius:7, border:'none', background:activeTab===t?'rgba(0,229,204,0.12)':'transparent', color:activeTab===t?TEAL:'#64748B', fontSize:12, fontWeight:activeTab===t?700:400, cursor:'pointer', transition:'all 0.15s' }}>
+              style={{ flex:1, minWidth:80, padding:'8px 14px', borderRadius:7, border:'none', background:activeTab===t?'rgba(59,91,250,0.12)':'transparent', color:activeTab===t?TEAL:'#64748B', fontSize:12, fontWeight:activeTab===t?700:400, cursor:'pointer', transition:'all 0.15s' }}>
               {t}
             </button>
           ))}
@@ -121,7 +121,7 @@ export default function SettingsPage() {
               </div>
             ))}
             <button onClick={() => toast.info('Connect wallet via the Phantom/MetaMask prompt')}
-              style={{ marginTop:12, padding:'9px 18px', borderRadius:8, border:`1px solid rgba(0,229,204,0.3)`, background:'rgba(0,229,204,0.06)', color:TEAL, fontSize:12, cursor:'pointer' }}>
+              style={{ marginTop:12, padding:'9px 18px', borderRadius:8, border:`1px solid rgba(59,91,250,0.3)`, background:'rgba(255,255,255,0.06)', color:TEAL, fontSize:12, cursor:'pointer' }}>
               + Add Wallet
             </button>
           </>}
@@ -294,7 +294,7 @@ export default function SettingsPage() {
             Reset
           </button>
           <button onClick={save} disabled={saving}
-            style={{ padding:'10px 24px', borderRadius:8, border:`1px solid ${TEAL}`, background:'rgba(0,229,204,0.12)', color:TEAL, fontSize:13, fontWeight:700, cursor:'pointer' }}>
+            style={{ padding:'10px 24px', borderRadius:8, border:`1px solid ${TEAL}`, background:'rgba(255,255,255,0.12)', color:TEAL, fontSize:13, fontWeight:700, cursor:'pointer' }}>
             {saving ? 'Saving...' : '✓ Save Changes'}
           </button>
         </div>

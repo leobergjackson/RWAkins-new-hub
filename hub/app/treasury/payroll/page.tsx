@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { fetchStreams, createStream, pauseStream, resumeStream, type PFStream } from '@/lib/palmflow-api'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -74,7 +74,7 @@ export default function PayrollPage() {
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          style={{ padding: '9px 18px', borderRadius: 8, border: `1px solid ${TEAL}`, background: 'rgba(0,229,204,0.1)', color: TEAL, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
+          style={{ padding: '9px 18px', borderRadius: 8, border: `1px solid ${TEAL}`, background: 'rgba(255,255,255,0.1)', color: TEAL, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
         >
           + Create Stream
         </button>
@@ -150,8 +150,8 @@ export default function PayrollPage() {
 
       {/* Create modal */}
       {showCreate && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100 }}>
-          <div style={{ background: '#ffffff', border: `1px solid rgba(0,229,204,0.2)`, borderRadius: 14, padding: 32, width: 420, maxWidth: '95vw' }}>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100 }}>
+          <div style={{ background: '#ffffff', border: `1px solid rgba(59,91,250,0.2)`, borderRadius: 14, padding: 32, width: 420, maxWidth: '95vw' }}>
             <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 20 }}>Create Payroll Stream</div>
             <form onSubmit={handleCreate}>
               {[
@@ -188,7 +188,7 @@ export default function PayrollPage() {
               ))}
               <div style={{ display: 'flex', gap: 10, marginTop: 8 }}>
                 <button type="button" onClick={() => setShowCreate(false)} style={{ flex: 1, padding: '10px', borderRadius: 8, border: `1px solid ${BDR}`, background: 'transparent', color: '#64748B', cursor: 'pointer' }}>Cancel</button>
-                <button type="submit" disabled={creating} style={{ flex: 1, padding: '10px', borderRadius: 8, border: `1px solid ${TEAL}`, background: 'rgba(0,229,204,0.1)', color: TEAL, fontWeight: 700, cursor: 'pointer' }}>
+                <button type="submit" disabled={creating} style={{ flex: 1, padding: '10px', borderRadius: 8, border: `1px solid ${TEAL}`, background: 'rgba(255,255,255,0.1)', color: TEAL, fontWeight: 700, cursor: 'pointer' }}>
                   {creating ? 'Creating...' : 'Create Stream'}
                 </button>
               </div>

@@ -24,15 +24,15 @@ const TIER_NAMES = ['None', 'Bronze', 'Silver', 'Gold'] as const
 
 // ─── Style helpers ────────────────────────────────────────────
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)',
+  background: '#F8FAFC',
+  border: '1px solid #E2E8F0',
   borderRadius: 14,
   padding: '20px 22px',
 }
 
 const btnPrimary: React.CSSProperties = {
   background: 'linear-gradient(135deg, #8B5CF6, #3B5BFA)',
-  color: '#fff',
+  color: '#0A0F2E',
   border: 'none',
   borderRadius: 8,
   padding: '10px 20px',
@@ -65,10 +65,10 @@ const btnDanger: React.CSSProperties = {
 const input: React.CSSProperties = {
   width: '100%',
   padding: '10px 14px',
-  background: 'rgba(255,255,255,0.06)',
-  border: '1px solid rgba(255,255,255,0.12)',
+  background: '#F1F5F9',
+  border: '1px solid #E2E8F0',
   borderRadius: 8,
-  color: '#fff',
+  color: '#0A0F2E',
   fontSize: 14,
   marginBottom: 10,
   boxSizing: 'border-box',
@@ -81,11 +81,11 @@ function TierOrb({ tier }: { tier: StakingTier | string }) {
     : 'None'
 
   const config = ({
-    None: { bg: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.15)', glow: 'transparent', label: '—', emoji: '' },
+    None: { bg: '#F1F5F9', border: '#CBD5E1', glow: 'transparent', label: '—', emoji: '' },
     Bronze: { bg: 'rgba(249,115,22,0.12)', border: 'rgba(249,115,22,0.4)', glow: 'rgba(249,115,22,0.25)', label: 'Bronze', emoji: '🥉' },
     Silver: { bg: 'rgba(156,163,175,0.12)', border: 'rgba(156,163,175,0.4)', glow: 'rgba(156,163,175,0.2)', label: 'Silver', emoji: '🥈' },
     Gold: { bg: 'rgba(245,197,24,0.12)', border: 'rgba(245,197,24,0.4)', glow: 'rgba(245,197,24,0.3)', label: 'Gold', emoji: '🥇' },
-  } as any)[normalizedTier] || { bg: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.15)', glow: 'transparent', label: '—', emoji: '' }
+  } as any)[normalizedTier] || { bg: '#F1F5F9', border: '#CBD5E1', glow: 'transparent', label: '—', emoji: '' }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginBottom: 24 }}>
@@ -107,7 +107,7 @@ function TierOrb({ tier }: { tier: StakingTier | string }) {
       >
         {config.emoji || '○'}
       </div>
-      <p style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.6)', margin: 0 }}>
+      <p style={{ fontSize: 14, fontWeight: 600, color: '#475569', margin: 0 }}>
         {normalizedTier === 'None' ? 'No Tier' : `${config.emoji} ${config.label} Tier`}
       </p>
       <style>{`
@@ -262,10 +262,10 @@ export default function StakePage() {
 
   const tierColor = (tier: StakingTier | string) => {
     const t = tier && typeof tier === 'string' ? tier.toLowerCase() : ''
-    if (t === 'gold') return '#F5C518'
+    if (t === 'gold') return '#3B5BFA'
     if (t === 'silver') return '#9CA3AF'
     if (t === 'bronze') return '#F97316'
-    return 'rgba(255,255,255,0.25)'
+    return '#CBD5E1'
   }
 
   return (
@@ -276,7 +276,7 @@ export default function StakePage() {
           NCRD STAKING
         </p>
         <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, lineHeight: 1.2 }}>Stake NCRD</h1>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 4 }}>
+        <p style={{ fontSize: 13, color: '#64748B', marginTop: 4 }}>
           Stake NCRD tokens to boost your credit score
         </p>
       </header>
@@ -284,7 +284,7 @@ export default function StakePage() {
       {/* No MetaMask */}
       {!installed && (
         <div style={{ ...card, textAlign: 'center', marginBottom: 20 }}>
-          <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>MetaMask is required.</p>
+          <p style={{ color: '#334155', marginBottom: 12 }}>MetaMask is required.</p>
           <a href={WALLET_INSTALL_LINKS.metamask} target="_blank" rel="noopener noreferrer" style={btnPrimary}>
             Install MetaMask
           </a>
@@ -295,7 +295,7 @@ export default function StakePage() {
         <div style={{ ...card, textAlign: 'center', padding: '40px 24px', marginBottom: 20 }}>
           <div style={{ fontSize: 40, marginBottom: 12 }}>🛡</div>
           <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 6 }}>Connect wallet to stake</p>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 20 }}>
+          <p style={{ fontSize: 13, color: '#64748B', marginBottom: 20 }}>
             Connect MetaMask on Mantle Network to stake NCRD tokens.
           </p>
           <ConnectButton type="evm" size="lg" />
@@ -318,19 +318,19 @@ export default function StakePage() {
             }}>
               <span>⚠</span>
               <span style={{ flex: 1 }}>{pageError}</span>
-              <button onClick={() => { setPageError(''); loadStaking(wallet) }} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', borderRadius: 6, padding: '3px 10px', fontSize: 11, cursor: 'pointer' }}>
+              <button onClick={() => { setPageError(''); loadStaking(wallet) }} style={{ background: 'transparent', border: '1px solid #CBD5E1', color: '#0A0F2E', borderRadius: 6, padding: '3px 10px', fontSize: 11, cursor: 'pointer' }}>
                 Retry
               </button>
             </div>
           )}
           {/* Wallet bar */}
           <div style={{ ...card, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, padding: '12px 18px', marginBottom: 20 }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>
+            <span style={{ fontFamily: 'monospace', fontSize: 13, color: '#334155' }}>
               {truncateAddress(wallet)}
             </span>
             <button
               onClick={disconnect}
-              style={{ background: 'transparent', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 7, padding: '6px 14px', fontSize: 12, cursor: 'pointer' }}
+              style={{ background: 'transparent', color: '#64748B', border: '1px solid #E2E8F0', borderRadius: 7, padding: '6px 14px', fontSize: 12, cursor: 'pointer' }}
             >
               Disconnect
             </button>
@@ -344,12 +344,12 @@ export default function StakePage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 12, marginBottom: 20 }}>
               {[
                 { label: 'STAKED', value: `${Number(data.stakedAmount || 0)} NCRD`, color: '#A78BFA' },
-                { label: 'AVAILABLE', value: `${Number(data.availableBalance || 0)} NCRD`, color: 'rgba(255,255,255,0.7)' },
+                { label: 'AVAILABLE', value: `${Number(data.availableBalance || 0)} NCRD`, color: '#334155' },
                 { label: 'CURRENT TIER', value: typeof data.currentTier === 'string' ? data.currentTier : 'None', color: tierColor(data.currentTier) },
                 { label: 'SCORE BOOST', value: `+${Number(data.scoreBoost || 0)}`, color: '#22C55E' },
               ].map((s) => (
-                <div key={s.label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: '12px 14px' }}>
-                  <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.3)', margin: '0 0 6px' }}>{s.label}</p>
+                <div key={s.label} style={{ background: '#F8FAFC', border: '1px solid #F1F5F9', borderRadius: 10, padding: '12px 14px' }}>
+                  <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', color: '#94A3B8', margin: '0 0 6px' }}>{s.label}</p>
                   <p style={{ fontSize: 16, fontWeight: 700, color: s.color, margin: 0 }}>{s.value}</p>
                 </div>
               ))}
@@ -358,11 +358,11 @@ export default function StakePage() {
             {/* Progress to next tier */}
             {data.nextTierName && typeof data.nextTierName === 'string' && (
               <div style={{ textAlign: 'left' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#64748B', marginBottom: 6 }}>
                   <span>Progress to {data.nextTierName}</span>
                   <span>{(data.progressToNextTier ?? 0).toFixed(1)}%</span>
                 </div>
-                <div style={{ height: 8, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden' }}>
+                <div style={{ height: 8, background: '#F1F5F9', borderRadius: 99, overflow: 'hidden' }}>
                   <div
                     style={{
                       height: '100%',
@@ -373,7 +373,7 @@ export default function StakePage() {
                     }}
                   />
                 </div>
-                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 5 }}>
+                <p style={{ fontSize: 11, color: '#94A3B8', marginTop: 5 }}>
                   Need {(data.nextTierRequired ?? 0).toLocaleString()} more NCRD for {data.nextTierName} tier
                 </p>
               </div>
@@ -384,7 +384,7 @@ export default function StakePage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16, marginBottom: 20 }}>
             <div style={card}>
               <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 4 }}>Stake NCRD</p>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 14 }}>Increase your credit score by staking tokens</p>
+              <p style={{ fontSize: 12, color: '#64748B', marginBottom: 14 }}>Increase your credit score by staking tokens</p>
               <input
                 type="number"
                 placeholder="Amount to stake"
@@ -404,7 +404,7 @@ export default function StakePage() {
 
             <div style={card}>
               <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 4 }}>Unstake NCRD</p>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 14 }}>Unstaking reduces your score boost</p>
+              <p style={{ fontSize: 12, color: '#64748B', marginBottom: 14 }}>Unstaking reduces your score boost</p>
               <input
                 type="number"
                 placeholder="Amount to unstake"
@@ -427,14 +427,14 @@ export default function StakePage() {
           {txHash && (
             <div style={{ ...card, marginBottom: 20, background: 'rgba(139,92,246,0.06)', border: '1px solid rgba(139,92,246,0.2)' }}>
               <p style={{ color: '#A78BFA', fontWeight: 600, fontSize: 13, margin: '0 0 4px' }}>Transaction confirmed ✓</p>
-              <p style={{ fontFamily: 'monospace', fontSize: 11, color: 'rgba(255,255,255,0.45)', margin: 0, wordBreak: 'break-all' }}>
+              <p style={{ fontFamily: 'monospace', fontSize: 11, color: '#64748B', margin: 0, wordBreak: 'break-all' }}>
                 {txHash}
               </p>
             </div>
           )}
 
           {/* Tier benefits */}
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.3)', marginBottom: 14 }}>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: '#94A3B8', marginBottom: 14 }}>
             TIER BENEFITS
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 14 }}>
@@ -447,15 +447,15 @@ export default function StakePage() {
                   key={tier}
                   style={{
                     ...card,
-                    border: `1px solid ${isCurrent ? `${cfg.color}50` : 'rgba(255,255,255,0.08)'}`,
-                    background: isCurrent ? `${cfg.color}0C` : 'rgba(255,255,255,0.03)',
+                    border: `1px solid ${isCurrent ? `${cfg.color}50` : '#E2E8F0'}`,
+                    background: isCurrent ? `${cfg.color}0C` : '#ffffff',
                     position: 'relative',
                     overflow: 'hidden',
                   }}
                 >
                   <p style={{ fontSize: 20, marginBottom: 6 }}>{cfg.emoji}</p>
                   <p style={{ fontSize: 16, fontWeight: 700, color: cfg.color, margin: '0 0 4px' }}>{tier}</p>
-                  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: '0 0 8px' }}>
+                  <p style={{ fontSize: 12, color: '#64748B', margin: '0 0 8px' }}>
                     Requires {cfg.required.toLocaleString()} NCRD
                   </p>
                   <p style={{ fontSize: 14, fontWeight: 700, color: '#22C55E', margin: '0 0 10px' }}>
@@ -470,10 +470,10 @@ export default function StakePage() {
                       background: isCurrent
                         ? `${cfg.color}20`
                         : isLocked
-                        ? 'rgba(255,255,255,0.04)'
+                        ? '#F8FAFC'
                         : 'rgba(34,197,94,0.1)',
-                      border: `1px solid ${isCurrent ? `${cfg.color}40` : isLocked ? 'rgba(255,255,255,0.1)' : 'rgba(34,197,94,0.3)'}`,
-                      color: isCurrent ? cfg.color : isLocked ? 'rgba(255,255,255,0.3)' : '#22C55E',
+                      border: `1px solid ${isCurrent ? `${cfg.color}40` : isLocked ? '#E2E8F0' : 'rgba(34,197,94,0.3)'}`,
+                      color: isCurrent ? cfg.color : isLocked ? '#94A3B8' : '#22C55E',
                       fontWeight: 600,
                     }}
                   >

@@ -24,7 +24,7 @@ export default function LegacyNav() {
         padding: '14px 24px',
         borderBottom: '1px solid rgba(245,197,24,0.08)',
         flexWrap: 'wrap',
-        background: 'rgba(0,0,0,0.4)',
+        background: '#64748B',
         backdropFilter: 'blur(12px)',
         position: 'sticky',
         top: 0,
@@ -60,8 +60,8 @@ export default function LegacyNav() {
               fontWeight: isActive ? 600 : 400,
               textDecoration: 'none',
               background: isActive ? 'rgba(245,197,24,0.12)' : 'transparent',
-              border: `1px solid ${isActive ? 'rgba(245,197,24,0.4)' : 'rgba(255,255,255,0.08)'}`,
-              color: isActive ? '#F5C518' : 'rgba(255,255,255,0.5)',
+              border: `1px solid ${isActive ? 'rgba(245,197,24,0.4)' : '#E2E8F0'}`,
+              color: isActive ? '#3B5BFA' : '#64748B',
               transition: 'all 0.2s',
             }}
           >

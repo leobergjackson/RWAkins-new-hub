@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import { fetchWallets, suggestRoute, sendPayment } from '@/lib/palmflow-api'
 import type { PFWallet, PFSwapRoute } from '@/lib/palmflow-api'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -124,7 +124,7 @@ export default function SendPage() {
                 <div style={{ position: 'relative' }}>
                   <input type="number" value={form.amount} onChange={upd('amount')} placeholder="0.00" style={{ ...inp, paddingRight: 60 }} required min="0" step="any" />
                   <button type="button" onClick={() => selectedWallet && setForm(p => ({ ...p, amount: String(selectedWallet.balance) }))}
-                    style={{ position:'absolute', right:8, top:'50%', transform:'translateY(-50%)', padding:'3px 8px', borderRadius:6, border:`1px solid ${BDR}`, background:'rgba(0,229,204,0.08)', color:TEAL, fontSize:10, cursor:'pointer' }}>MAX</button>
+                    style={{ position:'absolute', right:8, top:'50%', transform:'translateY(-50%)', padding:'3px 8px', borderRadius:6, border:`1px solid ${BDR}`, background:'rgba(255,255,255,0.08)', color:TEAL, fontSize:10, cursor:'pointer' }}>MAX</button>
                 </div>
                 {form.amount && <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 4, fontFamily: MONO }}>≈ ${usdEquiv} USD</div>}
               </Field>
@@ -153,7 +153,7 @@ export default function SendPage() {
 
               <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
                 <button type="submit" disabled={sending || !form.toAddress || !form.amount}
-                  style={{ flex: 2, padding: '12px', borderRadius: 10, border: `1px solid ${TEAL}`, background: sending ? 'rgba(0,229,204,0.05)' : 'rgba(0,229,204,0.12)', color: TEAL, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+                  style={{ flex: 2, padding: '12px', borderRadius: 10, border: `1px solid ${TEAL}`, background: sending ? 'rgba(59,91,250,0.05)' : 'rgba(59,91,250,0.12)', color: TEAL, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
                   {sending ? 'Sending...' : '💸 Send Payment'}
                 </button>
                 <button type="button" onClick={() => setForm({ fromWallet:'', toAddress:'', asset:'USDC', amount:'', network:'Mantle', memo:'' })}

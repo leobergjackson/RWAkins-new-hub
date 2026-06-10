@@ -8,7 +8,7 @@ import { fetchTransactions, fetchTaxSummary } from '@/lib/palmflow-api'
 import type { PFTaxSummary, PFTaxLot } from '@/lib/palmflow-api'
 import { computeTaxLots } from '@/lib/portfolio/tracker'
 
-const TEAL  = '#00E5CC'
+const TEAL  = '#3B5BFA'
 const BG    = '#ffffff'
 const CARD  = '#ffffff'
 const BDR   = '#E2E8F0'
@@ -132,14 +132,14 @@ export default function TaxPage() {
           {[CURRENT_YEAR, CURRENT_YEAR - 1, CURRENT_YEAR - 2].map(y => (
             <button key={y} onClick={() => setYear(y)} style={{
               padding: '5px 12px', borderRadius: 16, fontSize: 11, fontWeight: year === y ? 700 : 400, cursor: 'pointer',
-              background: year === y ? `rgba(0,229,204,0.12)` : 'transparent',
-              border: `1px solid ${year === y ? 'rgba(0,229,204,0.35)' : BDR}`,
+              background: year === y ? `rgba(59,91,250,0.12)` : 'transparent',
+              border: `1px solid ${year === y ? 'rgba(59,91,250,0.35)' : BDR}`,
               color: year === y ? TEAL : MUTED,
             }}>{y}</button>
           ))}
           <button onClick={exportCSV} disabled={loading} style={{
             padding: '5px 14px', borderRadius: 8, fontSize: 11, fontWeight: 600, cursor: 'pointer',
-            background: `rgba(0,229,204,0.08)`, border: `1px solid rgba(0,229,204,0.25)`, color: TEAL,
+            background: `rgba(255,255,255,0.08)`, border: `1px solid rgba(59,91,250,0.25)`, color: TEAL,
             opacity: loading ? 0.5 : 1,
           }}>⬇ Export CSV</button>
         </div>
@@ -179,8 +179,8 @@ export default function TaxPage() {
             {(['all','short','long'] as const).map(f => (
               <button key={f} onClick={() => setFilter(f)} style={{
                 padding: '4px 10px', borderRadius: 14, fontSize: 10, fontWeight: filter === f ? 700 : 400, cursor: 'pointer',
-                background: filter === f ? `rgba(0,229,204,0.12)` : 'transparent',
-                border: `1px solid ${filter === f ? 'rgba(0,229,204,0.35)' : BDR}`,
+                background: filter === f ? `rgba(59,91,250,0.12)` : 'transparent',
+                border: `1px solid ${filter === f ? 'rgba(59,91,250,0.35)' : BDR}`,
                 color: filter === f ? TEAL : MUTED,
               }}>
                 {f === 'all' ? 'All' : f === 'short' ? 'Short-term' : 'Long-term'}

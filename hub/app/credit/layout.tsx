@@ -2,7 +2,7 @@
 import type { Metadata } from 'next'
 import CreditNav from './_components/CreditNav'
 
-const title = 'Credit Passport — Kubryx'
+const title = 'Credit Passport — RWAkins'
 const description = 'AI-powered on-chain credit passport on Mantle blockchain'
 const url = 'https://kubryx.vercel.app/credit'
 
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title,
     description,
     url,
-    siteName: 'Kubryx',
+    siteName: 'RWAkins',
     type: 'website',
     images: [{ url: '/og-default.svg', width: 1200, height: 630 }],
   },
@@ -25,9 +25,9 @@ export default function CreditLayout({ children }: { children: React.ReactNode }
   return (
     <div
       style={{
-        background: '#080808',
+        background: '#ffffff',
         minHeight: '100vh',
-        color: '#fff',
+        color: '#0A0F2E',
         fontFamily: 'var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif',
       }}
     >

@@ -2,7 +2,7 @@
 import type { Metadata } from 'next'
 import LegacyNav from './_components/LegacyNav'
 
-const title = 'Family Vault — Kubryx'
+const title = 'Family Vault — RWAkins'
 const description = 'Encrypted digital Family Vault on Mantle Network — preserve memories for your heirs'
 const url = 'https://kubryx.vercel.app/legacy'
 
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title,
     description,
     url,
-    siteName: 'Kubryx',
+    siteName: 'RWAkins',
     type: 'website',
     images: [{ url: '/og-default.svg', width: 1200, height: 630 }],
   },
@@ -25,9 +25,9 @@ export default function LegacyLayout({ children }: { children: React.ReactNode }
   return (
     <div
       style={{
-        background: '#0d0e11',
+        background: '#ffffff',
         minHeight: '100vh',
-        color: '#fff',
+        color: '#0A0F2E',
         fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
       }}
     >

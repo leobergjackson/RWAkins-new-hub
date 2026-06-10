@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { MARKETPLACE_AGENTS } from '@/lib/palmflow-fallbacks'
 
-const TEAL = '#00E5CC'
+const TEAL = '#3B5BFA'
 const BG = '#ffffff'
 const CARD = '#ffffff'
 const BDR = '#E2E8F0'
@@ -55,7 +55,7 @@ export default function MarketplacePage() {
           <button
             key={c}
             onClick={() => setCategory(c)}
-            style={{ padding: '7px 14px', borderRadius: 20, border: `1px solid ${category === c ? TEAL : BDR}`, background: category === c ? 'rgba(0,229,204,0.1)' : 'transparent', color: category === c ? TEAL : '#64748B', fontSize: 11, cursor: 'pointer' }}
+            style={{ padding: '7px 14px', borderRadius: 20, border: `1px solid ${category === c ? TEAL : BDR}`, background: category === c ? 'rgba(59,91,250,0.1)' : 'transparent', color: category === c ? TEAL : '#64748B', fontSize: 11, cursor: 'pointer' }}
           >
             {c}
           </button>
@@ -86,7 +86,7 @@ export default function MarketplacePage() {
                 <div style={{ fontSize: 14, fontWeight: 700 }}>{a.name}</div>
                 <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>{a.role}</div>
               </div>
-              <span style={{ fontSize: 10, padding: '3px 9px', borderRadius: 20, background: a.price === 'Free' ? 'rgba(34,197,94,0.12)' : 'rgba(0,229,204,0.1)', border: `1px solid ${a.price === 'Free' ? 'rgba(34,197,94,0.3)' : 'rgba(0,229,204,0.25)'}`, color: a.price === 'Free' ? '#22C55E' : TEAL, fontWeight: 700 }}>
+              <span style={{ fontSize: 10, padding: '3px 9px', borderRadius: 20, background: a.price === 'Free' ? 'rgba(34,197,94,0.12)' : 'rgba(59,91,250,0.1)', border: `1px solid ${a.price === 'Free' ? 'rgba(34,197,94,0.3)' : 'rgba(59,91,250,0.25)'}`, color: a.price === 'Free' ? '#22C55E' : TEAL, fontWeight: 700 }}>
                 {a.price}
               </span>
             </div>
@@ -113,7 +113,7 @@ export default function MarketplacePage() {
               <button
                 onClick={() => hire(a.name)}
                 disabled={hiring[a.name]}
-                style={{ marginLeft: 'auto', padding: '7px 16px', borderRadius: 8, border: `1px solid ${TEAL}`, background: hiring[a.name] ? 'rgba(0,229,204,0.05)' : 'rgba(0,229,204,0.1)', color: TEAL, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
+                style={{ marginLeft: 'auto', padding: '7px 16px', borderRadius: 8, border: `1px solid ${TEAL}`, background: hiring[a.name] ? 'rgba(59,91,250,0.05)' : 'rgba(59,91,250,0.1)', color: TEAL, fontSize: 11, fontWeight: 700, cursor: 'pointer' }}
               >
                 {hiring[a.name] ? 'Deploying...' : 'Hire Agent'}
               </button>

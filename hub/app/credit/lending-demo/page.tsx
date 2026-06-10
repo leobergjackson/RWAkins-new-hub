@@ -21,15 +21,15 @@ import { ConnectButton } from '../../../components/wallet/ConnectButton'
 
 // ─── Style helpers ────────────────────────────────────────────
 const card: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.04)',
-  border: '1px solid rgba(255,255,255,0.08)',
+  background: '#F8FAFC',
+  border: '1px solid #E2E8F0',
   borderRadius: 14,
   padding: '20px 22px',
 }
 
 const btnPrimary: React.CSSProperties = {
   background: 'linear-gradient(135deg, #8B5CF6, #3B5BFA)',
-  color: '#fff',
+  color: '#0A0F2E',
   border: 'none',
   borderRadius: 8,
   padding: '10px 18px',
@@ -44,7 +44,7 @@ const btnPrimary: React.CSSProperties = {
 function StatPill({ label, value, color = '#fff' }: { label: string; value: string; color?: string }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: '0.07em', margin: 0 }}>
+      <p style={{ fontSize: 10, color: '#94A3B8', fontWeight: 700, letterSpacing: '0.07em', margin: 0 }}>
         {label}
       </p>
       <p style={{ fontSize: 16, fontWeight: 700, color, margin: 0 }}>{value}</p>
@@ -57,7 +57,7 @@ function OfferCard({ offer, index, score }: { offer: NcLoanOffer; index: number;
   const [accepted, setAccepted] = useState(false)
 
   const labels = ['Recommended for your risk profile', 'Best value', 'Available based on your score']
-  const accentColors = ['#8B5CF6', '#22C55E', '#F5C518']
+  const accentColors = ['#8B5CF6', '#22C55E', '#3B5BFA']
   const accent = accentColors[index % accentColors.length]
 
   async function accept() {
@@ -112,10 +112,10 @@ function OfferCard({ offer, index, score }: { offer: NcLoanOffer; index: number;
 
       {/* Amount */}
       <div>
-        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', margin: '0 0 4px', fontWeight: 700, letterSpacing: '0.07em' }}>
+        <p style={{ fontSize: 10, color: '#94A3B8', margin: '0 0 4px', fontWeight: 700, letterSpacing: '0.07em' }}>
           LOAN AMOUNT
         </p>
-        <p style={{ fontSize: 32, fontWeight: 800, color: '#fff', margin: 0 }}>
+        <p style={{ fontSize: 32, fontWeight: 800, color: '#0A0F2E', margin: 0 }}>
           ${(offer.loanAmount ?? 0).toLocaleString()}
         </p>
       </div>
@@ -123,13 +123,13 @@ function OfferCard({ offer, index, score }: { offer: NcLoanOffer; index: number;
       {/* Stats grid */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
         <StatPill label="INTEREST RATE" value={`${offer.interestRate}%`} color="#60A5FA" />
-        <StatPill label="DURATION" value={`${offer.duration} months`} color="rgba(255,255,255,0.7)" />
+        <StatPill label="DURATION" value={`${offer.duration} months`} color="#334155" />
         <StatPill
           label="COLLATERAL"
           value={`$${(offer.collateralRequired ?? 0).toLocaleString()}`}
-          color="rgba(255,255,255,0.6)"
+          color="#475569"
         />
-        <StatPill label="LTV RATIO" value={`${offer.ltv}%`} color="rgba(255,255,255,0.6)" />
+        <StatPill label="LTV RATIO" value={`${offer.ltv}%`} color="#475569" />
       </div>
 
       {/* Accept button */}
@@ -215,7 +215,7 @@ export default function LendingDemoPage() {
           DEFI LENDING
         </p>
         <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, lineHeight: 1.2 }}>DeFi Lending Demo</h1>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 4 }}>
+        <p style={{ fontSize: 13, color: '#64748B', marginTop: 4 }}>
           See how your credit score affects borrowing terms
         </p>
       </header>
@@ -225,7 +225,7 @@ export default function LendingDemoPage() {
         <div style={{ ...card, textAlign: 'center', padding: '40px 24px', marginBottom: 20 }}>
           <div style={{ fontSize: 40, marginBottom: 12 }}>💳</div>
           <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 6 }}>MetaMask Required</p>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 20 }}>
+          <p style={{ fontSize: 13, color: '#64748B', marginBottom: 20 }}>
             Install MetaMask to see personalized lending terms.
           </p>
           <a href={WALLET_INSTALL_LINKS.metamask} target="_blank" rel="noopener noreferrer"
@@ -255,7 +255,7 @@ export default function LendingDemoPage() {
             💳
           </div>
           <p style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>Generate Credit Score First</p>
-          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', marginBottom: 24, maxWidth: 400, margin: '0 auto 24px' }}>
+          <p style={{ fontSize: 14, color: '#64748B', marginBottom: 24, maxWidth: 400, margin: '0 auto 24px' }}>
             Generate your credit score to see personalized lending terms tailored to your on-chain profile.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -265,8 +265,8 @@ export default function LendingDemoPage() {
               style={{
                 ...btnPrimary,
                 background: 'transparent',
-                border: '1px solid rgba(255,255,255,0.15)',
-                color: 'rgba(255,255,255,0.6)',
+                border: '1px solid #CBD5E1',
+                color: '#475569',
                 textDecoration: 'none',
                 display: 'inline-flex',
               }}
@@ -284,12 +284,12 @@ export default function LendingDemoPage() {
           <div
             style={{ ...card, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, padding: '12px 18px', marginBottom: 20 }}
           >
-            <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>
+            <span style={{ fontFamily: 'monospace', fontSize: 13, color: '#334155' }}>
               {truncateAddress(wallet)}
             </span>
             <button
               onClick={disconnect}
-              style={{ background: 'transparent', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 7, padding: '6px 14px', fontSize: 12, cursor: 'pointer' }}
+              style={{ background: 'transparent', color: '#64748B', border: '1px solid #E2E8F0', borderRadius: 7, padding: '6px 14px', fontSize: 12, cursor: 'pointer' }}
             >
               Disconnect
             </button>
@@ -300,7 +300,7 @@ export default function LendingDemoPage() {
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  style={{ ...card, height: 340, background: 'rgba(255,255,255,0.02)', animation: 'pulse 2s infinite' }}
+                  style={{ ...card, height: 340, background: '#F8FAFC', animation: 'pulse 2s infinite' }}
                 />
               ))}
             </div>
@@ -318,8 +318,8 @@ export default function LendingDemoPage() {
                   flexWrap: 'wrap',
                 }}
               >
-                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>Your credit score:</p>
-                <p style={{ fontSize: 22, fontWeight: 800, color: '#fff', margin: 0 }}>{score}</p>
+                <p style={{ fontSize: 13, color: '#64748B', margin: 0 }}>Your credit score:</p>
+                <p style={{ fontSize: 22, fontWeight: 800, color: '#0A0F2E', margin: 0 }}>{score}</p>
                 <div
                   style={{
                     display: 'inline-flex',
@@ -336,7 +336,7 @@ export default function LendingDemoPage() {
                 </div>
               </div>
 
-              <p style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.4)', marginBottom: 14 }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: '#64748B', marginBottom: 14 }}>
                 YOUR PERSONALIZED LOAN OFFERS
               </p>
 
@@ -355,7 +355,7 @@ export default function LendingDemoPage() {
                   padding: '14px 18px',
                 }}
               >
-                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', margin: 0, lineHeight: 1.6 }}>
+                <p style={{ fontSize: 13, color: '#475569', margin: 0, lineHeight: 1.6 }}>
                   💡 Higher credit score = better rates and lower collateral requirements.
                   Your current score ({score}) qualifies for all three offers. Stake NCRD to boost your score and unlock better terms.
                 </p>
