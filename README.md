@@ -141,7 +141,7 @@ RWAkins/
 
 | Contract | Address | Explorer |
 |----------|---------|----------|
-| KubryxRWAVault | `<VAULT_ADDRESS>` | [View](https://sepolia.mantlescan.xyz/address/<VAULT_ADDRESS>) |
+| RWAVault | `<VAULT_ADDRESS>` | [View](https://sepolia.mantlescan.xyz/address/<VAULT_ADDRESS>) |
 | LendingSettlement | `<SETTLEMENT_ADDRESS>` | [View](https://sepolia.mantlescan.xyz/address/<SETTLEMENT_ADDRESS>) |
 | AgentIdentityRegistry (ERC-8004) | `<REGISTRY_ADDRESS>` | [View](https://sepolia.mantlescan.xyz/address/<REGISTRY_ADDRESS>) |
 | CreditPassportNFT | `<PASSPORT_ADDRESS>` | [View](https://sepolia.mantlescan.xyz/address/<PASSPORT_ADDRESS>) |
