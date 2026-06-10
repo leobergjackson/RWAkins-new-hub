@@ -1,0 +1,128 @@
+Phase 0: Environment Setup 
+Before touching any product code, get all your tooling installed and verified.
+Mantle Testnet Wallet
+Add Mantle Sepolia Testnet to MetaMask (Chain ID: 5003, RPC: https://rpc.sepolia.mantle.xyz). Get testnet MNT from the Mantle faucet. Confirm you can view transactions on the Mantle Sepolia Explorer. This is non-negotiable — the submission requires a live Mantle contract address.
+OpenClaw (RealClaw Base)
+OpenClaw is the agent framework you'll extend. Run openclaw onboard in your terminal — it guides you through setting up the gateway, workspace, channels, and skills. It works on macOS, Linux, and Windows. This becomes your "CFO logic layer" backbone. GitHub
+Byreal Agent Skills CLI
+Install the byreal-cli, run byreal-cli setup to configure your wallet, and verify you can run commands like byreal-cli pools list --sort-field apr24h and byreal-cli swap execute ... --dry-run before writing any agent logic. The dry-run flag is your safety net during development. GitHub
+Frontend Scaffold
+Spin up a Next.js project with Tailwind. Install Wagmi + RainbowKit for wallet connection. Install the Vercel AI SDK for the chat interface. Don't style anything yet — functionality first.
+
+Phase 1: The Agent Brain 
+This is the most critical piece. You're building the "intent parsing → decision → action" pipeline.
+Step 1 — Intent Parser
+When a user types "Keep my savings beating inflation but rotate 40% into ETH yield if markets look bullish," that plain text needs to become a structured object your agent can act on. Set up a backend API route (Next.js API or a lightweight Python FastAPI service) that takes the user's text and calls an LLM (GPT-4o-mini is fastest and cheapest) with a strict system prompt. The output should be a JSON schema like:
+{
+  risk_tolerance: "medium",
+  max_crypto_allocation: 40,
+  default_instrument: "USDY",
+  trigger: { condition: "bullish_market", rotate_to: "mETH", pct: 40 },
+  hedge_trigger: { condition: "high_volatility", rebalance_to: "USDY" }
+}
+Store this "Wealth Rules" object in your database (a simple Postgres or even a JSON file works for hackathon scope) tied to the user's wallet address.
+Step 2 — Market Monitor
+Build a background polling loop (a simple cron job or a Node.js setInterval) that runs every few minutes and checks:
+
+mETH price volatility (fetch from a public price API like CoinGecko or the Mantle DEX pool directly)
+USDY yield rate (from Ondo's on-chain contract or their public API)
+A simple "bullish/bearish" signal — you can mock this with ETH 24h price change % for the hackathon
+
+Step 3 — Risk Evaluator
+This is the agent's reasoning step. Feed the current market snapshot + the user's stored Wealth Rules JSON into your LLM. Ask it to return a decision object:
+{
+  action: "rebalance",
+  from: "mETH",
+  to: "USDY",
+  percentage: 20,
+  reason: "Volatility index exceeded threshold"
+}
+Keep this prompt tightly constrained so the LLM only outputs valid JSON — no prose.
+
+Phase 2: On-Chain Execution 
+This is where the Byreal Skills CLI does the heavy lifting.
+Connecting Agent Decisions to Byreal
+When the Risk Evaluator returns a rebalance action, your backend needs to call the Byreal CLI programmatically. You can do this via Node.js child_process.exec() or Python subprocess, wrapping the CLI commands in your server logic.
+The flow is: Decision JSON → build the byreal-cli swap execute command with the right input/output mints and amount → execute on Mantle Testnet.
+USDY and mETH Contract Interactions
+Both USDY (Ondo's tokenized US Treasuries) and mETH (Mantle Staked ETH) are standard ERC-20 tokens on Mantle. You'll interact with them using ethers.js or viem on the frontend for balance reads, and via the Byreal CLI for swaps. Find their official contract addresses in Mantle's documentation or the Mantle block explorer.
+Transaction Logging
+Every swap the agent executes must be logged — this is both a hackathon requirement (on-chain proof of deployment) and a core product feature. Save the transaction hash + a human-readable reason ("De-risked 20% to USDY due to volatility") to your database. This feeds the frontend narrative feed.
+
+Phase 3: The Frontend Dashboard 
+With the agent working, build the UI around it. You need three screens:
+Screen 1 — Onboarding / Intent Setup
+A clean chat interface where the user types their financial mandate in plain English. Show a confirmation card when the Wealth Rules are parsed and saved ("Your CFO is configured: Medium risk, max 40% in ETH yield").
+Screen 2 — Portfolio Dashboard
+Show current allocation split (% USDY vs % mETH), current portfolio value, yield being earned, and a simple allocation chart (Recharts or Chart.js works fine). Pull this data by reading the user's token balances from the Mantle chain.
+Screen 3 — Agent Activity Feed
+A chronological log of every decision the agent made with its reasoning. Each entry should show: timestamp, action taken, assets moved, tx hash (linked to Mantle explorer), and the plain-English reason. This is your most compelling demo moment — it shows the AI actually working.
+
+
+
+User journey - 
+Step 1 — User onboarding
+Connect wallet + set wealth rules
+User types: "Keep savings above inflation. Rotate 40% into mETH if market looks bullish."
+Tools: RainbowKit / Wagmi (wallet) · Vercel AI SDK (chat UI) · Next.js frontend
+Step 2 — Intent parsing (AI)
+LLM converts plain English → structured rules
+Output: { risk: "medium", max_crypto: 40%, trigger: "bullish → rotate to mETH" }
+Tool: GPT-4o-mini 
+Step 3 — Market monitoring (background loop)
+Agent continuously watches live data
+Watches: mETH price volatility · USDY yield rate · ETH 24h % change
+Tools: OpenClaw agent loop · CoinGecko / Mantle RPC calls
+Runs every few minutes as a background cron job
+Step 4 — Risk evaluation (AI decision)
+OpenClaw agent checks: are user rules being broken?
+Feeds: current market snapshot + stored wealth rules → LLM
+Output: { action: "rebalance", from: "mETH", to: "USDY", amount: 20%, reason: "high volatility" }
+Tools: OpenClaw (RealClaw) agent framework · GPT-4o-mini
+Step 5 — On-chain execution (the key moment)
+Byreal CLI executes the swap on Mantle
+Agent calls: byreal-cli swap execute (mETH → USDY) on Mantle Testnet
+Tools: Byreal Agent Skills CLI · Mantle Testnet RPC · ERC-20 contracts
+Result: real transaction hash logged on Mantle block explorer
+Step 6 — User sees the result
+Dashboard updates with narrative + portfolio change
+"De-risked 20% into treasury bonds due to high volatility" · tx hash shown
+Tools: Next.js dashboard · Recharts (charts) · Mantle RPC (live balances)
+
+testings of this project - Smart contract interactions verified on Mantle Sepolia Explorer (this qualifies you for the 20-project deployment side award worth $1K)
+At least one real end-to-end swap executed on testnet with a visible tx hash
+
+
+Layer 1: Frontend
+Next.js + Tailwind
+RainbowKit / Wagmi
+Vercel AI SDK
+Recharts
+What it does
+Shows portfolio + chat UI
+Connects user wallet
+Streams AI responses
+Layer 2: Agent brain
+OpenClaw (RealClaw)
+GPT-4o-mini LLM
+Byreal Skills CLI
+Node.js / Python backend
+What it does
+Parses user intent
+Monitors market data
+Makes rebalance decisions
+Layer 3: Blockchain
+Mantle Testnet
+USDY contract (Ondo)
+mETH contract (Mantle)
+Mantle block explorer
+What it does
+Settles swaps on-chain
+Holds real token balances
+Proves every action publicly
+User sees + interacts
+AI thinks + decides
+Blockchain acts + proves
+The key insight
+Most DeFi apps require users to manually decide when to rebalance.
+Your project removes that burden entirely — the agent does it autonomously.
