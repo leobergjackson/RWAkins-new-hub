@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CoverFi — Issuer Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='8,8 16,8 20,14 16,20 8,20 4,14' fill='none' stroke='%23333' stroke-width='1.5'/><polygon points='16,8 24,8 28,14 24,20 16,20 12,14' fill='none' stroke='%23333' stroke-width='1.5'/><polygon points='16,5 22,14 16,23 10,14' fill='%23F0B90B'/><circle cx='16' cy='13' r='1.5' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+/* ============================================================
+   CoverFi Issuer Dashboard — Claymorphism Design
+   ============================================================ */
+
+:root {
+  --bg-primary: #E3F2FD;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f5f6f8;
+  --text-primary: #2D3436;
+  --text-secondary: #5C676B;
+  --text-muted: #5f6b70;
+  --border-color: rgba(0,0,0,0.08);
+  --shadow-clay: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-clay-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --shadow-clay-sm: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-clay-inset: inset 2px 2px 5px rgba(0,0,0,0.15), inset -2px -2px 5px rgba(255,255,255,0.02);
+  --nav-bg: rgba(255,255,255,0.8);
+  --form-bg: #f5f5f5;
+  --form-border: rgba(0,0,0,0.1);
+  --gold: #F0B90B;
+  --gold-light: #FFD443;
+  --gold-dim: rgba(240,185,11,0.12);
+  --accent-blue: #2979FF;
+  --accent-blue-light: #82B1FF;
+  --accent-blue-dark: #1565C0;
+  --accent-blue-dim: rgba(41,121,255,0.12);
+  --accent-coral: #FF6B6B;
+  --accent-purple: #6C5CE7;
+  --color-pool: #3B8BFF;
+  --color-coverage: #E8760A;
+  --color-verify: #6C5CE7;
+  --color-payout: #00B894;
+  --color-success: #00B894;
+  --color-success-dim: rgba(0,184,148,0.12);
+  --color-danger: #EF4444;
+  --color-danger-dim: rgba(239,68,68,0.12);
+  --color-warning: #F0B90B;
+  --color-warning-dim: rgba(240,185,11,0.12);
+  --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 16px;
+  --radius-card: var(--radius-xl);
+  --radius-pill: 999px;
+  --spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.39, 0.575, 0.565, 1);
+  --motion: 1;
+  --nav-height: 68px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion: 0; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+::selection { background: rgba(240,185,11,0.25); color: #2D3436; }
+
+body {
+  font-family: var(--font-main); font-size: 0.875rem; line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; position: relative;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(240,185,11,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(240,185,11,0.5); }
+* { scrollbar-width: thin; scrollbar-color: rgba(240,185,11,0.3) transparent; }
+
+a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+a:hover { color: #e0a800; }
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--text-primary); }
+code, pre { font-family: var(--font-mono); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- BACKGROUND BLOBS ---------- */
+.bg-blobs { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; display: none; }
+.bg-blob { position: absolute; opacity: 0.08; }
+.bg-blob:nth-child(1) { top: -5%; right: -5%; animation: blob-float-1 18s ease-in-out infinite; }
+.bg-blob:nth-child(2) { bottom: -10%; left: -5%; animation: blob-float-2 22s ease-in-out infinite; }
+.bg-blob:nth-child(3) { top: 40%; right: 10%; animation: blob-float-1 25s ease-in-out infinite reverse; }
+
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
+}
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 20px) scale(0.97); }
+  66% { transform: translate(15px, -25px) scale(1.03); }
+}
+
+/* ---------- NAV ---------- */
+.dash-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-height); background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  box-shadow: none;
+  display: flex; align-items: center; padding: 0 1.5rem;
+}
+.dash-nav-inner {
+  max-width: 1600px; width: 100%; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  position: relative;
+}
+.nav-logo { display: flex; align-items: center; gap: 0.625rem; text-decoration: none; --logo-diamond: var(--accent-blue); }
+.nav-logo-text { font-size: 1.25rem; font-weight: 900; color: var(--text-primary); letter-spacing: -0.03em; }
+.nav-logo .accent { color: var(--accent-blue); }
+
+.dash-nav-links { display: flex; align-items: center; justify-content: center; gap: 0.25rem; }
+.dash-nav-link {
+  padding: 0.4rem 0.75rem; border: none; background: none; border-radius: 0;
+  font-size: 0.8125rem; font-weight: 600; color: #636E72;
+  text-decoration: none; transition: color 0.2s;
+}
+.dash-nav-link:hover { color: #F0B90B; }
+.dash-nav-link.active { color: #F0B90B; }
+
+.nav-actions { display: flex; align-items: center; gap: 0.75rem; justify-content: flex-end; }
+.badge-testnet {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.25rem 0.6rem; border-radius: var(--radius-pill);
+  font-size: 0.625rem; font-weight: 600; letter-spacing: 0.03em; white-space: nowrap;
+  background: rgba(240,185,11,0.1); color: #8a6800;
+  border: 1px solid rgba(240,185,11,0.2);
+}
+.badge-testnet .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse-gold 1.5s ease-in-out infinite; }
+@keyframes pulse-gold {
+  0%,100% { box-shadow: 0 0 4px rgba(240,185,11,0.4); }
+  50% { box-shadow: 0 0 16px rgba(240,185,11,0.9); }
+}
+
+.btn-connect {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1.25rem; border-radius: var(--radius-pill); border: none;
+  background: linear-gradient(135deg, #2979FF 0%, #82B1FF 100%);
+  color: #ffffff; font-family: var(--font-main); font-size: 0.8125rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s var(--spring);
+  box-shadow: 4px 4px 12px rgba(41,121,255,0.3), -2px -2px 8px rgba(255,255,255,0.6);
+}
+.btn-connect:hover { transform: scale(1.04) translateY(-1px); box-shadow: 6px 6px 18px rgba(41,121,255,0.4), -3px -3px 10px rgba(255,255,255,0.7); }
+.btn-connect.connected {
+  background: var(--color-success-dim); color: var(--color-success);
+  box-shadow: var(--shadow-clay-sm); border: 1px solid rgba(0,184,148,0.2);
+}
+.btn-connect.connected:hover { background: rgba(0,184,148,0.18); }
+
+/* ---------- THEME TOGGLE ---------- */
+.theme-toggle {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);
+  background: transparent; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; position: relative; transition: all 0.3s; color: #636E72;
+}
+.theme-toggle:hover { border-color: #F0B90B; color: #F0B90B; }
+.theme-toggle .icon-sun, .theme-toggle .icon-moon { position: absolute; transition: opacity 0.3s, transform 0.3s; }
+.icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+.icon-moon { opacity: 1; transform: scale(1); }
+[data-theme="dark"] .icon-sun { opacity: 1; transform: scale(1); }
+[data-theme="dark"] .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+[data-theme="dark"] .theme-toggle { border-color: rgba(255,255,255,0.15); color: #B2BEC3; }
+[data-theme="dark"] .theme-toggle:hover { border-color: #F0B90B; color: #F0B90B; }
+
+/* ---------- MAIN LAYOUT ---------- */
+.dash-main {
+  padding-top: var(--nav-height);
+  min-height: 100vh; position: relative; z-index: 1;
+}
+.dash-container {
+  display: grid; gap: 1rem; max-width: 1200px;
+  margin: 0 auto; padding: 1.25rem 1.5rem;
+}
+
+/* ---------- PAGE HEADER ---------- */
+.page-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.5rem 0;
+}
+.page-header h1 { font-size: 1.75rem; }
+.page-header .issuer-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.35rem 1rem; border-radius: var(--radius-pill);
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+/* ---------- ACCESS GATE ---------- */
+.access-gate {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 40vh; text-align: center; gap: 1.5rem;
+}
+.access-gate-icon {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(240,185,11,0.1); display: flex; align-items: center; justify-content: center;
+}
+.access-gate h2 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+.access-gate p { color: var(--text-secondary); max-width: 400px; line-height: 1.6; }
+
+/* ---------- GRID LAYOUTS ---------- */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: stretch; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; align-items: stretch; }
+.grid-2-1 { display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.5rem; align-items: stretch; }
+
+/* ---------- CARD (Claymorphic) ---------- */
+.dash-card {
+  background: #ffffff; color: #2D3436; border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12); transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  overflow: hidden; position: relative;
+  display: flex; flex-direction: column;
+}
+.dash-card:hover {
+  transform: translateY(-2px); box-shadow: var(--shadow-clay-hover);
+}
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.875rem 1.25rem; border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.card-header h3 {
+  font-size: 1.0625rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;
+  letter-spacing: -0.03em; color: #2D3436; font-family: var(--font-heading);
+}
+.card-header .card-icon {
+  width: 30px; height: 30px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.card-body { padding: 1rem 1.25rem; flex: 1; }
+
+/* ---------- STATUS BADGE ---------- */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.25rem 0.625rem; border-radius: var(--radius-pill);
+  font-size: 0.6875rem; font-weight: 600;
+}
+.status-observation { background: #E3F2FD; color: #1565C0; }
+.status-active { background: #E8F5E9; color: #2E7D32; }
+.status-monitoring { background: #FFF8E1; color: #8B4500; }
+.status-defaulted { background: #FFEBEE; color: #C62828; }
+.status-wind-down { background: rgba(108,92,231,0.1); color: #3C2A8C; }
+.status-closed { background: rgba(0,0,0,0.06); color: var(--text-muted); }
+
+/* ---------- ISSUER STATUS CARD ---------- */
+.issuer-info-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+.info-item { display: flex; flex-direction: column; gap: 0.2rem; }
+.info-label {
+  font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.06em; font-weight: 600;
+}
+.info-value {
+  font-size: 0.9375rem; font-weight: 700; color: var(--text-primary);
+  font-family: var(--font-mono); word-break: break-all;
+}
+.info-value.small { font-size: 0.8125rem; }
+
+/* Status timeline */
+.status-timeline {
+  display: flex; align-items: center; gap: 0; margin-top: 1rem;
+  padding: 1rem 0 0; border-top: 1px solid rgba(0,0,0,0.05);
+  position: relative;
+}
+.timeline-step {
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+  flex: 1; position: relative;
+}
+.timeline-step::after {
+  content: ''; position: absolute; top: 12px; left: calc(50% + 14px); right: calc(-50% + 14px);
+  height: 3px; background: rgba(0,0,0,0.1); z-index: 0; border-radius: 2px;
+}
+.timeline-step:last-child::after { display: none; }
+.timeline-step.completed::after {
+  background: var(--color-success);
+}
+.timeline-step.current::after {
+  background: rgba(0,0,0,0.1);
+}
+.timeline-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: transparent; border: 2.5px solid rgba(0,0,0,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.625rem; font-weight: 700; color: var(--text-muted);
+  z-index: 1; transition: all 0.3s;
+}
+.timeline-step.completed .timeline-dot {
+  background: var(--color-success); border-color: var(--color-success); color: #fff;
+}
+.timeline-step.current .timeline-dot {
+  background: var(--accent-blue); border-color: var(--accent-blue); color: #fff;
+  box-shadow: 0 0 0 4px rgba(41,121,255,0.2);
+}
+.timeline-step.future .timeline-dot {
+  background: transparent; border-color: rgba(0,0,0,0.12); color: rgba(0,0,0,0.25);
+}
+.timeline-label {
+  font-size: 0.5625rem; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.04em; text-align: center;
+  line-height: 1.2; max-width: 60px;
+}
+.timeline-step.current .timeline-label { color: var(--accent-blue); font-weight: 700; }
+.timeline-step.completed .timeline-label { color: var(--color-success); }
+
+/* ---------- IRS GAUGE ---------- */
+.irs-gauge-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  padding: 1rem 0;
+}
+.irs-gauge { position: relative; width: 200px; height: 110px; }
+.irs-gauge svg { width: 200px; height: 110px; }
+.irs-gauge-bg { fill: none; stroke: rgba(0,0,0,0.06); stroke-width: 14; stroke-linecap: round; }
+.irs-gauge-fill { fill: none; stroke-width: 14; stroke-linecap: round; transition: stroke-dashoffset 1s ease, stroke 0.5s; }
+.irs-gauge-value {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  font-size: 3rem; font-weight: 900; font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em; color: var(--accent-blue);
+}
+.irs-gauge-label {
+  font-size: 0.6875rem; color: var(--text-muted); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.irs-premium-rate {
+  margin-top: 0.5rem; padding: 0.5rem 1rem; border-radius: var(--radius-sm);
+  background: var(--accent-blue-dim); text-align: center;
+  font-size: 0.8125rem; font-weight: 700; color: var(--accent-blue-dark);
+}
+
+/* Dimension bars */
+.irs-dimensions { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+.irs-dim-row { display: flex; align-items: center; gap: 0.75rem; }
+.irs-dim-label { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); width: 90px; flex-shrink: 0; }
+.irs-dim-bar-wrap {
+  flex: 1; height: 10px; border-radius: 5px; background: rgba(0,0,0,0.06);
+  overflow: hidden; position: relative;
+}
+.irs-dim-bar {
+  height: 100%; border-radius: 5px; transition: width 0.8s var(--spring);
+  min-width: 4px; border-radius: 999px;
+}
+.irs-dim-bar-wrap { border-radius: 999px; }
+.irs-dim-value { font-size: 0.75rem; font-weight: 700; font-family: var(--font-mono); width: 40px; text-align: right; }
+
+.dim-nav { background: linear-gradient(135deg, #3B8BFF, #5DA3FF); }
+.dim-attestation { background: linear-gradient(135deg, #6C5CE7, #A29BFE); }
+.dim-repayment { background: linear-gradient(135deg, #00B894, #55EFC4); }
+.dim-collateral { background: linear-gradient(135deg, #E8760A, #FF9533); }
+.dim-activity { background: linear-gradient(135deg, #F0B90B, #FFD443); }
+
+/* ---------- BOND STATUS ---------- */
+.bond-big-value {
+  font-size: 2rem; font-weight: 900; font-family: var(--font-heading);
+  color: var(--text-primary); letter-spacing: -0.03em; margin-bottom: 0.5rem;
+}
+.bond-health {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.3rem 0.8rem; border-radius: var(--radius-pill);
+  font-size: 0.75rem; font-weight: 700;
+}
+.bond-health.sufficient { background: var(--color-success-dim); color: var(--color-success); }
+.bond-health.insufficient { background: var(--color-danger-dim); color: var(--color-danger); }
+.bond-stats { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+.bond-stat-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 0.5rem; border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.bond-stat-row:last-child { border-bottom: none; }
+.bond-stat-label { font-size: 0.8125rem; color: var(--text-secondary); }
+.bond-stat-value { font-size: 0.875rem; font-weight: 700; font-family: var(--font-mono); }
+
+/* ---------- ATTESTOR PANEL ---------- */
+.attestor-list { display: flex; flex-direction: column; gap: 1rem; }
+.attestor-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.875rem; border-radius: var(--radius-md);
+  background: var(--form-bg); transition: background 0.2s;
+}
+.attestor-item:hover { background: rgba(240,185,11,0.06); }
+.attestor-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.875rem; flex-shrink: 0;
+}
+.attestor-icon.custodian { background: rgba(59,139,255,0.12); color: var(--color-pool); }
+.attestor-icon.legal { background: rgba(108,92,231,0.12); color: var(--accent-purple); }
+.attestor-icon.auditor { background: rgba(0,184,148,0.12); color: var(--color-success); }
+.attestor-details { flex: 1; min-width: 0; }
+.attestor-role { font-size: 0.8125rem; font-weight: 700; color: var(--text-primary); }
+.attestor-addr {
+  font-size: 0.6875rem; font-family: var(--font-mono); color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.attestor-meta {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 0.15rem;
+}
+.attestor-count { font-size: 0.75rem; font-weight: 600; color: var(--text-primary); }
+.attestor-status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+.attestor-status-dot.active { background: var(--color-success); box-shadow: 0 0 6px rgba(0,184,148,0.5); }
+.attestor-status-dot.pending { background: var(--color-warning); }
+
+/* ---------- PREMIUM PAYMENT ---------- */
+.premium-info { display: flex; flex-direction: column; gap: 0.75rem; }
+.premium-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 0.5rem; border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.premium-row:last-child { border-bottom: none; padding-bottom: 0; }
+.premium-label { font-size: 0.8125rem; color: var(--text-secondary); }
+.premium-value { font-size: 0.875rem; font-weight: 700; font-family: var(--font-mono); color: var(--text-primary); }
+
+.btn-pay-premium {
+  width: 100%; margin-top: 1rem; padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-pill); border: none;
+  background: linear-gradient(135deg, #E8760A, #FF9533);
+  color: #fff; font-family: var(--font-main); font-size: 0.875rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s var(--spring);
+  box-shadow: 4px 4px 12px rgba(232,118,10,0.3);
+}
+.btn-pay-premium:hover { transform: translateY(-2px); box-shadow: 6px 6px 18px rgba(232,118,10,0.4); }
+.btn-pay-premium:disabled {
+  opacity: 0.5; cursor: not-allowed; transform: none !important;
+  box-shadow: var(--shadow-clay-sm) !important;
+}
+
+/* Payment history */
+.payment-history { margin-top: 1rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 0.75rem; }
+.payment-history h4 {
+  font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.06em; font-weight: 600; margin-bottom: 0.5rem;
+}
+.payment-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.4rem 0; font-size: 0.75rem;
+}
+.payment-item-amount { font-weight: 600; font-family: var(--font-mono); color: var(--color-coverage); }
+.payment-item-date { color: var(--text-muted); }
+.payment-empty { font-size: 0.75rem; color: var(--text-muted); text-align: center; padding: 0.5rem 0; }
+
+/* ---------- WIND-DOWN SECTION ---------- */
+.dash-card.wind-down-card {
+  border-left: 4px solid #FF6B6B;
+}
+.wind-down-info {
+  font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.65;
+  margin-bottom: 1rem;
+}
+.wind-down-steps {
+  display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem;
+}
+.wind-down-step {
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  font-size: 0.8125rem; color: var(--text-secondary);
+}
+.wind-down-step-num {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(255,107,107,0.12); color: #FF6B6B;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6875rem; font-weight: 700;
+}
+.btn-wind-down {
+  width: 100%; padding: 0.75rem 1.5rem; border-radius: var(--radius-pill);
+  border: none; background: #FF6B6B;
+  color: #fff; font-family: var(--font-main);
+  font-size: 0.875rem; font-weight: 700; cursor: pointer;
+  transition: all 0.25s var(--spring);
+  box-shadow: 4px 4px 12px rgba(255,107,107,0.3);
+}
+.btn-wind-down:hover { background: #e85d5d; transform: translateY(-2px); box-shadow: 6px 6px 18px rgba(255,107,107,0.4); }
+.btn-wind-down:disabled {
+  opacity: 0.4; cursor: not-allowed; transform: none !important;
+}
+
+/* ---------- COVERAGE STATS ---------- */
+.coverage-stat-big {
+  text-align: center; padding: 1rem 0;
+}
+.coverage-stat-big .big-val {
+  font-size: 2rem; font-weight: 900; font-family: var(--font-heading);
+  color: var(--color-coverage); letter-spacing: -0.03em;
+}
+.coverage-stat-big .big-label {
+  font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.06em; font-weight: 600;
+}
+.coverage-stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;
+  padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.05);
+}
+.cov-stat {
+  text-align: center; padding: 0.75rem; border-radius: var(--radius-md);
+  background: var(--form-bg);
+}
+.cov-stat-val { font-size: 1.25rem; font-weight: 800; font-family: var(--font-mono); color: var(--text-primary); }
+.cov-stat-label { font-size: 0.6875rem; color: var(--text-muted); font-weight: 600; margin-top: 0.15rem; }
+
+/* ---------- CONFIRMATION MODAL ---------- */
+.confirm-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.45); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.25s var(--ease-smooth), visibility 0.25s;
+}
+.confirm-overlay.active { opacity: 1; visibility: visible; }
+.confirm-modal {
+  background: #ffffff; color: #2D3436; border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 2rem 2rem 1.5rem; width: 92%; max-width: 440px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+  transform: translateY(30px) scale(0.96);
+  transition: transform 0.35s var(--spring), opacity 0.25s; opacity: 0;
+}
+.confirm-overlay.active .confirm-modal { transform: translateY(0) scale(1); opacity: 1; }
+.confirm-modal h3 {
+  font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem;
+  margin-bottom: 1rem; color: var(--text-primary); letter-spacing: -0.02em;
+}
+.confirm-body { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.5rem; }
+.confirm-detail-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);
+}
+.confirm-detail-row:last-child { border-bottom: none; }
+.confirm-detail-label { color: var(--text-muted); font-size: 0.8rem; font-weight: 500; }
+.confirm-detail-value { color: var(--text-primary); font-weight: 600; font-family: var(--font-mono); font-size: 0.85rem; }
+.confirm-warning {
+  margin-top: 0.75rem; padding: 0.65rem 0.85rem;
+  background: rgba(41,121,255,0.08); border-radius: var(--radius-sm);
+  font-size: 0.8rem; color: var(--accent-blue-dark); font-weight: 500;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.confirm-warning svg { flex-shrink: 0; }
+.confirm-warning.danger { background: var(--color-danger-dim); color: var(--color-danger); }
+.confirm-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
+.confirm-cancel {
+  padding: 0.6rem 1.4rem; border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-color); background: transparent;
+  color: var(--text-secondary); font-weight: 600; font-size: 0.85rem;
+  cursor: pointer; transition: all 0.2s; font-family: var(--font-main);
+}
+.confirm-cancel:hover { border-color: var(--text-muted); color: var(--text-primary); }
+.confirm-proceed {
+  padding: 0.6rem 1.8rem; border-radius: var(--radius-pill); border: none;
+  background: linear-gradient(135deg, #2979FF 0%, #82B1FF 100%);
+  color: #ffffff; font-weight: 700; font-size: 0.85rem;
+  cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(41,121,255,0.3); font-family: var(--font-main);
+}
+.confirm-proceed:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(41,121,255,0.4); }
+.confirm-proceed.danger {
+  background: linear-gradient(135deg, #EF4444, #F87171);
+  box-shadow: 0 2px 8px rgba(239,68,68,0.3); color: #fff;
+}
+.confirm-proceed.danger:hover { box-shadow: 0 4px 14px rgba(239,68,68,0.4); }
+
+/* ---------- TOAST ---------- */
+.toast-container {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 10000;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.toast {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.25rem; border-radius: var(--radius-md);
+  background: var(--bg-card); box-shadow: var(--shadow-clay);
+  border: 1px solid var(--border-color);
+  font-size: 0.8125rem; font-weight: 500; color: var(--text-primary);
+  animation: toast-in 0.3s var(--spring);
+}
+@keyframes toast-in { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes toast-out { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .grid-2, .grid-2-1, .grid-3 { grid-template-columns: 1fr; }
+  .dash-nav-links { display: none; }
+  .issuer-info-grid { grid-template-columns: 1fr; }
+  .coverage-stats-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .page-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .page-header h1 { font-size: 1.35rem; }
+  .status-timeline { flex-wrap: wrap; gap: 0.5rem; }
+  .timeline-step::after { display: none; }
+}
+
+/* ---------- DARK MODE ---------- */
+[data-theme="dark"] body { background: #0f1118; }
+[data-theme="dark"] .bg-blobs { opacity: 0.3; }
+[data-theme="dark"] .dash-nav { background: rgba(15,17,24,0.95); border-bottom: 1px solid rgba(255,255,255,0.06); }
+[data-theme="dark"] .dash-nav .nav-logo-text { color: #ffffff; }
+[data-theme="dark"] .dash-nav-link { color: rgba(255,255,255,0.7); }
+[data-theme="dark"] .dash-nav-link:hover { color: #F0B90B; }
+[data-theme="dark"] .dash-nav-link.active { color: #F0B90B; }
+[data-theme="dark"] .badge-testnet { background: rgba(240,185,11,0.15); color: #FFD443; border-color: rgba(240,185,11,0.3); }
+
+[data-theme="dark"] .dash-card {
+  background: #1e2329; color: #e8e8e8; border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+[data-theme="dark"] .card-header { border-bottom-color: rgba(255,255,255,0.06); }
+[data-theme="dark"] .card-header h3 { color: #ffffff; }
+
+[data-theme="dark"] .page-header h1 { color: #ffffff; }
+[data-theme="dark"] .access-gate h2 { color: #ffffff; }
+[data-theme="dark"] .access-gate p { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .access-gate-icon { background: rgba(240,185,11,0.15); }
+
+[data-theme="dark"] .info-label { color: rgba(255,255,255,0.4); }
+[data-theme="dark"] .info-value { color: #ffffff; }
+[data-theme="dark"] .status-timeline { border-top-color: rgba(255,255,255,0.06); }
+[data-theme="dark"] .timeline-dot { background: transparent; border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); }
+[data-theme="dark"] .timeline-step::after { background: rgba(255,255,255,0.08); }
+[data-theme="dark"] .timeline-step.current .timeline-dot { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; box-shadow: 0 0 0 4px rgba(41,121,255,0.25); }
+[data-theme="dark"] .timeline-step.completed .timeline-dot { background: var(--color-success); border-color: var(--color-success); color: #fff; }
+[data-theme="dark"] .timeline-step.completed::after { background: var(--color-success); }
+[data-theme="dark"] .timeline-step.future .timeline-dot { background: transparent; border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.45); }
+[data-theme="dark"] .timeline-label { color: rgba(255,255,255,0.55); }
+[data-theme="dark"] .timeline-step.current .timeline-label { color: var(--accent-blue-light); }
+[data-theme="dark"] .timeline-step.completed .timeline-label { color: var(--color-success); }
+
+[data-theme="dark"] .irs-gauge-value { color: var(--accent-blue-light); }
+[data-theme="dark"] .irs-gauge-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .irs-gauge-bg { stroke: rgba(255,255,255,0.06); }
+[data-theme="dark"] .irs-premium-rate { background: rgba(41,121,255,0.12); color: var(--accent-blue-light); }
+[data-theme="dark"] .irs-dim-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .irs-dim-value { color: rgba(255,255,255,0.8); }
+[data-theme="dark"] .irs-dim-bar-wrap { background: rgba(255,255,255,0.04); }
+
+[data-theme="dark"] .bond-big-value { color: #ffffff; }
+[data-theme="dark"] .bond-stat-row { border-bottom-color: rgba(255,255,255,0.04); }
+[data-theme="dark"] .bond-stat-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .bond-stat-value { color: #ffffff; }
+
+[data-theme="dark"] .attestor-item { background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .attestor-item:hover { background: rgba(240,185,11,0.06); }
+[data-theme="dark"] .attestor-role { color: #ffffff; }
+[data-theme="dark"] .attestor-addr { color: rgba(255,255,255,0.55); }
+[data-theme="dark"] .attestor-count { color: rgba(255,255,255,0.8); }
+
+[data-theme="dark"] .premium-row { border-bottom-color: rgba(255,255,255,0.04); }
+[data-theme="dark"] .premium-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .premium-value { color: #ffffff; }
+[data-theme="dark"] .payment-history { border-top-color: rgba(255,255,255,0.06); }
+[data-theme="dark"] .payment-history h4 { color: rgba(255,255,255,0.4); }
+[data-theme="dark"] .payment-item-date { color: rgba(255,255,255,0.55); }
+[data-theme="dark"] .payment-empty { color: rgba(255,255,255,0.55); }
+
+[data-theme="dark"] .wind-down-info { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .wind-down-step { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .wind-down-step-num { background: rgba(108,92,231,0.15); color: #A29BFE; }
+[data-theme="dark"] .btn-wind-down { border-color: #F87171; color: #F87171; }
+[data-theme="dark"] .btn-wind-down:hover { background: rgba(239,68,68,0.1); }
+
+[data-theme="dark"] .coverage-stat-big .big-label { color: rgba(255,255,255,0.4); }
+[data-theme="dark"] .cov-stat { background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .cov-stat-val { color: #ffffff; }
+[data-theme="dark"] .cov-stat-label { color: rgba(255,255,255,0.4); }
+[data-theme="dark"] .coverage-stats-grid { border-top-color: rgba(255,255,255,0.06); }
+
+[data-theme="dark"] .confirm-overlay { background: rgba(0,0,0,0.65); }
+[data-theme="dark"] .confirm-modal {
+  background: #1a1d28; border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 12px 12px 28px rgba(0,0,0,0.4), -6px -6px 18px rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+[data-theme="dark"] .confirm-modal h3 { color: #ffffff; }
+[data-theme="dark"] .confirm-body { color: rgba(255,255,255,0.6); }
+[data-theme="dark"] .confirm-detail-row { border-bottom-color: rgba(255,255,255,0.06); }
+[data-theme="dark"] .confirm-detail-label { color: rgba(255,255,255,0.4); }
+[data-theme="dark"] .confirm-detail-value { color: #ffffff; }
+[data-theme="dark"] .confirm-warning { background: rgba(41,121,255,0.1); color: var(--accent-blue-light); }
+[data-theme="dark"] .confirm-warning.danger { background: rgba(239,68,68,0.1); color: #F87171; }
+[data-theme="dark"] .confirm-cancel { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .confirm-cancel:hover { border-color: rgba(255,255,255,0.2); color: #ffffff; }
+
+/* Status badges dark */
+[data-theme="dark"] .status-observation { background: rgba(0,188,212,0.15); color: #4DD0E1; }
+[data-theme="dark"] .status-active { background: rgba(0,184,148,0.15); color: #55efc4; }
+[data-theme="dark"] .status-monitoring { background: rgba(240,185,11,0.15); color: #FBBF24; }
+[data-theme="dark"] .status-defaulted { background: rgba(239,68,68,0.15); color: #FF6B6B; }
+[data-theme="dark"] .status-wind-down { background: rgba(108,92,231,0.15); color: #A29BFE; }
+[data-theme="dark"] .status-closed { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+
+[data-theme="dark"] .toast { background: #1a1d24; border-color: rgba(255,255,255,0.08); color: #ffffff; }
+[data-theme="dark"] ::-webkit-scrollbar-track { background: #0f1118; }
+
+[data-theme="dark"] .form-bg, [data-theme="dark"] .form-input {
+  background: #1e2329; border-color: rgba(255,255,255,0.08); color: #ffffff;
+}
+
+/* ---------- FORM INPUT ---------- */
+.form-input {
+  width: 100%; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(255,255,255,0.1); background: #f5f5f5;
+  font-family: var(--font-mono); font-size: 0.85rem; color: #2D3436;
+  box-shadow: var(--shadow-clay-inset); transition: all 0.2s;
+  outline: none;
+}
+.form-input:focus { border-color: var(--gold); box-shadow: var(--shadow-clay-inset), 0 0 0 3px rgba(240,185,11,0.12); }
+  </style>
+</head>
+<body>
+
+<!-- Background Blobs -->
+<div class="bg-blobs" aria-hidden="true">
+  <svg class="bg-blob" width="500" height="500" viewBox="0 0 500 500"><path d="M250 50C350 50 450 150 450 250S350 450 250 450S50 350 50 250S150 50 250 50Z" fill="#F0B90B"/></svg>
+  <svg class="bg-blob" width="400" height="400" viewBox="0 0 400 400"><circle cx="200" cy="200" r="180" fill="#6C5CE7"/></svg>
+  <svg class="bg-blob" width="350" height="350" viewBox="0 0 350 350"><path d="M175 30C270 30 320 120 320 175S270 320 175 320S30 270 30 175S80 30 175 30Z" fill="#00B894"/></svg>
+</div>
+
+<!-- SVG Defs -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0B90B"/>
+      <stop offset="100%" stop-color="#FFD443"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav class="dash-nav" aria-label="Main navigation">
+  <div class="dash-nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="CoverFi home">
+      <svg width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <polygon points="10,9 16,9 19,13 16,17 10,17 7,13" fill="none" stroke="var(--logo-hex, #1a1a1a)" stroke-width="2"/>
+        <polygon points="16,9 22,9 25,13 22,17 16,17 13,13" fill="none" stroke="var(--logo-hex, #1a1a1a)" stroke-width="2"/>
+        <polygon points="16,7 20.5,13 16,19 11.5,13" fill="var(--logo-diamond, var(--gold, #F0B90B))"/><circle cx="16" cy="12.5" r="1" fill="white" opacity="0.85"/>
+      </svg>
+      <span class="nav-logo-text">Cover<span class="accent">Fi</span></span>
+    </a>
+
+    <div class="dash-nav-links">
+      <a href="dashboard.html" class="dash-nav-link">Dashboard</a>
+      <a href="issuers.html" class="dash-nav-link">Issuers</a>
+      <a href="pool.html" class="dash-nav-link">Pool</a>
+      <a href="coverage.html" class="dash-nav-link">Coverage</a>
+    </div>
+
+    <div class="nav-actions">
+      <div class="badge-testnet"><span class="dot"></span> HashKey Testnet</div>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="18" aria-hidden="true" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" width="18" aria-hidden="true" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="btn-connect" id="btnConnect" onclick="handleWalletClick()" aria-label="Connect wallet">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="3"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg>
+        Connect Wallet
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main class="dash-main">
+  <div class="dash-container">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>Issuer <span style="color: var(--accent-blue);">Management</span></h1>
+      <span class="issuer-badge status-badge" id="headerStatusBadge" style="display:none;">
+        <span class="dot" id="headerStatusDot"></span>
+        <span id="headerStatusText">--</span>
+      </span>
+    </div>
+
+    <!-- Access Gate (shown when not an issuer) -->
+    <div id="accessGate" class="access-gate">
+      <div class="access-gate-icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F0B90B" stroke-width="2" stroke-linecap="round">
+          <rect x="3" y="11" width="18" height="11" rx="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <div>
+        <h2>Issuer Access Required</h2>
+        <p>This dashboard is for registered issuers only. Connect your wallet to verify your issuer status, or register as an issuer on the main dashboard.</p>
+      </div>
+      <button class="btn-connect" onclick="connectWallet()" style="margin-top:0.5rem;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="3"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg>
+        Connect Wallet
+      </button>
+    </div>
+
+    <!-- Issuer Dashboard Content (hidden until verified) -->
+    <div id="issuerContent" style="display:none;">
+
+      <!-- Row 1: Issuer Status + IRS Score -->
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+
+        <!-- Issuer Status Card -->
+        <div class="dash-card">
+          <div class="card-header">
+            <h3>
+              <span class="card-icon" style="background:rgba(41,121,255,0.12);color:var(--accent-blue);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </span>
+              Issuer Status
+            </h3>
+            <span class="status-badge" id="statusBadge">--</span>
+          </div>
+          <div class="card-body">
+            <div class="issuer-info-grid">
+              <div class="info-item">
+                <span class="info-label">Token Name</span>
+                <span class="info-value" id="tokenName">--</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Symbol</span>
+                <span class="info-value" id="tokenSymbol">--</span>
+              </div>
+              <div class="info-item" style="grid-column:span 2;">
+                <span class="info-label">Contract Address</span>
+                <span class="info-value small" id="tokenAddress">--</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Registration Block</span>
+                <span class="info-value" id="regBlock">--</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Track</span>
+                <span class="info-value" id="trackType">--</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Days Since Registration</span>
+                <span class="info-value" id="daysSinceReg">--</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Observation End Block</span>
+                <span class="info-value" id="obsEndBlock">--</span>
+              </div>
+            </div>
+
+            <!-- Status Timeline -->
+            <div class="status-timeline" id="statusTimeline">
+              <div class="timeline-step" data-status="0">
+                <div class="timeline-dot">1</div>
+                <span class="timeline-label">Observe</span>
+              </div>
+              <div class="timeline-step" data-status="1">
+                <div class="timeline-dot">2</div>
+                <span class="timeline-label">Active</span>
+              </div>
+              <div class="timeline-step" data-status="2">
+                <div class="timeline-dot">3</div>
+                <span class="timeline-label">Monitor</span>
+              </div>
+              <div class="timeline-step" data-status="4">
+                <div class="timeline-dot">4</div>
+                <span class="timeline-label">Wind Down</span>
+              </div>
+              <div class="timeline-step" data-status="5">
+                <div class="timeline-dot">5</div>
+                <span class="timeline-label">Closed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IRS Score Breakdown -->
+        <div class="dash-card">
+          <div class="card-header">
+            <h3>
+              <span class="card-icon" style="background:rgba(108,92,231,0.12);color:var(--accent-purple);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </span>
+              IRS Score
+            </h3>
+            <span class="status-badge" id="premiumBadge" style="background:rgba(232,118,10,0.1);color:var(--color-coverage);">-- bps</span>
+          </div>
+          <div class="card-body">
+            <div class="irs-gauge-wrap">
+              <div class="irs-gauge">
+                <svg viewBox="0 0 200 110">
+                  <path class="irs-gauge-bg" d="M 17,100 A 83,83 0 0,1 183,100" />
+                  <path class="irs-gauge-fill" id="irsGaugeFill" d="M 17,100 A 83,83 0 0,1 183,100" stroke="#2979FF" stroke-dasharray="261" stroke-dashoffset="261" />
+                </svg>
+                <div class="irs-gauge-value" id="irsScoreValue">--</div>
+              </div>
+              <div class="irs-gauge-label">Composite IRS Score (max 1000)</div>
+            </div>
+
+            <div class="irs-premium-rate" id="irsPremiumRate">
+              Premium Rate: -- bps/year
+            </div>
+
+            <div class="irs-dimensions">
+              <div class="irs-dim-row">
+                <span class="irs-dim-label">NAV</span>
+                <div class="irs-dim-bar-wrap"><div class="irs-dim-bar dim-nav" id="dimNavBar" style="width:0%"></div></div>
+                <span class="irs-dim-value" id="dimNavVal">--</span>
+              </div>
+              <div class="irs-dim-row">
+                <span class="irs-dim-label">Attestation</span>
+                <div class="irs-dim-bar-wrap"><div class="irs-dim-bar dim-attestation" id="dimAttBar" style="width:0%"></div></div>
+                <span class="irs-dim-value" id="dimAttVal">--</span>
+              </div>
+              <div class="irs-dim-row">
+                <span class="irs-dim-label">Repayment</span>
+                <div class="irs-dim-bar-wrap"><div class="irs-dim-bar dim-repayment" id="dimRepBar" style="width:0%"></div></div>
+                <span class="irs-dim-value" id="dimRepVal">--</span>
+              </div>
+              <div class="irs-dim-row">
+                <span class="irs-dim-label">Collateral</span>
+                <div class="irs-dim-bar-wrap"><div class="irs-dim-bar dim-collateral" id="dimColBar" style="width:0%"></div></div>
+                <span class="irs-dim-value" id="dimColVal">--</span>
+              </div>
+              <div class="irs-dim-row">
+                <span class="irs-dim-label">Activity</span>
+                <div class="irs-dim-bar-wrap"><div class="irs-dim-bar dim-activity" id="dimActBar" style="width:0%"></div></div>
+                <span class="irs-dim-value" id="dimActVal">--</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Bond Status + Attestor Panel -->
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+
+        <!-- Bond Status -->
+        <div class="dash-card">
+          <div class="card-header">
+            <h3>
+              <span class="card-icon" style="background:rgba(0,184,148,0.12);color:var(--color-success);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </span>
+              Bond Status
+            </h3>
+            <span class="bond-health" id="bondHealthBadge">--</span>
+          </div>
+          <div class="card-body">
+            <div class="bond-big-value" id="bondAmount">-- USDT</div>
+            <div class="bond-stats">
+              <div class="bond-stat-row">
+                <span class="bond-stat-label">Market Cap at Deposit</span>
+                <span class="bond-stat-value" id="bondMarketCap">--</span>
+              </div>
+              <div class="bond-stat-row">
+                <span class="bond-stat-label">Bond-to-Market-Cap Ratio</span>
+                <span class="bond-stat-value" id="bondRatio">--</span>
+              </div>
+              <div class="bond-stat-row">
+                <span class="bond-stat-label">Deposit Block</span>
+                <span class="bond-stat-value" id="bondDepositBlock">--</span>
+              </div>
+              <div class="bond-stat-row">
+                <span class="bond-stat-label">Liquidated</span>
+                <span class="bond-stat-value" id="bondLiquidated">No</span>
+              </div>
+              <div class="bond-stat-row">
+                <span class="bond-stat-label">Released</span>
+                <span class="bond-stat-value" id="bondReleased">No</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attestor Panel -->
+        <div class="dash-card">
+          <div class="card-header">
+            <h3>
+              <span class="card-icon" style="background:rgba(108,92,231,0.12);color:var(--accent-purple);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </span>
+              Attestors
+            </h3>
+            <span class="status-badge" id="attestationCountBadge" style="background:rgba(108,92,231,0.1);color:var(--accent-purple);">
+              <span id="attestCountText">0</span> attestations
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="attestor-list">
+              <!-- Custodian -->
+              <div class="attestor-item">
+                <div class="attestor-icon custodian">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <div class="attestor-details">
+                  <div class="attestor-role">Custodian</div>
+                  <div class="attestor-addr" id="custodianAddr">Not set</div>
+                </div>
+                <div class="attestor-meta">
+                  <div class="attestor-status-dot" id="custodianDot"></div>
+                </div>
+              </div>
+              <!-- Legal Rep -->
+              <div class="attestor-item">
+                <div class="attestor-icon legal">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <div class="attestor-details">
+                  <div class="attestor-role">Legal Representative</div>
+                  <div class="attestor-addr" id="legalAddr">Not set</div>
+                </div>
+                <div class="attestor-meta">
+                  <div class="attestor-status-dot" id="legalDot"></div>
+                </div>
+              </div>
+              <!-- Auditor -->
+              <div class="attestor-item">
+                <div class="attestor-icon auditor">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                </div>
+                <div class="attestor-details">
+                  <div class="attestor-role">Auditor</div>
+                  <div class="attestor-addr" id="auditorAddr">Not set</div>
+                </div>
+                <div class="attestor-meta">
+                  <div class="attestor-status-dot" id="auditorDot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Premium Payment + Wind-Down -->
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+
+        <!-- Premium Payment -->
+        <div class="dash-card">
+          <div class="card-header">
+            <h3>
+              <span class="card-icon" style="background:rgba(232,118,10,0.12);color:var(--color-coverage);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </span>
+              Premium Payment
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="premium-info">
+              <div class="premium-row">
+                <span class="premium-label">Current Premium Rate</span>
+                <span class="premium-value" id="premRate">-- bps</span>
+              </div>
+              <div class="premium-row">
+                <span class="premium-label">Total Insured Amount</span>
+                <span class="premium-value" id="premInsured">-- USDT</span>
+              </div>
+              <div class="premium-row">
+                <span class="premium-label">Estimated Monthly Payment</span>
+                <span class="premium-value" id="premMonthly" style="color:var(--color-coverage);">-- USDT</span>
+              </div>
+            </div>
+
+            <div style="margin-top:1rem;">
+              <label style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:0.35rem;">Payment Amount (USDT)</label>
+              <input type="number" class="form-input" id="premiumAmountInput" placeholder="Enter amount" min="0" step="1" />
+            </div>
+
+            <button class="btn-pay-premium" id="btnPayPremium" onclick="showPremiumModal()" disabled>
+              Pay Premium
+            </button>
+
+            <div class="payment-history" id="paymentHistory">
+              <h4>Payment History</h4>
+              <div class="payment-empty">No payments recorded yet</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wind-Down Section -->
+        <div class="dash-card wind-down-card">
+          <div class="card-header">
+            <h3>
+              <span class="card-icon" style="background:rgba(239,68,68,0.12);color:var(--color-danger);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+              Wind-Down
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="wind-down-info">
+              Initiating a wind-down is a voluntary process that allows you to gracefully exit the CoverFi protocol. This process ensures all coverage holders are protected.
+            </div>
+            <div class="wind-down-steps">
+              <div class="wind-down-step">
+                <span class="wind-down-step-num">1</span>
+                <span>Submit wind-down request with custodian and legal attestation UIDs</span>
+              </div>
+              <div class="wind-down-step">
+                <span class="wind-down-step-num">2</span>
+                <span>30-day notice period begins (challengeable by coverage holders)</span>
+              </div>
+              <div class="wind-down-step">
+                <span class="wind-down-step-num">3</span>
+                <span>After deadline, finalize wind-down to release bond (minus 0.5% protocol fee)</span>
+              </div>
+            </div>
+
+            <div style="margin-bottom:0.75rem;">
+              <label style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:0.35rem;">Custodian Attest UID</label>
+              <input type="number" class="form-input" id="windDownCustodianUID" placeholder="Custodian attestation UID" min="0" />
+            </div>
+            <div style="margin-bottom:1rem;">
+              <label style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:0.35rem;">Legal Attest UID</label>
+              <input type="number" class="form-input" id="windDownLegalUID" placeholder="Legal attestation UID" min="0" />
+            </div>
+
+            <button class="btn-wind-down" id="btnWindDown" onclick="showWindDownModal()" disabled>
+              Initiate Wind-Down
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4: Coverage Statistics -->
+      <div class="dash-card">
+        <div class="card-header">
+          <h3>
+            <span class="card-icon" style="background:rgba(232,118,10,0.12);color:var(--color-coverage);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </span>
+            Coverage Statistics
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="coverage-stat-big">
+            <div class="big-val" id="totalCoverage">$0.00</div>
+            <div class="big-label">Total Coverage Written</div>
+          </div>
+          <div class="coverage-stats-grid">
+            <div class="cov-stat">
+              <div class="cov-stat-val" id="seniorTVL">$0</div>
+              <div class="cov-stat-label">Senior TVL</div>
+            </div>
+            <div class="cov-stat">
+              <div class="cov-stat-val" id="juniorTVL">$0</div>
+              <div class="cov-stat-label">Junior TVL</div>
+            </div>
+            <div class="cov-stat">
+              <div class="cov-stat-val" id="coverageRatio">0%</div>
+              <div class="cov-stat-label">Coverage Ratio</div>
+            </div>
+            <div class="cov-stat">
+              <div class="cov-stat-val" id="poolActive">--</div>
+              <div class="cov-stat-label">Pool Active</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /issuerContent -->
+
+  </div><!-- /dash-container -->
+</main>
+
+<!-- Premium Confirmation Modal -->
+<div id="premiumModal" class="confirm-overlay" role="dialog" aria-modal="true" onclick="if(event.target===this)closePremiumModal()">
+  <div class="confirm-modal">
+    <h3>Confirm Premium Payment</h3>
+    <div class="confirm-body" id="premiumModalBody">
+      <div class="confirm-detail-row"><span class="confirm-detail-label">Issuer Token</span><span class="confirm-detail-value" id="pmToken">--</span></div>
+      <div class="confirm-detail-row"><span class="confirm-detail-label">Premium Rate</span><span class="confirm-detail-value" id="pmRate">-- bps</span></div>
+      <div class="confirm-detail-row"><span class="confirm-detail-label">Payment Amount</span><span class="confirm-detail-value" id="pmAmount" style="font-weight:700;color:var(--color-coverage);">--</span></div>
+      <div class="confirm-warning">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+        USDT will be deducted from your wallet. Ensure sufficient allowance.
+      </div>
+    </div>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" onclick="closePremiumModal()">Cancel</button>
+      <button class="confirm-proceed" id="premiumConfirmBtn" onclick="executePremiumPayment()" style="background:linear-gradient(135deg,#E8760A,#FF9533);color:#fff;">Pay Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Wind-Down Confirmation Modal -->
+<div id="windDownModal" class="confirm-overlay" role="dialog" aria-modal="true" onclick="if(event.target===this)closeWindDownModal()">
+  <div class="confirm-modal">
+    <h3>Confirm Wind-Down Initiation</h3>
+    <div class="confirm-body">
+      <div class="confirm-detail-row"><span class="confirm-detail-label">Token</span><span class="confirm-detail-value" id="wdToken">--</span></div>
+      <div class="confirm-detail-row"><span class="confirm-detail-label">Custodian UID</span><span class="confirm-detail-value" id="wdCustUID">--</span></div>
+      <div class="confirm-detail-row"><span class="confirm-detail-label">Legal UID</span><span class="confirm-detail-value" id="wdLegalUID">--</span></div>
+      <div class="confirm-detail-row"><span class="confirm-detail-label">Notice Period</span><span class="confirm-detail-value">30 days</span></div>
+      <div class="confirm-detail-row"><span class="confirm-detail-label">Protocol Fee</span><span class="confirm-detail-value">0.5% of bond</span></div>
+      <div class="confirm-warning danger">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        This action cannot be easily reversed. Coverage holders may challenge the wind-down. Your bond will be held until the notice period expires.
+      </div>
+    </div>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" onclick="closeWindDownModal()">Cancel</button>
+      <button class="confirm-proceed danger" id="windDownConfirmBtn" onclick="executeWindDown()">Initiate Wind-Down</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<script src="contract-abis.js"></script>
+<script>
+// ---- Theme ----
+function getTheme() { return localStorage.getItem('coverfi-theme') || 'light'; }
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('coverfi-theme', theme);
+}
+function toggleTheme() { setTheme(getTheme() === 'dark' ? 'light' : 'dark'); }
+(function() { setTheme(getTheme()); })();
+
+// ---- Contract Addresses ----
+const CONTRACTS = {
+  MockUSDT:          '0x65A3Ae0e4787856CfcDdE505015c5CC3d5560212',
+  MockERC3643Token:  '0xa7C664459C66325Cd9dB15245DD901f1623c9655',
+  IssuerBond:        '0x1Ca7B678BDf1deCe9964c5178C01AB9312F2664D',
+  IRSOracle:         '0x8D4C37f45883aAEEd20d2CC1020e6Ab193D3A50C',
+  IssuerRegistry:    '0xc07859b25FC869F0a81fae86b9B5bEa868D08A9f',
+  InsurancePool:     '0xa5d64A7770136B1EEade6B980404140D8D5F7C06'
+};
+
+const BSC_TESTNET_CHAIN_ID = 133;
+const ISSUER_STATUS_LABELS = ['OBSERVATION', 'ACTIVE', 'MONITORING', 'DEFAULTED', 'WIND_DOWN', 'CLOSED'];
+const STATUS_CSS_CLASSES = ['status-observation', 'status-active', 'status-monitoring', 'status-defaulted', 'status-wind-down', 'status-closed'];
+const DEMO_ISSUER_TOKEN = CONTRACTS.MockERC3643Token;
+
+// ---- State ----
+let walletConnected = false;
+let walletAddress = '';
+let ethersProvider = null;
+let issuerTokenAddress = null;
+let issuerProfile = null;
+let currentPremiumBPS = 0;
+
+// ---- Toast ----
+function showToast(message, type) {
+  type = type || 'success';
+  var container = document.getElementById('toastContainer');
+  var toast = document.createElement('div');
+  toast.className = 'toast toast-' + type;
+  var icons = {
+    success: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00B894" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>',
+    error: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>',
+    warning: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F0B90B" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>'
+  };
+  toast.innerHTML = (icons[type] || icons.error) + '<span>' + message + '</span>';
+  container.appendChild(toast);
+  setTimeout(function() {
+    toast.style.animation = 'toast-out 0.3s ease forwards';
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 4000);
+}
+
+// ---- Utility ----
+function shortAddr(addr) {
+  if (!addr || addr === '0x0000000000000000000000000000000000000000') return 'Not set';
+  return addr.slice(0, 6) + '...' + addr.slice(-4);
+}
+function formatUSDT(val) {
+  var n = parseFloat(ethers.formatUnits(val, 6));
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function isZeroAddr(addr) {
+  return !addr || addr === '0x0000000000000000000000000000000000000000';
+}
+
+// ---- Wallet ----
+async function connectWallet() {
+  if (walletConnected) return;
+  if (typeof window.ethereum === 'undefined') {
+    showToast(window.location.protocol === 'file:' ? 'MetaMask cannot connect on file:// pages. Use a local server.' : 'MetaMask not detected. Please install MetaMask.', 'error');
+    return;
+  }
+  try {
+    // Check/switch network
+    try {
+      await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x85' }] });
+    } catch (e) {
+      if (e.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [{ chainId: '0x85', chainName: 'HashKey Chain Testnet', rpcUrls: ['https://testnet.hsk.xyz'], nativeCurrency: { name: 'HSK', symbol: 'HSK', decimals: 18 }, blockExplorerUrls: ['https://testnet-explorer.hsk.xyz'] }]
+        });
+      }
+    }
+
+    var accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    if (accounts.length > 0) {
+      walletAddress = accounts[0];
+      walletConnected = true;
+      ethersProvider = new ethers.BrowserProvider(window.ethereum);
+      localStorage.setItem('coverfi-wallet-connected', 'true');
+      updateWalletUI();
+      showToast('Wallet connected: ' + shortAddr(walletAddress), 'success');
+      await checkIssuerAccess();
+    }
+  } catch (err) {
+    console.error('Wallet connection error:', err);
+    showToast('Connection rejected', 'error');
+  }
+}
+
+function handleWalletClick() {
+  if (walletConnected) return;
+  connectWallet();
+}
+
+function updateWalletUI() {
+  var btn = document.getElementById('btnConnect');
+  if (walletConnected) {
+    btn.classList.add('connected');
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>' + shortAddr(walletAddress);
+  }
+}
+
+// ---- Check if connected wallet is an issuer ----
+async function checkIssuerAccess() {
+  try {
+    var registry = new ethers.Contract(CONTRACTS.IssuerRegistry, COVERFI_ABIS.IssuerRegistry, ethersProvider);
+
+    // Strategy: check if connected wallet is the issuerEOA for the demo token
+    // Also try issuerOfToken mapping to find token by EOA
+    var tokenAddr = DEMO_ISSUER_TOKEN;
+
+    // Check if this wallet is the issuer of the demo token
+    try {
+      var issuerEOA = await registry.getIssuerEOA(tokenAddr);
+      if (issuerEOA.toLowerCase() === walletAddress.toLowerCase()) {
+        issuerTokenAddress = tokenAddr;
+        await loadIssuerDashboard();
+        return;
+      }
+    } catch (e) {
+      console.log('getIssuerEOA check failed:', e.message);
+    }
+
+    // Try reverse lookup: check if wallet has a token mapped via issuerOfToken
+    try {
+      var mappedIssuer = await registry.issuerOfToken(walletAddress);
+      if (!isZeroAddr(mappedIssuer)) {
+        // walletAddress is itself a token address with an issuer
+        issuerTokenAddress = walletAddress;
+        await loadIssuerDashboard();
+        return;
+      }
+    } catch (e) {
+      console.log('issuerOfToken check failed:', e.message);
+    }
+
+    // If we get here, check the profile for the demo token anyway to see
+    // if the profile exists (for demo purposes)
+    try {
+      var profile = await registry.getProfile(tokenAddr);
+      if (profile && profile.tokenAddress && !isZeroAddr(profile.tokenAddress)) {
+        // For demo: show dashboard for the demo token if profile exists
+        issuerTokenAddress = tokenAddr;
+        await loadIssuerDashboard();
+        return;
+      }
+    } catch (e) {
+      console.log('Profile check failed:', e.message);
+    }
+
+    // Not an issuer
+    showToast('Your wallet is not registered as an issuer', 'warning');
+    document.getElementById('accessGate').style.display = 'flex';
+    document.getElementById('issuerContent').style.display = 'none';
+
+  } catch (err) {
+    console.error('Issuer access check error:', err);
+    showToast('Error checking issuer status: ' + (err.reason || err.message), 'error');
+  }
+}
+
+// ---- Load Issuer Dashboard Data ----
+async function loadIssuerDashboard() {
+  document.getElementById('accessGate').style.display = 'none';
+  document.getElementById('issuerContent').style.display = 'block';
+
+  try {
+    var registry = new ethers.Contract(CONTRACTS.IssuerRegistry, COVERFI_ABIS.IssuerRegistry, ethersProvider);
+    var irsOracle = new ethers.Contract(CONTRACTS.IRSOracle, COVERFI_ABIS.IRSOracle, ethersProvider);
+    var issuerBond = new ethers.Contract(CONTRACTS.IssuerBond, COVERFI_ABIS.IssuerBond, ethersProvider);
+    var pool = new ethers.Contract(CONTRACTS.InsurancePool, COVERFI_ABIS.InsurancePool, ethersProvider);
+
+    // Load all data in parallel
+    var [profile, score, components, premiumBPS, bondRecord, poolState] = await Promise.all([
+      registry.getProfile(issuerTokenAddress),
+      irsOracle.getScore(issuerTokenAddress).catch(function() { return 0n; }),
+      irsOracle.getComponents(issuerTokenAddress).catch(function() { return null; }),
+      irsOracle.getPremiumRateBPS(issuerTokenAddress).catch(function() { return 0n; }),
+      issuerBond.getBondRecord(issuerTokenAddress).catch(function() { return null; }),
+      pool.getPoolState(issuerTokenAddress).catch(function() { return null; })
+    ]);
+
+    issuerProfile = profile;
+    currentPremiumBPS = Number(premiumBPS);
+
+    // Try to get token name/symbol via ERC20 interface
+    var tokenName = 'RWA Token';
+    var tokenSymbol = 'RWA';
+    try {
+      var erc20ABI = ['function name() view returns (string)', 'function symbol() view returns (string)'];
+      var tokenContract = new ethers.Contract(issuerTokenAddress, erc20ABI, ethersProvider);
+      var [name, symbol] = await Promise.all([
+        tokenContract.name().catch(function() { return 'RWA Token'; }),
+        tokenContract.symbol().catch(function() { return 'RWA'; })
+      ]);
+      tokenName = name;
+      tokenSymbol = symbol;
+    } catch (e) { /* use defaults */ }
+
+    // Update UI
+    updateStatusCard(profile, tokenName, tokenSymbol);
+    updateIRSScore(Number(score), components, currentPremiumBPS);
+    updateBondStatus(bondRecord);
+    updateAttestorPanel(profile);
+    updatePremiumSection(currentPremiumBPS, poolState);
+    updateCoverageStats(poolState);
+    updateWindDownSection(profile);
+
+  } catch (err) {
+    console.error('Dashboard load error:', err);
+    showToast('Error loading issuer data: ' + (err.reason || err.message), 'error');
+  }
+}
+
+// ---- Update Status Card ----
+function updateStatusCard(profile, tokenName, tokenSymbol) {
+  var statusIdx = Number(profile.status);
+  var statusLabel = ISSUER_STATUS_LABELS[statusIdx] || 'UNKNOWN';
+  var statusClass = STATUS_CSS_CLASSES[statusIdx] || '';
+
+  document.getElementById('tokenName').textContent = tokenName;
+  document.getElementById('tokenSymbol').textContent = tokenSymbol;
+  document.getElementById('tokenAddress').textContent = issuerTokenAddress;
+  document.getElementById('regBlock').textContent = profile.registrationBlock.toString();
+  document.getElementById('trackType').textContent = profile.fastTrack ? 'Fast Track' : 'Standard';
+  document.getElementById('obsEndBlock').textContent = profile.observationEndBlock.toString();
+
+  // Calculate days since registration (approximate: 3 seconds per block on BSC)
+  var currentBlockEstimate = Math.floor(Date.now() / 3000);
+  var regBlockNum = Number(profile.registrationBlock);
+  var blocksDiff = currentBlockEstimate - regBlockNum;
+  var daysDiff = blocksDiff > 0 ? Math.floor(blocksDiff * 3 / 86400) : '--';
+  document.getElementById('daysSinceReg').textContent = daysDiff.toString();
+
+  // Status badge
+  var badge = document.getElementById('statusBadge');
+  badge.className = 'status-badge ' + statusClass;
+  badge.innerHTML = '<span class="dot dot-' + (statusIdx === 1 ? 'green' : 'gold') + '"></span>' + statusLabel;
+
+  // Header badge
+  var headerBadge = document.getElementById('headerStatusBadge');
+  headerBadge.style.display = 'inline-flex';
+  headerBadge.className = 'issuer-badge status-badge ' + statusClass;
+  document.getElementById('headerStatusText').textContent = statusLabel;
+
+  // Timeline
+  updateTimeline(statusIdx);
+}
+
+function updateTimeline(currentStatus) {
+  var steps = document.querySelectorAll('.timeline-step');
+  var statusOrder = [0, 1, 2, 4, 5]; // OBSERVATION, ACTIVE, MONITORING, WIND_DOWN, CLOSED
+
+  steps.forEach(function(step, i) {
+    var stepStatus = statusOrder[i];
+    step.classList.remove('completed', 'current', 'future');
+
+    if (currentStatus === 3) {
+      // DEFAULTED - special case
+      if (stepStatus <= 2) step.classList.add('completed');
+      else step.classList.add('future');
+    } else {
+      var currentOrderIdx = statusOrder.indexOf(currentStatus);
+      if (currentOrderIdx < 0) currentOrderIdx = 0;
+      if (i < currentOrderIdx) step.classList.add('completed');
+      else if (i === currentOrderIdx) step.classList.add('current');
+      else step.classList.add('future');
+    }
+  });
+}
+
+// ---- Update IRS Score ----
+function updateIRSScore(score, components, premiumBPS) {
+  var maxScore = 1000;
+  var pct = Math.min(score / maxScore, 1);
+
+  document.getElementById('irsScoreValue').textContent = score.toString();
+
+  // Gauge arc: total arc length ~261
+  var arcLength = 261;
+  var offset = arcLength * (1 - pct);
+  var fill = document.getElementById('irsGaugeFill');
+  fill.style.strokeDashoffset = offset.toString();
+
+  // Color based on score
+  var color = '#D32F2F'; // low
+  if (score >= 700) color = '#00962A';
+  else if (score >= 500) color = '#B8860B';
+  else if (score >= 300) color = '#D32F2F';
+  fill.setAttribute('stroke', color);
+
+  // Premium badge and rate
+  document.getElementById('premiumBadge').textContent = premiumBPS + ' bps';
+  document.getElementById('irsPremiumRate').textContent = 'Premium Rate: ' + premiumBPS + ' bps/year (' + (premiumBPS / 100).toFixed(2) + '%)';
+
+  // Dimension bars
+  if (components) {
+    var dims = [
+      { bar: 'dimNavBar', val: 'dimNavVal', score: Number(components.navPunctuality), max: 200 },
+      { bar: 'dimAttBar', val: 'dimAttVal', score: Number(components.attestationAccuracy), max: 200 },
+      { bar: 'dimRepBar', val: 'dimRepVal', score: Number(components.repaymentHistory), max: 200 },
+      { bar: 'dimColBar', val: 'dimColVal', score: Number(components.collateralHealth), max: 200 },
+      { bar: 'dimActBar', val: 'dimActVal', score: Number(components.governanceActivity), max: 200 }
+    ];
+    dims.forEach(function(d) {
+      var pctDim = Math.min(d.score / d.max * 100, 100);
+      var barEl = document.getElementById(d.bar);
+      barEl.style.width = pctDim + '%';
+      // Color bars based on percentage: green > 70%, gold 40-70%, red < 40%
+      if (pctDim > 70) {
+        barEl.style.background = 'linear-gradient(135deg, #00B894, #55EFC4)';
+      } else if (pctDim >= 40) {
+        barEl.style.background = 'linear-gradient(135deg, #F0B90B, #FFD443)';
+      } else {
+        barEl.style.background = 'linear-gradient(135deg, #EF4444, #F87171)';
+      }
+      document.getElementById(d.val).textContent = d.score + '/' + d.max;
+    });
+  }
+}
+
+// ---- Update Bond Status ----
+function updateBondStatus(bondRecord) {
+  if (!bondRecord) {
+    document.getElementById('bondAmount').textContent = 'No Bond';
+    document.getElementById('bondHealthBadge').textContent = 'No Bond';
+    document.getElementById('bondHealthBadge').className = 'bond-health insufficient';
+    return;
+  }
+
+  var bondAmt = bondRecord.bondAmount;
+  var marketCap = bondRecord.marketCapAtDeposit;
+  var depositBlock = bondRecord.depositBlock;
+  var liquidated = bondRecord.liquidated;
+  var released = bondRecord.released;
+
+  document.getElementById('bondAmount').textContent = formatUSDT(bondAmt);
+  document.getElementById('bondMarketCap').textContent = formatUSDT(marketCap);
+  document.getElementById('bondDepositBlock').textContent = depositBlock.toString();
+  document.getElementById('bondLiquidated').textContent = liquidated ? 'Yes' : 'No';
+  document.getElementById('bondLiquidated').style.color = liquidated ? 'var(--color-danger)' : 'var(--color-success)';
+  document.getElementById('bondReleased').textContent = released ? 'Yes' : 'No';
+
+  // Bond ratio
+  var bondNum = parseFloat(ethers.formatUnits(bondAmt, 6));
+  var mcapNum = parseFloat(ethers.formatUnits(marketCap, 6));
+  var ratio = mcapNum > 0 ? ((bondNum / mcapNum) * 100).toFixed(2) + '%' : '--';
+  document.getElementById('bondRatio').textContent = ratio;
+
+  // Bond health
+  var healthBadge = document.getElementById('bondHealthBadge');
+  if (liquidated) {
+    healthBadge.textContent = 'Liquidated';
+    healthBadge.className = 'bond-health insufficient';
+  } else if (released) {
+    healthBadge.textContent = 'Released';
+    healthBadge.className = 'bond-health';
+    healthBadge.style.background = 'rgba(108,92,231,0.1)';
+    healthBadge.style.color = 'var(--accent-purple)';
+  } else if (bondNum > 0) {
+    healthBadge.textContent = 'Sufficient';
+    healthBadge.className = 'bond-health sufficient';
+  } else {
+    healthBadge.textContent = 'Insufficient';
+    healthBadge.className = 'bond-health insufficient';
+  }
+}
+
+// ---- Update Attestor Panel ----
+function updateAttestorPanel(profile) {
+  var custodian = profile.custodianAttestor;
+  var legal = profile.legalAttestor;
+  var auditor = profile.auditorAttestor;
+  var count = Number(profile.attestationCount);
+
+  document.getElementById('custodianAddr').textContent = isZeroAddr(custodian) ? 'Not set' : shortAddr(custodian);
+  document.getElementById('legalAddr').textContent = isZeroAddr(legal) ? 'Not set' : shortAddr(legal);
+  document.getElementById('auditorAddr').textContent = isZeroAddr(auditor) ? 'Not set' : shortAddr(auditor);
+
+  document.getElementById('custodianDot').className = 'attestor-status-dot ' + (isZeroAddr(custodian) ? 'pending' : 'active');
+  document.getElementById('legalDot').className = 'attestor-status-dot ' + (isZeroAddr(legal) ? 'pending' : 'active');
+  document.getElementById('auditorDot').className = 'attestor-status-dot ' + (isZeroAddr(auditor) ? 'pending' : 'active');
+
+  document.getElementById('attestCountText').textContent = count;
+}
+
+// ---- Update Premium Section ----
+function updatePremiumSection(premiumBPS, poolState) {
+  document.getElementById('premRate').textContent = premiumBPS + ' bps';
+
+  var totalInsured = 0n;
+  if (poolState) {
+    totalInsured = poolState.totalInsuredAmount;
+    document.getElementById('premInsured').textContent = formatUSDT(totalInsured);
+  }
+
+  // Estimated monthly payment: (totalInsured * premiumBPS / 10000) / 12
+  var insuredNum = parseFloat(ethers.formatUnits(totalInsured, 6));
+  var monthly = (insuredNum * premiumBPS / 10000) / 12;
+  document.getElementById('premMonthly').textContent = '$' + monthly.toFixed(2);
+
+  // Enable pay button if status is ACTIVE or MONITORING
+  if (issuerProfile) {
+    var status = Number(issuerProfile.status);
+    var canPay = (status === 1 || status === 2); // ACTIVE or MONITORING
+    document.getElementById('btnPayPremium').disabled = !canPay;
+  }
+
+  // Enable input listener
+  document.getElementById('premiumAmountInput').addEventListener('input', function() {
+    var val = parseFloat(this.value);
+    document.getElementById('btnPayPremium').disabled = !(val > 0 && issuerProfile && (Number(issuerProfile.status) === 1 || Number(issuerProfile.status) === 2));
+  });
+}
+
+// ---- Update Coverage Stats ----
+function updateCoverageStats(poolState) {
+  if (!poolState) {
+    document.getElementById('totalCoverage').textContent = '$0.00';
+    return;
+  }
+
+  document.getElementById('totalCoverage').textContent = formatUSDT(poolState.totalInsuredAmount);
+  document.getElementById('seniorTVL').textContent = formatUSDT(poolState.seniorTVL);
+  document.getElementById('juniorTVL').textContent = formatUSDT(poolState.juniorTVL);
+  document.getElementById('coverageRatio').textContent = (Number(poolState.coverageRatioBPS) / 100).toFixed(1) + '%';
+  document.getElementById('poolActive').textContent = poolState.isActive ? 'Yes' : 'No';
+  document.getElementById('poolActive').style.color = poolState.isActive ? 'var(--color-success)' : 'var(--text-muted)';
+}
+
+// ---- Update Wind-Down Section ----
+function updateWindDownSection(profile) {
+  var status = Number(profile.status);
+  // Wind-down available for ACTIVE (1) and MONITORING (2)
+  var canWindDown = (status === 1 || status === 2);
+  document.getElementById('btnWindDown').disabled = !canWindDown;
+
+  if (status === 4) {
+    // Already in WIND_DOWN
+    document.getElementById('btnWindDown').textContent = 'Wind-Down In Progress';
+    document.getElementById('btnWindDown').disabled = true;
+  } else if (status === 5) {
+    document.getElementById('btnWindDown').textContent = 'Closed';
+    document.getElementById('btnWindDown').disabled = true;
+  } else if (status === 3) {
+    document.getElementById('btnWindDown').textContent = 'Defaulted';
+    document.getElementById('btnWindDown').disabled = true;
+  }
+}
+
+// ---- Premium Modal ----
+function showPremiumModal() {
+  var amount = parseFloat(document.getElementById('premiumAmountInput').value);
+  if (!amount || amount <= 0) {
+    showToast('Please enter a valid payment amount', 'warning');
+    return;
+  }
+  document.getElementById('pmToken').textContent = shortAddr(issuerTokenAddress);
+  document.getElementById('pmRate').textContent = currentPremiumBPS + ' bps';
+  document.getElementById('pmAmount').textContent = '$' + amount.toFixed(2) + ' USDT';
+  document.getElementById('premiumModal').classList.add('active');
+}
+
+function closePremiumModal() {
+  document.getElementById('premiumModal').classList.remove('active');
+}
+
+async function executePremiumPayment() {
+  var amount = parseFloat(document.getElementById('premiumAmountInput').value);
+  if (!amount || amount <= 0) return;
+
+  var btn = document.getElementById('premiumConfirmBtn');
+  btn.textContent = 'Processing...';
+  btn.disabled = true;
+
+  try {
+    var signer = await ethersProvider.getSigner();
+    var usdtAmount = ethers.parseUnits(amount.toString(), 6);
+
+    // Approve USDT first
+    var usdtContract = new ethers.Contract(CONTRACTS.MockUSDT, [
+      'function approve(address spender, uint256 amount) returns (bool)',
+      'function allowance(address owner, address spender) view returns (uint256)'
+    ], signer);
+
+    var currentAllowance = await usdtContract.allowance(walletAddress, CONTRACTS.InsurancePool);
+    if (currentAllowance < usdtAmount) {
+      showToast('Approving USDT...', 'warning');
+      var approveTx = await usdtContract.approve(CONTRACTS.InsurancePool, usdtAmount);
+      await approveTx.wait();
+    }
+
+    // Pay premium
+    var poolContract = new ethers.Contract(CONTRACTS.InsurancePool, COVERFI_ABIS.InsurancePool, signer);
+    var tx = await poolContract.payPremium(issuerTokenAddress, usdtAmount);
+    showToast('Premium payment submitted...', 'warning');
+    await tx.wait();
+
+    showToast('Premium payment successful!', 'success');
+    closePremiumModal();
+    document.getElementById('premiumAmountInput').value = '';
+
+    // Add to payment history
+    addPaymentToHistory(amount);
+
+    // Reload data
+    await loadIssuerDashboard();
+
+  } catch (err) {
+    console.error('Premium payment error:', err);
+    showToast('Payment failed: ' + (err.reason || err.message), 'error');
+  } finally {
+    btn.textContent = 'Pay Now';
+    btn.disabled = false;
+  }
+}
+
+function addPaymentToHistory(amount) {
+  var history = document.getElementById('paymentHistory');
+  var empty = history.querySelector('.payment-empty');
+  if (empty) empty.remove();
+
+  var item = document.createElement('div');
+  item.className = 'payment-item';
+  item.innerHTML = '<span class="payment-item-amount">$' + amount.toFixed(2) + '</span><span class="payment-item-date">' + new Date().toLocaleDateString() + '</span>';
+
+  var h4 = history.querySelector('h4');
+  if (h4 && h4.nextSibling) {
+    h4.parentNode.insertBefore(item, h4.nextSibling);
+  } else {
+    history.appendChild(item);
+  }
+}
+
+// ---- Wind-Down Modal ----
+function showWindDownModal() {
+  var custUID = document.getElementById('windDownCustodianUID').value;
+  var legalUID = document.getElementById('windDownLegalUID').value;
+
+  if (!custUID || !legalUID) {
+    showToast('Please enter both attestation UIDs', 'warning');
+    return;
+  }
+
+  document.getElementById('wdToken').textContent = shortAddr(issuerTokenAddress);
+  document.getElementById('wdCustUID').textContent = custUID;
+  document.getElementById('wdLegalUID').textContent = legalUID;
+  document.getElementById('windDownModal').classList.add('active');
+}
+
+function closeWindDownModal() {
+  document.getElementById('windDownModal').classList.remove('active');
+}
+
+async function executeWindDown() {
+  var custUID = parseInt(document.getElementById('windDownCustodianUID').value);
+  var legalUID = parseInt(document.getElementById('windDownLegalUID').value);
+
+  var btn = document.getElementById('windDownConfirmBtn');
+  btn.textContent = 'Processing...';
+  btn.disabled = true;
+
+  try {
+    var signer = await ethersProvider.getSigner();
+    var registryContract = new ethers.Contract(CONTRACTS.IssuerRegistry, COVERFI_ABIS.IssuerRegistry, signer);
+
+    var tx = await registryContract.initiateWindDown(issuerTokenAddress, custUID, legalUID);
+    showToast('Wind-down initiation submitted...', 'warning');
+    await tx.wait();
+
+    showToast('Wind-down initiated successfully! 30-day notice period begins.', 'success');
+    closeWindDownModal();
+
+    // Reload data
+    await loadIssuerDashboard();
+
+  } catch (err) {
+    console.error('Wind-down error:', err);
+    showToast('Wind-down failed: ' + (err.reason || err.message), 'error');
+  } finally {
+    btn.textContent = 'Initiate Wind-Down';
+    btn.disabled = false;
+  }
+}
+
+// Auto-connect if previously connected
+(async function() {
+  if (localStorage.getItem('coverfi-wallet-connected') === 'true' && typeof window.ethereum !== 'undefined') {
+    try {
+      var accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      if (accounts.length > 0) {
+        walletAddress = accounts[0];
+        walletConnected = true;
+        ethersProvider = new ethers.BrowserProvider(window.ethereum);
+        updateWalletUI();
+        await checkIssuerAccess();
+      }
+    } catch(e) {
+      console.log('Auto-reconnect failed:', e.message);
+    }
+  }
+})();
+
+// ---- Wallet event listeners ----
+if (typeof window.ethereum !== 'undefined') {
+  window.ethereum.on('accountsChanged', function(accounts) {
+    if (accounts.length === 0) {
+      walletConnected = false;
+      walletAddress = '';
+      localStorage.removeItem('coverfi-wallet-connected');
+      document.getElementById('accessGate').style.display = 'flex';
+      document.getElementById('issuerContent').style.display = 'none';
+      document.getElementById('headerStatusBadge').style.display = 'none';
+      var btn = document.getElementById('btnConnect');
+      btn.classList.remove('connected');
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="3"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg> Connect Wallet';
+    } else {
+      walletAddress = accounts[0];
+      ethersProvider = new ethers.BrowserProvider(window.ethereum);
+      updateWalletUI();
+      checkIssuerAccess();
+    }
+  });
+
+  window.ethereum.on('chainChanged', function() {
+    window.location.reload();
+  });
+}
+</script>
+
+</body>
+</html>

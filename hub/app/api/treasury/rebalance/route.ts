@@ -1,5 +1,5 @@
-// Built by vsrupeshkumar
-// Server-side AI rebalancer for the Kubryx AI x RWA Treasury.
+﻿// Built by vsrupeshkumar
+// Server-side AI rebalancer for the RWAkins AI x RWA Treasury.
 // Reads real on-chain inputs (balances + mock RWA yields) supplied by the client,
 // asks Groq for a target USDY/mETH allocation, then validates + clamps the result
 // against the SAME risk rule the smart contract enforces (mETH <= 70%, sum == 100%)
@@ -11,7 +11,7 @@ const MODEL = 'llama-3.3-70b-versatile'
 const MAX_RISK_BPS = 7000
 
 const SYSTEM_PROMPT =
-  'You are the autonomous treasury agent for Kubryx, an AI x RWA vault on Mantle. ' +
+  'You are the autonomous treasury agent for RWAkins, an AI x RWA vault on Mantle. ' +
   'You allocate a treasury between USDY (a stable real-world-asset yield token) and ' +
   'mETH (ETH staking yield, the higher-risk asset). Hard rule: mETH may never exceed ' +
   '70% (7000 bps); the two targets must sum to exactly 10000 bps. Favour mETH when its ' +

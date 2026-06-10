@@ -1,4 +1,4 @@
-// Built by vsrupeshkumar
+﻿// Built by vsrupeshkumar
 // Server-side proxy for the Groq AI chat used by Protocol Borrow Engine.
 // Keeps GROQ_API_KEY off the client. Falls back to NEXT_PUBLIC_GROQ_API_KEY
 // only for migration — remove that var from Vercel once GROQ_API_KEY is set.
@@ -8,7 +8,7 @@ const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const MODEL = 'llama-3.3-70b-versatile'
 
 const SYSTEM_PROMPT =
-  'You are a DeFi loan negotiation AI for the Kubryx Protocol Borrow Engine on Mantle Network. Be concise and specific about rates, ZK credit, and RWA collateral (USDY, mETH).'
+  'You are a DeFi loan negotiation AI for the RWAkins Protocol Borrow Engine on Mantle Network. Be concise and specific about rates, ZK credit, and RWA collateral (USDY, mETH).'
 
 export async function POST(req: Request) {
   const key = process.env.GROQ_API_KEY || process.env.NEXT_PUBLIC_GROQ_API_KEY

@@ -1,4 +1,4 @@
-# Kubryx / Ruphex — Complete Frontend Design Reference
+﻿# RWAkins / Ruphex — Complete Frontend Design Reference
 
 > The exact design of **kubryx.vercel.app** (the `hub/` app), documented end to end:
 > design system, global chrome, every one of the 56 routes, all 65 components,
@@ -364,7 +364,7 @@ appearance is 100% inline styles.
 - `components/agents/` — `AgentDashboard, AgentAnalytics, JobsExplorer, NodeRegistry, DeployWizard, MiniMesh, TrustMeshHero, TrustMeshTabBar`
 - `components/lend/` — `LendDashboard, LoanPortfolio, BorrowForm, LendForm, LendMarkets, DefiTVLWidget, LendoraHero, LendoraTabBar`
 - `components/vault/` — `VaultDashboard, CollateralManager, DWalletManager, FHETradeForm, VaultHistory, CipherVaultHero, CipherVaultTabBar`
-- `components/treasury/` — `RWAVaultPanel` (live KubryxRWAVault, the AI×RWA hero panel)
+- `components/treasury/` — `RWAVaultPanel` (live RWAkinsRWAVault, the AI×RWA hero panel)
 - `components/credit/` — `CreditPassportVerifier`
 - `components/invoice/` — `StepRow, EcosystemPanel, EcosystemSidebar, EcosystemWrapper`
 

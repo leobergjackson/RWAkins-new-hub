@@ -1,5 +1,5 @@
-// Built by vsrupeshkumar
-// Central registry of every Kubryx tool — names, chains, colors, wallet types.
+﻿// Built by vsrupeshkumar
+// Central registry of every RWAkins tool — names, chains, colors, wallet types.
 // The Turing Test Hackathon 2026: every tool targets Mantle Sepolia (chain 5003).
 
 export interface ToolConfig {
@@ -27,19 +27,6 @@ export const TOOLS: ToolConfig[] = [
     chain: 'Mantle Sepolia',
     status: 'Live',
     color: '#10b981',
-    walletType: 'evm',
-    networkKey: 'MANTLE_SEPOLIA',
-  },
-  {
-    route: '/invoice',
-    name: 'Invoice',
-    tagline: 'AI-parsed stablecoin invoicing',
-    description: 'Paste any invoice — AI reads it, generates a payment link, client pays in stablecoin on Mantle in seconds.',
-    icon: '📄',
-    category: 'Payments',
-    chain: 'Mantle Sepolia',
-    status: 'Live',
-    color: '#C8FF00',
     walletType: 'evm',
     networkKey: 'MANTLE_SEPOLIA',
   },
@@ -145,5 +132,5 @@ export function getToolColor(route: string): string {
 }
 
 export function getToolName(route: string): string {
-  return getToolByRoute(route)?.name ?? 'Kubryx'
+  return getToolByRoute(route)?.name ?? 'RWAkins'
 }

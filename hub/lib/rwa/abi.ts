@@ -1,5 +1,5 @@
-// Built by vsrupeshkumar
-// ABIs for the Kubryx AI x RWA stack on Mantle Sepolia.
+﻿// Built by vsrupeshkumar
+// ABIs for the RWAkins AI x RWA stack on Mantle Sepolia.
 
 export const RWA_TOKEN_ABI = [
   { type: 'function', name: 'approve', stateMutability: 'nonpayable', inputs: [{ name: 'spender', type: 'address' }, { name: 'amount', type: 'uint256' }], outputs: [{ type: 'bool' }] },

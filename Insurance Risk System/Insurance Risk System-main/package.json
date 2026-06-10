@@ -1,0 +1,40 @@
+{
+  "name": "coverfi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:integration": "hardhat test test/integration/FullLifecycle.test.ts",
+    "demo": "hardhat run scripts/run-full-demo.ts",
+    "deploy:local": "hardhat run scripts/deploy.ts",
+    "deploy:testnet": "hardhat run scripts/deploy.ts --network bscTestnet",
+    "deploy:mainnet": "hardhat run scripts/deploy.ts --network bscMainnet",
+    "deploy:hashkey": "hardhat run scripts/deploy.ts --network hashkeyTestnet",
+    "demo:hashkey": "hardhat run scripts/demo-testnet.ts --network hashkeyTestnet",
+    "verify:testnet": "hardhat run scripts/verify.ts --network bscTestnet",
+    "demo:testnet": "hardhat run scripts/demo-testnet.ts --network bscTestnet",
+    "gas": "REPORT_GAS=true hardhat test",
+    "test:subrogation": "hardhat test test/unit/SubrogationNFT.test.ts",
+    "test:frontend": "node test/frontend/subrogation.helpers.test.js",
+    "test:stats-nav": "node test/frontend/stats-nav.test.js",
+    "test:e2e": "playwright test",
+    "test:e2e:stats": "playwright test test/e2e/stats-nav.spec.js --project=chromium-desktop"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^6.1.2",
+    "@nomicfoundation/hardhat-verify": "^2.1.3",
+    "@openzeppelin/contracts": "^4.9.6",
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.5.0",
+    "dotenv": "^17.3.1",
+    "hardhat": "^2.28.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  }
+}

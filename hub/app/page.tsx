@@ -1,4 +1,4 @@
-// Built by vsrupeshkumar
+﻿// Built by vsrupeshkumar
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
@@ -188,7 +188,7 @@ function Hero() {
             ))}
           </motion.div>
           <motion.div variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-            <GradBtn href="/invoice">Create Invoice <ArrowRight size={17} strokeWidth={2.2} /></GradBtn>
+            <GradBtn href="/treasury">Create Invoice <ArrowRight size={17} strokeWidth={2.2} /></GradBtn>
             <GhostBtn href="#how-it-works">See How It Works</GhostBtn>
           </motion.div>
           <motion.div variants={fadeUp} style={{ width: '100%' }}>
@@ -290,7 +290,7 @@ function HowItWorks() {
       num: '03',
       icon: <Wallet size={28} color="#10B981" />,
       title: 'Get Paid Instantly',
-      desc: 'USDC lands in your wallet in seconds. Use it across the full Kubryx financial ecosystem.',
+      desc: 'USDC lands in your wallet in seconds. Use it across the full RWAkins financial ecosystem.',
       color: '#10B981',
     },
   ]
@@ -326,7 +326,7 @@ function HowItWorks() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} style={{ display: 'flex', justifyContent: 'center', marginTop: 48 }}>
-          <GradBtn href="/invoice">Create Your First Invoice <ArrowRight size={17} strokeWidth={2.2} /></GradBtn>
+          <GradBtn href="/treasury">Create Your First Invoice <ArrowRight size={17} strokeWidth={2.2} /></GradBtn>
         </motion.div>
       </div>
     </section>
@@ -523,15 +523,15 @@ function DashFrame() {
           <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#28C840' }} />
         </div>
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: 'rgba(255,255,255,0.05)', borderRadius: 999, padding: '6px 12px', fontSize: 12, color: '#94A3B8', fontFamily: 'var(--font-mono, monospace)' }}>
-          <Lock size={11} strokeWidth={2.2} /> kubryx.vercel.app/invoice
+          <Lock size={11} strokeWidth={2.2} /> kubryx.vercel.app/treasury
         </div>
         <RefreshCw size={14} strokeWidth={2.2} color="#94A3B8" />
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', minHeight: 520 }}>
         <aside style={{ background: '#0C1232', borderRight: '1px solid rgba(255,255,255,0.05)', padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 12, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-            <span style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#3B5BFA,#EC4899)', display: 'grid', placeItems: 'center', fontSize: 13, fontWeight: 900, color: '#fff' }}>K</span>
-            <span style={{ fontSize: 15, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Kubryx</span>
+            <span style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg,#3B5BFA,#EC4899)', display: 'grid', placeItems: 'center', fontSize: 8, fontWeight: 900, color: '#fff', letterSpacing: '-0.02em' }}>RWA</span>
+            <span style={{ fontSize: 15, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>RWAkins</span>
           </div>
           <nav style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {sideItems.map(([icon, name, active]) => (
@@ -557,7 +557,7 @@ function DashFrame() {
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 16 }}>
-            {[['$2,750', 'Invoice Amount', 'USDC'], ['< 3s', 'Settlement', 'On Mantle'], ['0%', 'Fees Taken', 'By Kubryx']].map(([n, label, sub], i) => (
+            {[['$2,750', 'Invoice Amount', 'USDC'], ['< 3s', 'Settlement', 'On Mantle'], ['0%', 'Fees Taken', 'By RWAkins']].map(([n, label, sub], i) => (
               <div key={i} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 12, padding: 16 }}>
                 <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#475569', fontWeight: 700 }}>{label}</div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 6 }}>
@@ -620,7 +620,7 @@ function FinalCTA() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: isMobile ? 'stretch' : 'flex-end' }}>
                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                  <Link href="/invoice" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, borderRadius: 999, background: '#fff', color: '#0A0F2E', fontWeight: 700, padding: '16px 28px', fontSize: 15, textDecoration: 'none', boxShadow: '0 20px 40px -10px rgba(0,0,0,0.25)' }}>
+                  <Link href="/treasury" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, borderRadius: 999, background: '#fff', color: '#0A0F2E', fontWeight: 700, padding: '16px 28px', fontSize: 15, textDecoration: 'none', boxShadow: '0 20px 40px -10px rgba(0,0,0,0.25)' }}>
                     <span className="gradient-text">Create Invoice</span>
                     <ArrowRight size={17} strokeWidth={2.4} color="#0A0F2E" />
                   </Link>
@@ -641,7 +641,6 @@ function FinalCTA() {
 type FooterLink = { label: string; href: string; external?: boolean }
 const FOOTER_COLS: Record<string, FooterLink[]> = {
   PLATFORM: [
-    { label: 'Invoice',              href: '/invoice'  },
     { label: 'Credit Passport',      href: '/credit'   },
     { label: 'Family Vault',         href: '/legacy'   },
     { label: 'Agent Co-ordinator',   href: '/agents'   },
@@ -675,10 +674,10 @@ function Footer() {
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '80px 24px 40px', position: 'relative' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 24, paddingBottom: 48, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            <span style={{ width: 32, height: 32, borderRadius: 10, display: 'grid', placeItems: 'center', fontSize: 16, fontWeight: 900, color: '#fff', background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6 55%, #EC4899)' }}>K</span>
-            <span style={{ fontSize: 20, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Kubryx</span>
+            <span style={{ width: 32, height: 32, borderRadius: 10, display: 'grid', placeItems: 'center', fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6 55%, #EC4899)' }}>RWA</span>
+            <span style={{ fontSize: 20, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>RWAkins</span>
           </Link>
-          <Link href="/invoice" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, borderRadius: 999, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontWeight: 600, padding: '10px 20px', fontSize: 14, textDecoration: 'none' }}>
+          <Link href="/treasury" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, borderRadius: 999, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontWeight: 600, padding: '10px 20px', fontSize: 14, textDecoration: 'none' }}>
             Create Invoice <ArrowRight size={15} strokeWidth={2.4} />
           </Link>
         </div>
@@ -707,7 +706,7 @@ function Footer() {
         </div>
         <div style={{ padding: '40px 0', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
           <div style={{ fontSize: 'clamp(60px, 14vw, 220px)', fontWeight: 900, letterSpacing: '-0.06em', lineHeight: 1, WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02))', userSelect: 'none' }}>
-            Kubryx
+            RWAkins
           </div>
         </div>
         <div style={{ paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: 12, lineHeight: 1.6, color: 'rgba(148,163,184,0.7)', display: 'flex', flexDirection: 'column', gap: 12, textAlign: 'center', maxWidth: 960, margin: '0 auto' }}>
@@ -761,9 +760,48 @@ function ScrollTop() {
 }
 
 // ─── MAIN EXPORT ─────────────────────────────────────────────
+function HackathonBanner() {
+  return (
+    <section style={{ background: 'var(--cloud-bg)', padding: 'clamp(72px, 9vw, 120px) 24px', position: 'relative', overflow: 'hidden' }}>
+      {/* soft glow to seat the banner into the cloud background */}
+      <div style={{ position: 'absolute', top: '8%', left: '50%', transform: 'translateX(-50%)', width: 720, height: 360, borderRadius: '50%', background: 'radial-gradient(circle, rgba(63,154,115,0.14) 0%, transparent 70%)', pointerEvents: 'none' }} />
+      <div style={{ maxWidth: 1040, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
+        <div style={{ fontFamily: "'Dancing Script', cursive", fontSize: 20, color: '#2f6b54', marginBottom: 10 }}>Proudly competing in</div>
+        <h2 style={{ fontSize: 'clamp(26px, 3.6vw, 42px)', fontWeight: 800, color: '#163b2c', letterSpacing: '-0.025em', lineHeight: 1.1, margin: '0 0 12px' }}>
+          The Turing Test Hackathon 2026
+        </h2>
+        <p style={{ fontSize: 16, lineHeight: 1.65, color: '#475569', maxWidth: 560, margin: '0 auto 40px' }}>
+          RWAkins is built on <strong style={{ color: '#163b2c' }}>Mantle</strong> for the <strong style={{ color: '#163b2c' }}>AI × RWA</strong> track — autonomous agents creating verifiable, on-chain value.
+        </p>
+        <a
+          href="https://dorahacks.io/hackathon/the-turing-test"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'block', borderRadius: 24, overflow: 'hidden',
+            border: '1px solid rgba(22,59,44,0.10)',
+            boxShadow: '0 40px 90px -40px rgba(22,59,44,0.55), 0 8px 24px -12px rgba(22,59,44,0.18)',
+            transition: 'transform 0.4s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.4s',
+          }}
+          className="module-card"
+          aria-label="The Turing Test Hackathon 2026 on Mantle — view on DoraHacks"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/turing-test-banner.png"
+            alt="The Turing Test Hackathon 2026 — Mantle × Bybit × Byreal"
+            loading="lazy"
+            style={{ display: 'block', width: '100%', height: 'auto' }}
+          />
+        </a>
+      </div>
+    </section>
+  )
+}
+
 export default function Home() {
   return (
-    <div style={{ background: '#fff', color: '#0A0F2E' }}>
+    <div style={{ background: 'var(--cloud-bg)', color: '#0A0F2E' }}>
       <Navbar />
       <Hero />
       <TrustBar />
@@ -771,6 +809,7 @@ export default function Home() {
       <StatsBar />
       <Ecosystem />
       <DashboardPreview />
+      <HackathonBanner />
       <FinalCTA />
       <Footer />
       <CookieBanner />

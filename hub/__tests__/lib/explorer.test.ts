@@ -1,7 +1,7 @@
-// Built by vsrupeshkumar
+﻿// Built by vsrupeshkumar
 import { getExplorerUrl } from '@/lib/explorer'
 
-// Kubryx targets Mantle Sepolia. The explorer module consolidates every chain key
+// RWAkins targets Mantle Sepolia. The explorer module consolidates every chain key
 // onto the Mantle Sepolia explorer, so all links resolve to explorer.sepolia.mantle.xyz.
 describe('explorer.ts', () => {
   it('generates Mantle tx URL', () => {

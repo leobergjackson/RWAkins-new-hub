@@ -1,0 +1,26 @@
+# Source (published as compiled dist/)
+src/
+circuits/
+contracts/
+scripts/
+
+# Dev files
+.env
+.env.example
+.seed
+.*.json
+tsconfig.json
+jest.config.*
+vitest.config.*
+*.test.ts
+__tests__/
+
+# Build artifacts
+node_modules/
+.github/
+coverage/
+docs/
+
+# Large files
+*.db
+*.sqlite

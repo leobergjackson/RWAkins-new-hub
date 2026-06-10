@@ -1,0 +1,84 @@
+{
+  "rules": [
+    {
+      "id": "max-single-tx",
+      "type": "max_amount",
+      "params": {
+        "maxAmount": 50
+      },
+      "enabled": true,
+      "priority": 1
+    },
+    {
+      "id": "daily-spending-cap",
+      "type": "daily_cap",
+      "params": {
+        "dailyLimit": 200
+      },
+      "enabled": true,
+      "priority": 2
+    },
+    {
+      "id": "blocked-addresses",
+      "type": "recipient_blacklist",
+      "params": {
+        "addresses": [
+          "0x0000000000000000000000000000000000000000",
+          "0x000000000000000000000000000000000000dead"
+        ]
+      },
+      "enabled": true,
+      "priority": 0
+    },
+    {
+      "id": "frequency-limit",
+      "type": "frequency_limit",
+      "params": {
+        "maxPerHour": 10
+      },
+      "enabled": true,
+      "priority": 3
+    },
+    {
+      "id": "chain-restriction",
+      "type": "chain_restriction",
+      "params": {
+        "allowedChains": [
+          "ethereum-sepolia",
+          "ethereum-sepolia-gasless",
+          "ton-testnet",
+          "ton-testnet-gasless",
+          "tron-nile",
+          "bitcoin-testnet",
+          "solana-devnet",
+          "plasma",
+          "stable"
+        ]
+      },
+      "enabled": true,
+      "priority": 4
+    }
+  ],
+  "stats": {
+    "max-single-tx": {
+      "blocked": 0,
+      "allowed": 0
+    },
+    "daily-spending-cap": {
+      "blocked": 0,
+      "allowed": 0
+    },
+    "blocked-addresses": {
+      "blocked": 0,
+      "allowed": 0
+    },
+    "frequency-limit": {
+      "blocked": 0,
+      "allowed": 0
+    },
+    "chain-restriction": {
+      "blocked": 0,
+      "allowed": 0
+    }
+  }
+}

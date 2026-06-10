@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CoverFi — Issuer Registration</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='8,8 16,8 20,14 16,20 8,20 4,14' fill='none' stroke='%23333' stroke-width='1.5'/><polygon points='16,8 24,8 28,14 24,20 16,20 12,14' fill='none' stroke='%23333' stroke-width='1.5'/><polygon points='16,5 22,14 16,23 10,14' fill='%23F0B90B'/><circle cx='16' cy='13' r='1.5' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+/* ============================================================
+   CoverFi Registration — Claymorphism Warm Light Design
+   ============================================================ */
+
+:root {
+  --bg-primary: #FFF8E1;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f5f6f8;
+  --text-primary: #2D3436;
+  --text-secondary: #5C676B;
+  --text-muted: #5f6b70;
+  --border-color: rgba(0,0,0,0.08);
+  --shadow-clay: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-clay-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --shadow-clay-sm: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-clay-inset: inset 2px 2px 5px rgba(0,0,0,0.15), inset -2px -2px 5px rgba(255,255,255,0.02);
+  --nav-bg: rgba(255,255,255,0.8);
+  --form-bg: #f5f5f5;
+  --form-border: rgba(0,0,0,0.1);
+  --gold: #F0B90B;
+  --gold-light: #FFD443;
+  --gold-dim: rgba(240,185,11,0.12);
+  --accent-coral: #FF6B6B;
+  --accent-purple: #6C5CE7;
+  --color-pool: #3B8BFF;
+  --color-coverage: #E8760A;
+  --color-verify: #6C5CE7;
+  --color-payout: #00B894;
+  --color-success: #00B894;
+  --color-success-dim: rgba(0,184,148,0.12);
+  --color-danger: #EF4444;
+  --color-danger-dim: rgba(239,68,68,0.12);
+  --color-warning: #F0B90B;
+  --color-warning-dim: rgba(240,185,11,0.12);
+  --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 16px;
+  --radius-card: var(--radius-xl);
+  --radius-pill: 999px;
+  --spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.39, 0.575, 0.565, 1);
+  --motion: 1;
+  --nav-height: 68px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion: 0; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+::selection { background: rgba(240,185,11,0.25); color: #2D3436; }
+
+body {
+  font-family: var(--font-main); font-size: 0.875rem; line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(240,185,11,0.3); border-radius: 3px; }
+* { scrollbar-width: thin; scrollbar-color: rgba(240,185,11,0.3) transparent; }
+
+a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+a:hover { color: #e0a800; }
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--text-primary); }
+code, pre { font-family: var(--font-mono); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- BACKGROUND BLOBS ---------- */
+.bg-blobs { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; display: none; }
+.bg-blob { position: absolute; opacity: 0.08; }
+.bg-blob:nth-child(1) { top: -5%; right: -5%; animation: blob-float-1 18s ease-in-out infinite; }
+.bg-blob:nth-child(2) { bottom: -10%; left: -5%; animation: blob-float-2 22s ease-in-out infinite; }
+.bg-blob:nth-child(3) { top: 40%; right: 10%; animation: blob-float-1 25s ease-in-out infinite reverse; }
+
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
+}
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 20px) scale(0.97); }
+  66% { transform: translate(15px, -25px) scale(1.03); }
+}
+
+/* ---------- NAV ---------- */
+.dash-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-height); background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  box-shadow: none;
+  display: flex; align-items: center; padding: 0 1.5rem;
+}
+.dash-nav-inner {
+  max-width: 1600px; width: 100%; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  position: relative;
+}
+.nav-logo { display: flex; align-items: center; gap: 0.625rem; text-decoration: none; }
+.nav-logo-text { font-size: 1.25rem; font-weight: 900; color: var(--text-primary); letter-spacing: -0.03em; }
+.nav-logo .accent { color: var(--gold); }
+.dash-nav-links { display: flex; align-items: center; justify-content: center; gap: 0.25rem; }
+.dash-nav-link {
+  padding: 0.4rem 0.75rem; border: none; background: none; border-radius: 0;
+  font-size: 0.8125rem; font-weight: 600; color: #636E72;
+  text-decoration: none; transition: color 0.2s;
+}
+.dash-nav-link:hover { color: #F0B90B; }
+.dash-nav-link.active { color: #F0B90B; }
+
+.nav-actions { display: flex; align-items: center; gap: 0.75rem; justify-content: flex-end; }
+.badge-testnet {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.25rem 0.6rem; border-radius: var(--radius-pill);
+  font-size: 0.625rem; font-weight: 600; letter-spacing: 0.03em; white-space: nowrap;
+  background: rgba(240,185,11,0.1); color: #8a6800;
+  border: 1px solid rgba(240,185,11,0.2);
+}
+.badge-testnet .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse-gold 1.5s ease-in-out infinite; }
+@keyframes pulse-gold {
+  0%,100% { box-shadow: 0 0 4px rgba(240,185,11,0.4); }
+  50% { box-shadow: 0 0 16px rgba(240,185,11,0.9); }
+}
+
+.btn-connect {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1.25rem; border-radius: var(--radius-pill); border: none;
+  background: linear-gradient(135deg, #F0B90B 0%, #FFD443 100%);
+  color: #1a1d24; font-family: var(--font-main); font-size: 0.8125rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s var(--spring);
+  box-shadow: 4px 4px 12px rgba(240,185,11,0.3), -2px -2px 8px rgba(255,255,255,0.6);
+}
+.btn-connect:hover { transform: scale(1.04) translateY(-1px); box-shadow: 6px 6px 18px rgba(240,185,11,0.4), -3px -3px 10px rgba(255,255,255,0.7); }
+.btn-connect.connected {
+  background: var(--color-success-dim); color: var(--color-success);
+  box-shadow: var(--shadow-clay-sm); border: 1px solid rgba(0,184,148,0.2);
+}
+
+/* ---------- THEME TOGGLE ---------- */
+.theme-toggle {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);
+  background: transparent; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; position: relative; transition: all 0.3s;
+  color: #636E72;
+}
+.theme-toggle:hover { border-color: #F0B90B; color: #F0B90B; }
+.theme-toggle .icon-sun, .theme-toggle .icon-moon { position: absolute; transition: opacity 0.3s, transform 0.3s; }
+.icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+.icon-moon { opacity: 1; transform: scale(1); }
+[data-theme="dark"] .icon-sun { opacity: 1; transform: scale(1); }
+[data-theme="dark"] .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+[data-theme="dark"] .theme-toggle { border-color: rgba(255,255,255,0.15); color: #B2BEC3; }
+[data-theme="dark"] .theme-toggle:hover { border-color: #F0B90B; color: #F0B90B; }
+
+/* ---------- MAIN LAYOUT ---------- */
+.reg-main {
+  padding-top: calc(var(--nav-height) + 2rem);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 3rem;
+}
+.reg-container {
+  width: 100%;
+  max-width: 680px;
+  padding: 0 1.5rem;
+}
+
+/* ---------- STEP INDICATOR ---------- */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 1.25rem;
+}
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.step-circle {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8125rem; font-weight: 700;
+  font-family: var(--font-mono);
+  border: 2px solid rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.04);
+  color: rgba(0,0,0,0.4);
+  transition: all 0.3s var(--spring);
+  box-shadow: var(--shadow-clay-sm);
+  flex-shrink: 0;
+}
+.step-circle.active {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, #F0B90B, #FFD443);
+  color: #000;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(240,185,11,0.4);
+}
+.step-circle.completed {
+  border-color: var(--color-success);
+  background: var(--color-success);
+  color: #fff;
+}
+.step-line {
+  width: 40px; height: 3px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+.step-line.completed {
+  background: var(--color-success);
+}
+.step-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* ---------- CARD ---------- */
+.reg-card {
+  background: #ffffff;
+  color: #2D3436;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  overflow: hidden;
+  transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.reg-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-clay-hover);
+}
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.875rem 1.25rem; border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.card-header h3 {
+  font-size: 1.0625rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;
+  letter-spacing: -0.03em; color: #2D3436; font-family: var(--font-heading);
+}
+.card-header .step-badge {
+  font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem; border-radius: var(--radius-pill);
+  background: var(--gold-dim); color: #8a6800;
+}
+.card-body { padding: 1rem 1.25rem; flex: 1; }
+
+/* ---------- FORM ELEMENTS ---------- */
+.form-group { margin-bottom: 1.25rem; }
+.form-label {
+  display: block; font-size: 0.6875rem; color: #636E72;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-bottom: 0.4rem;
+}
+.form-input {
+  width: 100%; padding: 0.875rem 1rem; background: #f5f5f5;
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
+  color: #2D3436; font-family: var(--font-main); font-size: 0.9375rem;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s; outline: none;
+  box-shadow: var(--shadow-clay-inset);
+}
+.form-input:hover { background: #eeeeee; }
+.form-input:focus {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-clay-inset), 0 0 0 3px rgba(240,185,11,0.15);
+  background: #f5f5f5;
+}
+.form-input.mono { font-family: var(--font-mono); font-size: 0.8125rem; }
+.form-input.error { border-color: var(--color-danger); }
+.form-input.success { border-color: var(--color-success); }
+.form-hint {
+  font-size: 0.75rem; color: #636E72; margin-top: 0.35rem;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn-gold {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  width: 100%; padding: 0.875rem 2rem; border-radius: 12px; border: none;
+  background: linear-gradient(135deg, #F0B90B, #FFD443);
+  background-size: 200% 100%;
+  color: #000; font-family: var(--font-main); font-size: 1rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s var(--spring);
+  box-shadow: 6px 6px 16px rgba(240,185,11,0.3), -3px -3px 10px rgba(255,255,255,0.6);
+  letter-spacing: -0.01em;
+}
+.btn-gold:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 20px rgba(240,185,11,0.4), -4px -4px 12px rgba(255,255,255,0.7);
+}
+.btn-gold:disabled {
+  opacity: 0.5; cursor: not-allowed;
+  background: var(--form-bg); color: var(--text-muted);
+  box-shadow: var(--shadow-clay-sm);
+}
+
+.btn-outline {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  width: 100%; padding: 0.75rem 1.25rem; border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(240,185,11,0.3);
+  background: linear-gradient(135deg, rgba(240,185,11,0.08), rgba(240,185,11,0.02));
+  color: #C89A09; font-family: var(--font-main); font-size: 0.875rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s var(--spring);
+}
+.btn-outline:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(240,185,11,0.15), rgba(240,185,11,0.05));
+  border-color: #F0B90B;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(240,185,11,0.15);
+}
+.btn-outline:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-row { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+.btn-row .btn-back {
+  flex: 0 0 auto;
+  padding: 0.75rem 1.25rem; border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(0,0,0,0.1);
+  background: transparent; color: var(--text-secondary);
+  font-family: var(--font-main); font-size: 0.875rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-row .btn-back:hover { border-color: var(--text-muted); color: var(--text-primary); }
+.btn-row .btn-next { flex: 1; }
+
+/* ---------- VALIDATION RESULTS ---------- */
+.validation-results {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--form-bg);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-clay-inset);
+  display: none;
+}
+.validation-results.show { display: block; animation: fadeIn 0.3s ease; }
+.val-row {
+  display: flex; align-items: center; gap: 0.625rem;
+  padding: 0.5rem 0;
+  font-size: 0.8125rem;
+}
+.val-row + .val-row { border-top: 1px solid rgba(0,0,0,0.04); }
+.val-icon {
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.625rem; flex-shrink: 0;
+}
+.val-icon.ok { background: var(--color-success-dim); color: var(--color-success); }
+.val-icon.fail { background: var(--color-danger-dim); color: var(--color-danger); }
+.val-label { color: var(--text-muted); font-weight: 500; min-width: 110px; }
+.val-value { font-weight: 600; color: var(--text-primary); font-family: var(--font-mono); font-size: 0.8125rem; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- BOND CALCULATION ---------- */
+.calc-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.calc-item {
+  padding: 0.875rem;
+  background: var(--form-bg);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-clay-inset);
+}
+.calc-item-label {
+  font-size: 0.625rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.calc-item-value {
+  font-size: 1.25rem; font-weight: 800;
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+.calc-item-value.gold { color: #8a6800; }
+.calc-item-full { grid-column: 1 / -1; }
+.calc-item-highlight {
+  background: rgba(240,185,11,0.08);
+  border: 1px solid rgba(240,185,11,0.15);
+}
+
+/* ---------- ATTESTOR INPUTS ---------- */
+.attestor-group {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: var(--form-bg);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-clay-inset);
+}
+.attestor-group-title {
+  font-size: 0.75rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-primary); margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.attestor-group-title .required {
+  font-size: 0.5625rem; color: var(--color-danger);
+  font-weight: 700; text-transform: uppercase;
+}
+.attestor-status {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  display: flex; align-items: center; gap: 0.35rem;
+}
+.attestor-status.valid { color: var(--color-success); }
+.attestor-status.invalid { color: var(--color-danger); }
+.attestor-meta {
+  margin-top: 0.35rem; font-size: 0.6875rem; color: var(--text-muted);
+}
+
+.track-display {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+.track-display.fast {
+  background: rgba(0,184,148,0.08);
+  border: 1px solid rgba(0,184,148,0.15);
+}
+.track-display.standard {
+  background: rgba(240,185,11,0.08);
+  border: 1px solid rgba(240,185,11,0.15);
+}
+.track-label {
+  font-size: 0.625rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 0.25rem;
+}
+.track-display.fast .track-label { color: var(--color-success); }
+.track-display.standard .track-label { color: #8a6800; }
+.track-value {
+  font-size: 1rem; font-weight: 800; font-family: var(--font-heading);
+  color: var(--text-primary);
+}
+.track-sub { font-size: 0.6875rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+/* ---------- EXPANDABLE INFO ---------- */
+.expandable {
+  margin-top: 1rem;
+}
+.expandable-trigger {
+  display: flex; align-items: center; gap: 0.35rem;
+  background: none; border: none; cursor: pointer;
+  color: var(--gold); font-size: 0.8125rem; font-weight: 600;
+  font-family: var(--font-main);
+  padding: 0.5rem 0; transition: color 0.2s;
+}
+.expandable-trigger:hover { color: #e0a800; }
+.expandable-trigger svg { transition: transform 0.3s; }
+.expandable-trigger.open svg { transform: rotate(180deg); }
+.expandable-content {
+  display: none;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  background: var(--form-bg);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-clay-inset);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.expandable-content.show {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+.expandable-content ol {
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+}
+.expandable-content li { margin-bottom: 0.35rem; }
+
+/* ---------- SUMMARY ---------- */
+.summary-grid {
+  display: flex; flex-direction: column; gap: 0;
+}
+.summary-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 0;
+  font-size: 0.8125rem;
+}
+.summary-row + .summary-row { border-top: 1px solid rgba(0,0,0,0.04); }
+.summary-label { color: var(--text-muted); font-weight: 500; }
+.summary-value { font-weight: 600; color: var(--text-primary); font-family: var(--font-mono); font-size: 0.8125rem; }
+.summary-value.ok { color: var(--color-success); }
+
+/* ---------- SUCCESS SCREEN ---------- */
+.success-screen {
+  display: none;
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+.success-screen.show { display: block; animation: fadeIn 0.5s ease; }
+.success-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--color-success-dim);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+  animation: successPop 0.5s var(--spring);
+}
+@keyframes successPop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+.success-title {
+  font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;
+  font-family: var(--font-heading);
+}
+.success-sub { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9375rem; }
+.success-info {
+  padding: 1rem;
+  background: var(--form-bg);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-clay-inset);
+  margin-bottom: 1.5rem;
+}
+.success-info-row {
+  display: flex; justify-content: space-between;
+  padding: 0.5rem 0; font-size: 0.8125rem;
+}
+.success-info-row + .success-info-row { border-top: 1px solid rgba(0,0,0,0.04); }
+.success-info-label { color: var(--text-muted); }
+.success-info-value { font-weight: 600; font-family: var(--font-mono); }
+
+/* ---------- TOAST ---------- */
+.toast {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-clay);
+  font-size: 0.8125rem; font-weight: 600;
+  z-index: 1000;
+  transform: translateY(120%);
+  transition: transform 0.3s var(--spring);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.toast.show { transform: translateY(0); }
+.toast.success { border-left: 3px solid var(--color-success); }
+.toast.error { border-left: 3px solid var(--color-danger); }
+.toast.info { border-left: 3px solid var(--gold); }
+
+/* ---------- SPINNER ---------- */
+.spinner {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2px solid rgba(0,0,0,0.15);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- HIDDEN ---------- */
+.hidden { display: none !important; }
+
+/* ---------- DARK MODE ---------- */
+[data-theme="dark"] body { background: #0f1118; }
+[data-theme="dark"] .bg-blobs { opacity: 0.3; }
+[data-theme="dark"] .dash-nav { background: rgba(15,17,24,0.95); border-bottom: 1px solid rgba(255,255,255,0.06); }
+[data-theme="dark"] .dash-nav .nav-logo-text { color: #ffffff; }
+[data-theme="dark"] .dash-nav-link { color: rgba(255,255,255,0.7); }
+[data-theme="dark"] .dash-nav-link:hover { color: #F0B90B; }
+[data-theme="dark"] .dash-nav-link.active { color: #F0B90B; }
+
+[data-theme="dark"] .reg-card {
+  background: #1e2329;
+  color: #e8e8e8;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+[data-theme="dark"] .card-header { border-bottom-color: rgba(255,255,255,0.06); }
+[data-theme="dark"] .card-header h3 { color: #ffffff; }
+[data-theme="dark"] .card-header .step-badge { background: rgba(240,185,11,0.15); color: #FFD443; }
+
+[data-theme="dark"] .form-label { color: rgba(255,255,255,0.6); }
+[data-theme="dark"] .form-input {
+  background: #1e2329; border-color: rgba(255,255,255,0.08);
+  color: #ffffff;
+}
+[data-theme="dark"] .form-input:hover { background: #2a2f36; }
+[data-theme="dark"] .form-input:focus {
+  border-color: #F0B90B; background: #2a2f36;
+}
+[data-theme="dark"] .form-hint { color: rgba(255,255,255,0.55); }
+
+[data-theme="dark"] .step-circle {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.4);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .step-circle.active {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, #F0B90B, #FFD443);
+  color: #000;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(240,185,11,0.4);
+}
+[data-theme="dark"] .step-line { background: rgba(255,255,255,0.06); }
+
+[data-theme="dark"] .validation-results,
+[data-theme="dark"] .calc-item,
+[data-theme="dark"] .attestor-group,
+[data-theme="dark"] .expandable-content,
+[data-theme="dark"] .success-info {
+  background: rgba(255,255,255,0.04);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+[data-theme="dark"] .val-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .val-value { color: #ffffff; }
+[data-theme="dark"] .val-row + .val-row { border-top-color: rgba(255,255,255,0.04); }
+
+[data-theme="dark"] .calc-item-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .calc-item-value { color: #ffffff; }
+[data-theme="dark"] .calc-item-value.gold { color: #FFD443; }
+[data-theme="dark"] .calc-item-highlight { background: rgba(240,185,11,0.1); border-color: rgba(240,185,11,0.2); }
+
+[data-theme="dark"] .attestor-group-title { color: #ffffff; }
+[data-theme="dark"] .attestor-meta { color: rgba(255,255,255,0.55); }
+
+[data-theme="dark"] .track-display.fast { background: rgba(0,184,148,0.1); border-color: rgba(0,184,148,0.2); }
+[data-theme="dark"] .track-display.standard { background: rgba(240,185,11,0.1); border-color: rgba(240,185,11,0.2); }
+[data-theme="dark"] .track-value { color: #ffffff; }
+[data-theme="dark"] .track-sub { color: rgba(255,255,255,0.55); }
+
+[data-theme="dark"] .summary-row + .summary-row { border-top-color: rgba(255,255,255,0.04); }
+[data-theme="dark"] .summary-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .summary-value { color: #ffffff; }
+
+[data-theme="dark"] .success-title { color: #ffffff; }
+[data-theme="dark"] .success-sub { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .success-info-row + .success-info-row { border-top-color: rgba(255,255,255,0.04); }
+[data-theme="dark"] .success-info-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .success-info-value { color: #ffffff; }
+
+[data-theme="dark"] .btn-gold:disabled {
+  background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.25);
+}
+[data-theme="dark"] .btn-row .btn-back { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .btn-row .btn-back:hover { border-color: rgba(255,255,255,0.2); color: #ffffff; }
+[data-theme="dark"] .btn-outline { background: rgba(240,185,11,0.06); border-color: rgba(240,185,11,0.2); color: #FFD443; }
+[data-theme="dark"] .btn-outline:hover:not(:disabled) { background: rgba(240,185,11,0.12); border-color: #FFD443; }
+
+[data-theme="dark"] .expandable-trigger { color: #FFD443; }
+[data-theme="dark"] .expandable-content { color: rgba(255,255,255,0.6); }
+
+[data-theme="dark"] .toast { background: #1a1d24; border-color: rgba(255,255,255,0.08); color: #ffffff; }
+
+[data-theme="dark"] ::-webkit-scrollbar-track { background: #0f1118; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .dash-nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  .reg-container { padding: 0 1rem; }
+  .card-body { padding: 1rem 1.25rem; }
+  .calc-grid { grid-template-columns: 1fr; }
+  .step-line { width: 20px; }
+  .step-circle { width: 30px; height: 30px; font-size: 0.6875rem; }
+}
+
+  </style>
+</head>
+<body>
+
+<!-- Background Blobs -->
+<div class="bg-blobs" aria-hidden="true">
+  <svg class="bg-blob" width="400" height="350" viewBox="0 0 400 350" fill="none"><path d="M320 50c60 40 90 120 60 200s-100 120-180 110S40 300 20 220s10-140 70-170S260 10 320 50z" fill="rgba(240,185,11,0.08)"/></svg>
+  <svg class="bg-blob" width="380" height="320" viewBox="0 0 380 320" fill="none"><path d="M50 80c40-60 140-90 220-60s130 100 100 180-80 120-160 120S30 280 10 200s0-60 40-120z" fill="rgba(255,107,107,0.06)"/></svg>
+  <svg class="bg-blob" width="300" height="280" viewBox="0 0 300 280" fill="none"><path d="M240 40c50 30 70 100 50 170s-70 90-140 80S30 240 15 170 40 60 100 30s90-20 140 10z" fill="rgba(108,92,231,0.05)"/></svg>
+</div>
+
+<!-- Nav -->
+<nav class="dash-nav">
+  <div class="dash-nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <polygon points="16,2 28,9 28,23 16,30 4,23 4,9" fill="#F0B90B"/>
+        <text x="16" y="22" text-anchor="middle" fill="white" font-size="14" font-weight="bold">C</text>
+      </svg>
+      <span class="nav-logo-text">Cover<span class="accent">Fi</span></span>
+    </a>
+    <div class="dash-nav-links">
+      <a href="dashboard.html" class="dash-nav-link">Dashboard</a>
+      <a href="issuers.html" class="dash-nav-link">Issuers</a>
+      <a href="pool.html" class="dash-nav-link">Pool</a>
+      <a href="coverage.html" class="dash-nav-link">Coverage</a>
+    </div>
+    <div class="nav-actions">
+      <span class="badge-testnet"><span class="dot"></span> HashKey Testnet</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="btn-connect" id="btnConnect" onclick="handleWalletClick()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="3"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg>
+        Connect Wallet
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="reg-main">
+  <div class="reg-container">
+
+    <!-- Step Indicator -->
+    <div class="step-indicator" id="stepIndicator">
+      <div class="step-item"><div class="step-circle active" data-step="1">1</div></div>
+      <div class="step-line" data-line="1"></div>
+      <div class="step-item"><div class="step-circle" data-step="2">2</div></div>
+      <div class="step-line" data-line="2"></div>
+      <div class="step-item"><div class="step-circle" data-step="3">3</div></div>
+      <div class="step-line" data-line="3"></div>
+      <div class="step-item"><div class="step-circle" data-step="4">4</div></div>
+      <div class="step-line" data-line="4"></div>
+      <div class="step-item"><div class="step-circle" data-step="5">5</div></div>
+    </div>
+
+    <!-- ============ STEP 1: Token Information ============ -->
+    <div class="reg-step" id="step1">
+      <div class="reg-card">
+        <div class="card-header">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F0B90B" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Register Your RWA Token
+          </h3>
+          <span class="step-badge">Step 1 of 5</span>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Token Contract Address</label>
+            <input type="text" class="form-input mono" id="tokenAddress" placeholder="0x..." maxlength="42">
+            <div class="form-hint">Enter the ERC-3643 token contract address deployed on HashKey Chain Testnet</div>
+          </div>
+          <button class="btn-outline" id="btnValidate" onclick="validateToken()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Validate Token
+          </button>
+          <div class="validation-results" id="valResults">
+            <div class="val-row"><div class="val-icon ok" id="valNameIcon">&#10003;</div><span class="val-label">Token Name</span><span class="val-value" id="valName">--</span></div>
+            <div class="val-row"><div class="val-icon ok" id="valSymbolIcon">&#10003;</div><span class="val-label">Symbol</span><span class="val-value" id="valSymbol">--</span></div>
+            <div class="val-row"><div class="val-icon ok" id="valSupplyIcon">&#10003;</div><span class="val-label">Total Supply</span><span class="val-value" id="valSupply">--</span></div>
+            <div class="val-row"><div class="val-icon ok" id="valComplianceIcon">&#10003;</div><span class="val-label">ERC-3643</span><span class="val-value" id="valCompliance">--</span></div>
+          </div>
+          <div class="btn-row" id="step1BtnRow" style="display:none;">
+            <button class="btn-gold btn-next" onclick="goToStep(2)">Next Step &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ STEP 2: Bond Calculation ============ -->
+    <div class="reg-step hidden" id="step2">
+      <div class="reg-card">
+        <div class="card-header">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F0B90B" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/></svg>
+            Required Bond
+          </h3>
+          <span class="step-badge">Step 2 of 5</span>
+        </div>
+        <div class="card-body">
+          <div class="calc-grid">
+            <div class="calc-item">
+              <div class="calc-item-label">Token Supply</div>
+              <div class="calc-item-value" id="calcSupply">--</div>
+            </div>
+            <div class="calc-item">
+              <div class="calc-item-label">NAV / Token</div>
+              <div class="calc-item-value">$0.10</div>
+            </div>
+            <div class="calc-item calc-item-full">
+              <div class="calc-item-label">Market Cap</div>
+              <div class="calc-item-value gold" id="calcMarketCap">--</div>
+            </div>
+            <div class="calc-item calc-item-full calc-item-highlight">
+              <div class="calc-item-label">Required Bond (5%)</div>
+              <div class="calc-item-value gold" id="calcBond">--</div>
+            </div>
+            <div class="calc-item calc-item-full">
+              <div class="calc-item-label">Your USDT Balance</div>
+              <div class="calc-item-value" id="calcBalance">--</div>
+            </div>
+          </div>
+          <div class="expandable">
+            <button class="expandable-trigger" onclick="toggleExpand(this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              What is the issuer bond?
+            </button>
+            <div class="expandable-content">
+              The issuer bond is a first-loss capital deposit in USDT. It demonstrates the issuer's commitment and protects coverage holders. The bond equals 5% of the token's market capitalization and is held in the IssuerBond smart contract. If a default occurs, the bond is liquidated first before pool funds are used. The bond is returned (minus a small protocol fee) upon successful wind-down.
+            </div>
+          </div>
+          <div id="bondStatus" style="display:none; margin-top:1rem; text-align:center; font-size:0.875rem; font-weight:600; color:var(--color-success);">
+            Bond deposited successfully
+          </div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="goToStep(1)">&larr; Back</button>
+            <button class="btn-gold btn-next" id="btnDeposit" onclick="approveAndDeposit()">Approve &amp; Deposit Bond</button>
+          </div>
+          <div class="btn-row hidden" id="step2NextRow">
+            <button class="btn-back" onclick="goToStep(1)">&larr; Back</button>
+            <button class="btn-gold btn-next" onclick="goToStep(3)">Next Step &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ STEP 3: Select Attestors ============ -->
+    <div class="reg-step hidden" id="step3">
+      <div class="reg-card">
+        <div class="card-header">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C5CE7" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Select Your Attestors
+          </h3>
+          <span class="step-badge">Step 3 of 5</span>
+        </div>
+        <div class="card-body">
+          <div class="attestor-group">
+            <div class="attestor-group-title">Custodian <span class="required">Required</span></div>
+            <input type="text" class="form-input mono" id="custodianAddr" placeholder="0x..." maxlength="42" oninput="validateAttestor('custodian')">
+            <div class="attestor-status" id="custodianStatus"></div>
+            <div class="attestor-meta" id="custodianMeta"></div>
+          </div>
+          <div class="attestor-group">
+            <div class="attestor-group-title">Legal Representative <span class="required">Required</span></div>
+            <input type="text" class="form-input mono" id="legalRepAddr" placeholder="0x..." maxlength="42" oninput="validateAttestor('legalRep')">
+            <div class="attestor-status" id="legalRepStatus"></div>
+            <div class="attestor-meta" id="legalRepMeta"></div>
+          </div>
+          <div class="attestor-group">
+            <div class="attestor-group-title">Auditor <span class="required">Required</span></div>
+            <input type="text" class="form-input mono" id="auditorAddr" placeholder="0x..." maxlength="42" oninput="validateAttestor('auditor')">
+            <div class="attestor-status" id="auditorStatus"></div>
+            <div class="attestor-meta" id="auditorMeta"></div>
+          </div>
+          <div class="track-display" id="trackDisplay" style="display:none;">
+            <div class="track-label" id="trackLabel">--</div>
+            <div class="track-value" id="trackValue">--</div>
+            <div class="track-sub" id="trackSub">--</div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="goToStep(2)">&larr; Back</button>
+            <button class="btn-gold btn-next" id="btnStep3Next" onclick="goToStep(4)" disabled>Next Step &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ STEP 4: BAS Attestation ============ -->
+    <div class="reg-step hidden" id="step4">
+      <div class="reg-card">
+        <div class="card-header">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8760A" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Legal Entity Verification
+          </h3>
+          <span class="step-badge">Step 4 of 5</span>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">BAS Attestation UID</label>
+            <input type="text" class="form-input mono" id="basUID" placeholder="Enter your BAS attestation UID (numeric)" oninput="checkStep4()">
+            <div class="form-hint">Get this from the Attestation Service after submitting your legal entity registration.</div>
+          </div>
+          <div class="expandable">
+            <button class="expandable-trigger" onclick="toggleExpand(this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              How to get a BAS Attestation UID?
+            </button>
+            <div class="expandable-content">
+              <ol>
+                <li>Visit the Attestation Service portal</li>
+                <li>Connect your wallet (the same one registering here)</li>
+                <li>Navigate to "Create Attestation" and select the CoverFi Legal Entity schema</li>
+                <li>Fill in your legal entity details: company name, jurisdiction, registration number</li>
+                <li>Submit the attestation and pay the gas fee</li>
+                <li>Copy the attestation UID from the transaction receipt</li>
+                <li>Paste the UID in the field above</li>
+              </ol>
+              <p style="margin-top:0.75rem;">The attestation proves your legal entity exists and is linked to your wallet address on-chain.</p>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="goToStep(3)">&larr; Back</button>
+            <button class="btn-gold btn-next" id="btnStep4Next" onclick="goToStep(5)" disabled>Next Step &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ STEP 5: Confirm & Register ============ -->
+    <div class="reg-step hidden" id="step5">
+      <div class="reg-card">
+        <div class="card-header">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00B894" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Registration Summary
+          </h3>
+          <span class="step-badge">Step 5 of 5</span>
+        </div>
+        <div class="card-body" id="step5Body">
+          <div class="summary-grid" id="summaryGrid">
+            <div class="summary-row"><span class="summary-label">Token</span><span class="summary-value" id="sumToken">--</span></div>
+            <div class="summary-row"><span class="summary-label">Contract</span><span class="summary-value" id="sumContract">--</span></div>
+            <div class="summary-row"><span class="summary-label">Bond Deposited</span><span class="summary-value ok" id="sumBond">--</span></div>
+            <div class="summary-row"><span class="summary-label">Custodian</span><span class="summary-value" id="sumCustodian">--</span></div>
+            <div class="summary-row"><span class="summary-label">Legal Rep</span><span class="summary-value" id="sumLegalRep">--</span></div>
+            <div class="summary-row"><span class="summary-label">Auditor</span><span class="summary-value" id="sumAuditor">--</span></div>
+            <div class="summary-row"><span class="summary-label">BAS UID</span><span class="summary-value" id="sumBAS">--</span></div>
+            <div class="summary-row"><span class="summary-label">Track</span><span class="summary-value" id="sumTrack">--</span></div>
+            <div class="summary-row"><span class="summary-label">Starting IRS</span><span class="summary-value" id="sumIRS">--</span></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="goToStep(4)">&larr; Back</button>
+            <button class="btn-gold btn-next" id="btnRegister" onclick="registerIssuer()">Register Now</button>
+          </div>
+        </div>
+        <!-- Success screen replaces the body -->
+        <div class="success-screen" id="successScreen">
+          <div class="success-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00B894" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 class="success-title">Registration Complete!</h2>
+          <p class="success-sub">You are now in the observation period.</p>
+          <div class="success-info">
+            <div class="success-info-row"><span class="success-info-label">Status</span><span class="success-info-value">OBSERVATION</span></div>
+            <div class="success-info-row"><span class="success-info-label">Track</span><span class="success-info-value" id="successTrack">--</span></div>
+            <div class="success-info-row"><span class="success-info-label">Attestations Needed</span><span class="success-info-value">0 / 2 submitted</span></div>
+          </div>
+          <a href="dashboard.html" class="btn-gold" style="text-decoration:none; display:inline-flex;">Go to Dashboard &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<script src="contract-abis.js"></script>
+<script>
+// ---- Theme ----
+function getTheme() { return localStorage.getItem('coverfi-theme') || 'light'; }
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('coverfi-theme', theme);
+}
+function toggleTheme() { setTheme(getTheme() === 'dark' ? 'light' : 'dark'); }
+(function() { setTheme(getTheme()); })();
+
+// ---- Contract Addresses ----
+var CONTRACTS = {
+  IssuerRegistry:   '0xc07859b25FC869F0a81fae86b9B5bEa868D08A9f',
+  IssuerBond:       '0x1Ca7B678BDf1deCe9964c5178C01AB9312F2664D',
+  TIR:              '0xa4ECEB47F80a32D7176C23e4993cDa4d2337Fc3A',
+  MockUSDT:         '0x65A3Ae0e4787856CfcDdE505015c5CC3d5560212',
+  MockERC3643Token: '0xa7C664459C66325Cd9dB15245DD901f1623c9655'
+};
+
+// ---- Minimal ABIs for tokens ----
+var ERC20_ABI = [
+  'function name() view returns (string)',
+  'function symbol() view returns (string)',
+  'function totalSupply() view returns (uint256)',
+  'function decimals() view returns (uint8)',
+  'function balanceOf(address) view returns (uint256)',
+  'function approve(address spender, uint256 amount) returns (bool)',
+  'function allowance(address owner, address spender) view returns (uint256)'
+];
+
+var ERC3643_CHECK_ABI = [
+  'function name() view returns (string)',
+  'function symbol() view returns (string)',
+  'function totalSupply() view returns (uint256)',
+  'function decimals() view returns (uint8)',
+  'function identityRegistry() view returns (address)'
+];
+
+// ---- State ----
+var provider = null;
+var signer = null;
+var userAddress = null;
+var currentStep = 1;
+
+var regData = {
+  tokenAddress: '',
+  tokenName: '',
+  tokenSymbol: '',
+  totalSupply: 0n,
+  decimals: 18,
+  isERC3643: false,
+  marketCap: 0n,
+  requiredBond: 0n,
+  bondDeposited: false,
+  custodian: '',
+  legalRep: '',
+  auditor: '',
+  custodianValid: false,
+  legalRepValid: false,
+  auditorValid: false,
+  fastTrack: false,
+  basUID: '',
+  custodianDays: 0
+};
+
+// ---- Toast ----
+function showToast(msg, type) {
+  type = type || 'info';
+  var t = document.getElementById('toast');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 4000);
+}
+
+// ---- Wallet ----
+async function handleWalletClick() {
+  if (userAddress) return;
+  if (typeof window.ethereum === 'undefined') {
+    showToast('Please install MetaMask to continue', 'error');
+    return;
+  }
+  try {
+    provider = new ethers.BrowserProvider(window.ethereum);
+    var accounts = await provider.send('eth_requestAccounts', []);
+    signer = await provider.getSigner();
+    userAddress = await signer.getAddress();
+
+    localStorage.setItem('coverfi-wallet-connected', 'true');
+    var btn = document.getElementById('btnConnect');
+    var short = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+    btn.textContent = short;
+    btn.classList.add('connected');
+
+    // Check network
+    var network = await provider.getNetwork();
+    if (Number(network.chainId) !== 133) {
+      showToast('Please switch to HashKey Chain Testnet (chainId 133)', 'error');
+    }
+  } catch (err) {
+    showToast('Wallet connection failed: ' + (err.message || err), 'error');
+  }
+}
+
+async function ensureWallet() {
+  if (!userAddress) {
+    showToast('Please connect your wallet first', 'error');
+    return false;
+  }
+  return true;
+}
+
+// ---- Step Navigation ----
+function goToStep(step) {
+  // Hide all steps
+  document.querySelectorAll('.reg-step').forEach(function(el) { el.classList.add('hidden'); });
+  // Show target
+  document.getElementById('step' + step).classList.remove('hidden');
+
+  // Update indicator
+  document.querySelectorAll('.step-circle').forEach(function(el) {
+    var s = parseInt(el.getAttribute('data-step'));
+    el.className = 'step-circle';
+    if (s < step) el.classList.add('completed');
+    else if (s === step) el.classList.add('active');
+  });
+  document.querySelectorAll('.step-line').forEach(function(el) {
+    var l = parseInt(el.getAttribute('data-line'));
+    el.className = 'step-line';
+    if (l < step) el.classList.add('completed');
+  });
+
+  currentStep = step;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Populate step-specific data
+  if (step === 2) populateStep2();
+  if (step === 5) populateStep5();
+}
+
+// ---- STEP 1: Validate Token ----
+async function validateToken() {
+  if (!(await ensureWallet())) return;
+
+  var addr = document.getElementById('tokenAddress').value.trim();
+  if (!ethers.isAddress(addr)) {
+    showToast('Invalid address format', 'error');
+    return;
+  }
+
+  var btn = document.getElementById('btnValidate');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Validating...';
+
+  try {
+    var token = new ethers.Contract(addr, ERC3643_CHECK_ABI, provider);
+    var name = await token.name();
+    var symbol = await token.symbol();
+    var supply = await token.totalSupply();
+    var decimals;
+    try { decimals = await token.decimals(); } catch(_) { decimals = 18; }
+
+    // Check ERC-3643 compliance by looking for identityRegistry
+    var isERC3643 = false;
+    try {
+      var idReg = await token.identityRegistry();
+      isERC3643 = idReg && idReg !== ethers.ZeroAddress;
+    } catch(_) {
+      isERC3643 = false;
+    }
+
+    var formatted = ethers.formatUnits(supply, decimals);
+
+    // Store
+    regData.tokenAddress = addr;
+    regData.tokenName = name;
+    regData.tokenSymbol = symbol;
+    regData.totalSupply = supply;
+    regData.decimals = Number(decimals);
+    regData.isERC3643 = isERC3643;
+
+    // Display
+    document.getElementById('valName').textContent = name;
+    document.getElementById('valSymbol').textContent = symbol;
+    document.getElementById('valSupply').textContent = Number(formatted).toLocaleString();
+    document.getElementById('valCompliance').textContent = isERC3643 ? 'Compliant' : 'Not Compliant';
+
+    document.getElementById('valNameIcon').className = 'val-icon ok';
+    document.getElementById('valNameIcon').innerHTML = '&#10003;';
+    document.getElementById('valSymbolIcon').className = 'val-icon ok';
+    document.getElementById('valSymbolIcon').innerHTML = '&#10003;';
+    document.getElementById('valSupplyIcon').className = 'val-icon ok';
+    document.getElementById('valSupplyIcon').innerHTML = '&#10003;';
+
+    if (isERC3643) {
+      document.getElementById('valComplianceIcon').className = 'val-icon ok';
+      document.getElementById('valComplianceIcon').innerHTML = '&#10003;';
+    } else {
+      document.getElementById('valComplianceIcon').className = 'val-icon fail';
+      document.getElementById('valComplianceIcon').innerHTML = '&#10007;';
+    }
+
+    document.getElementById('valResults').classList.add('show');
+
+    if (isERC3643) {
+      document.getElementById('step1BtnRow').style.display = 'flex';
+    } else {
+      document.getElementById('step1BtnRow').style.display = 'none';
+      showToast('This token is not ERC-3643 compliant. CoverFi requires ERC-3643 tokens only.', 'error');
+    }
+
+  } catch (err) {
+    showToast('Token validation failed: ' + (err.reason || err.message || 'Unknown error'), 'error');
+    document.getElementById('valResults').classList.remove('show');
+    document.getElementById('step1BtnRow').style.display = 'none';
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Validate Token';
+}
+
+// ---- STEP 2: Bond Calculation ----
+async function populateStep2() {
+  // Calculate market cap: totalSupply * $0.10
+  // NAV = 0.10 USDT, USDT has 6 decimals on BSC
+  var supplyFormatted = ethers.formatUnits(regData.totalSupply, regData.decimals);
+  var supplyNum = parseFloat(supplyFormatted);
+  var marketCapUSD = supplyNum * 0.10;
+  var bondUSD = marketCapUSD * 0.05;
+
+  // In USDT (6 decimals)
+  regData.marketCap = ethers.parseUnits(marketCapUSD.toFixed(6), 6);
+  regData.requiredBond = ethers.parseUnits(bondUSD.toFixed(6), 6);
+
+  document.getElementById('calcSupply').textContent = supplyNum.toLocaleString();
+  document.getElementById('calcMarketCap').textContent = '$' + marketCapUSD.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  document.getElementById('calcBond').textContent = '$' + bondUSD.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
+
+  // Get USDT balance
+  if (userAddress) {
+    try {
+      var usdt = new ethers.Contract(CONTRACTS.MockUSDT, ERC20_ABI, provider);
+      var balance = await usdt.balanceOf(userAddress);
+      var balFormatted = ethers.formatUnits(balance, 18);
+      document.getElementById('calcBalance').textContent = '$' + parseFloat(balFormatted).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    } catch(e) {
+      document.getElementById('calcBalance').textContent = 'Error loading';
+    }
+  }
+}
+
+async function approveAndDeposit() {
+  if (!(await ensureWallet())) return;
+
+  var btn = document.getElementById('btnDeposit');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Approving USDT...';
+
+  try {
+    var usdt = new ethers.Contract(CONTRACTS.MockUSDT, ERC20_ABI, signer);
+
+    // Step 1: Approve
+    showToast('Approve USDT spending in MetaMask...', 'info');
+    var approveTx = await usdt.approve(CONTRACTS.IssuerBond, regData.requiredBond);
+    showToast('Waiting for approval confirmation...', 'info');
+    await approveTx.wait();
+    showToast('USDT approved! Now depositing bond...', 'success');
+
+    // Step 2: Deposit
+    btn.innerHTML = '<span class="spinner"></span> Depositing Bond...';
+    var bondContract = new ethers.Contract(CONTRACTS.IssuerBond, COVERFI_ABIS.IssuerBond, signer);
+    var depositTx = await bondContract.deposit(regData.tokenAddress, regData.requiredBond, regData.marketCap);
+    showToast('Waiting for deposit confirmation...', 'info');
+    await depositTx.wait();
+
+    regData.bondDeposited = true;
+    showToast('Bond deposited successfully!', 'success');
+
+    // Show success and switch to next button
+    document.getElementById('bondStatus').style.display = 'block';
+    btn.parentElement.classList.add('hidden');
+    document.getElementById('step2NextRow').classList.remove('hidden');
+
+  } catch (err) {
+    var msg = err.reason || err.message || 'Transaction failed';
+    if (msg.length > 100) msg = msg.substring(0, 100) + '...';
+    showToast('Bond deposit failed: ' + msg, 'error');
+    btn.disabled = false;
+    btn.innerHTML = 'Approve &amp; Deposit Bond';
+  }
+}
+
+// ---- STEP 3: Attestor Validation ----
+var attestorDebounce = {};
+
+function validateAttestor(role) {
+  clearTimeout(attestorDebounce[role]);
+  attestorDebounce[role] = setTimeout(function() { doValidateAttestor(role); }, 500);
+}
+
+async function doValidateAttestor(role) {
+  var inputId = role === 'legalRep' ? 'legalRepAddr' : (role + 'Addr');
+  var statusEl = document.getElementById(role + 'Status');
+  var metaEl = document.getElementById(role + 'Meta');
+  var addr = document.getElementById(inputId).value.trim();
+
+  if (!addr || !ethers.isAddress(addr)) {
+    statusEl.className = 'attestor-status';
+    statusEl.textContent = '';
+    metaEl.textContent = '';
+    regData[role + 'Valid'] = false;
+    regData[role] = '';
+    updateStep3();
+    return;
+  }
+
+  if (!provider) {
+    statusEl.className = 'attestor-status invalid';
+    statusEl.textContent = 'Connect wallet first';
+    return;
+  }
+
+  try {
+    var tir = new ethers.Contract(CONTRACTS.TIR, COVERFI_ABIS.TIR, provider);
+    var info = await tir.attestors(addr);
+
+    // info: wallet, attestorType, bondBNB, registrationTimestamp, status, successfulAttestations, disputedAttestations, slashCount
+    var status = Number(info.status);
+    // Status 0 = None, 1 = Active, 2 = Suspended, 3 = Exited
+    if (status === 1) {
+      statusEl.className = 'attestor-status valid';
+      statusEl.innerHTML = '&#10003; Active TIR member';
+
+      var bondBNB = ethers.formatEther(info.bondBNB);
+      var regTimestamp = Number(info.registrationTimestamp);
+      var daysRegistered = regTimestamp > 0 ? Math.floor((Date.now() / 1000 - regTimestamp) / 86400) : 0;
+
+      metaEl.textContent = 'Bond: ' + parseFloat(bondBNB).toFixed(2) + ' USDT | Days registered: ' + daysRegistered;
+
+      regData[role + 'Valid'] = true;
+      regData[role] = addr;
+
+      // Track fast track eligibility from custodian
+      if (role === 'custodian') {
+        regData.custodianDays = daysRegistered;
+        regData.fastTrack = daysRegistered >= 30;
+      }
+    } else {
+      statusEl.className = 'attestor-status invalid';
+      var statusNames = ['Not Registered', 'Active', 'Suspended', 'Exited'];
+      statusEl.innerHTML = '&#10007; ' + (statusNames[status] || 'Invalid');
+      metaEl.textContent = '';
+      regData[role + 'Valid'] = false;
+      regData[role] = '';
+    }
+  } catch (err) {
+    statusEl.className = 'attestor-status invalid';
+    statusEl.innerHTML = '&#10007; Could not verify';
+    metaEl.textContent = '';
+    regData[role + 'Valid'] = false;
+    regData[role] = '';
+  }
+
+  updateStep3();
+}
+
+function updateStep3() {
+  var allValid = regData.custodianValid && regData.legalRepValid && regData.auditorValid;
+  document.getElementById('btnStep3Next').disabled = !allValid;
+
+  // Show track eligibility
+  var trackEl = document.getElementById('trackDisplay');
+  if (regData.custodianValid) {
+    trackEl.style.display = 'block';
+    if (regData.fastTrack) {
+      trackEl.className = 'track-display fast';
+      document.getElementById('trackLabel').textContent = 'FAST TRACK (14 days)';
+      document.getElementById('trackValue').textContent = 'Your custodian qualifies!';
+      document.getElementById('trackSub').textContent = 'Custodian registered 30+ days | Activation IRS: 650';
+    } else {
+      trackEl.className = 'track-display standard';
+      document.getElementById('trackLabel').textContent = 'STANDARD TRACK (60 days)';
+      document.getElementById('trackValue').textContent = 'Standard observation period';
+      document.getElementById('trackSub').textContent = 'Custodian registered ' + regData.custodianDays + ' days (need 30+ for fast track) | Activation IRS: 600';
+    }
+  } else {
+    trackEl.style.display = 'none';
+  }
+}
+
+// ---- STEP 4: BAS UID ----
+function checkStep4() {
+  var val = document.getElementById('basUID').value.trim();
+  regData.basUID = val;
+  document.getElementById('btnStep4Next').disabled = !val;
+}
+
+// ---- STEP 5: Summary & Register ----
+function populateStep5() {
+  document.getElementById('sumToken').textContent = regData.tokenName + ' (' + regData.tokenSymbol + ')';
+  document.getElementById('sumContract').textContent = regData.tokenAddress.slice(0, 8) + '...' + regData.tokenAddress.slice(-6);
+  var bondFormatted = ethers.formatUnits(regData.requiredBond, 6);
+  document.getElementById('sumBond').textContent = '$' + parseFloat(bondFormatted).toLocaleString(undefined, {minimumFractionDigits: 2}) + ' USDT';
+  document.getElementById('sumCustodian').textContent = regData.custodian.slice(0, 8) + '...' + regData.custodian.slice(-4);
+  document.getElementById('sumLegalRep').textContent = regData.legalRep.slice(0, 8) + '...' + regData.legalRep.slice(-4);
+  document.getElementById('sumAuditor').textContent = regData.auditor.slice(0, 8) + '...' + regData.auditor.slice(-4);
+  document.getElementById('sumBAS').textContent = regData.basUID;
+  document.getElementById('sumTrack').textContent = regData.fastTrack ? 'Fast Track (14 days)' : 'Standard (60 days)';
+  document.getElementById('sumIRS').textContent = regData.fastTrack ? '650' : '600';
+}
+
+async function registerIssuer() {
+  if (!(await ensureWallet())) return;
+
+  var btn = document.getElementById('btnRegister');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Registering...';
+
+  try {
+    var registry = new ethers.Contract(CONTRACTS.IssuerRegistry, COVERFI_ABIS.IssuerRegistry, signer);
+
+    showToast('Confirm registration transaction in MetaMask...', 'info');
+
+    var basUIDNum = BigInt(regData.basUID);
+    var tx = await registry.register(
+      regData.tokenAddress,
+      basUIDNum,
+      regData.custodian,
+      regData.legalRep,
+      regData.auditor,
+      regData.marketCap,
+      regData.fastTrack
+    );
+
+    showToast('Waiting for confirmation...', 'info');
+    await tx.wait();
+
+    showToast('Registration successful!', 'success');
+
+    // Show success screen
+    document.getElementById('step5Body').style.display = 'none';
+    document.getElementById('successScreen').classList.add('show');
+    document.getElementById('successTrack').textContent = regData.fastTrack ? 'Fast Track (14 days)' : 'Standard (60 days)';
+
+  } catch (err) {
+    var msg = err.reason || err.message || 'Transaction failed';
+    if (msg.length > 100) msg = msg.substring(0, 100) + '...';
+    showToast('Registration failed: ' + msg, 'error');
+    btn.disabled = false;
+    btn.innerHTML = 'Register Now';
+  }
+}
+
+// ---- Expandable ----
+function toggleExpand(trigger) {
+  trigger.classList.toggle('open');
+  var content = trigger.nextElementSibling;
+  content.classList.toggle('show');
+}
+
+// ---- Auto-reconnect on load ----
+(async function() {
+  if (localStorage.getItem('coverfi-wallet-connected') === 'true' && typeof window.ethereum !== 'undefined') {
+    try {
+      var accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      if (accounts && accounts.length > 0) {
+        provider = new ethers.BrowserProvider(window.ethereum);
+        signer = await provider.getSigner();
+        userAddress = await signer.getAddress();
+        var btn = document.getElementById('btnConnect');
+        btn.textContent = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+        btn.classList.add('connected');
+      }
+    } catch(_) {}
+  }
+})();
+</script>
+</body>
+</html>

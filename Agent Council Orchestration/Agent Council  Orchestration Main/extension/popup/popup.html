@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=400, initial-scale=1.0">
+  <link rel="stylesheet" href="popup.css">
+  <title>AeroFyta</title>
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-brand">
+        <img src="../icons/icon48.png" alt="AeroFyta" class="header-icon">
+        <div>
+          <h1 class="header-title">AeroFyta</h1>
+          <span class="header-subtitle">Autonomous Creator Tipping</span>
+        </div>
+      </div>
+      <div class="status-badge" id="statusBadge">
+        <span class="status-dot"></span>
+        <span class="status-text">Disconnected</span>
+      </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+      <button class="tab-btn tab-btn--active" data-tab="main">Tips</button>
+      <button class="tab-btn" data-tab="events">Events</button>
+    </nav>
+
+    <!-- ══ MAIN TAB ══ -->
+    <div class="tab-content tab-content--active" id="tab-main">
+
+    <!-- Not on Rumble Banner -->
+    <section class="card not-rumble-card" id="notRumbleCard" style="display:none;">
+      <div class="not-rumble-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#555570" stroke-width="1.5"/><path d="M15 9l-6 6M9 9l6 6" stroke="#555570" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="not-rumble-text">
+        <strong>Not on Rumble</strong>
+        <span>Visit a Rumble channel or video page to detect creators and send tips.</span>
+      </div>
+    </section>
+
+    <!-- Wallet Card -->
+    <section class="card wallet-card">
+      <div class="card-header">
+        <span class="card-label">Wallet Balance</span>
+        <span class="chain-badge" id="chainBadge">EVM</span>
+      </div>
+      <div class="balance-row">
+        <span class="balance-amount" id="balanceAmount">--</span>
+        <span class="balance-currency">USDT</span>
+      </div>
+      <div class="wallet-address" id="walletAddress" title="Click to copy">
+        Not connected
+      </div>
+    </section>
+
+    <!-- Current Creator -->
+    <section class="card creator-card" id="creatorCard" style="display:none;">
+      <div class="card-header">
+        <span class="card-label">Detected Creator</span>
+        <span class="page-type-badge" id="pageTypeBadge"></span>
+      </div>
+      <div class="creator-info">
+        <div class="creator-avatar" id="creatorAvatar">?</div>
+        <div class="creator-details">
+          <span class="creator-name" id="creatorName">--</span>
+          <span class="creator-channel" id="creatorChannel">--</span>
+          <span class="creator-subs" id="creatorSubs" style="display:none;"></span>
+        </div>
+      </div>
+
+      <!-- Quick Tip Amounts -->
+      <div class="tip-amounts">
+        <button class="btn btn-chip" data-amount="0.50">$0.50</button>
+        <button class="btn btn-chip" data-amount="1.00">$1</button>
+        <button class="btn btn-chip aerofyta-chip-active" data-amount="2.00">$2</button>
+        <button class="btn btn-chip" data-amount="5.00">$5</button>
+      </div>
+      <div class="tip-custom">
+        <input type="number" id="customAmount" class="input" placeholder="Custom amount" min="0.01" step="0.01">
+        <span class="input-suffix">USDT</span>
+      </div>
+      <button class="btn btn-primary btn-tip" id="tipButton">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.4 8.6L21.5 9.3L16.1 14L17.6 21L12 17.5L6.4 21L7.9 14L2.5 9.3L9.6 8.6L12 2Z" fill="currentColor"/></svg>
+        Send $2.00 Tip
+      </button>
+    </section>
+
+    <!-- Per-Creator Rules -->
+    <details class="settings-panel rules-panel" id="rulesPanel">
+      <summary class="settings-toggle">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 14l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Creator Rules
+        <span class="card-count" id="rulesCount">0</span>
+      </summary>
+      <div class="settings-content rules-content">
+        <!-- Add rule for current creator -->
+        <div class="rule-add" id="ruleAddSection" style="display:none;">
+          <div class="rule-add-header">
+            <span class="rule-add-label" id="ruleAddLabel">Configure for --</span>
+          </div>
+          <div class="rule-fields">
+            <div class="setting-row">
+              <label class="setting-label" for="ruleMaxPerDay">Max $/day</label>
+              <input type="number" id="ruleMaxPerDay" class="input" value="5" min="0.01" step="0.5">
+            </div>
+            <div class="setting-row">
+              <label class="setting-label" for="ruleMinWatch">Min watch (min)</label>
+              <input type="number" id="ruleMinWatch" class="input" value="5" min="1" step="1">
+            </div>
+            <div class="setting-row">
+              <label class="setting-label" for="ruleTipRate">$/min rate</label>
+              <input type="number" id="ruleTipRate" class="input" value="0.10" min="0.01" step="0.01">
+            </div>
+            <div class="setting-row">
+              <label class="setting-label" for="ruleEnabled">Enabled</label>
+              <label class="toggle">
+                <input type="checkbox" id="ruleEnabled" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-save-rule" id="saveRuleBtn">Save Rule</button>
+        </div>
+        <!-- Configured creators list -->
+        <div class="rules-list" id="rulesList">
+          <div class="tip-empty">No creator rules configured yet.</div>
+        </div>
+        <button class="btn btn-secondary btn-reset-rules" id="resetRulesBtn" style="display:none;">Reset All Rules</button>
+      </div>
+    </details>
+
+    <!-- Recent Tips -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-label">Tip History</span>
+        <span class="card-count" id="tipCount">0</span>
+      </div>
+      <div class="tip-list" id="tipList">
+        <div class="tip-empty">No tips yet. Visit a Rumble creator to get started!</div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <details class="settings-panel">
+      <summary class="settings-toggle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 9a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="1.2"/><path d="M11.4 8.6l.9.5a.5.5 0 01.2.7l-1 1.7a.5.5 0 01-.6.2l-.9-.4a4.5 4.5 0 01-1 .6l-.1 1a.5.5 0 01-.5.4H6.6a.5.5 0 01-.5-.4l-.1-1a4.5 4.5 0 01-1-.6l-.9.4a.5.5 0 01-.6-.2l-1-1.7a.5.5 0 01.2-.7l.9-.5a4.5 4.5 0 010-1.2l-.9-.5a.5.5 0 01-.2-.7l1-1.7a.5.5 0 01.6-.2l.9.4a4.5 4.5 0 011-.6l.1-1A.5.5 0 016.6.7h1.8a.5.5 0 01.5.4l.1 1a4.5 4.5 0 011 .6l.9-.4a.5.5 0 01.6.2l1 1.7a.5.5 0 01-.2.7l-.9.5a4.5 4.5 0 010 1.2z" stroke="currentColor" stroke-width="1.2"/></svg>
+        Settings
+      </summary>
+      <div class="settings-content">
+        <div class="setting-row">
+          <label class="setting-label" for="apiUrl">Agent API URL</label>
+          <input type="url" id="apiUrl" class="input" value="http://localhost:3001" placeholder="http://localhost:3001">
+        </div>
+        <div class="setting-row">
+          <label class="setting-label" for="defaultTip">Default Tip (USDT)</label>
+          <input type="number" id="defaultTip" class="input" value="2.00" min="0.01" step="0.01">
+        </div>
+        <div class="setting-row">
+          <label class="setting-label" for="autoDetect">Auto-detect creators</label>
+          <label class="toggle">
+            <input type="checkbox" id="autoDetect" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <button class="btn btn-secondary btn-save" id="saveSettings">Save Settings</button>
+      </div>
+    </details>
+
+    </div><!-- end tab-main -->
+
+    <!-- ══ EVENTS TAB ══ -->
+    <div class="tab-content" id="tab-events">
+
+      <!-- Hype Score Gauge -->
+      <section class="card hype-card">
+        <div class="card-header">
+          <span class="card-label">Live Hype Score</span>
+          <span class="hype-status" id="hypeStatus">Inactive</span>
+        </div>
+        <div class="hype-gauge">
+          <div class="hype-gauge-track">
+            <div class="hype-gauge-fill" id="hypeGaugeFill" style="width: 0%"></div>
+          </div>
+          <span class="hype-gauge-score" id="hypeGaugeScore">0</span>
+          <span class="hype-gauge-max">/100</span>
+        </div>
+        <div class="hype-signals">
+          <span class="hype-signal">Velocity 0.35</span>
+          <span class="hype-signal">Keywords 0.25</span>
+          <span class="hype-signal">Emoji 0.20</span>
+          <span class="hype-signal">Caps 0.20</span>
+        </div>
+      </section>
+
+      <!-- Event Monitors -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-label">Event Monitors</span>
+          <span class="card-count">6</span>
+        </div>
+        <div class="event-monitors">
+          <div class="event-monitor-row">
+            <span class="event-monitor-icon">&#x23F1;</span>
+            <div class="event-monitor-info">
+              <span class="event-monitor-name">Watch Time</span>
+              <span class="event-monitor-desc">Tip after <input type="number" id="evtWatchMinutes" class="input input-mini" value="5" min="1" max="60"> min</span>
+            </div>
+            <label class="toggle"><input type="checkbox" id="evtWatchEnabled" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="event-monitor-row">
+            <span class="event-monitor-icon">&#x1F525;</span>
+            <div class="event-monitor-info">
+              <span class="event-monitor-name">Chat Hype</span>
+              <span class="event-monitor-desc">Threshold <input type="number" id="evtHypeThreshold" class="input input-mini" value="70" min="10" max="100">/100</span>
+            </div>
+            <label class="toggle"><input type="checkbox" id="evtHypeEnabled" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="event-monitor-row">
+            <span class="event-monitor-icon">&#x1F4C8;</span>
+            <div class="event-monitor-info">
+              <span class="event-monitor-name">Viewer Spike</span>
+              <span class="event-monitor-desc">Spike &ge;<input type="number" id="evtSpikePercent" class="input input-mini" value="20" min="5" max="100">%</span>
+            </div>
+            <label class="toggle"><input type="checkbox" id="evtSpikeEnabled" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="event-monitor-row">
+            <span class="event-monitor-icon">&#x1F3C6;</span>
+            <div class="event-monitor-info">
+              <span class="event-monitor-name">Follower Milestones</span>
+              <span class="event-monitor-desc">100, 500, 1K, 5K, 10K...</span>
+            </div>
+            <label class="toggle"><input type="checkbox" id="evtFollowerEnabled" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="event-monitor-row">
+            <span class="event-monitor-icon">&#x2B50;</span>
+            <div class="event-monitor-info">
+              <span class="event-monitor-name">Subscribe Events</span>
+              <span class="event-monitor-desc">When you follow a creator</span>
+            </div>
+            <label class="toggle"><input type="checkbox" id="evtSubscribeEnabled" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="event-monitor-row">
+            <span class="event-monitor-icon">&#x1F4B0;</span>
+            <div class="event-monitor-info">
+              <span class="event-monitor-name">Manual Tips</span>
+              <span class="event-monitor-desc">FAB button &amp; popup tips</span>
+            </div>
+            <label class="toggle"><input type="checkbox" id="evtManualEnabled" checked><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-save-events" id="saveEventsBtn">Save Event Config</button>
+      </section>
+
+      <!-- Event History -->
+      <section class="card">
+        <div class="card-header">
+          <span class="card-label">Event History</span>
+          <span class="card-count" id="eventHistoryCount">0</span>
+        </div>
+        <div class="event-history-list" id="eventHistoryList">
+          <div class="tip-empty">No events triggered yet.</div>
+        </div>
+      </section>
+
+    </div><!-- end tab-events -->
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>AeroFyta v0.1.0</span>
+      <span class="footer-sep">&middot;</span>
+      <span>Powered by Tether WDK</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

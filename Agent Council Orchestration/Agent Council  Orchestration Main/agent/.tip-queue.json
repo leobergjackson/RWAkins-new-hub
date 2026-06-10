@@ -1,0 +1,54 @@
+{
+  "queue": [
+    {
+      "id": "e505299e-9378-4ae3-9f44-185bf1b0687f",
+      "recipient": "0xA",
+      "amount": "0.01",
+      "token": "native",
+      "priority": "normal",
+      "status": "queued",
+      "attempts": 0,
+      "maxAttempts": 3,
+      "createdAt": "2026-03-22T16:45:53.338Z",
+      "source": "api"
+    },
+    {
+      "id": "35cf6e01-5feb-4c15-a44a-53773be9c7a1",
+      "recipient": "0xB",
+      "amount": "0.02",
+      "token": "native",
+      "priority": "normal",
+      "status": "queued",
+      "attempts": 0,
+      "maxAttempts": 3,
+      "createdAt": "2026-03-22T16:45:53.340Z",
+      "source": "api"
+    },
+    {
+      "id": "1ceae97e-0d96-4c21-bd90-61012bb0f6ce",
+      "recipient": "0xA",
+      "amount": "0.01",
+      "token": "native",
+      "priority": "batch",
+      "status": "queued",
+      "attempts": 0,
+      "maxAttempts": 3,
+      "createdAt": "2026-03-22T16:45:53.344Z",
+      "source": "api"
+    },
+    {
+      "id": "9aac88aa-159a-4544-b3b1-0591d8cb5da5",
+      "recipient": "0xB",
+      "amount": "0.02",
+      "token": "native",
+      "priority": "batch",
+      "status": "queued",
+      "attempts": 0,
+      "maxAttempts": 3,
+      "createdAt": "2026-03-22T16:45:53.345Z",
+      "source": "api"
+    }
+  ],
+  "deadLetterQueue": [],
+  "savedAt": "2026-03-22T16:45:53.345Z"
+}

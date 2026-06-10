@@ -1,0 +1,12 @@
+node_modules
+cache
+artifacts
+typechain-types
+coverage
+coverage.json
+.env
+dist
+*.log
+test-results
+playwright-report
+/playwright/.cache

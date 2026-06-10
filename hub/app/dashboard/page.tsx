@@ -1,4 +1,4 @@
-// Built by vsrupeshkumar
+﻿// Built by vsrupeshkumar
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
@@ -26,7 +26,6 @@ import DailyBriefing from '@/components/ui/DailyBriefing'
 import WalletPortfolio from '@/components/ui/WalletPortfolio'
 import ArbitrumActivity from '@/components/ui/ArbitrumActivity'
 import AgentSafetyWidget from '@/components/ui/AgentSafetyWidget'
-import { getInvoiceStats } from '@/lib/invoice/invoiceStore'
 
 /* ── Theme — light, landing-page aesthetic ──────────── */
 const BG      = '#FAFBFF'
@@ -123,9 +122,9 @@ function DashSidebar({
             width: 28, height: 28, borderRadius: 8, flexShrink: 0,
             background: `linear-gradient(135deg, ${ACCENT}, #8B5CF6)`,
             display: 'grid', placeItems: 'center',
-            fontSize: 14, fontWeight: 900, color: '#fff',
-          }}>K</div>
-          <span style={{ fontSize: 16, fontWeight: 800, color: INK, letterSpacing: '-0.02em' }}>Kubryx</span>
+            fontSize: 9, fontWeight: 900, color: '#fff', letterSpacing: '-0.02em',
+          }}>RWA</div>
+          <span style={{ fontSize: 16, fontWeight: 800, color: INK, letterSpacing: '-0.02em' }}>RWAkins</span>
         </div>
 
         {/* Nav items */}
@@ -223,7 +222,7 @@ function DashSidebar({
                 : '0x9F3C…E3A1'}
             </div>
             <div style={{ fontSize: 11, color: MUTED2, marginBottom: 10 }}>
-              Mantle • Mantle • Mantle • ETH
+              Mantle Sepolia · Chain 5003
             </div>
             <button
               onClick={onDisconnect}
@@ -354,7 +353,7 @@ function ProtocolActivity() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
         <div>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED2 }}>
-            Protocol Activity
+            Agent Activity
           </div>
           <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginTop: 2 }}>
             Last {range === '1D' ? '24 hours' : range === '7D' ? '7 days' : range === '30D' ? '30 days' : 'all time'}
@@ -467,47 +466,171 @@ function ProtocolActivity() {
   )
 }
 
-/* ── Invoice Activity Card ───────────────────────────── */
-function InvoiceActivityCard() {
-  const [stats, setStats] = useState<{ totalCreated: number; totalPaid: number; totalUSDC: number; lastCreated: string | null } | null>(null)
+/* ── 6-Step Workflow Strip ───────────────────────────── */
+const WORKFLOW_STEPS = [
+  { n: 1, icon: '🔗', title: 'Connect',   desc: 'Link your wallet on Mantle Sepolia' },
+  { n: 2, icon: '💬', title: 'Tell AI',   desc: 'Set your wealth rules in plain English' },
+  { n: 3, icon: '📡', title: 'Monitor',   desc: 'Agent watches ETH price & USDY yield live' },
+  { n: 4, icon: '🧠', title: 'Evaluate',  desc: 'AI checks if your rules need action' },
+  { n: 5, icon: '⚡', title: 'Execute',   desc: 'Rebalance happens on Mantle — tx logged' },
+  { n: 6, icon: '📊', title: 'See it',    desc: 'Dashboard shows what changed + tx proof' },
+]
 
-  useEffect(() => {
-    setStats(getInvoiceStats())
-  }, [])
+function WorkflowStrip({ walletConnected, rulesSet }: { walletConnected: boolean; rulesSet: boolean }) {
+  const done = walletConnected ? (rulesSet ? 3 : 2) : 0
+  return (
+    <div style={{ padding: '20px 24px 0' }}>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED2, marginBottom: 12 }}>
+        How RWAkins Works — 6 Steps
+      </div>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: 8,
+      }}>
+        {WORKFLOW_STEPS.map(s => {
+          const isDone = s.n <= done
+          const isNext = s.n === done + 1
+          return (
+            <div key={s.n} style={{
+              background: isDone ? 'rgba(99,102,241,0.06)' : isNext ? 'rgba(236,72,153,0.05)' : '#fff',
+              border: `1px solid ${isDone ? 'rgba(99,102,241,0.25)' : isNext ? 'rgba(236,72,153,0.2)' : BORDER}`,
+              borderRadius: 14,
+              padding: '14px 16px',
+              position: 'relative',
+              overflow: 'hidden',
+            }}>
+              {isNext && (
+                <div style={{ position: 'absolute', top: 8, right: 10, fontSize: 9, fontWeight: 800, color: PINK, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                  Up next
+                </div>
+              )}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                <span style={{
+                  width: 24, height: 24, borderRadius: 8, flexShrink: 0,
+                  display: 'grid', placeItems: 'center', fontSize: 13,
+                  background: isDone ? 'rgba(99,102,241,0.12)' : isNext ? 'rgba(236,72,153,0.1)' : 'rgba(15,23,42,0.05)',
+                }}>
+                  {isDone ? '✓' : s.icon}
+                </span>
+                <span style={{ fontSize: 12, fontWeight: 800, color: isDone ? ACCENT : isNext ? PINK : INK }}>
+                  {s.n}. {s.title}
+                </span>
+              </div>
+              <p style={{ margin: 0, fontSize: 11.5, color: MUTED, lineHeight: 1.45 }}>{s.desc}</p>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
 
-  if (!stats) return null
+/* ── AI CFO Status Card ──────────────────────────────── */
+function AICFOStatusCard({ walletConnected, rulesSet }: { walletConnected: boolean; rulesSet: boolean }) {
+  const bgTeal  = 'rgba(20,184,166,0.06)'
+  const bdTeal  = 'rgba(20,184,166,0.22)'
+  const bgAmber = 'rgba(251,191,36,0.06)'
+  const bdAmber = 'rgba(251,191,36,0.2)'
 
   return (
     <div style={{ padding: '20px 24px 0' }}>
       <div style={{
-        background: 'rgba(200,255,0,0.03)',
-        border: '1px solid rgba(200,255,0,0.15)',
-        borderRadius: 16, padding: '16px 20px',
+        background: walletConnected ? bgTeal : bgAmber,
+        border: `1px solid ${walletConnected ? bdTeal : bdAmber}`,
+        borderRadius: 16, padding: '18px 22px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16,
       }}>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#C8FF00', marginBottom: 4 }}>
-            Invoice Activity
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+            <span style={{ fontSize: 16 }}>{walletConnected ? '🤖' : '⚠️'}</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: INK }}>
+              {walletConnected
+                ? rulesSet ? 'AI CFO is active — rules saved' : 'Wallet connected — tell the AI your goals'
+                : 'Start here: connect your wallet'}
+            </span>
           </div>
-          <div style={{ fontSize: 13, color: MUTED }}>
-            {stats.totalCreated === 0
-              ? 'No invoices yet — create your first'
-              : `${stats.totalCreated} created · ${stats.totalPaid} paid · $${stats.totalUSDC.toFixed(2)} USDC received`}
-          </div>
-          {stats.lastCreated && (
-            <div style={{ fontSize: 11, color: MUTED2, marginTop: 4 }}>
-              Last: {new Date(stats.lastCreated).toLocaleDateString()}
-            </div>
+          <p style={{ margin: 0, fontSize: 12.5, color: MUTED, lineHeight: 1.5, maxWidth: 520 }}>
+            {walletConnected
+              ? rulesSet
+                ? 'Your AI CFO is monitoring ETH price and USDY yield. Click "Run Rebalance" on the Portfolio page when you\'re ready to execute.'
+                : 'Describe your risk appetite in plain English — "medium risk, keep 60% in USDY". The AI converts it to on-chain rules instantly.'
+              : 'RWAkins uses your wallet to read your on-chain balance and execute rebalances between USDY (stable yield) and mETH (ETH staking yield) on Mantle Sepolia.'}
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {!walletConnected && (
+            <Link href="/onboarding" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '9px 18px', borderRadius: 10, fontSize: 13, fontWeight: 700, background: ACCENT, color: '#fff', textDecoration: 'none', boxShadow: `0 4px 14px ${ACCENT}40` }}>
+              Connect wallet →
+            </Link>
+          )}
+          {walletConnected && !rulesSet && (
+            <Link href="/onboarding" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '9px 18px', borderRadius: 10, fontSize: 13, fontWeight: 700, background: PINK, color: '#fff', textDecoration: 'none', boxShadow: `0 4px 14px ${PINK}40` }}>
+              Set wealth rules →
+            </Link>
+          )}
+          {rulesSet && (
+            <Link href="/portfolio" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '9px 18px', borderRadius: 10, fontSize: 13, fontWeight: 700, background: '#14b8a6', color: '#fff', textDecoration: 'none', boxShadow: '0 4px 14px rgba(20,184,166,0.4)' }}>
+              View portfolio →
+            </Link>
           )}
         </div>
-        <Link href="/invoice" style={{
-          display: 'inline-flex', alignItems: 'center', gap: 8,
-          padding: '8px 16px', borderRadius: 999, fontSize: 13, fontWeight: 700,
-          background: 'rgba(200,255,0,0.1)', color: '#C8FF00',
-          border: '1px solid rgba(200,255,0,0.25)', textDecoration: 'none',
-        }}>
-          📄 Create Invoice
-        </Link>
+      </div>
+    </div>
+  )
+}
+
+/* ── 3 Agent App CTAs ────────────────────────────────── */
+const AGENT_CTАС = [
+  {
+    icon: '💬',
+    title: 'Set Wealth Rules',
+    desc: 'Tell the AI your goals in plain English. It converts them to on-chain risk guardrails.',
+    href: '/onboarding',
+    cta: 'Go to Onboarding',
+    accent: '#6366f1',
+    bg: 'rgba(99,102,241,0.05)',
+    border: 'rgba(99,102,241,0.2)',
+  },
+  {
+    icon: '📊',
+    title: 'Live Portfolio',
+    desc: 'See your USDY + mETH split, yield rate, and 30-day performance chart. One button to rebalance.',
+    href: '/portfolio',
+    cta: 'View Portfolio',
+    accent: '#14b8a6',
+    bg: 'rgba(20,184,166,0.05)',
+    border: 'rgba(20,184,166,0.2)',
+  },
+  {
+    icon: '🔗',
+    title: 'Agent Activity',
+    desc: 'Every AI decision logged on-chain. Click any action to see the Mantle Sepolia transaction.',
+    href: '/activity',
+    cta: 'View Activity',
+    accent: '#a78bfa',
+    bg: 'rgba(167,139,250,0.05)',
+    border: 'rgba(167,139,250,0.2)',
+  },
+]
+
+function AgentAppCTAs() {
+  return (
+    <div style={{ padding: '20px 24px 0' }}>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED2, marginBottom: 12 }}>
+        Agent App — 3 Screens
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+        {AGENT_CTАС.map(c => (
+          <div key={c.href} style={{ background: c.bg, border: `1px solid ${c.border}`, borderRadius: 16, padding: '18px 20px' }}>
+            <div style={{ fontSize: 22, marginBottom: 10 }}>{c.icon}</div>
+            <div style={{ fontSize: 14, fontWeight: 800, color: INK, marginBottom: 6 }}>{c.title}</div>
+            <p style={{ margin: '0 0 16px', fontSize: 12.5, color: MUTED, lineHeight: 1.5 }}>{c.desc}</p>
+            <Link href={c.href} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 8, fontSize: 12, fontWeight: 700, background: `${c.accent}18`, color: c.accent, border: `1px solid ${c.accent}35`, textDecoration: 'none' }}>
+              {c.cta} →
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   )
@@ -645,11 +768,14 @@ export default function DashboardPage() {
     : DASH_STATS.uptimeSub
 
   const statCards: StatCardData[] = [
-    { label: 'Active Tools',  value: activeToolsValue,                                               sub: 'backends live',                                          bg: 'rgba(99,102,241,0.08)',  border: 'rgba(99,102,241,0.3)',  subColor: '#6366f1', icon: '◈', accent: '#6366f1' },
-    { label: 'Chains',        value: DASH_STATS.chains.toString(),                                   sub: DASH_STATS.chainsSub,                                     bg: 'rgba(6,182,212,0.08)',   border: 'rgba(6,182,212,0.3)',   subColor: '#06b6d4', icon: '⛓', accent: '#06b6d4' },
-    { label: 'Active Agents', value: liveAgents !== null ? liveAgents.toLocaleString() : '—',        sub: liveAgents !== null ? 'via TrustMesh' : 'loading…',       bg: 'rgba(16,185,129,0.08)',  border: 'rgba(16,185,129,0.3)',  subColor: '#10b981', icon: '⬡', accent: '#10b981' },
-    { label: 'Backends Live', value: backendsLiveStr,                                                sub: lastUpdatedSub,                                           bg: 'rgba(236,72,153,0.08)',  border: 'rgba(236,72,153,0.3)',  subColor: '#ec4899', icon: '◎', accent: '#ec4899' },
+    { label: 'Stable Yield Asset',  value: 'USDY',     sub: '~4.8% APY · Real-world yield token',     bg: 'rgba(20,184,166,0.08)',  border: 'rgba(20,184,166,0.3)',  subColor: '#14b8a6', icon: '💵', accent: '#14b8a6' },
+    { label: 'Growth Asset',        value: 'mETH',     sub: '~3.6% APY · ETH staking yield',           bg: 'rgba(167,139,250,0.08)', border: 'rgba(167,139,250,0.3)', subColor: '#a78bfa', icon: '⟠',  accent: '#a78bfa' },
+    { label: 'Max Risk Cap',        value: '70%',      sub: 'mETH hard cap — enforced on-chain',       bg: 'rgba(99,102,241,0.08)',  border: 'rgba(99,102,241,0.3)',  subColor: '#6366f1', icon: '🛡', accent: '#6366f1' },
+    { label: 'Backends Live',       value: backendsLiveStr, sub: lastUpdatedSub,                       bg: 'rgba(16,185,129,0.08)',  border: 'rgba(16,185,129,0.3)',  subColor: '#10b981', icon: '◎', accent: '#10b981' },
   ]
+
+  const walletConnected = !!wallet
+  const rulesSet = false // future: read from localStorage via a useEffect
 
   function handleDisconnect() {
     setWallet('')
@@ -699,11 +825,11 @@ export default function DashboardPage() {
                 textTransform: 'uppercase',
                 display: 'inline-flex', alignItems: 'center', gap: 6,
               }}>
-                <span style={{ fontSize: 14, color: PINK }}>✦</span> Financial OS · Multi-chain
+                <span style={{ fontSize: 14, color: PINK }}>✦</span> AI CFO · Mantle Sepolia
               </span>
               <span style={{ width: 4, height: 4, borderRadius: '50%', background: MUTED2 }} />
               <span style={{ fontSize: 11, fontFamily: MONO, color: MUTED2 }}>
-                {creditTier.lendingRate}% APR · {creditTier.vaultLTV}% LTV unlocked
+                USDY · mETH · ERC-8004 Agent Identity
               </span>
             </div>
             <h1 style={{
@@ -714,17 +840,18 @@ export default function DashboardPage() {
               lineHeight: 1.05,
               margin: 0,
             }}>
-              {greeting}, <span style={{
+              {greeting}. Your{' '}
+              <span style={{
                 background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6 55%, #EC4899)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-              }}>Kubryx</span>.
+              }}>AI CFO</span>{' '}is ready.
             </h1>
-            <p style={{ fontSize: 14, color: MUTED, margin: '8px 0 0', maxWidth: 580, lineHeight: 1.5 }}>
-              {platform.creditScore !== null
-                ? `Your ${creditTier.name} tier is live across all 4 chains. Below is your full cross-chain state, refreshed in real time.`
-                : 'Connect your wallets to bring your full cross-chain identity online. All 8 tools share one credit score.'}
+            <p style={{ fontSize: 14, color: MUTED, margin: '8px 0 0', maxWidth: 600, lineHeight: 1.6 }}>
+              RWAkins watches live market data, checks your wealth rules, and rebalances between{' '}
+              <strong>USDY</strong> (stable real-world yield) and <strong>mETH</strong> (ETH staking yield) —
+              every decision logged on Mantle with a verifiable transaction hash.
             </p>
           </section>
 
@@ -746,8 +873,14 @@ export default function DashboardPage() {
             {statCards.map(card => <StatCard key={card.label} card={card} />)}
           </div>
 
-          {/* Invoice Activity Card */}
-          <InvoiceActivityCard />
+          {/* AI CFO Status — primary CTA based on where user is in the workflow */}
+          <AICFOStatusCard walletConnected={walletConnected} rulesSet={rulesSet} />
+
+          {/* 3 agent app entry points */}
+          <AgentAppCTAs />
+
+          {/* 6-step workflow progress */}
+          <WorkflowStrip walletConnected={walletConnected} rulesSet={rulesSet} />
 
           {/* Platform Identity — unified cross-module credit signal */}
           <div style={{ padding: '20px 24px 0' }}>
@@ -840,9 +973,9 @@ export default function DashboardPage() {
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', flex: 1 }}>
                 {[
                   platform.vaultActive      && { icon: '🔐', label: 'Vault',    note: '+85 pts', color: '#A855F7' },
-                  platform.stellarPayments  && { icon: '⭐', label: 'Mantle',  note: `${platform.stellarPayments} txns`, color: '#F472B6' },
+                  platform.stellarPayments  && { icon: '⭐', label: 'Payments', note: `${platform.stellarPayments} txns`, color: '#F472B6' },
                   platform.treasuryValue    && { icon: '💰', label: 'Treasury', note: `$${(platform.treasuryValue/1000).toFixed(0)}k`, color: '#00E5CC' },
-                  platform.solanaSlot       && { icon: '◎',  label: 'Mantle',   note: `slot #${platform.solanaSlot.toLocaleString()}`, color: '#9945FF' },
+                  platform.solanaSlot       && { icon: '◎',  label: 'On-chain', note: `block #${platform.solanaSlot.toLocaleString()}`, color: '#9945FF' },
                 ].filter(Boolean).map((s) => {
                   const sig = s as { icon: string; label: string; note: string; color: string }
                   return (
@@ -918,7 +1051,7 @@ export default function DashboardPage() {
           {/* Daily briefing — AI markets pulse */}
           <DailyBriefing />
 
-          {/* Protocol activity chart */}
+          {/* Agent activity chart (rebalances + transactions over time) */}
           <ProtocolActivity />
 
           {/* Live activity feed */}

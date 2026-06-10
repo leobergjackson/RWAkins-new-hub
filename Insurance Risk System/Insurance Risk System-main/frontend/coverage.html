@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CoverFi Coverage — My Protection Positions</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='8,8 16,8 20,14 16,20 8,20 4,14' fill='none' stroke='%23333' stroke-width='1.5'/><polygon points='16,8 24,8 28,14 24,20 16,20 12,14' fill='none' stroke='%23333' stroke-width='1.5'/><polygon points='16,5 22,14 16,23 10,14' fill='%23F0B90B'/><circle cx='16' cy='13' r='1.5' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+/* ============================================================
+   CoverFi Coverage — Claymorphism Warm Light Design
+   ============================================================ */
+
+:root {
+  --bg-primary: #E8F5E9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f5f6f8;
+  --text-primary: #2D3436;
+  --text-secondary: #5C676B;
+  --text-muted: #5f6b70;
+  --border-color: rgba(0,0,0,0.08);
+  --shadow-clay: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-clay-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --shadow-clay-sm: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-clay-inset: inset 2px 2px 5px rgba(0,0,0,0.15), inset -2px -2px 5px rgba(255,255,255,0.02);
+  --nav-bg: rgba(255,255,255,0.8);
+  --form-bg: #f5f5f5;
+  --form-border: rgba(0,0,0,0.1);
+  --gold: #F0B90B;
+  --gold-light: #FFD443;
+  --gold-dim: rgba(240,185,11,0.12);
+  --accent-coral: #FF6B6B;
+  --accent-purple: #6C5CE7;
+  --accent-green: #00C853;
+  --accent-green-light: #69F0AE;
+  --accent-green-dark: #00962A;
+  --accent-green-dim: rgba(0,200,83,0.12);
+  --color-pool: #3B8BFF;
+  --color-coverage: #E8760A;
+  --color-verify: #6C5CE7;
+  --color-payout: #00B894;
+  --color-success: #00B894;
+  --color-success-dim: rgba(0,184,148,0.12);
+  --color-danger: #EF4444;
+  --color-danger-dim: rgba(239,68,68,0.12);
+  --color-warning: #F0B90B;
+  --color-warning-dim: rgba(240,185,11,0.12);
+  --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-card: var(--radius-xl);
+  --radius-pill: 999px;
+  --spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.39, 0.575, 0.565, 1);
+  --motion: 1;
+  --nav-height: 68px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion: 0; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+::selection { background: rgba(0,200,83,0.25); color: #2D3436; }
+::-moz-selection { background: rgba(0,200,83,0.25); color: #2D3436; }
+
+body {
+  font-family: var(--font-main); font-size: 0.875rem; line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,200,83,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,200,83,0.5); }
+* { scrollbar-width: thin; scrollbar-color: rgba(0,200,83,0.3) transparent; }
+
+a { color: var(--accent-green); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--accent-green-dark); }
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--text-primary); }
+code, pre { font-family: var(--font-mono); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- ABSTRACT SVG BACKGROUND ---------- */
+.bg-blobs { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; display: none; }
+.bg-blob { position: absolute; opacity: 0.08; }
+.bg-blob:nth-child(1) { top: -5%; right: -5%; animation: blob-float-1 18s ease-in-out infinite; }
+.bg-blob:nth-child(2) { bottom: -10%; left: -5%; animation: blob-float-2 22s ease-in-out infinite; }
+.bg-blob:nth-child(3) { top: 40%; right: 10%; animation: blob-float-1 25s ease-in-out infinite reverse; }
+.bg-blob:nth-child(4) { bottom: 20%; left: 30%; animation: blob-float-2 20s ease-in-out infinite; }
+.bg-blob:nth-child(5) { top: 15%; left: 50%; animation: blob-float-1 23s ease-in-out infinite; animation-delay: -8s; }
+
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
+}
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 20px) scale(0.97); }
+  66% { transform: translate(15px, -25px) scale(1.03); }
+}
+
+/* ---------- NAV ---------- */
+.dash-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-height); background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  box-shadow: none;
+  display: flex; align-items: center; padding: 0 1.5rem;
+}
+.dash-nav-inner {
+  max-width: 1600px; width: 100%; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  position: relative;
+}
+.nav-logo { display: flex; align-items: center; gap: 0.625rem; text-decoration: none; --logo-diamond: var(--accent-green); }
+.nav-logo-text { font-size: 1.25rem; font-weight: 900; color: var(--text-primary); letter-spacing: -0.03em; }
+.nav-logo .accent { color: var(--accent-green); }
+
+.dash-nav-links { display: flex; align-items: center; justify-content: center; gap: 0.25rem; }
+.dash-nav-link {
+  padding: 0.4rem 0.75rem; border: none; background: none; border-radius: 0;
+  font-size: 0.8125rem; font-weight: 600; color: #636E72;
+  text-decoration: none; transition: color 0.2s;
+}
+.dash-nav-link:hover { color: #F0B90B; }
+.dash-nav-link.active { color: #F0B90B; }
+
+.nav-actions { display: flex; align-items: center; gap: 0.75rem; justify-content: flex-end; }
+.badge-testnet {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.25rem 0.6rem; border-radius: var(--radius-pill);
+  font-size: 0.625rem; font-weight: 600; letter-spacing: 0.03em; white-space: nowrap;
+  background: rgba(240,185,11,0.1); color: #8a6800;
+  border: 1px solid rgba(240,185,11,0.2);
+}
+.badge-testnet .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse-gold 1.5s ease-in-out infinite; }
+@keyframes pulse-gold {
+  0%,100% { box-shadow: 0 0 4px rgba(240,185,11,0.4); }
+  50% { box-shadow: 0 0 16px rgba(240,185,11,0.9); }
+}
+
+.btn-connect {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1.25rem; border-radius: var(--radius-pill); border: none;
+  background: linear-gradient(135deg, #00C853 0%, #69F0AE 100%);
+  color: #1a1d24; font-family: var(--font-main); font-size: 0.8125rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s var(--spring);
+  box-shadow: 4px 4px 12px rgba(0,200,83,0.3), -2px -2px 8px rgba(255,255,255,0.6);
+}
+.btn-connect:hover { transform: scale(1.04) translateY(-1px); box-shadow: 6px 6px 18px rgba(0,200,83,0.4), -3px -3px 10px rgba(255,255,255,0.7); }
+.btn-connect.connected {
+  background: var(--color-success-dim); color: var(--color-success);
+  box-shadow: var(--shadow-clay-sm); border: 1px solid rgba(0,184,148,0.2);
+}
+.btn-connect.connected:hover { background: rgba(0,184,148,0.18); }
+
+/* ---------- MAIN LAYOUT ---------- */
+.dash-main {
+  padding-top: var(--nav-height);
+  min-height: 100vh;
+  position: relative; z-index: 1;
+}
+.dash-container {
+  display: grid;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+}
+
+/* ---------- METRICS BAR ---------- */
+.dash-row-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  position: relative; z-index: 1;
+}
+
+.metric-card {
+  background: #ffffff; color: #2D3436;
+  border-radius: 14px; padding: 1.25rem 1.25rem 1rem;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  display: flex; align-items: flex-start; gap: 1rem;
+  position: relative; overflow: hidden;
+  min-height: 110px;
+}
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-clay-hover);
+}
+.metric-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.metric-icon-gold { background: rgba(0,200,83,0.2); color: #006B3E; }
+.metric-icon-blue { background: rgba(0,200,83,0.2); color: #006B3E; }
+.metric-icon-orange { background: rgba(0,200,83,0.2); color: #006B3E; }
+.metric-icon-purple { background: rgba(0,200,83,0.2); color: #006B3E; }
+.metric-icon-green { background: rgba(0,200,83,0.2); color: #006B3E; }
+.metric-label { font-size: 0.75rem; color: #636E72; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.25rem; }
+.metric-value {
+  font-size: 1.75rem; font-weight: 900; letter-spacing: -0.03em;
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  color: #2D3436;
+}
+.metric-value.dimmed { color: #636E72; }
+.metric-value.connected { font-size: 1.75rem; font-weight: 900; color: #2D3436; }
+
+/* ---------- DASHBOARD GRID ---------- */
+.dash-row {
+  display: grid; gap: 1rem; align-items: stretch;
+}
+.dash-row-2col {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+.dash-row-equal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+.dash-row-full {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* ---------- CARD (Claymorphic) ---------- */
+.dash-card {
+  color: #2D3436;
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-clay);
+  transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  overflow: hidden;
+  position: relative;
+  contain: content;
+  display: flex;
+  flex-direction: column;
+}
+.dash-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-clay-hover);
+}
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.875rem 1.25rem; border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.card-header h3 {
+  font-size: 1.0625rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;
+  letter-spacing: -0.03em; color: #2D3436; font-family: var(--font-heading);
+}
+.card-header .card-icon {
+  width: 30px; height: 30px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.card-header .badge-live {
+  font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem; border-radius: var(--radius-pill);
+  display: flex; align-items: center; gap: 0.35rem;
+}
+.card-body { padding: 1rem 1.25rem; flex: 1; }
+
+/* ---------- TABLE ---------- */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+thead th {
+  text-align: left; padding: 0.75rem 0.875rem; color: #636E72;
+  font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  background: transparent;
+}
+tbody td { padding: 0.875rem; border-bottom: 1px solid rgba(0,0,0,0.04); color: #2D3436; vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr { transition: background 0.2s; border-radius: 8px; }
+tbody tr:hover { background: rgba(0,200,83,0.04); }
+
+.status-badge {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.25rem 0.625rem; border-radius: var(--radius-pill);
+  font-size: 0.6875rem; font-weight: 600;
+}
+.status-active { background: #E8F5E9; color: #2E7D32; }
+.status-expired { background: rgba(108,92,231,0.1); color: var(--accent-purple); }
+.status-paid { background: rgba(240,185,11,0.1); color: #8a6800; }
+.status-defaulted { background: #FFEBEE; color: #C62828; }
+
+.dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.dot-green { background: var(--color-success); animation: pulse-green 1.5s ease-in-out infinite; }
+.dot-gold { background: var(--gold); animation: pulse-gold 1.5s ease-in-out infinite; }
+.dot-red { background: var(--color-danger); animation: pulse-red 1.5s ease-in-out infinite; }
+@keyframes pulse-green {
+  0%,100% { box-shadow: 0 0 4px rgba(0,184,148,0.4); transform: scale(1); }
+  50% { box-shadow: 0 0 16px rgba(0,184,148,0.9); transform: scale(1.3); }
+}
+@keyframes pulse-red {
+  0%,100% { box-shadow: 0 0 4px rgba(239,68,68,0.4); transform: scale(1); }
+  50% { box-shadow: 0 0 16px rgba(239,68,68,0.9); transform: scale(1.3); }
+}
+
+/* ---------- CERTIFICATE CARD ---------- */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+/* Empty state always spans full grid width */
+.cert-grid .empty-state { grid-column: 1 / -1; }
+
+.cert-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  border: none;
+  box-shadow: var(--shadow-clay);
+  transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+.cert-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-clay-hover);
+}
+
+.cert-card-inner {
+  background: rgba(0,200,83,0.04);
+  border: none; border-radius: var(--radius-md);
+  padding: 1.25rem; position: relative; overflow: hidden;
+  box-shadow: var(--shadow-clay-inset);
+  margin: 1rem;
+}
+.cert-card-inner::before {
+  content: ''; position: absolute; top: -50%; right: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(0,200,83,0.04) 0%, transparent 50%);
+  pointer-events: none; animation: cert-glow 4s ease-in-out infinite alternate;
+}
+@keyframes cert-glow {
+  0% { opacity: 0.5; transform: translate(0, 0); }
+  100% { opacity: 1; transform: translate(-5%, 5%); }
+}
+
+.cert-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+.cert-title { font-size: 0.9375rem; font-weight: 800; color: var(--accent-green); letter-spacing: -0.02em; }
+.cert-status-badge {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.2rem 0.65rem; border-radius: var(--radius-pill);
+  font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+}
+.cert-status-active { background: #E8F5E9; color: #2E7D32; }
+.cert-status-expired { background: rgba(108,92,231,0.1); color: var(--accent-purple); }
+.cert-status-paid { background: rgba(240,185,11,0.12); color: #8a6800; }
+
+.cert-sbt-badge {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  padding: 0.2rem 0.6rem; border-radius: var(--radius-pill);
+  background: rgba(108,92,231,0.1); color: #3C2A8C;
+  font-size: 0.625rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 0.875rem;
+}
+
+.cert-rows { display: flex; flex-direction: column; gap: 0.4rem; }
+.cert-row { display: flex; justify-content: space-between; align-items: center; padding: 0.15rem 0; }
+.cert-row-label { font-size: 0.75rem; color: var(--text-muted); }
+.cert-row-value { font-size: 0.8125rem; font-weight: 600; color: var(--text-primary); font-family: var(--font-mono); }
+.cert-row-value.highlight { color: var(--accent-green); }
+.cert-divider { height: 1px; background: rgba(0,0,0,0.06); margin: 0.5rem 0; }
+
+/* IRS Score Bar */
+.irs-bar-wrap { display: flex; align-items: center; gap: 0.5rem; }
+.irs-bar-bg {
+  flex: 1; height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden;
+}
+.irs-bar {
+  height: 100%; border-radius: 4px; transition: width 1s var(--ease-smooth);
+  background: linear-gradient(90deg, #FF6B6B, #F0B90B, #00B894);
+}
+.irs-bar-value { font-size: 0.75rem; font-weight: 700; color: var(--text-primary); font-family: var(--font-mono); min-width: 28px; }
+
+/* Payout eligibility */
+.cert-payout-eligible {
+  display: flex; align-items: center; gap: 0.35rem;
+  margin-top: 0.25rem; padding: 0.5rem 0.75rem;
+  background: rgba(0,184,148,0.06); border-radius: var(--radius-sm);
+  font-size: 0.75rem; font-weight: 600; color: var(--color-success);
+}
+.cert-payout-estimated {
+  margin-left: auto;
+  font-family: var(--font-mono); font-weight: 700;
+}
+
+/* ---------- PAYOUT CARD ---------- */
+.payout-card {
+  background: linear-gradient(135deg, rgba(0,184,148,0.06) 0%, rgba(240,185,11,0.04) 100%);
+  border-radius: var(--radius-md);
+  padding: 1.25rem; position: relative; overflow: hidden;
+  box-shadow: var(--shadow-clay-inset);
+  margin: 1rem;
+  border: 1.5px solid rgba(0,184,148,0.15);
+}
+.payout-header {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 1rem; font-weight: 800; color: var(--color-success);
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+}
+.payout-row { display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0; }
+.payout-row-label { font-size: 0.75rem; color: var(--text-muted); }
+.payout-row-value { font-size: 0.8125rem; font-weight: 600; color: var(--text-primary); font-family: var(--font-mono); }
+.payout-row-value a { color: var(--gold); font-weight: 600; }
+.payout-divider { height: 1px; background: rgba(0,184,148,0.12); margin: 0.75rem 0; }
+
+.payout-breakdown { margin-top: 0.5rem; }
+.payout-breakdown-title { font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-bottom: 0.5rem; }
+.payout-bar-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; }
+.payout-bar-label { font-size: 0.6875rem; color: var(--text-secondary); width: 110px; flex-shrink: 0; font-weight: 500; }
+.payout-bar-bg { flex: 1; height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
+.payout-bar { height: 100%; border-radius: 4px; transition: width 1s var(--ease-smooth); }
+.payout-bar-bond { background: #FF6B6B; }
+.payout-bar-junior { background: #B388FF; }
+.payout-bar-senior { background: #7C4DFF; }
+.payout-bar-val { font-size: 0.6875rem; font-weight: 600; color: var(--text-primary); width: 80px; text-align: right; font-family: var(--font-mono); }
+.payout-total-amount { color: #00C853; font-size: 2rem; font-weight: 900; font-family: var(--font-mono); }
+
+.subrogation-note {
+  margin-top: 0.75rem; padding: 0.6rem 0.75rem;
+  background: rgba(108,92,231,0.06); border-radius: var(--radius-sm);
+  font-size: 0.6875rem; color: var(--accent-purple); font-weight: 500;
+  display: flex; align-items: center; gap: 0.35rem;
+}
+
+/* ---------- HISTORY TABLE ---------- */
+.history-table { width: 100%; }
+.history-table .tx-hash {
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--gold);
+  font-weight: 500;
+}
+.history-table .tx-hash:hover { text-decoration: underline; }
+
+/* ---------- CTA SECTION ---------- */
+.cta-section {
+  background: linear-gradient(135deg, #00C853 0%, #69F0AE 100%);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-clay);
+  border: none;
+}
+.cta-section h3 {
+  font-size: 1.25rem; font-weight: 900; margin-bottom: 0.5rem;
+  color: #1a1d24;
+}
+.cta-section p {
+  color: #2D3436; font-size: 0.875rem; margin-bottom: 1.25rem;
+  max-width: 500px; margin-left: auto; margin-right: auto;
+}
+.cta-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.btn-cta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.75rem; border-radius: var(--radius-pill); border: none;
+  font-family: var(--font-main); font-size: 0.875rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s var(--spring);
+  text-decoration: none;
+}
+.btn-cta-primary {
+  background: #ffffff;
+  color: #1a1d24;
+  box-shadow: 6px 6px 16px rgba(0,0,0,0.15), -3px -3px 10px rgba(255,255,255,0.6);
+}
+.btn-cta-primary:hover {
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 8px 8px 22px rgba(0,0,0,0.2), -4px -4px 14px rgba(255,255,255,0.7);
+  color: #1a1d24;
+}
+.btn-cta-secondary {
+  background: transparent;
+  color: #1a1d24;
+  box-shadow: none;
+  border: 1.5px solid rgba(0,0,0,0.2);
+}
+.btn-cta-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-color: #1a1d24;
+  background: rgba(255,255,255,0.15);
+  color: #1a1d24;
+}
+
+/* ---------- EMPTY STATE ---------- */
+.empty-state {
+  text-align: center; padding: 1.5rem 1.5rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: auto;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 20px;
+}
+.empty-state-icon {
+  width: 40px; height: 40px; margin: 0 auto 0.75rem;
+  background: rgba(0,200,83,0.08); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent-green); font-size: 40px;
+}
+.empty-state-icon svg { width: 32px; height: 32px; }
+.empty-state-title {
+  font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;
+  color: #2D3436;
+}
+.empty-state-desc {
+  font-size: 0.875rem; color: #636E72; max-width: 360px;
+  margin: 0 auto 0.75rem;
+}
+.btn-empty-cta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.65rem 1.5rem; border-radius: var(--radius-pill); border: none;
+  background: linear-gradient(135deg, #00C853 0%, #69F0AE 100%);
+  color: #1a1d24; font-family: var(--font-main); font-size: 0.875rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s var(--spring);
+  text-decoration: none;
+  box-shadow: 4px 4px 12px rgba(0,200,83,0.3);
+}
+.btn-empty-cta:hover { transform: scale(1.04) translateY(-2px); box-shadow: 6px 6px 18px rgba(0,200,83,0.4); color: #1a1d24; }
+
+/* ---------- SECTION DIVIDER ---------- */
+/* ---------- SCROLL REVEAL ---------- */
+.reveal {
+  opacity: 0; transform: translateY(calc(var(--motion) * 30px));
+  transition: opacity calc(var(--motion) * 0.6s) var(--ease-smooth),
+              transform calc(var(--motion) * 0.6s) var(--spring);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ---------- TOAST ---------- */
+.toast-container { position: fixed; top: calc(var(--nav-height) + 1rem); right: 1.5rem; z-index: 200; display: flex; flex-direction: column; gap: 0.5rem; }
+.toast {
+  padding: 0.75rem 1.25rem; background: var(--bg-card);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-clay);
+  font-size: 0.8125rem; font-weight: 500; color: var(--text-primary);
+  display: flex; align-items: center; gap: 0.5rem;
+  animation: toast-in 0.3s var(--spring);
+  max-width: 380px;
+}
+.toast.toast-success { box-shadow: var(--shadow-clay), 0 0 0 2px rgba(0,184,148,0.2); }
+.toast.toast-error { box-shadow: var(--shadow-clay), 0 0 0 2px rgba(239,68,68,0.2); }
+@keyframes toast-in { from { opacity: 0; transform: translateX(40px) scale(0.95); } to { opacity: 1; transform: translateX(0) scale(1); } }
+@keyframes toast-out { from { opacity: 1; transform: translateX(0) scale(1); } to { opacity: 0; transform: translateX(40px) scale(0.95); } }
+
+/* ---------- THEME TOGGLE ---------- */
+.theme-toggle {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);
+  background: transparent; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; position: relative; transition: all 0.3s;
+  color: #636E72;
+}
+.theme-toggle:hover { border-color: #00C853; color: #00C853; }
+.theme-toggle .icon-sun, .theme-toggle .icon-moon { position: absolute; transition: opacity 0.3s, transform 0.3s; }
+.icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+.icon-moon { opacity: 1; transform: scale(1); }
+[data-theme="dark"] .icon-sun { opacity: 1; transform: scale(1); }
+[data-theme="dark"] .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+[data-theme="dark"] .theme-toggle { border-color: rgba(255,255,255,0.15); color: #B2BEC3; }
+[data-theme="dark"] .theme-toggle:hover { border-color: #00C853; color: #00C853; }
+
+/* ---------- WALLET DROPDOWN ---------- */
+.wallet-dropdown-wrap { position: relative; }
+.wallet-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  min-width: 220px; padding: 0.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-clay-hover), 0 8px 32px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.06);
+  opacity: 0; visibility: hidden; transform: translateY(-8px) scale(0.96);
+  transition: all 0.2s var(--spring);
+  z-index: 110;
+}
+.wallet-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+.wallet-dropdown-addr {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.625rem 0.75rem; margin-bottom: 0.25rem;
+  background: var(--form-bg); border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-clay-inset);
+}
+.wallet-dropdown-addr .addr-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-success); box-shadow: 0 0 6px rgba(0,184,148,0.5); flex-shrink: 0; }
+.wallet-dropdown-addr .addr-text { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; color: var(--text-primary); flex: 1; }
+.wallet-dropdown-item {
+  display: flex; align-items: center; gap: 0.625rem;
+  padding: 0.625rem 0.75rem; border-radius: var(--radius-sm);
+  font-size: 0.8125rem; font-weight: 500; color: var(--text-secondary);
+  cursor: pointer; border: none; background: none; width: 100%;
+  font-family: var(--font-main); text-align: left; transition: all 0.15s;
+}
+.wallet-dropdown-item:hover { background: rgba(0,200,83,0.08); color: #ffffff; }
+.wallet-dropdown-item svg { flex-shrink: 0; opacity: 0.6; }
+.wallet-dropdown-item:hover svg { opacity: 1; }
+.wallet-dropdown-divider { height: 1px; background: rgba(0,0,0,0.06); margin: 0.25rem 0; }
+.wallet-dropdown-item.danger { color: var(--color-danger); }
+.wallet-dropdown-item.danger:hover { background: rgba(239,68,68,0.08); }
+.wallet-dropdown-item .copy-feedback { font-size: 0.6875rem; color: var(--color-success); font-weight: 600; margin-left: auto; opacity: 0; transition: opacity 0.2s; }
+.wallet-dropdown-item .copy-feedback.show { opacity: 1; }
+
+/* ---------- LOADING SKELETON ---------- */
+.skeleton {
+  background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+@keyframes skeleton-pulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ---------- DARK MODE OVERRIDES ---------- */
+[data-theme="dark"] body { background: #0f1118; color: #ffffff; }
+[data-theme="dark"] .bg-blobs { opacity: 0.3; }
+[data-theme="dark"] { --text-muted: rgba(255,255,255,0.65); }
+
+[data-theme="dark"] .dash-nav { background: rgba(15,17,24,0.95); border-bottom: 1px solid rgba(255,255,255,0.06); }
+[data-theme="dark"] .dash-nav .nav-logo-text { color: #ffffff; }
+[data-theme="dark"] .dash-nav-link { color: rgba(255,255,255,0.7); }
+[data-theme="dark"] .dash-nav-link:hover { color: #F0B90B; }
+[data-theme="dark"] .dash-nav-link.active { color: #F0B90B; }
+
+[data-theme="dark"] .dash-container h1 { color: #ffffff; }
+[data-theme="dark"] .dash-container h1 span { color: #00C853; }
+[data-theme="dark"] .dash-container > div > div > p { color: rgba(255,255,255,0.85); }
+
+[data-theme="dark"] .dash-card, [data-theme="dark"] .metric-card, [data-theme="dark"] .cert-card {
+  background: #1e2329;
+  color: #e8e8e8;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+[data-theme="dark"] .metric-label { color: rgba(255,255,255,0.7); }
+[data-theme="dark"] .metric-value { color: #ffffff; }
+[data-theme="dark"] .metric-card .metric-icon { opacity: 0.8; }
+[data-theme="dark"] .metric-icon-gold,
+[data-theme="dark"] .metric-icon-blue,
+[data-theme="dark"] .metric-icon-orange,
+[data-theme="dark"] .metric-icon-purple,
+[data-theme="dark"] .metric-icon-green { background: rgba(0,200,83,0.15); color: #69F0AE; }
+
+[data-theme="dark"] .card-header h3 { color: #ffffff; }
+[data-theme="dark"] .card-header { border-bottom-color: rgba(255,255,255,0.06); }
+
+[data-theme="dark"] thead th { color: rgba(255,255,255,0.6); border-bottom-color: rgba(255,255,255,0.06); }
+[data-theme="dark"] tbody td { color: rgba(255,255,255,0.85); border-bottom-color: rgba(255,255,255,0.04); }
+[data-theme="dark"] tbody tr:hover { background: rgba(0,200,83,0.04); }
+
+[data-theme="dark"] .cert-card-inner {
+  background: rgba(0,200,83,0.03);
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2), inset -2px -2px 5px rgba(255,255,255,0.02);
+}
+[data-theme="dark"] .cert-title { color: #00C853; }
+[data-theme="dark"] .cert-row-label { color: rgba(255,255,255,0.7); }
+[data-theme="dark"] .cert-row-value { color: #ffffff; }
+[data-theme="dark"] .cert-row-value.highlight { color: #00C853; }
+[data-theme="dark"] .cert-divider { background: rgba(255,255,255,0.06); }
+[data-theme="dark"] .cert-sbt-badge { background: rgba(108,92,231,0.15); color: #A29BFE; }
+
+[data-theme="dark"] .irs-bar-bg { background: rgba(255,255,255,0.06); }
+[data-theme="dark"] .irs-bar-value { color: #ffffff; }
+
+[data-theme="dark"] .cert-payout-eligible { background: rgba(0,184,148,0.08); color: #55efc4; }
+
+[data-theme="dark"] .payout-card {
+  background: linear-gradient(135deg, rgba(0,184,148,0.05) 0%, rgba(240,185,11,0.03) 100%);
+  border-color: rgba(0,184,148,0.12);
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2), inset -2px -2px 5px rgba(255,255,255,0.02);
+}
+[data-theme="dark"] .payout-header { color: #55efc4; }
+[data-theme="dark"] .payout-row-label { color: rgba(255,255,255,0.7); }
+[data-theme="dark"] .payout-row-value { color: #ffffff; }
+[data-theme="dark"] .payout-divider { background: rgba(0,184,148,0.08); }
+[data-theme="dark"] .payout-bar-bg { background: rgba(255,255,255,0.08); }
+[data-theme="dark"] .payout-bar-label { color: rgba(255,255,255,0.7); }
+[data-theme="dark"] .payout-bar-val { color: rgba(255,255,255,0.85); }
+[data-theme="dark"] .subrogation-note { background: rgba(108,92,231,0.08); color: #A29BFE; }
+
+[data-theme="dark"] .cta-section {
+  background: linear-gradient(135deg, #00C853 0%, #69F0AE 100%);
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+[data-theme="dark"] .cta-section h3 { color: #1a1d24; }
+[data-theme="dark"] .cta-section p { color: #2D3436; }
+[data-theme="dark"] .btn-cta-secondary {
+  background: transparent; color: #1a1d24;
+  border-color: rgba(0,0,0,0.2);
+  box-shadow: none;
+}
+[data-theme="dark"] .btn-cta-secondary:hover { background: rgba(255,255,255,0.15); border-color: #1a1d24; }
+
+/* btn-cta inside CTA section keeps white/dark text on green bg */
+
+[data-theme="dark"] .empty-state-title { color: #ffffff; }
+[data-theme="dark"] .empty-state-desc { color: rgba(255,255,255,0.6); }
+[data-theme="dark"] .empty-state-icon { background: rgba(0,200,83,0.06); color: var(--accent-green); }
+
+[data-theme="dark"] .wallet-dropdown {
+  background: #1a1d24; border-color: rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+[data-theme="dark"] .wallet-dropdown-addr { background: rgba(255,255,255,0.04); box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2), inset -2px -2px 5px rgba(255,255,255,0.02); }
+[data-theme="dark"] .wallet-dropdown-addr .addr-text { color: #ffffff; }
+[data-theme="dark"] .wallet-dropdown-item { color: rgba(255,255,255,0.6); }
+[data-theme="dark"] .wallet-dropdown-item:hover { background: rgba(0,200,83,0.1); color: #ffffff; }
+[data-theme="dark"] .wallet-dropdown-divider { background: rgba(255,255,255,0.06); }
+
+[data-theme="dark"] .toast { background: #1a1d24; border-color: rgba(255,255,255,0.08); color: #ffffff; }
+
+/* Status badges dark */
+[data-theme="dark"] .status-active { background: rgba(0,184,148,0.15); color: #55efc4; }
+[data-theme="dark"] .status-expired { background: rgba(108,92,231,0.15); color: #A29BFE; }
+[data-theme="dark"] .status-paid { background: rgba(240,185,11,0.15); color: #FBBF24; }
+[data-theme="dark"] .status-defaulted { background: rgba(239,68,68,0.15); color: #FF6B6B; }
+
+[data-theme="dark"] ::-webkit-scrollbar-track { background: #0f1118; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(0,200,83,0.3); }
+
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+}
+
+[data-theme="dark"] .history-table .tx-hash { color: #00C853; }
+
+/* ---------- NUCLEAR DARK MODE TEXT FIX ---------- */
+[data-theme="dark"] .metric-label,
+[data-theme="dark"] .card-header h3,
+[data-theme="dark"] .empty-state h3,
+[data-theme="dark"] .empty-state p,
+[data-theme="dark"] .dash-card p,
+[data-theme="dark"] .dash-card label,
+[data-theme="dark"] td,
+[data-theme="dark"] th,
+[data-theme="dark"] .cert-row-label,
+[data-theme="dark"] .payout-row-label,
+[data-theme="dark"] .history-empty p {
+  color: rgba(255,255,255,0.85) !important;
+}
+
+[data-theme="dark"] .page-header h1,
+[data-theme="dark"] .dash-card h3,
+[data-theme="dark"] .metric-value,
+[data-theme="dark"] .empty-state h3 {
+  color: #ffffff !important;
+}
+
+/* CTA section must keep DARK text on green background */
+[data-theme="dark"] .cta-section h3 { color: #1a1d24 !important; }
+[data-theme="dark"] .cta-section p { color: #2D3436 !important; }
+[data-theme="dark"] .cta-section .btn-cta-primary { background: #ffffff; color: #1a1d24 !important; }
+[data-theme="dark"] .cta-section .btn-cta-secondary { color: #1a1d24 !important; border-color: rgba(0,0,0,0.3); }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) {
+  .dash-container { padding: 1.25rem 1.25rem 2rem; }
+  .dash-row-metrics { grid-template-columns: repeat(2, 1fr); }
+  .dash-row-2col { grid-template-columns: 1fr 1fr; }
+  .dash-row-equal { grid-template-columns: 1fr 1fr; }
+  .cert-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .dash-nav-links { display: none; }
+  .dash-container { padding: 1rem; gap: 1rem; }
+  .dash-row-metrics { grid-template-columns: 1fr 1fr; gap: 0.625rem; }
+  .dash-row-2col { grid-template-columns: 1fr; gap: 1rem; }
+  .dash-row-equal { grid-template-columns: 1fr; gap: 1rem; }
+  .cert-grid { grid-template-columns: 1fr; }
+  .nav-logo-text { font-size: 1.05rem; }
+  .nav-actions { gap: 0.5rem; }
+  .badge-testnet { display: none; }
+  .btn-connect { padding: 0.45rem 0.9rem; font-size: 0.75rem; }
+  .card-header h3 { font-size: 0.9375rem; }
+  .metric-value { font-size: 1.375rem; }
+  .metric-icon { width: 40px; height: 40px; border-radius: 12px; }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-wrap table { min-width: 500px; }
+  .toast-container { right: 1rem; left: 1rem; }
+  .toast { max-width: 100%; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+}
+
+@media (max-width: 480px) {
+  .dash-container { padding: 0.75rem; gap: 0.75rem; }
+  .dash-nav { padding: 0 0.75rem; }
+  .dash-row-metrics { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .nav-logo-text { font-size: 0.95rem; }
+  .btn-connect { padding: 0.4rem 0.75rem; font-size: 0.6875rem; gap: 0.35rem; }
+  .btn-connect svg { width: 12px; height: 12px; }
+  .theme-toggle { width: 34px; height: 34px; }
+  .card-header { padding: 0.75rem 1rem; }
+  .card-header h3 { font-size: 0.875rem; gap: 0.35rem; }
+  .card-header .card-icon { width: 26px; height: 26px; border-radius: 8px; }
+  .card-body { padding: 1rem; }
+  .metric-card { padding: 1rem; gap: 0.75rem; }
+  .metric-value { font-size: 1.25rem; }
+  .metric-label { font-size: 0.6875rem; }
+  .metric-icon { width: 36px; height: 36px; border-radius: 10px; }
+  .cert-card-inner { margin: 0.75rem; padding: 1rem; }
+}
+  </style>
+</head>
+<body>
+
+<!-- Abstract SVG Background Blobs -->
+<div class="bg-blobs" aria-hidden="true">
+  <svg class="bg-blob" width="400" height="350" viewBox="0 0 400 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M320 50c60 40 90 120 60 200s-100 120-180 110S40 300 20 220s10-140 70-170S260 10 320 50z" fill="rgba(240,185,11,0.08)"/>
+  </svg>
+  <svg class="bg-blob" width="380" height="320" viewBox="0 0 380 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 80c40-60 140-90 220-60s130 100 100 180-80 120-160 120S30 280 10 200s0-60 40-120z" fill="rgba(255,107,107,0.06)"/>
+  </svg>
+  <svg class="bg-blob" width="300" height="280" viewBox="0 0 300 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M240 40c50 30 70 100 50 170s-70 90-140 80S30 240 15 170 40 60 100 30s90-20 140 10z" fill="rgba(108,92,231,0.05)"/>
+  </svg>
+  <svg class="bg-blob" width="280" height="260" viewBox="0 0 280 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M200 30c50 25 80 90 70 160s-60 80-130 70S20 210 10 140 30 40 90 15s60-10 110 15z" fill="rgba(0,184,148,0.05)"/>
+  </svg>
+  <svg class="bg-blob" width="220" height="200" viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M160 25c40 20 60 75 45 130s-55 65-110 55S15 170 8 115 25 30 75 12s45-7 85 13z" fill="rgba(240,185,11,0.06)"/>
+  </svg>
+</div>
+
+<!-- SVG Gradients -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F0B90B"/><stop offset="100%" stop-color="#FFD443"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav class="dash-nav" aria-label="Main navigation">
+  <div class="dash-nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="CoverFi home">
+      <svg width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <polygon points="10,9 16,9 19,13 16,17 10,17 7,13" fill="none" stroke="var(--logo-hex, #1a1a1a)" stroke-width="2"/>
+        <polygon points="16,9 22,9 25,13 22,17 16,17 13,13" fill="none" stroke="var(--logo-hex, #1a1a1a)" stroke-width="2"/>
+        <polygon points="16,7 20.5,13 16,19 11.5,13" fill="var(--logo-diamond, var(--gold, #F0B90B))"/><circle cx="16" cy="12.5" r="1" fill="white" opacity="0.85"/>
+      </svg>
+      <span class="nav-logo-text">Cover<span class="accent">Fi</span></span>
+    </a>
+
+    <div class="dash-nav-links">
+      <a href="dashboard.html" class="dash-nav-link">Dashboard</a>
+      <a href="issuers.html" class="dash-nav-link">Issuers</a>
+      <a href="pool.html" class="dash-nav-link">Pool</a>
+      <a href="coverage.html" class="dash-nav-link active">Coverage</a>
+      <a href="subrogation.html" class="dash-nav-link">Subrogation</a>
+      <a href="stats.html" class="dash-nav-link">Stats</a>
+    </div>
+
+    <div class="nav-actions">
+      <div class="badge-testnet"><span class="dot"></span> HashKey Testnet</div>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="18" aria-hidden="true" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" width="18" aria-hidden="true" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <div class="wallet-dropdown-wrap">
+        <button class="btn-connect" id="btnConnect" onclick="handleWalletClick()" aria-label="Connect wallet">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="3"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg>
+          Connect Wallet
+        </button>
+        <div class="wallet-dropdown" id="walletDropdown">
+          <div class="wallet-dropdown-addr">
+            <span class="addr-dot"></span>
+            <span class="addr-text" id="dropdownAddr">0x0000...0000</span>
+          </div>
+          <button class="wallet-dropdown-item" onclick="copyWalletAddress()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copy Address
+            <span class="copy-feedback" id="copyFeedback">Copied!</span>
+          </button>
+          <a class="wallet-dropdown-item" id="bscscanLink" href="#" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View on Explorer
+          </a>
+          <div class="wallet-dropdown-divider"></div>
+          <button class="wallet-dropdown-item danger" onclick="disconnectWallet()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Disconnect
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main class="dash-main" id="main-content" role="main">
+<div class="dash-container">
+
+<!-- ---- PAGE HEADER ---- -->
+<div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+  <div>
+    <h1 style="font-size:1.75rem; margin-bottom:0.25rem;">My <span style="color:#00C853;">Coverage</span></h1>
+    <p style="color:var(--text-muted); font-size:0.875rem;">Monitor your active protection positions and payout history</p>
+  </div>
+  <a href="dashboard.html" class="btn-cta" style="font-size:0.8125rem; padding:0.55rem 1.25rem; background:rgba(0,200,83,0.1); color:#00C853; border:1.5px solid rgba(0,200,83,0.2); border-radius:var(--radius-pill);">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Dashboard
+  </a>
+</div>
+
+<!-- ---- METRICS ROW ---- -->
+<div class="dash-row-metrics reveal" id="coverageMetrics">
+  <div class="metric-card">
+    <div class="metric-icon metric-icon-orange">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div>
+      <div class="metric-label">Active Positions</div>
+      <div class="metric-value dimmed" id="metricActiveCount">--</div>
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-icon metric-icon-gold">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+    </div>
+    <div>
+      <div class="metric-label">Total Coverage</div>
+      <div class="metric-value dimmed" id="metricTotalCoverage">--</div>
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-icon metric-icon-purple">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    </div>
+    <div>
+      <div class="metric-label">Premiums Paid</div>
+      <div class="metric-value dimmed" id="metricPremiums">--</div>
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-icon metric-icon-green">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    </div>
+    <div>
+      <div class="metric-label">Payouts Received</div>
+      <div class="metric-value dimmed" id="metricPayouts">--</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ---- MY ACTIVE COVERAGE ---- -->
+<div class="dash-card reveal" id="activeCoverageCard">
+  <div class="card-header">
+    <h3>
+      <span class="card-icon" style="background:rgba(0,200,83,0.12); color:#00C853;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </span>
+      My Active Coverage
+    </h3>
+    <span class="badge-live" style="background:rgba(0,200,83,0.1); color:#006B3E;">
+      <span class="dot dot-green"></span> LIVE
+    </span>
+  </div>
+  <div class="card-body">
+    <div class="cert-grid" id="activeCertGrid">
+      <!-- Populated by JS -->
+      <div class="empty-state" id="activeCoverageEmpty">
+        <div class="empty-state-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="empty-state-title">No Active Coverage</div>
+        <div class="empty-state-desc">Connect your wallet to view ProtectionCert NFTs, or purchase coverage from the dashboard.</div>
+        <a href="dashboard.html#purchase" class="btn-empty-cta">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Get Coverage
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ---- PAYOUT STATUS (shown only if default occurred) ---- -->
+<div class="dash-card reveal" id="payoutStatusCard" style="display:none;">
+  <div class="card-header">
+    <h3>
+      <span class="card-icon" style="background:rgba(0,200,83,0.12); color:#00C853;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </span>
+      Payout Status
+    </h3>
+    <span class="badge-live" style="background:rgba(0,200,83,0.1); color:#006B3E;">RECEIVED</span>
+  </div>
+  <div id="payoutStatusContent">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+
+<!-- ---- COVERAGE HISTORY ---- -->
+<div class="dash-card reveal" id="coverageHistoryCard">
+  <div class="card-header">
+    <h3>
+      <span class="card-icon" style="background:rgba(0,200,83,0.12); color:#00C853;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </span>
+      Coverage History
+    </h3>
+  </div>
+  <div class="card-body">
+    <div class="table-wrap">
+      <table class="history-table" id="historyTable">
+        <thead>
+          <tr>
+            <th>Cert ID</th>
+            <th>Issuer</th>
+            <th>Coverage</th>
+            <th>Period</th>
+            <th>Status</th>
+            <th>Payout / TX</th>
+          </tr>
+        </thead>
+        <tbody id="historyTableBody">
+          <tr id="historyEmpty">
+            <td colspan="6" style="text-align:center; padding:2rem; color:var(--text-muted);">
+              No coverage history yet. Expired and paid-out positions will appear here.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ---- BUY MORE COVERAGE CTA ---- -->
+<div class="cta-section reveal">
+  <h3>Get Coverage</h3>
+  <p>Purchase credit protection from verified issuers on the CoverFi protocol. Coverage is backed by the tri-layer waterfall system.</p>
+  <div class="cta-buttons">
+    <a href="dashboard.html#purchase" class="btn-cta btn-cta-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Get Coverage
+    </a>
+    <a href="issuers.html" class="btn-cta btn-cta-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Browse Issuers
+    </a>
+  </div>
+</div>
+
+</div><!-- /dash-container -->
+</main>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<script src="contract-abis.js"></script>
+<script>
+// ---- Theme toggle ----
+function getTheme() { return localStorage.getItem('coverfi-theme') || 'light'; }
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('coverfi-theme', theme);
+}
+function toggleTheme() { setTheme(getTheme() === 'dark' ? 'light' : 'dark'); }
+(function() { setTheme(getTheme()); })();
+
+// ---- Contract Addresses ----
+var CONTRACTS = {
+  ProtectionCert: '0x91062e509E75AAe31f1d6425b78D8815Ad941e73',
+  PayoutEngine:   '0x44944cB598A750Df4C4Bf9A7D3FdDDf7575F88F5',
+  IssuerRegistry: '0xc07859b25FC869F0a81fae86b9B5bEa868D08A9f',
+  IRSOracle:      '0x8D4C37f45883aAEEd20d2CC1020e6Ab193D3A50C'
+};
+
+var BSC_TESTNET = { chainId: '0x85', chainName: 'HashKey Chain Testnet', rpcUrl: 'https://testnet.hsk.xyz', explorer: 'https://testnet-explorer.hsk.xyz' };
+
+// ---- State ----
+var provider = null;
+var signer = null;
+var userAddress = null;
+var protectionCertContract = null;
+var payoutEngineContract = null;
+var issuerRegistryContract = null;
+var irsOracleContract = null;
+
+// ---- Wallet ----
+async function handleWalletClick() {
+  if (userAddress) {
+    var dd = document.getElementById('walletDropdown');
+    dd.classList.toggle('open');
+    return;
+  }
+  await connectWallet();
+}
+
+async function connectWallet() {
+  if (typeof window.ethereum === 'undefined') {
+    showToast('Please install MetaMask to use CoverFi', 'error');
+    return;
+  }
+  try {
+    var accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    provider = new ethers.BrowserProvider(window.ethereum);
+    signer = await provider.getSigner();
+    userAddress = accounts[0];
+    localStorage.setItem('coverfi-wallet-connected', 'true');
+    updateWalletUI(userAddress);
+    initContracts();
+    loadCoverageData();
+    showToast('Wallet connected successfully', 'success');
+  } catch (err) {
+    showToast('Wallet connection failed: ' + (err.message || err), 'error');
+  }
+}
+
+function updateWalletUI(addr) {
+  var btn = document.getElementById('btnConnect');
+  var short = addr.slice(0, 6) + '...' + addr.slice(-4);
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="3"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg>' + short;
+  btn.classList.add('connected');
+  document.getElementById('dropdownAddr').textContent = short;
+  document.getElementById('bscscanLink').href = BSC_TESTNET.explorer + '/address/' + addr;
+}
+
+function copyWalletAddress() {
+  if (!userAddress) return;
+  navigator.clipboard.writeText(userAddress);
+  var fb = document.getElementById('copyFeedback');
+  fb.classList.add('show');
+  setTimeout(function() { fb.classList.remove('show'); }, 2000);
+}
+
+function disconnectWallet() {
+  userAddress = null;
+  signer = null;
+  localStorage.removeItem('coverfi-wallet-connected');
+  var btn = document.getElementById('btnConnect');
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="3"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg> Connect Wallet';
+  btn.classList.remove('connected');
+  document.getElementById('walletDropdown').classList.remove('open');
+  resetCoverageUI();
+  showToast('Wallet disconnected', 'success');
+}
+
+function initContracts() {
+  try {
+    if (COVERFI_ABIS && COVERFI_ABIS.ProtectionCert) {
+      protectionCertContract = new ethers.Contract(CONTRACTS.ProtectionCert, COVERFI_ABIS.ProtectionCert, signer);
+    }
+    if (COVERFI_ABIS && COVERFI_ABIS.PayoutEngine) {
+      payoutEngineContract = new ethers.Contract(CONTRACTS.PayoutEngine, COVERFI_ABIS.PayoutEngine, signer);
+    }
+    if (COVERFI_ABIS && COVERFI_ABIS.IssuerRegistry) {
+      issuerRegistryContract = new ethers.Contract(CONTRACTS.IssuerRegistry, COVERFI_ABIS.IssuerRegistry, signer);
+    }
+    if (COVERFI_ABIS && COVERFI_ABIS.IRSOracle) {
+      irsOracleContract = new ethers.Contract(CONTRACTS.IRSOracle, COVERFI_ABIS.IRSOracle, signer);
+    }
+  } catch (e) {
+    console.warn('Contract init error:', e);
+  }
+}
+
+// ---- Coverage Data Loading ----
+async function loadCoverageData() {
+  if (!userAddress) return;
+
+  // Try loading from contract, fall back to demo data
+  try {
+    await loadFromContracts();
+  } catch (err) {
+    console.warn('Contract read failed, loading demo data:', err);
+    loadDemoData();
+  }
+}
+
+async function loadFromContracts() {
+  if (!protectionCertContract) throw new Error('No contract');
+
+  // Try to get balance of user
+  var balance = await protectionCertContract.balanceOf(userAddress);
+  var count = Number(balance);
+
+  if (count === 0) {
+    loadDemoData();
+    return;
+  }
+
+  var activeCerts = [];
+  var historyCerts = [];
+  var totalCoverage = 0;
+  var totalPremiums = 0;
+  var totalPayouts = 0;
+
+  for (var i = 0; i < count; i++) {
+    try {
+      var tokenId = await protectionCertContract.tokenOfOwnerByIndex(userAddress, i);
+      var cert = await protectionCertContract.getCert(tokenId);
+      var certData = {
+        id: Number(tokenId),
+        issuer: cert.issuerName || 'Unknown Issuer',
+        coverage: Number(cert.coverageAmount || 0) / 1e6,
+        premium: Number(cert.premiumPaid || 0) / 1e6,
+        rate: Number(cert.premiumBps || 0),
+        startDate: new Date(Number(cert.startTime || 0) * 1000),
+        endDate: new Date(Number(cert.endTime || 0) * 1000),
+        active: cert.active || false,
+        irsScore: Number(cert.irsScore || 0),
+        paidOut: cert.paidOut || false,
+        payoutAmount: Number(cert.payoutAmount || 0) / 1e6,
+        payoutTx: cert.payoutTx || ''
+      };
+      totalCoverage += certData.coverage;
+      totalPremiums += certData.premium;
+      if (certData.paidOut) totalPayouts += certData.payoutAmount;
+
+      if (certData.active) {
+        activeCerts.push(certData);
+      } else {
+        historyCerts.push(certData);
+      }
+    } catch (e) {
+      console.warn('Error reading cert #' + i, e);
+    }
+  }
+
+  renderMetrics(activeCerts.length, totalCoverage, totalPremiums, totalPayouts);
+  renderActiveCerts(activeCerts);
+  renderHistoryTable(historyCerts);
+}
+
+function loadDemoData() {
+  var now = new Date();
+  var demoActive = [
+    {
+      id: 3,
+      issuer: 'TradeFlow Finance',
+      coverage: 15000,
+      premium: 1044,
+      rate: 696,
+      startDate: new Date(2026, 2, 26),
+      endDate: new Date(2027, 2, 25),
+      active: true,
+      irsScore: 600,
+      paidOut: false,
+      payoutAmount: 0,
+      payoutTx: '',
+      issuerStatus: 'Active',
+      payoutEligible: true,
+      estimatedPayout: 12500,
+      estimatedPayoutPct: 83
+    },
+    {
+      id: 7,
+      issuer: 'Nexus Trade Corp',
+      coverage: 25000,
+      premium: 1500,
+      rate: 600,
+      startDate: new Date(2026, 2, 15),
+      endDate: new Date(2027, 2, 14),
+      active: true,
+      irsScore: 720,
+      paidOut: false,
+      payoutAmount: 0,
+      payoutTx: '',
+      issuerStatus: 'Active',
+      payoutEligible: true,
+      estimatedPayout: 22500,
+      estimatedPayoutPct: 90
+    }
+  ];
+
+  var demoHistory = [
+    {
+      id: 1,
+      issuer: 'GlobalEx Partners',
+      coverage: 10000,
+      premium: 800,
+      rate: 800,
+      startDate: new Date(2025, 8, 1),
+      endDate: new Date(2026, 2, 1),
+      active: false,
+      irsScore: 450,
+      paidOut: true,
+      payoutAmount: 10000,
+      payoutTx: '0x5381a9c3b7e4d2f1...4c65'
+    },
+    {
+      id: 2,
+      issuer: 'Meridian Exports',
+      coverage: 8000,
+      premium: 480,
+      rate: 600,
+      startDate: new Date(2025, 5, 15),
+      endDate: new Date(2025, 11, 15),
+      active: false,
+      irsScore: 680,
+      paidOut: false,
+      payoutAmount: 0,
+      payoutTx: ''
+    }
+  ];
+
+  var totalCoverage = 0;
+  var totalPremiums = 0;
+  var totalPayouts = 0;
+  demoActive.forEach(function(c) { totalCoverage += c.coverage; totalPremiums += c.premium; });
+  demoHistory.forEach(function(c) { totalPremiums += c.premium; if (c.paidOut) totalPayouts += c.payoutAmount; });
+
+  renderMetrics(demoActive.length, totalCoverage, totalPremiums, totalPayouts);
+  renderActiveCerts(demoActive);
+  renderHistoryTable(demoHistory);
+
+  // Show payout status for demo default scenario
+  renderPayoutStatus({
+    amount: 10000,
+    tx: '0x5381a9c3b7e4d2f18c07e6a9b5d3f2e1c0a8b7d64c65',
+    date: new Date(2026, 2, 26),
+    bondLiquidated: 3300,
+    bondPct: 33,
+    juniorTranche: 2000,
+    juniorPct: 20,
+    seniorTranche: 4700,
+    seniorPct: 47,
+    subrogationId: 1
+  });
+}
+
+// ---- Rendering ----
+function renderMetrics(activeCount, totalCoverage, totalPremiums, totalPayouts) {
+  var ids = ['metricActiveCount', 'metricTotalCoverage', 'metricPremiums', 'metricPayouts'];
+  ids.forEach(function(id) {
+    var el = document.getElementById(id);
+    el.classList.remove('dimmed');
+    el.classList.add('connected');
+  });
+  document.getElementById('metricActiveCount').textContent = activeCount;
+  document.getElementById('metricTotalCoverage').textContent = '$' + formatNumber(totalCoverage);
+  document.getElementById('metricPremiums').textContent = '$' + formatNumber(totalPremiums);
+  document.getElementById('metricPayouts').textContent = '$' + formatNumber(totalPayouts);
+}
+
+function renderActiveCerts(certs) {
+  var grid = document.getElementById('activeCertGrid');
+  var empty = document.getElementById('activeCoverageEmpty');
+
+  if (certs.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  var html = '';
+  certs.forEach(function(cert) {
+    var now = new Date();
+    var daysRemaining = Math.max(0, Math.ceil((cert.endDate - now) / (1000 * 60 * 60 * 24)));
+    var irsPercent = Math.min(100, Math.round((cert.irsScore / 1000) * 100));
+    var rateBps = cert.rate;
+    var ratePct = (rateBps / 100).toFixed(2);
+    var issuerStatus = cert.issuerStatus || 'Active';
+    var payoutEligible = cert.payoutEligible !== false;
+    var estimatedPayout = cert.estimatedPayout || Math.round(cert.coverage * 0.83);
+    var estimatedPct = cert.estimatedPayoutPct || 83;
+
+    html += '<div class="cert-card">' +
+      '<div class="cert-card-inner">' +
+        '<div class="cert-header">' +
+          '<span class="cert-title">ProtectionCert #' + cert.id + '</span>' +
+          '<span class="cert-status-badge cert-status-active"><span class="dot dot-green"></span> ACTIVE</span>' +
+        '</div>' +
+        '<div class="cert-sbt-badge">' +
+          '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>' +
+          ' SOULBOUND (ERC-5192)' +
+        '</div>' +
+        '<div class="cert-rows">' +
+          '<div class="cert-row"><span class="cert-row-label">Issuer</span><span class="cert-row-value">' + cert.issuer + '</span></div>' +
+          '<div class="cert-row"><span class="cert-row-label">Coverage</span><span class="cert-row-value highlight">' + formatNumber(cert.coverage) + ' USDT</span></div>' +
+          '<div class="cert-row"><span class="cert-row-label">Premium Paid</span><span class="cert-row-value">$' + formatNumber(cert.premium) + '</span></div>' +
+          '<div class="cert-row"><span class="cert-row-label">Rate</span><span class="cert-row-value">' + rateBps + ' bps (' + ratePct + '%)</span></div>' +
+          '<div class="cert-divider"></div>' +
+          '<div class="cert-row"><span class="cert-row-label">Started</span><span class="cert-row-value">' + formatDate(cert.startDate) + '</span></div>' +
+          '<div class="cert-row"><span class="cert-row-label">Expires</span><span class="cert-row-value">' + formatDate(cert.endDate) + '</span></div>' +
+          '<div class="cert-row"><span class="cert-row-label">Days Remaining</span><span class="cert-row-value highlight">' + daysRemaining + '</span></div>' +
+          '<div class="cert-divider"></div>' +
+          '<div class="cert-row"><span class="cert-row-label">Issuer Status</span><span class="cert-row-value"><span class="dot dot-green" style="margin-right:4px;"></span> ' + issuerStatus + '</span></div>' +
+          '<div class="cert-row"><span class="cert-row-label">IRS Score</span><span class="cert-row-value">' + cert.irsScore + '</span></div>' +
+          '<div style="margin-top:0.25rem;">' +
+            '<div class="irs-bar-wrap">' +
+              '<div class="irs-bar-bg"><div class="irs-bar" style="width:' + irsPercent + '%;"></div></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="cert-payout-eligible" style="margin-top:0.75rem;">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' +
+          'Payout Eligible: Yes' +
+          '<span class="cert-payout-estimated">~$' + formatNumber(estimatedPayout) + ' (' + estimatedPct + '%)</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  });
+
+  grid.innerHTML = html;
+}
+
+function renderPayoutStatus(payout) {
+  var card = document.getElementById('payoutStatusCard');
+  var content = document.getElementById('payoutStatusContent');
+
+  card.style.display = 'block';
+
+  var html = '<div class="payout-card">' +
+    '<div class="payout-header">' +
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' +
+      'PAYOUT RECEIVED' +
+    '</div>' +
+    '<div class="payout-row"><span class="payout-row-label">Amount</span><span class="payout-total-amount">$' + formatNumber(payout.amount) + ' USDT</span></div>' +
+    '<div class="payout-row"><span class="payout-row-label">TX</span><span class="payout-row-value"><a href="' + BSC_TESTNET.explorer + '/tx/' + payout.tx + '" target="_blank" rel="noopener">' + payout.tx.slice(0, 6) + '...' + payout.tx.slice(-4) + ' &#8599;</a></span></div>' +
+    '<div class="payout-row"><span class="payout-row-label">Date</span><span class="payout-row-value">' + formatDate(payout.date) + '</span></div>' +
+    '<div class="payout-divider"></div>' +
+    '<div class="payout-breakdown">' +
+      '<div class="payout-breakdown-title">Breakdown</div>' +
+      '<div class="payout-bar-row">' +
+        '<span class="payout-bar-label">Bond liquidated</span>' +
+        '<div class="payout-bar-bg"><div class="payout-bar payout-bar-bond" style="width:' + payout.bondPct + '%;"></div></div>' +
+        '<span class="payout-bar-val">$' + formatNumber(payout.bondLiquidated) + ' (' + payout.bondPct + '%)</span>' +
+      '</div>' +
+      '<div class="payout-bar-row">' +
+        '<span class="payout-bar-label">Junior tranche</span>' +
+        '<div class="payout-bar-bg"><div class="payout-bar payout-bar-junior" style="width:' + payout.juniorPct + '%;"></div></div>' +
+        '<span class="payout-bar-val">$' + formatNumber(payout.juniorTranche) + ' (' + payout.juniorPct + '%)</span>' +
+      '</div>' +
+      '<div class="payout-bar-row">' +
+        '<span class="payout-bar-label">Senior tranche</span>' +
+        '<div class="payout-bar-bg"><div class="payout-bar payout-bar-senior" style="width:' + payout.seniorPct + '%;"></div></div>' +
+        '<span class="payout-bar-val">$' + formatNumber(payout.seniorTranche) + ' (' + payout.seniorPct + '%)</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="subrogation-note">' +
+      '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
+      'SubrogationNFT #' + payout.subrogationId + ' minted to Foundation for recovery' +
+    '</div>' +
+  '</div>';
+
+  content.innerHTML = html;
+}
+
+function renderHistoryTable(history) {
+  var tbody = document.getElementById('historyTableBody');
+  var empty = document.getElementById('historyEmpty');
+
+  if (history.length === 0) {
+    empty.style.display = '';
+    return;
+  }
+
+  var html = '';
+  history.forEach(function(cert) {
+    var statusClass = cert.paidOut ? 'status-paid' : 'status-expired';
+    var statusText = cert.paidOut ? 'Paid Out' : 'Expired';
+    var payoutCell = '';
+    if (cert.paidOut && cert.payoutTx) {
+      payoutCell = '<span style="color:var(--color-success); font-weight:600;">$' + formatNumber(cert.payoutAmount) + '</span><br>' +
+        '<a class="tx-hash" href="' + BSC_TESTNET.explorer + '/tx/' + cert.payoutTx + '" target="_blank" rel="noopener">' + cert.payoutTx.slice(0, 10) + '...' + cert.payoutTx.slice(-4) + '</a>';
+    } else {
+      payoutCell = '<span style="color:var(--text-muted);">--</span>';
+    }
+
+    html += '<tr>' +
+      '<td style="font-family:var(--font-mono); font-weight:600;">#' + cert.id + '</td>' +
+      '<td>' + cert.issuer + '</td>' +
+      '<td style="font-family:var(--font-mono);">$' + formatNumber(cert.coverage) + '</td>' +
+      '<td>' + formatDateShort(cert.startDate) + ' - ' + formatDateShort(cert.endDate) + '</td>' +
+      '<td><span class="status-badge ' + statusClass + '">' + statusText + '</span></td>' +
+      '<td>' + payoutCell + '</td>' +
+    '</tr>';
+  });
+
+  tbody.innerHTML = html;
+}
+
+function resetCoverageUI() {
+  var ids = ['metricActiveCount', 'metricTotalCoverage', 'metricPremiums', 'metricPayouts'];
+  ids.forEach(function(id) {
+    var el = document.getElementById(id);
+    el.textContent = '--';
+    el.classList.remove('connected');
+    el.classList.add('dimmed');
+  });
+  document.getElementById('activeCertGrid').innerHTML =
+    '<div class="empty-state" id="activeCoverageEmpty">' +
+      '<div class="empty-state-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>' +
+      '<div class="empty-state-title">No Active Coverage</div>' +
+      '<div class="empty-state-desc">Connect your wallet to view ProtectionCert NFTs, or purchase coverage from the dashboard.</div>' +
+      '<a href="dashboard.html#purchase" class="btn-empty-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Get Coverage</a>' +
+    '</div>';
+  document.getElementById('payoutStatusCard').style.display = 'none';
+  document.getElementById('payoutStatusContent').innerHTML = '';
+  document.getElementById('historyTableBody').innerHTML =
+    '<tr id="historyEmpty"><td colspan="6" style="text-align:center; padding:2rem; color:var(--text-muted);">No coverage history yet. Expired and paid-out positions will appear here.</td></tr>';
+}
+
+// ---- Utility Functions ----
+function formatNumber(n) {
+  return n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+}
+
+function formatDate(d) {
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+}
+
+function formatDateShort(d) {
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[d.getMonth()] + ' ' + d.getDate() + ', ' + String(d.getFullYear()).slice(-2);
+}
+
+function showToast(message, type) {
+  type = type || 'success';
+  var container = document.getElementById('toastContainer');
+  var icon = type === 'success' ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' :
+             type === 'error' ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>' : '';
+  var toast = document.createElement('div');
+  toast.className = 'toast toast-' + type;
+  toast.innerHTML = icon + '<span>' + message + '</span>';
+  container.appendChild(toast);
+  setTimeout(function() {
+    toast.style.animation = 'toast-out 0.3s forwards';
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 4000);
+}
+
+// ---- Scroll Reveal ----
+function initReveal() {
+  var els = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(function(el) { observer.observe(el); });
+}
+
+// ---- Close dropdowns on outside click ----
+document.addEventListener('click', function(e) {
+  var walletWrap = document.querySelector('.wallet-dropdown-wrap');
+  if (walletWrap && !walletWrap.contains(e.target)) {
+    document.getElementById('walletDropdown').classList.remove('open');
+  }
+});
+
+// ---- MetaMask events ----
+if (window.ethereum) {
+  window.ethereum.on('accountsChanged', function(accounts) {
+    if (accounts.length === 0) {
+      disconnectWallet();
+    } else {
+      userAddress = accounts[0];
+      updateWalletUI(userAddress);
+      loadCoverageData();
+    }
+  });
+  window.ethereum.on('chainChanged', function() {
+    window.location.reload();
+  });
+}
+
+// ---- Init ----
+document.addEventListener('DOMContentLoaded', async function() {
+  initReveal();
+  // Auto-connect if previously connected
+  if (localStorage.getItem('coverfi-wallet-connected') === 'true' && window.ethereum) {
+    try {
+      var accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      if (accounts.length > 0) {
+        provider = new ethers.BrowserProvider(window.ethereum);
+        signer = await provider.getSigner();
+        userAddress = accounts[0];
+        updateWalletUI(userAddress);
+        initContracts();
+        loadCoverageData();
+      }
+    } catch(e) {
+      console.log('Auto-reconnect failed:', e.message);
+    }
+  }
+});
+</script>
+</body>
+</html>

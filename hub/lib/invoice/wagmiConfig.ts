@@ -1,8 +1,8 @@
-import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+﻿import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { http } from 'wagmi';
 import { defineChain } from 'viem';
 
-// Mantle Sepolia testnet (chain 5003) — the single chain Kubryx targets for
+// Mantle Sepolia testnet (chain 5003) — the single chain RWAkins targets for
 // The Turing Test Hackathon 2026. Gas token is MNT (not ETH).
 export const mantleSepolia = defineChain({
   id: 5003,
@@ -14,7 +14,7 @@ export const mantleSepolia = defineChain({
 });
 
 export const wagmiConfig = getDefaultConfig({
-  appName: 'Kubryx Invoice',
+  appName: 'RWAkins Invoice',
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '1c33f21132b492329813589b910e5bd6',
   chains: [mantleSepolia],
   transports: {

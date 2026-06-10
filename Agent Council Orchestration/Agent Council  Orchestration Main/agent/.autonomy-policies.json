@@ -1,0 +1,14 @@
+[
+  {
+    "name": "TestBudget",
+    "type": "budget",
+    "enabled": true,
+    "rules": {
+      "maxPerTip": 0.05,
+      "maxDailyTotal": 1
+    },
+    "id": "policy-1774197948874-3266w5",
+    "userId": "default",
+    "createdAt": "2026-03-22T16:45:48.874Z"
+  }
+]

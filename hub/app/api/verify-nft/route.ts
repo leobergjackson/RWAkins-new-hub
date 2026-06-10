@@ -1,4 +1,4 @@
-// Built by vsrupeshkumar
+﻿// Built by vsrupeshkumar
 // Verify Credit Passport Soulbound NFT & fetch general NFTs via Moralis Web3 API.
 // Server-side only so MORALIS_API_KEY never reaches the browser.
 import { NextResponse } from 'next/server'
@@ -77,7 +77,7 @@ export async function GET(req: Request) {
     const allNfts = results.flat()
 
     // Detect if a Credit Passport soulbound NFT exists
-    // We check NFT name, symbol, or metadata name for "Credit Passport" or "Kubryx Credit"
+    // We check NFT name, symbol, or metadata name for "Credit Passport" or "RWAkins Credit"
     const creditPassportNft = allNfts.find(n => {
       const name = (n.name ?? '').toLowerCase()
       const symbol = (n.symbol ?? '').toLowerCase()
@@ -97,7 +97,7 @@ export async function GET(req: Request) {
       creditPassport: creditPassportNft ? {
         tokenAddress: creditPassportNft.token_address,
         tokenId: creditPassportNft.token_id,
-        name: creditPassportNft.name || 'Kubryx Credit Passport',
+        name: creditPassportNft.name || 'RWAkins Credit Passport',
         symbol: creditPassportNft.symbol || 'KCP',
         chainName: creditPassportNft.chainName,
         metadata: creditPassportNft.normalized_metadata,

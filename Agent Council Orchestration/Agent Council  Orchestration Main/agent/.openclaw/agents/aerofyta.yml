@@ -1,0 +1,50 @@
+name: aerofyta
+description: Autonomous multi-chain payment agent powered by Tether WDK
+version: 1.0.0
+author: Danish A
+license: Apache-2.0
+
+model: groq/llama-3.3-70b
+
+skills:
+  - tip_creator
+  - check_balance
+  - manage_wallet
+  - create_escrow
+  - atomic_swap
+  - analyze_creator
+  - manage_dca
+  - stream_payments
+  - assess_risk
+  - bridge_usdt0
+  - defi_operations
+  - governance
+  - treasury_management
+  - conditional_payments
+  - x402_micropayments
+
+tools_endpoint: http://localhost:3001/api/mcp
+
+chains:
+  - ethereum-sepolia
+  - ton-testnet
+  - tron-nile
+
+protocols:
+  - aave-v3
+  - velora-swap
+  - usdt0-bridge
+
+mcp_server:
+  name: aerofyta-mcp
+  transport: stdio
+  command: npx tsx src/mcp-server.ts
+  tool_count: 97+
+
+safety:
+  kill_switch: true
+  spend_limits:
+    hourly: 10
+    daily: 50
+    monthly: 500
+  require_human_approval_above: 25

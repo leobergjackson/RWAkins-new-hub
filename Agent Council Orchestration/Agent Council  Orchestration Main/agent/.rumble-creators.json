@@ -1,0 +1,543 @@
+{
+  "creators": [
+    {
+      "id": "9d84c90e-c15f-49a8-b66b-afa5fdcc34d8",
+      "name": "TestCreator",
+      "channelUrl": "https://rumble.com/test",
+      "walletAddress": "0xabc",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.399Z"
+    },
+    {
+      "id": "3783aa90-f576-4240-a5bc-1f23c2516a8b",
+      "name": "NewName",
+      "channelUrl": "https://rumble.com/dup",
+      "walletAddress": "0x222",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.414Z"
+    },
+    {
+      "id": "189c9b1a-8fd9-41fa-9087-1a4bd65db165",
+      "name": "Low",
+      "channelUrl": "https://rumble.com/low",
+      "walletAddress": "0x1",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.418Z"
+    },
+    {
+      "id": "1f615ad8-9c6a-4db7-849f-8a7c7acf4c0a",
+      "name": "High",
+      "channelUrl": "https://rumble.com/high",
+      "walletAddress": "0x2",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 1,
+      "totalTipAmount": 0.5,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.420Z"
+    },
+    {
+      "id": "3f4b9f0d-7158-4dde-91fd-dae3f9edb539",
+      "name": "WatchMe",
+      "channelUrl": "https://rumble.com/watch",
+      "walletAddress": "0xw",
+      "categories": [
+        "edu"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.424Z"
+    },
+    {
+      "id": "811b252e-b76a-4770-a0d5-9d69b6d96759",
+      "name": "AutoCreator",
+      "channelUrl": "https://rumble.com/auto",
+      "walletAddress": "0xa",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.429Z"
+    },
+    {
+      "id": "80031771-5fc2-4351-94ae-1b49d8d067d2",
+      "name": "LowWatch",
+      "channelUrl": "https://rumble.com/loww",
+      "walletAddress": "0xl",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.433Z"
+    },
+    {
+      "id": "8b88c596-898d-4a5e-b28e-8b8c81ef141a",
+      "name": "PoolCreator",
+      "channelUrl": "https://rumble.com/pool",
+      "walletAddress": "0xp",
+      "categories": [
+        "crypto"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.438Z"
+    },
+    {
+      "id": "ee044932-415f-481e-bea3-7bb335396435",
+      "name": "GoalCreator",
+      "channelUrl": "https://rumble.com/goal",
+      "walletAddress": "0xg",
+      "categories": [
+        "finance"
+      ],
+      "totalTipsReceived": 2,
+      "totalTipAmount": 0.11,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.440Z"
+    },
+    {
+      "id": "ac3019fe-212a-4fc6-a82b-1254ea6ad8c9",
+      "name": "DoneCreator",
+      "channelUrl": "https://rumble.com/done",
+      "walletAddress": "0xd",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 1,
+      "totalTipAmount": 0.01,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.446Z"
+    },
+    {
+      "id": "54ce2085-e0a0-4ef3-97d3-80bb6ffbf222",
+      "name": "ActivePool",
+      "channelUrl": "https://rumble.com/active",
+      "walletAddress": "0xap",
+      "categories": [
+        "gaming"
+      ],
+      "totalTipsReceived": 1,
+      "totalTipAmount": 0.01,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.453Z"
+    },
+    {
+      "id": "201387e4-8653-41a2-ab0d-2a7008f07e1d",
+      "name": "NoHistory",
+      "channelUrl": "https://rumble.com/nh",
+      "walletAddress": "0xnh",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.458Z"
+    },
+    {
+      "id": "83545910-1924-423a-ae25-16a30ad6bf5f",
+      "name": "EngCreator",
+      "channelUrl": "https://rumble.com/eng",
+      "walletAddress": "0xeng",
+      "categories": [
+        "education"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.463Z"
+    },
+    {
+      "id": "9d0c4bac-5bae-4e4d-901c-39807b9d4f8d",
+      "name": "EduCreator",
+      "channelUrl": "https://rumble.com/edu",
+      "walletAddress": "0xedu",
+      "categories": [
+        "education"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.470Z"
+    },
+    {
+      "id": "0e8dc334-7cfd-41a3-9f84-2e06a78d3c9f",
+      "name": "GamCreator",
+      "channelUrl": "https://rumble.com/gam",
+      "walletAddress": "0xgam",
+      "categories": [
+        "gaming"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.472Z"
+    },
+    {
+      "id": "9b267793-5908-42d7-8796-738dea8132ee",
+      "name": "TrigCreator",
+      "channelUrl": "https://rumble.com/trig",
+      "walletAddress": "0xt",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.475Z"
+    },
+    {
+      "id": "26469d9f-e5a3-4dda-a900-1858284afd5c",
+      "name": "EventCreator",
+      "channelUrl": "https://rumble.com/event",
+      "walletAddress": "0xe",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 1,
+      "totalTipAmount": 0.05,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.478Z"
+    },
+    {
+      "id": "7d1ad40c-bf90-44a0-8941-cd9472220783",
+      "name": "NoEvent",
+      "channelUrl": "https://rumble.com/noe",
+      "walletAddress": "0xne",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.494Z"
+    },
+    {
+      "id": "aceb2ebb-b793-4a93-848e-b1916d77e5aa",
+      "name": "LB1",
+      "channelUrl": "https://rumble.com/lb1",
+      "walletAddress": "0xlb1",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.497Z"
+    },
+    {
+      "id": "514bdb37-020f-4811-95f9-847295eddf75",
+      "name": "LB2",
+      "channelUrl": "https://rumble.com/lb2",
+      "walletAddress": "0xlb2",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.497Z"
+    },
+    {
+      "id": "5f404cd1-dab1-46e9-a808-0ee1ab2fd2e0",
+      "name": "Collab1",
+      "channelUrl": "https://rumble.com/c1",
+      "walletAddress": "0xc1",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.499Z"
+    },
+    {
+      "id": "04886305-9348-42ed-a7f7-e3dc9a019aa0",
+      "name": "Collab2",
+      "channelUrl": "https://rumble.com/c2",
+      "walletAddress": "0xc2",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.500Z"
+    },
+    {
+      "id": "7c18e681-2aa8-45f3-8479-7fa0f022a11c",
+      "name": "BadSplit",
+      "channelUrl": "https://rumble.com/bs",
+      "walletAddress": "0xbs",
+      "categories": [
+        "tech"
+      ],
+      "totalTipsReceived": 0,
+      "totalTipAmount": 0,
+      "subscriberCount": 0,
+      "registeredAt": "2026-03-22T16:45:52.503Z"
+    }
+  ],
+  "watchSessions": [
+    {
+      "id": "8b7ec264-1e82-4eea-97cb-37bcb2eb4e07",
+      "userId": "user1",
+      "creatorId": "3f4b9f0d-7158-4dde-91fd-dae3f9edb539",
+      "videoId": "vid1",
+      "watchPercent": 85,
+      "timestamp": "2026-03-22T16:45:52.425Z",
+      "autoTipTriggered": false
+    },
+    {
+      "id": "8be415bf-d72a-4fcf-a142-5a5a58a09785",
+      "userId": "user2",
+      "creatorId": "811b252e-b76a-4770-a0d5-9d69b6d96759",
+      "videoId": "vid2",
+      "watchPercent": 90,
+      "timestamp": "2026-03-22T16:45:52.431Z",
+      "autoTipTriggered": true
+    },
+    {
+      "id": "bbb63daa-e650-4efc-b958-4e33f5719e66",
+      "userId": "user3",
+      "creatorId": "80031771-5fc2-4351-94ae-1b49d8d067d2",
+      "videoId": "vid3",
+      "watchPercent": 50,
+      "timestamp": "2026-03-22T16:45:52.434Z",
+      "autoTipTriggered": false
+    },
+    {
+      "id": "62f76883-e117-4b7b-b95f-497ced36167b",
+      "userId": "engUser",
+      "creatorId": "83545910-1924-423a-ae25-16a30ad6bf5f",
+      "videoId": "v1",
+      "watchPercent": 90,
+      "timestamp": "2026-03-22T16:45:52.464Z",
+      "autoTipTriggered": false
+    },
+    {
+      "id": "10d5b281-6d6e-4228-98a3-167731fea3ab",
+      "userId": "engUser",
+      "creatorId": "83545910-1924-423a-ae25-16a30ad6bf5f",
+      "videoId": "v2",
+      "watchPercent": 85,
+      "timestamp": "2026-03-22T16:45:52.465Z",
+      "autoTipTriggered": false
+    },
+    {
+      "id": "a588278f-ed98-4174-9e67-27dd3ebd5cea",
+      "userId": "engUser",
+      "creatorId": "83545910-1924-423a-ae25-16a30ad6bf5f",
+      "videoId": "v1",
+      "watchPercent": 95,
+      "timestamp": "2026-03-22T16:45:52.467Z",
+      "autoTipTriggered": false
+    },
+    {
+      "id": "d6a56dc8-89ed-4929-b280-d354dd5fd4df",
+      "userId": "eduUser",
+      "creatorId": "9d0c4bac-5bae-4e4d-901c-39807b9d4f8d",
+      "videoId": "v1",
+      "watchPercent": 90,
+      "timestamp": "2026-03-22T16:45:52.471Z",
+      "autoTipTriggered": false
+    },
+    {
+      "id": "cf339ef3-8921-47fe-9acc-5d4f18206917",
+      "userId": "gamUser",
+      "creatorId": "0e8dc334-7cfd-41a3-9f84-2e06a78d3c9f",
+      "videoId": "v1",
+      "watchPercent": 90,
+      "timestamp": "2026-03-22T16:45:52.473Z",
+      "autoTipTriggered": false
+    }
+  ],
+  "autoTipRules": [
+    {
+      "id": "6db0972b-6487-4afe-affb-eb6c40c474a8",
+      "userId": "user2",
+      "minWatchPercent": 70,
+      "tipAmount": 0.01,
+      "maxTipsPerDay": 5,
+      "enabledCategories": [
+        "tech"
+      ],
+      "enabled": true,
+      "createdAt": "2026-03-22T16:45:52.430Z"
+    },
+    {
+      "id": "c6f5218d-061a-4b6a-8868-686091e6a01e",
+      "userId": "user3",
+      "minWatchPercent": 80,
+      "tipAmount": 0.01,
+      "maxTipsPerDay": 5,
+      "enabledCategories": [
+        "tech"
+      ],
+      "enabled": true,
+      "createdAt": "2026-03-22T16:45:52.433Z"
+    }
+  ],
+  "tipPools": [
+    {
+      "id": "d0fb6d2c-e43d-4324-9ba6-8ff4b9ba2c9f",
+      "creatorId": "1f615ad8-9c6a-4db7-849f-8a7c7acf4c0a",
+      "creatorName": "High",
+      "title": "fund",
+      "goalAmount": 1,
+      "currentAmount": 0.5,
+      "contributors": [
+        {
+          "contributor": "user1",
+          "amount": 0.5,
+          "timestamp": "2026-03-22T16:45:52.422Z"
+        }
+      ],
+      "completed": false,
+      "createdAt": "2026-03-22T16:45:52.421Z"
+    },
+    {
+      "id": "9c355c40-ba65-47bf-8f36-c5be58828bc1",
+      "creatorId": "8b88c596-898d-4a5e-b28e-8b8c81ef141a",
+      "creatorName": "PoolCreator",
+      "title": "Equipment Fund",
+      "goalAmount": 1,
+      "currentAmount": 0,
+      "contributors": [],
+      "completed": false,
+      "createdAt": "2026-03-22T16:45:52.438Z"
+    },
+    {
+      "id": "2b5416b5-0668-4ecf-b017-444d9af35ec7",
+      "creatorId": "ee044932-415f-481e-bea3-7bb335396435",
+      "creatorName": "GoalCreator",
+      "title": "Goal Test",
+      "goalAmount": 0.1,
+      "currentAmount": 0.11,
+      "contributors": [
+        {
+          "contributor": "u1",
+          "amount": 0.06,
+          "timestamp": "2026-03-22T16:45:52.441Z"
+        },
+        {
+          "contributor": "u2",
+          "amount": 0.05,
+          "timestamp": "2026-03-22T16:45:52.442Z"
+        }
+      ],
+      "completed": true,
+      "createdAt": "2026-03-22T16:45:52.441Z"
+    },
+    {
+      "id": "883d1aa5-6ed5-48f0-ba54-b4b3312226bf",
+      "creatorId": "ac3019fe-212a-4fc6-a82b-1254ea6ad8c9",
+      "creatorName": "DoneCreator",
+      "title": "Done Pool",
+      "goalAmount": 0.01,
+      "currentAmount": 0.01,
+      "contributors": [
+        {
+          "contributor": "u1",
+          "amount": 0.01,
+          "timestamp": "2026-03-22T16:45:52.451Z"
+        }
+      ],
+      "completed": true,
+      "createdAt": "2026-03-22T16:45:52.450Z"
+    },
+    {
+      "id": "551db21c-49e0-4d50-93aa-a8738322a86b",
+      "creatorId": "54ce2085-e0a0-4ef3-97d3-80bb6ffbf222",
+      "creatorName": "ActivePool",
+      "title": "Active",
+      "goalAmount": 10,
+      "currentAmount": 0,
+      "contributors": [],
+      "completed": false,
+      "createdAt": "2026-03-22T16:45:52.454Z"
+    },
+    {
+      "id": "01a6ffe4-420f-482a-901c-407f110eee39",
+      "creatorId": "54ce2085-e0a0-4ef3-97d3-80bb6ffbf222",
+      "creatorName": "ActivePool",
+      "title": "Complete",
+      "goalAmount": 0.01,
+      "currentAmount": 0.01,
+      "contributors": [
+        {
+          "contributor": "u",
+          "amount": 0.01,
+          "timestamp": "2026-03-22T16:45:52.455Z"
+        }
+      ],
+      "completed": true,
+      "createdAt": "2026-03-22T16:45:52.454Z"
+    }
+  ],
+  "eventTriggers": [
+    {
+      "id": "c3ac0080-92e1-489a-b2c3-acaf28e4b1b8",
+      "creatorId": "9b267793-5908-42d7-8796-738dea8132ee",
+      "event": "new_video",
+      "tipAmount": 0.01,
+      "enabled": true,
+      "triggerCount": 0,
+      "createdAt": "2026-03-22T16:45:52.476Z"
+    },
+    {
+      "id": "3e9fa177-1e55-4334-8f0d-e10040e15606",
+      "creatorId": "26469d9f-e5a3-4dda-a900-1858284afd5c",
+      "event": "milestone",
+      "tipAmount": 0.05,
+      "enabled": true,
+      "triggerCount": 1,
+      "createdAt": "2026-03-22T16:45:52.479Z",
+      "lastTriggered": "2026-03-22T16:45:52.492Z"
+    }
+  ],
+  "collabSplits": [
+    {
+      "id": "f496a8f6-b4ae-40a1-ba46-16de98e19404",
+      "videoId": "video1",
+      "creators": [
+        {
+          "creatorId": "5f404cd1-dab1-46e9-a808-0ee1ab2fd2e0",
+          "creatorName": "Collab1",
+          "percentage": 60,
+          "walletAddress": "0xc1"
+        },
+        {
+          "creatorId": "04886305-9348-42ed-a7f7-e3dc9a019aa0",
+          "creatorName": "Collab2",
+          "percentage": 40,
+          "walletAddress": "0xc2"
+        }
+      ],
+      "totalTipAmount": 0,
+      "createdAt": "2026-03-22T16:45:52.501Z"
+    }
+  ]
+}

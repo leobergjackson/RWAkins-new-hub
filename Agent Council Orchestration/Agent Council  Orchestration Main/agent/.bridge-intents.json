@@ -1,0 +1,5602 @@
+[
+  {
+    "id": "bridge-intent-1774197961430-r8c1jd",
+    "timestamp": "2026-03-22T16:46:01.430Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774197961428-qeo7bv",
+    "timestamp": "2026-03-22T16:46:01.428Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774197961315-qn9naz",
+    "timestamp": "2026-03-22T16:46:01.315Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774197961313-i2tmfq",
+    "timestamp": "2026-03-22T16:46:01.313Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774197961310-ntfbah",
+    "timestamp": "2026-03-22T16:46:01.310Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774197901627-marx88",
+    "timestamp": "2026-03-22T16:45:01.627Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774197901624-46nzax",
+    "timestamp": "2026-03-22T16:45:01.624Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774197901510-g45nci",
+    "timestamp": "2026-03-22T16:45:01.510Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774197901508-7lai3e",
+    "timestamp": "2026-03-22T16:45:01.508Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774197901505-tt29w1",
+    "timestamp": "2026-03-22T16:45:01.505Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774196752118-19d4nc",
+    "timestamp": "2026-03-22T16:25:52.118Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774196752116-wvmx7n",
+    "timestamp": "2026-03-22T16:25:52.116Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774196751995-bgdqxg",
+    "timestamp": "2026-03-22T16:25:51.995Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774196751993-xxbd81",
+    "timestamp": "2026-03-22T16:25:51.993Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774196751990-2kpxus",
+    "timestamp": "2026-03-22T16:25:51.990Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195237609-dsu84z",
+    "timestamp": "2026-03-22T16:00:37.609Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195237607-rhr76f",
+    "timestamp": "2026-03-22T16:00:37.607Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195237434-uil6uy",
+    "timestamp": "2026-03-22T16:00:37.434Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195237431-0rokqa",
+    "timestamp": "2026-03-22T16:00:37.431Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195237428-r199ry",
+    "timestamp": "2026-03-22T16:00:37.428Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195186205-7qpcpd",
+    "timestamp": "2026-03-22T15:59:46.205Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195186203-2qvh3f",
+    "timestamp": "2026-03-22T15:59:46.203Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195186087-pt0glc",
+    "timestamp": "2026-03-22T15:59:46.087Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195186083-g5e6e8",
+    "timestamp": "2026-03-22T15:59:46.083Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195186080-vnf8gq",
+    "timestamp": "2026-03-22T15:59:46.080Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195070914-tend8f",
+    "timestamp": "2026-03-22T15:57:50.914Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195070912-efgocj",
+    "timestamp": "2026-03-22T15:57:50.912Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195070762-c5peqh",
+    "timestamp": "2026-03-22T15:57:50.762Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195070759-3t8rio",
+    "timestamp": "2026-03-22T15:57:50.759Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774195070756-wrxjeg",
+    "timestamp": "2026-03-22T15:57:50.756Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774152473662-zxp8u5",
+    "timestamp": "2026-03-22T04:07:53.662Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774152473660-7u4mkg",
+    "timestamp": "2026-03-22T04:07:53.660Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774152473563-7e6j5s",
+    "timestamp": "2026-03-22T04:07:53.563Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774152473560-v9nyo9",
+    "timestamp": "2026-03-22T04:07:53.560Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774152473558-joqbvp",
+    "timestamp": "2026-03-22T04:07:53.558Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774152318772-i53uvi",
+    "timestamp": "2026-03-22T04:05:18.772Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774152318770-oh83nq",
+    "timestamp": "2026-03-22T04:05:18.770Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774152318672-4tl5yo",
+    "timestamp": "2026-03-22T04:05:18.672Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774152318670-6v54fp",
+    "timestamp": "2026-03-22T04:05:18.670Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774152318667-1yn6ew",
+    "timestamp": "2026-03-22T04:05:18.667Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148794250-nt5ppi",
+    "timestamp": "2026-03-22T03:06:34.250Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148794248-5o9pna",
+    "timestamp": "2026-03-22T03:06:34.248Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148794150-ds16up",
+    "timestamp": "2026-03-22T03:06:34.150Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148794148-0qsj1w",
+    "timestamp": "2026-03-22T03:06:34.148Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148794146-jm25kt",
+    "timestamp": "2026-03-22T03:06:34.146Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148508579-0g88vj",
+    "timestamp": "2026-03-22T03:01:48.579Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148508577-i74cgz",
+    "timestamp": "2026-03-22T03:01:48.577Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148508477-9uxa47",
+    "timestamp": "2026-03-22T03:01:48.477Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148508475-lc3gg2",
+    "timestamp": "2026-03-22T03:01:48.475Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148508473-90o80g",
+    "timestamp": "2026-03-22T03:01:48.473Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148319355-yhsduc",
+    "timestamp": "2026-03-22T02:58:39.355Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148319353-4nykr8",
+    "timestamp": "2026-03-22T02:58:39.353Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148319250-q2t745",
+    "timestamp": "2026-03-22T02:58:39.250Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148319248-mm3ad0",
+    "timestamp": "2026-03-22T02:58:39.248Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148319245-8pigvm",
+    "timestamp": "2026-03-22T02:58:39.245Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148057457-h2pmfk",
+    "timestamp": "2026-03-22T02:54:17.457Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148057455-jsanog",
+    "timestamp": "2026-03-22T02:54:17.455Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148057356-i8jl2o",
+    "timestamp": "2026-03-22T02:54:17.356Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148057354-glhshv",
+    "timestamp": "2026-03-22T02:54:17.354Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774148057352-3u0jhw",
+    "timestamp": "2026-03-22T02:54:17.352Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774147869729-deqkom",
+    "timestamp": "2026-03-22T02:51:09.729Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774147869727-c779ig",
+    "timestamp": "2026-03-22T02:51:09.727Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774147869629-akad0r",
+    "timestamp": "2026-03-22T02:51:09.629Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774147869627-isagvk",
+    "timestamp": "2026-03-22T02:51:09.627Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774147869625-h2rvr8",
+    "timestamp": "2026-03-22T02:51:09.625Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774147729789-ltpx6u",
+    "timestamp": "2026-03-22T02:48:49.789Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774147729786-6igf34",
+    "timestamp": "2026-03-22T02:48:49.786Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774147729677-tmopwp",
+    "timestamp": "2026-03-22T02:48:49.677Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774147729675-479odi",
+    "timestamp": "2026-03-22T02:48:49.675Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774147729673-axnxn4",
+    "timestamp": "2026-03-22T02:48:49.673Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774145512824-btw37d",
+    "timestamp": "2026-03-22T02:11:52.824Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774145512822-bvht55",
+    "timestamp": "2026-03-22T02:11:52.822Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774145512720-c1e8ff",
+    "timestamp": "2026-03-22T02:11:52.720Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774145512717-b29g07",
+    "timestamp": "2026-03-22T02:11:52.717Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774145512714-j38sy7",
+    "timestamp": "2026-03-22T02:11:52.715Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774145007708-qw8rgj",
+    "timestamp": "2026-03-22T02:03:27.708Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774145007706-maj6ma",
+    "timestamp": "2026-03-22T02:03:27.706Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774145007593-vokpla",
+    "timestamp": "2026-03-22T02:03:27.593Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774145007591-ttcjba",
+    "timestamp": "2026-03-22T02:03:27.591Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774145007588-tt7lr8",
+    "timestamp": "2026-03-22T02:03:27.588Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143671241-wpaum9",
+    "timestamp": "2026-03-22T01:41:11.241Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143671239-v90sxh",
+    "timestamp": "2026-03-22T01:41:11.239Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143671129-nr2pnz",
+    "timestamp": "2026-03-22T01:41:11.130Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143671127-74wswp",
+    "timestamp": "2026-03-22T01:41:11.127Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143671125-htpvua",
+    "timestamp": "2026-03-22T01:41:11.125Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143643454-6o7toh",
+    "timestamp": "2026-03-22T01:40:43.454Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143643451-twdjpj",
+    "timestamp": "2026-03-22T01:40:43.451Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143643345-a06csu",
+    "timestamp": "2026-03-22T01:40:43.345Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143643342-4r62te",
+    "timestamp": "2026-03-22T01:40:43.342Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143643339-zhc9e0",
+    "timestamp": "2026-03-22T01:40:43.339Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143616708-b9przh",
+    "timestamp": "2026-03-22T01:40:16.708Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143616705-qsh5ay",
+    "timestamp": "2026-03-22T01:40:16.705Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143616588-d0cfrj",
+    "timestamp": "2026-03-22T01:40:16.588Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143616586-dj77eo",
+    "timestamp": "2026-03-22T01:40:16.586Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143616584-webeh5",
+    "timestamp": "2026-03-22T01:40:16.584Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143594642-fipb1m",
+    "timestamp": "2026-03-22T01:39:54.642Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143594640-13cuen",
+    "timestamp": "2026-03-22T01:39:54.640Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143594529-pd7qbb",
+    "timestamp": "2026-03-22T01:39:54.529Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143594527-t91uth",
+    "timestamp": "2026-03-22T01:39:54.527Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774143594524-blnae3",
+    "timestamp": "2026-03-22T01:39:54.524Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123105212-kf84j3",
+    "timestamp": "2026-03-21T19:58:25.212Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123105210-5szjdu",
+    "timestamp": "2026-03-21T19:58:25.210Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123105103-m81jvz",
+    "timestamp": "2026-03-21T19:58:25.103Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123105100-7gwqe1",
+    "timestamp": "2026-03-21T19:58:25.100Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123105097-m5omzo",
+    "timestamp": "2026-03-21T19:58:25.097Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123048422-amucw0",
+    "timestamp": "2026-03-21T19:57:28.423Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123048420-4mc5z9",
+    "timestamp": "2026-03-21T19:57:28.420Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123048309-1fdzrr",
+    "timestamp": "2026-03-21T19:57:28.309Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123048306-3ue564",
+    "timestamp": "2026-03-21T19:57:28.306Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123048302-casmw6",
+    "timestamp": "2026-03-21T19:57:28.302Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123025440-pd79eb",
+    "timestamp": "2026-03-21T19:57:05.440Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123025438-btyork",
+    "timestamp": "2026-03-21T19:57:05.438Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123025340-ck3x4c",
+    "timestamp": "2026-03-21T19:57:05.340Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123025338-kgxl4l",
+    "timestamp": "2026-03-21T19:57:05.338Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123025335-irg92i",
+    "timestamp": "2026-03-21T19:57:05.335Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123004598-5vwi33",
+    "timestamp": "2026-03-21T19:56:44.598Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123004596-10c63k",
+    "timestamp": "2026-03-21T19:56:44.596Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123004492-lxpixu",
+    "timestamp": "2026-03-21T19:56:44.492Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123004490-ghr9m7",
+    "timestamp": "2026-03-21T19:56:44.490Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774123004487-xlnyew",
+    "timestamp": "2026-03-21T19:56:44.487Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122984801-2vh6mi",
+    "timestamp": "2026-03-21T19:56:24.801Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122984799-73wdtj",
+    "timestamp": "2026-03-21T19:56:24.799Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122984685-zqkuxj",
+    "timestamp": "2026-03-21T19:56:24.685Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122984682-4g65sz",
+    "timestamp": "2026-03-21T19:56:24.682Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122984680-duzn6g",
+    "timestamp": "2026-03-21T19:56:24.680Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122962535-cd9ch0",
+    "timestamp": "2026-03-21T19:56:02.535Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122962533-rtgmwj",
+    "timestamp": "2026-03-21T19:56:02.533Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122962436-jt560l",
+    "timestamp": "2026-03-21T19:56:02.436Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122962434-gvke2h",
+    "timestamp": "2026-03-21T19:56:02.434Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122962431-1px3rx",
+    "timestamp": "2026-03-21T19:56:02.431Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122938746-8e2fwk",
+    "timestamp": "2026-03-21T19:55:38.746Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122938744-59w3vc",
+    "timestamp": "2026-03-21T19:55:38.744Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122938639-t74nri",
+    "timestamp": "2026-03-21T19:55:38.639Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122938637-f14uan",
+    "timestamp": "2026-03-21T19:55:38.637Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122938634-uiaoa1",
+    "timestamp": "2026-03-21T19:55:38.634Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122918180-pa1z1d",
+    "timestamp": "2026-03-21T19:55:18.180Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122918178-cw14ah",
+    "timestamp": "2026-03-21T19:55:18.178Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122918070-0nia9w",
+    "timestamp": "2026-03-21T19:55:18.070Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122918068-cv0f1k",
+    "timestamp": "2026-03-21T19:55:18.068Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122918065-t6t4n4",
+    "timestamp": "2026-03-21T19:55:18.065Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122898117-ychp4b",
+    "timestamp": "2026-03-21T19:54:58.117Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122898115-03iasf",
+    "timestamp": "2026-03-21T19:54:58.115Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122898005-g55iug",
+    "timestamp": "2026-03-21T19:54:58.005Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122898001-8gpkxp",
+    "timestamp": "2026-03-21T19:54:58.001Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122897998-j22iq6",
+    "timestamp": "2026-03-21T19:54:57.998Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122878930-vk09mg",
+    "timestamp": "2026-03-21T19:54:38.930Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122878928-1lhh96",
+    "timestamp": "2026-03-21T19:54:38.928Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122878816-lnf7vn",
+    "timestamp": "2026-03-21T19:54:38.816Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122878812-ovcrh0",
+    "timestamp": "2026-03-21T19:54:38.812Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122878810-ypwxdx",
+    "timestamp": "2026-03-21T19:54:38.810Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122858462-yrie44",
+    "timestamp": "2026-03-21T19:54:18.463Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122858461-6r9lt4",
+    "timestamp": "2026-03-21T19:54:18.461Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122858352-hpo5zg",
+    "timestamp": "2026-03-21T19:54:18.352Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122858350-c2oeej",
+    "timestamp": "2026-03-21T19:54:18.350Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122858347-9b9px7",
+    "timestamp": "2026-03-21T19:54:18.347Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122838611-oi36qj",
+    "timestamp": "2026-03-21T19:53:58.611Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122838609-tpekk9",
+    "timestamp": "2026-03-21T19:53:58.609Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122838500-oftg7q",
+    "timestamp": "2026-03-21T19:53:58.500Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122838498-l2hq6t",
+    "timestamp": "2026-03-21T19:53:58.498Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122838495-ybbzkb",
+    "timestamp": "2026-03-21T19:53:58.495Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122493671-yjw7eo",
+    "timestamp": "2026-03-21T19:48:13.671Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122493669-x04ayh",
+    "timestamp": "2026-03-21T19:48:13.669Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122493557-rfyl28",
+    "timestamp": "2026-03-21T19:48:13.557Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122493555-34dmm0",
+    "timestamp": "2026-03-21T19:48:13.555Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122493552-hoarqq",
+    "timestamp": "2026-03-21T19:48:13.552Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122021865-9lv3ld",
+    "timestamp": "2026-03-21T19:40:21.865Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122021863-otm0le",
+    "timestamp": "2026-03-21T19:40:21.863Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122021759-udrnqq",
+    "timestamp": "2026-03-21T19:40:21.759Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122021756-jj3gjz",
+    "timestamp": "2026-03-21T19:40:21.756Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774122021754-klp3z3",
+    "timestamp": "2026-03-21T19:40:21.754Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121999088-d3veok",
+    "timestamp": "2026-03-21T19:39:59.088Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121999086-0yylse",
+    "timestamp": "2026-03-21T19:39:59.086Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121998981-xyltk1",
+    "timestamp": "2026-03-21T19:39:58.981Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121998978-lvn30i",
+    "timestamp": "2026-03-21T19:39:58.978Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121998976-ctu5kw",
+    "timestamp": "2026-03-21T19:39:58.976Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121972877-xy711z",
+    "timestamp": "2026-03-21T19:39:32.877Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121972875-d8ujdx",
+    "timestamp": "2026-03-21T19:39:32.875Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121972777-4eea4l",
+    "timestamp": "2026-03-21T19:39:32.777Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121972775-kp0rh9",
+    "timestamp": "2026-03-21T19:39:32.775Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121972773-gl5kjm",
+    "timestamp": "2026-03-21T19:39:32.773Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121951077-n4eka3",
+    "timestamp": "2026-03-21T19:39:11.077Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121951075-8rq7wb",
+    "timestamp": "2026-03-21T19:39:11.075Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121950951-72awxk",
+    "timestamp": "2026-03-21T19:39:10.951Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121950949-zngnz6",
+    "timestamp": "2026-03-21T19:39:10.949Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121950946-re0h5f",
+    "timestamp": "2026-03-21T19:39:10.946Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121923049-6jd3dn",
+    "timestamp": "2026-03-21T19:38:43.049Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121923047-kxqea6",
+    "timestamp": "2026-03-21T19:38:43.047Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121922946-28b5am",
+    "timestamp": "2026-03-21T19:38:42.946Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121922943-8ldk8e",
+    "timestamp": "2026-03-21T19:38:42.943Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121922941-pskfjn",
+    "timestamp": "2026-03-21T19:38:42.941Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121797508-exx8lf",
+    "timestamp": "2026-03-21T19:36:37.508Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121797506-17yuhe",
+    "timestamp": "2026-03-21T19:36:37.506Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121797401-48bdr0",
+    "timestamp": "2026-03-21T19:36:37.401Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121797399-0or8gb",
+    "timestamp": "2026-03-21T19:36:37.399Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121797396-m6lzww",
+    "timestamp": "2026-03-21T19:36:37.396Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121776858-xctwah",
+    "timestamp": "2026-03-21T19:36:16.858Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "1a7c6ff61a935f9985ba0a27afc304f7f53c6eb030573660c4a19d7768d86db3",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121776856-biderr",
+    "timestamp": "2026-03-21T19:36:16.856Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121776748-qvpdfc",
+    "timestamp": "2026-03-21T19:36:16.748Z",
+    "fromChain": "Ethereum",
+    "toChain": "Base",
+    "token": "USDT0",
+    "amount": "10",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "base",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(10000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "be590a4aa457f2e51c365dd78cb6b3cd155f97eed6c1034becf53b466143ee5e",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121776746-pko0sq",
+    "timestamp": "2026-03-21T19:36:16.746Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "100",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(100000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "91322f8a455ecaaab0133f51611cf71c6005f6f7a8e957b9fa13da387b9f48a8",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  },
+  {
+    "id": "bridge-intent-1774121776743-jsk9y5",
+    "timestamp": "2026-03-21T19:36:16.743Z",
+    "fromChain": "Ethereum",
+    "toChain": "Arbitrum",
+    "token": "USDT0",
+    "amount": "50",
+    "wdkCallParams": {
+      "method": "bridgeProtocol.bridge",
+      "protocol": "@tetherto/wdk-protocol-bridge-usdt0-evm",
+      "params": {
+        "targetChain": "arbitrum",
+        "recipient": "sender_address",
+        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "amount": "BigInt(50000000)"
+      },
+      "registrationParams": {
+        "protocolName": "usdt0",
+        "protocolClass": "Usdt0ProtocolEvm",
+        "options": {
+          "bridgeMaxFee": "1000000000000000n"
+        }
+      }
+    },
+    "intentHash": "7b9f33990cc2873f2fe15a258d1937efd1cc60d0ee9c7435c1134a4e76f18374",
+    "status": "would_execute_on_mainnet",
+    "explorerUrl": "On mainnet, verify at: https://etherscan.io/tx/<hash> or https://layerzeroscan.com"
+  }
+]

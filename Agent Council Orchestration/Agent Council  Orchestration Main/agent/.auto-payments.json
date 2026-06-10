@@ -1,0 +1,617 @@
+{
+  "bills": [
+    [
+      "bill_ec291db5",
+      {
+        "id": "bill_ec291db5",
+        "title": "Test Dinner",
+        "totalAmount": 100,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xHost",
+        "participants": [
+          {
+            "address": "0xA",
+            "sharePercent": 25,
+            "shareAmount": 25,
+            "paid": false
+          },
+          {
+            "address": "0xB",
+            "sharePercent": 25,
+            "shareAmount": 25,
+            "paid": false
+          },
+          {
+            "address": "0xC",
+            "sharePercent": 25,
+            "shareAmount": 25,
+            "paid": false
+          },
+          {
+            "address": "0xD",
+            "sharePercent": 25,
+            "shareAmount": 25,
+            "paid": false
+          }
+        ],
+        "status": "pending",
+        "createdAt": "2026-03-22T16:00:27.041Z"
+      }
+    ],
+    [
+      "bill_7c1e48a0",
+      {
+        "id": "bill_7c1e48a0",
+        "title": "ToCancel",
+        "totalAmount": 50,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xHost",
+        "participants": [
+          {
+            "address": "0xA",
+            "sharePercent": 100,
+            "shareAmount": 50,
+            "paid": false
+          }
+        ],
+        "status": "cancelled",
+        "createdAt": "2026-03-22T16:00:27.043Z"
+      }
+    ],
+    [
+      "bill_06818f95",
+      {
+        "id": "bill_06818f95",
+        "title": "Lunch Split",
+        "totalAmount": 100,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xAlice",
+        "participants": [
+          {
+            "address": "0xBob",
+            "name": "Bob",
+            "sharePercent": 50,
+            "shareAmount": 50,
+            "paid": false
+          },
+          {
+            "address": "0xCharlie",
+            "name": "Charlie",
+            "sharePercent": 50,
+            "shareAmount": 50,
+            "paid": false
+          }
+        ],
+        "status": "pending",
+        "createdAt": "2026-03-22T16:00:37.558Z"
+      }
+    ],
+    [
+      "bill_90347c5d",
+      {
+        "id": "bill_90347c5d",
+        "title": "Dinner",
+        "totalAmount": 60,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xAlice",
+        "participants": [
+          {
+            "address": "0xBob",
+            "sharePercent": 33.333333333333336,
+            "shareAmount": 20.000000000000004,
+            "paid": false
+          },
+          {
+            "address": "0xCarol",
+            "sharePercent": 33.333333333333336,
+            "shareAmount": 20.000000000000004,
+            "paid": false
+          },
+          {
+            "address": "0xDave",
+            "sharePercent": 33.333333333333336,
+            "shareAmount": 20.000000000000004,
+            "paid": false
+          }
+        ],
+        "status": "pending",
+        "createdAt": "2026-03-22T16:00:37.560Z"
+      }
+    ],
+    [
+      "bill_0d54af61",
+      {
+        "id": "bill_0d54af61",
+        "title": "Test",
+        "totalAmount": 30,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xAlice",
+        "participants": [
+          {
+            "address": "0xBob",
+            "sharePercent": 50,
+            "shareAmount": 15,
+            "paid": true,
+            "paidAt": "2026-03-22T16:00:37.565Z",
+            "txHash": "0xsim_54a15b84-2ce3-4b"
+          },
+          {
+            "address": "0xCarol",
+            "sharePercent": 50,
+            "shareAmount": 15,
+            "paid": true,
+            "paidAt": "2026-03-22T16:00:37.565Z",
+            "txHash": "0xsim_41c29bd6-cc90-4a"
+          }
+        ],
+        "status": "settled",
+        "createdAt": "2026-03-22T16:00:37.563Z",
+        "settledAt": "2026-03-22T16:00:37.565Z"
+      }
+    ],
+    [
+      "bill_e4fbd9b0",
+      {
+        "id": "bill_e4fbd9b0",
+        "title": "Cancelled",
+        "totalAmount": 10,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xAlice",
+        "participants": [
+          {
+            "address": "0xBob",
+            "sharePercent": 100,
+            "shareAmount": 10,
+            "paid": false
+          }
+        ],
+        "status": "cancelled",
+        "createdAt": "2026-03-22T16:00:37.566Z"
+      }
+    ],
+    [
+      "bill_fa52cd8a",
+      {
+        "id": "bill_fa52cd8a",
+        "title": "B1",
+        "totalAmount": 10,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xA",
+        "participants": [
+          {
+            "address": "0xB",
+            "sharePercent": 100,
+            "shareAmount": 10,
+            "paid": false
+          }
+        ],
+        "status": "pending",
+        "createdAt": "2026-03-22T16:00:37.571Z"
+      }
+    ],
+    [
+      "bill_6455346c",
+      {
+        "id": "bill_6455346c",
+        "title": "Specific",
+        "totalAmount": 25,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xA",
+        "participants": [
+          {
+            "address": "0xB",
+            "sharePercent": 100,
+            "shareAmount": 25,
+            "paid": false
+          }
+        ],
+        "status": "pending",
+        "createdAt": "2026-03-22T16:00:37.572Z"
+      }
+    ],
+    [
+      "bill_66caba97",
+      {
+        "id": "bill_66caba97",
+        "title": "S",
+        "totalAmount": 10,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xA",
+        "participants": [
+          {
+            "address": "0xB",
+            "sharePercent": 100,
+            "shareAmount": 10,
+            "paid": false
+          }
+        ],
+        "status": "pending",
+        "createdAt": "2026-03-22T16:00:37.574Z"
+      }
+    ],
+    [
+      "bill_bb9871d8",
+      {
+        "id": "bill_bb9871d8",
+        "title": "T",
+        "totalAmount": 10,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xA",
+        "participants": [
+          {
+            "address": "0xB",
+            "sharePercent": 100,
+            "shareAmount": 10,
+            "paid": false
+          }
+        ],
+        "status": "pending",
+        "createdAt": "2026-03-22T16:00:37.577Z"
+      }
+    ],
+    [
+      "bill_1a0f6ea3",
+      {
+        "id": "bill_1a0f6ea3",
+        "title": "Team Lunch",
+        "totalAmount": 100,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "createdBy": "0xAlice",
+        "participants": [
+          {
+            "address": "0xBob",
+            "name": "Bob",
+            "sharePercent": 60,
+            "shareAmount": 60,
+            "paid": true,
+            "paidAt": "2026-03-22T16:00:37.613Z",
+            "txHash": "0xsim_2385dedb-6a21-4b"
+          },
+          {
+            "address": "0xCarol",
+            "name": "Carol",
+            "sharePercent": 40,
+            "shareAmount": 40,
+            "paid": true,
+            "paidAt": "2026-03-22T16:00:37.613Z",
+            "txHash": "0xsim_3bcf4b85-7059-41"
+          }
+        ],
+        "status": "settled",
+        "createdAt": "2026-03-22T16:00:37.612Z",
+        "settledAt": "2026-03-22T16:00:37.613Z"
+      }
+    ]
+  ],
+  "subscriptions": [
+    [
+      "sub_46f6a858",
+      {
+        "id": "sub_46f6a858",
+        "name": "Monthly Support",
+        "type": "subscription",
+        "from": "0xPayer",
+        "to": "0xCreator",
+        "amount": 5,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "intervalMs": 2592000000,
+        "intervalLabel": "1 months",
+        "status": "retry_pending",
+        "nextPaymentAt": "2026-06-04T12:23:45.677Z",
+        "totalPaid": 0,
+        "paymentCount": 1,
+        "retryCount": 1,
+        "maxRetries": 3,
+        "maxPayments": 12,
+        "createdAt": "2026-03-22T16:00:27.050Z",
+        "history": [
+          {
+            "amount": 5,
+            "paidAt": "2026-06-04T12:18:45.677Z",
+            "status": "failed",
+            "onChainVerified": false,
+            "error": "Error: EVM transfer failed: TypeError: invalid address (argument=\"address\", value=\"0xCreator\", code=INVALID_ARGUMENT, version=6.14.3) (argument=\"to\", value=\"0xCreator\", code=INVALID_ARGUMENT, version=6.14.3)"
+          }
+        ],
+        "memo": "Monthly creator support",
+        "lastPaidAt": "2026-06-04T12:18:45.677Z"
+      }
+    ],
+    [
+      "sub_bcddda29",
+      {
+        "id": "sub_bcddda29",
+        "name": "ToPause",
+        "type": "subscription",
+        "from": "0xPayer",
+        "to": "0xCreator",
+        "amount": 1,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "intervalMs": 86400000,
+        "intervalLabel": "1 days",
+        "status": "retry_pending",
+        "nextPaymentAt": "2026-06-04T12:23:45.677Z",
+        "totalPaid": 0,
+        "paymentCount": 1,
+        "retryCount": 1,
+        "maxRetries": 3,
+        "createdAt": "2026-03-22T16:00:27.051Z",
+        "history": [
+          {
+            "amount": 1,
+            "paidAt": "2026-06-04T12:18:45.677Z",
+            "status": "failed",
+            "onChainVerified": false,
+            "error": "Error: EVM transfer failed: TypeError: invalid address (argument=\"address\", value=\"0xCreator\", code=INVALID_ARGUMENT, version=6.14.3) (argument=\"to\", value=\"0xCreator\", code=INVALID_ARGUMENT, version=6.14.3)"
+          }
+        ],
+        "lastPaidAt": "2026-06-04T12:18:45.677Z"
+      }
+    ],
+    [
+      "sub_1780fad9",
+      {
+        "id": "sub_1780fad9",
+        "name": "ToCancelSub",
+        "type": "subscription",
+        "from": "0xPayer",
+        "to": "0xCreator",
+        "amount": 2,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "intervalMs": 604800000,
+        "intervalLabel": "1 weeks",
+        "status": "cancelled",
+        "nextPaymentAt": "2026-03-29T16:00:27.054Z",
+        "totalPaid": 0,
+        "paymentCount": 0,
+        "retryCount": 0,
+        "maxRetries": 3,
+        "createdAt": "2026-03-22T16:00:27.054Z",
+        "history": []
+      }
+    ],
+    [
+      "sub_e2aba8bc",
+      {
+        "id": "sub_e2aba8bc",
+        "name": "Monthly VPN",
+        "type": "subscription",
+        "from": "0xAlice",
+        "to": "0xProvider",
+        "amount": 10,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "intervalMs": 2592000000,
+        "intervalLabel": "1 months",
+        "status": "retry_pending",
+        "nextPaymentAt": "2026-06-04T12:23:45.677Z",
+        "totalPaid": 0,
+        "paymentCount": 1,
+        "retryCount": 1,
+        "maxRetries": 3,
+        "createdAt": "2026-03-22T16:00:37.569Z",
+        "history": [
+          {
+            "amount": 10,
+            "paidAt": "2026-06-04T12:18:45.677Z",
+            "status": "failed",
+            "onChainVerified": false,
+            "error": "Error: EVM transfer failed: TypeError: invalid address (argument=\"address\", value=\"0xProvider\", code=INVALID_ARGUMENT, version=6.14.3) (argument=\"to\", value=\"0xProvider\", code=INVALID_ARGUMENT, version=6.14.3)"
+          }
+        ],
+        "lastPaidAt": "2026-06-04T12:18:45.677Z"
+      }
+    ]
+  ],
+  "conditionalPayments": [
+    [
+      "cp_d42895bd",
+      {
+        "id": "cp_d42895bd",
+        "recipient": "0xBob",
+        "amount": 50,
+        "token": "USDT",
+        "chain": "ethereum-sepolia",
+        "condition": {
+          "type": "view_count",
+          "target": 10000
+        },
+        "expiresAt": "2026-03-23T16:00:37.576Z",
+        "label": "Conditional view_count",
+        "status": "pending",
+        "currentValue": 0,
+        "createdAt": "2026-03-22T16:00:37.576Z",
+        "lastCheckedAt": null,
+        "checkCount": 0
+      }
+    ]
+  ],
+  "settlements": [
+    [
+      "stl_6203cd36",
+      {
+        "id": "stl_6203cd36",
+        "billId": "bill_90347c5d",
+        "totalAmount": 60.000000000000014,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "participants": [
+          {
+            "address": "0xBob",
+            "shareAmount": 20.000000000000004,
+            "status": "pending"
+          },
+          {
+            "address": "0xCarol",
+            "shareAmount": 20.000000000000004,
+            "status": "pending"
+          },
+          {
+            "address": "0xDave",
+            "shareAmount": 20.000000000000004,
+            "status": "pending"
+          }
+        ],
+        "status": "prepared",
+        "preparedAt": "2026-03-22T16:00:37.561Z",
+        "auditTrail": [
+          {
+            "action": "PREPARE",
+            "timestamp": "2026-03-22T16:00:37.561Z",
+            "details": "Settlement prepared for bill bill_90347c5d: 60.000000000000014 USDT across 3 participants"
+          }
+        ]
+      }
+    ],
+    [
+      "stl_f2868340",
+      {
+        "id": "stl_f2868340",
+        "billId": "bill_0d54af61",
+        "totalAmount": 30,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "participants": [
+          {
+            "address": "0xBob",
+            "shareAmount": 15,
+            "status": "success",
+            "txHash": "0xsim_54a15b84-2ce3-4b"
+          },
+          {
+            "address": "0xCarol",
+            "shareAmount": 15,
+            "status": "success",
+            "txHash": "0xsim_41c29bd6-cc90-4a"
+          }
+        ],
+        "status": "committed",
+        "preparedAt": "2026-03-22T16:00:37.564Z",
+        "auditTrail": [
+          {
+            "action": "PREPARE",
+            "timestamp": "2026-03-22T16:00:37.564Z",
+            "details": "Settlement prepared for bill bill_0d54af61: 30 USDT across 2 participants"
+          },
+          {
+            "action": "COMMIT_START",
+            "timestamp": "2026-03-22T16:00:37.564Z",
+            "details": "Beginning commit phase for 2 payments"
+          },
+          {
+            "action": "PAYMENT_SIMULATED",
+            "timestamp": "2026-03-22T16:00:37.565Z",
+            "details": "Simulated payment of 15 USDT to 0xBob — tx: 0xsim_54a15b84-2ce3-4b"
+          },
+          {
+            "action": "PAYMENT_SIMULATED",
+            "timestamp": "2026-03-22T16:00:37.565Z",
+            "details": "Simulated payment of 15 USDT to 0xCarol — tx: 0xsim_41c29bd6-cc90-4a"
+          },
+          {
+            "action": "COMMITTED",
+            "timestamp": "2026-03-22T16:00:37.565Z",
+            "details": "All 2 payments succeeded. Settlement committed."
+          }
+        ],
+        "committedAt": "2026-03-22T16:00:37.565Z"
+      }
+    ],
+    [
+      "stl_bdee0227",
+      {
+        "id": "stl_bdee0227",
+        "billId": "bill_bb9871d8",
+        "totalAmount": 10,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "participants": [
+          {
+            "address": "0xB",
+            "shareAmount": 10,
+            "status": "pending"
+          }
+        ],
+        "status": "prepared",
+        "preparedAt": "2026-03-22T16:00:37.578Z",
+        "auditTrail": [
+          {
+            "action": "PREPARE",
+            "timestamp": "2026-03-22T16:00:37.578Z",
+            "details": "Settlement prepared for bill bill_bb9871d8: 10 USDT across 1 participants"
+          }
+        ]
+      }
+    ],
+    [
+      "stl_6a8faa30",
+      {
+        "id": "stl_6a8faa30",
+        "billId": "bill_1a0f6ea3",
+        "totalAmount": 100,
+        "token": "USDT",
+        "chainId": "ethereum-sepolia",
+        "participants": [
+          {
+            "address": "0xBob",
+            "name": "Bob",
+            "shareAmount": 60,
+            "status": "success",
+            "txHash": "0xsim_2385dedb-6a21-4b"
+          },
+          {
+            "address": "0xCarol",
+            "name": "Carol",
+            "shareAmount": 40,
+            "status": "success",
+            "txHash": "0xsim_3bcf4b85-7059-41"
+          }
+        ],
+        "status": "committed",
+        "preparedAt": "2026-03-22T16:00:37.613Z",
+        "auditTrail": [
+          {
+            "action": "PREPARE",
+            "timestamp": "2026-03-22T16:00:37.613Z",
+            "details": "Settlement prepared for bill bill_1a0f6ea3: 100 USDT across 2 participants"
+          },
+          {
+            "action": "COMMIT_START",
+            "timestamp": "2026-03-22T16:00:37.613Z",
+            "details": "Beginning commit phase for 2 payments"
+          },
+          {
+            "action": "PAYMENT_SIMULATED",
+            "timestamp": "2026-03-22T16:00:37.613Z",
+            "details": "Simulated payment of 60 USDT to 0xBob — tx: 0xsim_2385dedb-6a21-4b"
+          },
+          {
+            "action": "PAYMENT_SIMULATED",
+            "timestamp": "2026-03-22T16:00:37.613Z",
+            "details": "Simulated payment of 40 USDT to 0xCarol — tx: 0xsim_3bcf4b85-7059-41"
+          },
+          {
+            "action": "COMMITTED",
+            "timestamp": "2026-03-22T16:00:37.613Z",
+            "details": "All 2 payments succeeded. Settlement committed."
+          }
+        ],
+        "committedAt": "2026-03-22T16:00:37.613Z"
+      }
+    ]
+  ]
+}

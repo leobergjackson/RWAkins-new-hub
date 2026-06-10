@@ -1,5 +1,5 @@
-// Built by vsrupeshkumar
-// All network (chain) configuration for Kubryx wallet connectivity.
+﻿// Built by vsrupeshkumar
+// All network (chain) configuration for RWAkins wallet connectivity.
 // Updated for The Turing Test Hackathon 2026: Mantle Sepolia ONLY.
 
 export const NETWORKS = {
@@ -37,7 +37,6 @@ export type NetworkKey = keyof typeof NETWORKS
 export type NetworkConfig = (typeof NETWORKS)[NetworkKey]
 
 export const TOOL_NETWORKS: Record<string, NetworkKey> = {
-  '/invoice':   'MANTLE_SEPOLIA',
   '/dashboard': 'MANTLE_SEPOLIA',
   '/credit':    'MANTLE_SEPOLIA',
   '/legacy':    'MANTLE_SEPOLIA',
@@ -52,7 +51,7 @@ export const TOOL_NETWORKS: Record<string, NetworkKey> = {
 
 // EVM tools (use MetaMask)
 export const EVM_TOOLS = [
-  '/invoice', '/dashboard', '/credit', '/legacy', '/vault', '/split', '/lend', '/agents', '/treasury', '/shadow'
+  '/dashboard', '/credit', '/legacy', '/vault', '/split', '/lend', '/agents', '/treasury', '/shadow'
 ]
 
 // Mantle tools (use Phantom)

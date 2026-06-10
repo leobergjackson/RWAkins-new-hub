@@ -1,0 +1,32 @@
+{
+  "name": "aerofyta",
+  "version": "1.2.0",
+  "description": "Colibrí — AI remittance agent that sends USD→MXN: settles USDC on Arbitrum + Base and off-ramps to pesos via Bitso. Built for Ethereum México 2026.",
+  "private": true,
+  "scripts": {
+    "postinstall": "cd agent && npm install && cd ../dashboard && npm install",
+    "install:all": "cd agent && npm install && cd ../dashboard && npm install",
+    "dev": "concurrently -n agent,dashboard -c green,blue \"cd agent && npm run dev\" \"cd dashboard && npm run dev\"",
+    "dev:agent": "cd agent && npm run dev",
+    "dev:dashboard": "cd dashboard && npm run dev",
+    "build": "cd dashboard && npm run build",
+    "build:all": "cd agent && npm run build && cd ../dashboard && npm run build",
+    "test": "cd agent && npm test",
+    "test:contracts": "cd contracts && npx hardhat test",
+    "test:all": "cd agent && npm test && cd ../contracts && npx hardhat test",
+    "lint": "cd agent && npm run lint",
+    "docker": "docker-compose up --build",
+    "agents:status": "cd agent && npm run agents:status",
+    "pipeline:status": "cd agent && npm run pipeline:status",
+    "economics:pnl": "cd agent && npm run economics:pnl",
+    "wdk:check": "cd agent && npm run wdk:check",
+    "telegram": "cd agent && npm run telegram"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

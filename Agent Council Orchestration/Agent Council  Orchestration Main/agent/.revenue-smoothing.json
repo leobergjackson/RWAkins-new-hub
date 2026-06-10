@@ -1,0 +1,35 @@
+{
+  "profiles": [
+    {
+      "creatorId": "creator1",
+      "walletAddress": "0xCreator1",
+      "avgDailyIncome": 0.5,
+      "incomeStdDev": 0,
+      "totalIncome": 0.5,
+      "smoothingLevel": 60,
+      "dailyHistory": [
+        {
+          "date": "2026-03-22",
+          "amount": 0.5
+        }
+      ],
+      "reserveContributed": 0,
+      "reserveReceived": 0,
+      "enrolledAt": "2026-03-22T16:45:48.886Z"
+    },
+    {
+      "creatorId": "creator2",
+      "walletAddress": "0xCreator2",
+      "avgDailyIncome": 0,
+      "incomeStdDev": 0,
+      "totalIncome": 0,
+      "smoothingLevel": 50,
+      "dailyHistory": [],
+      "reserveContributed": 0,
+      "reserveReceived": 0,
+      "enrolledAt": "2026-03-22T16:45:48.897Z"
+    }
+  ],
+  "actions": [],
+  "reserveBalance": 10
+}

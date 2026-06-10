@@ -1,4 +1,4 @@
-// Built by vsrupeshkumar
+﻿// Built by vsrupeshkumar
 // Contract addresses + minimal human-readable ABIs for the Credit Passport
 // suite, deployed on Mantle Network (Chain ID 1990).
 
@@ -9,7 +9,7 @@ export const CONTRACTS = {
   NCRDToken:         '0x7427734468598674645Aa71Ef651218A9Db2be11',
 } as const
 
-// Only the functions Kubryx actually calls are included.
+// Only the functions RWAkins actually calls are included.
 
 export const CREDIT_PASSPORT_ABI = [
   // getScore returns ScoreView { uint16 score; uint8 riskBand; uint64 lastUpdated }

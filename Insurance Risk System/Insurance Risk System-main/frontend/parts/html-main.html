@@ -1,0 +1,437 @@
+<div class="main">
+
+  <!-- ═══════════════════════════════════════════ LEFT COLUMN ═══════════════════════════════════════════ -->
+  <div class="left-col">
+
+    <!-- ─────────────── A. ISSUERS TABLE ─────────────── -->
+    <div class="clay card" id="issuers">
+      <div class="card-header">
+        <div class="card-title-group">
+          <!-- SVG:svg-stat-issuers -->
+          <h3 class="card-title">Registered Issuers</h3>
+        </div>
+        <span class="badge badge-green">3 Active</span>
+      </div>
+      <div class="card-body">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Issuer</th>
+                <th>IRS Score</th>
+                <th>Premium Rate</th>
+                <th>Coverage Cap</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="issuer-name">AsiaReit Capital</div>
+                  <div class="issuer-meta">0xABC...1234 &middot; Real Estate</div>
+                </td>
+                <td><span class="irs-badge irs-green">820</span></td>
+                <td>3.24%</td>
+                <td>$50,000</td>
+                <td><span class="status-dot dot-green"></span> Active</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="issuer-name">TradeFlow Finance</div>
+                  <div class="issuer-meta">0xDEF...5678 &middot; Trade Finance</div>
+                </td>
+                <td><span class="irs-badge irs-gold">600</span></td>
+                <td>6.96%</td>
+                <td>$30,000</td>
+                <td><span class="status-dot dot-green"></span> Active</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="issuer-name">UrbanBridge Infra</div>
+                  <div class="issuer-meta">0x789...ABCD &middot; Infrastructure</div>
+                </td>
+                <td><span class="irs-badge irs-red">380</span></td>
+                <td>14.8%</td>
+                <td>$20,000</td>
+                <td><span class="status-dot dot-yellow"></span> Monitoring</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────── B. HOW IT WORKS ─────────────── -->
+    <div class="clay card" id="how">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h3 class="card-title">How CoverFi Works</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="steps-grid">
+
+          <div class="clay step-card reveal">
+            <div class="step-icon"><!-- SVG:svg-step-register --></div>
+            <div class="step-num">1</div>
+            <div class="step-title">Issuer Registers</div>
+            <div class="step-desc">RWA issuers post a 5 BNB bond and get attested by 3 independent verifiers (custodian, legal, auditor)</div>
+          </div>
+
+          <div class="clay step-card reveal">
+            <div class="step-icon"><!-- SVG:svg-step-score --></div>
+            <div class="step-num">2</div>
+            <div class="step-title">IRS Score Calculated</div>
+            <div class="step-desc">5-dimensional risk score (0-1000) across NAV, attestation, repayment, collateral and activity metrics</div>
+          </div>
+
+          <div class="clay step-card reveal">
+            <div class="step-icon"><!-- SVG:svg-step-coverage --></div>
+            <div class="step-num">3</div>
+            <div class="step-title">Coverage Purchased</div>
+            <div class="step-desc">Token holders buy protection. Premium set algorithmically: 1600 x e^(-0.001386 x IRS) bps/year</div>
+          </div>
+
+          <div class="clay step-card reveal">
+            <div class="step-icon"><!-- SVG:svg-step-liquidity --></div>
+            <div class="step-num">4</div>
+            <div class="step-title">LPs Provide Liquidity</div>
+            <div class="step-desc">Senior (70%) and junior (30%) tranches earn yield from premiums. Junior absorbs first-loss risk</div>
+          </div>
+
+          <div class="clay step-card reveal">
+            <div class="step-icon"><!-- SVG:svg-step-default --></div>
+            <div class="step-num">5</div>
+            <div class="step-title">Default Detected</div>
+            <div class="step-desc">2-of-3 trusted attestors confirm default event. Oracle triggers payout engine automatically</div>
+          </div>
+
+          <div class="clay step-card reveal">
+            <div class="step-icon"><!-- SVG:svg-step-payout --></div>
+            <div class="step-num">6</div>
+            <div class="step-title">Payout Executed</div>
+            <div class="step-desc">USDT sent to verified ERC-3643 holders. SubrogationNFT minted for Foundation recovery rights</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────── C. EVENTS FEED ─────────────── -->
+    <div class="clay card" id="eventFeed">
+      <div class="card-header">
+        <div class="card-title-group">
+          <!-- SVG:svg-events-bolt -->
+          <h3 class="card-title">Live Protocol Events</h3>
+        </div>
+        <span class="badge badge-blue">5 Events</span>
+      </div>
+      <div class="card-body">
+
+        <div class="clay-sub event-item ev-red">
+          <div class="event-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M11 1L3 12h6l-1 7 8-11h-6l1-7z" stroke="#ef4444" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="event-text">
+            <div class="event-title">Default Payout Executed</div>
+            <div class="event-desc">UrbanBridge Infra: $15,000 USDT paid, SubrogationNFT #1 minted, IRS&#8594;0</div>
+          </div>
+          <div class="event-time">2h ago</div>
+        </div>
+
+        <div class="clay-sub event-item ev-gold">
+          <div class="event-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.48l-4.94 2.63.94-5.5-4-3.9 5.61-.87z" stroke="#eab308" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="event-text">
+            <div class="event-title">Default Confirmed</div>
+            <div class="event-desc">2/3 Attestors: MISAPPROPRIATION confirmed by Custodian + Auditor</div>
+          </div>
+          <div class="event-time">3h ago</div>
+        </div>
+
+        <div class="clay-sub event-item ev-green">
+          <div class="event-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M10 2c-1.5 0-6 1-6 7 0 4 2 6 6 9 4-3 6-5 6-9 0-6-4.5-7-6-7z" stroke="#22c55e" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7.5 10l1.5 1.5 3-3" stroke="#22c55e" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="event-text">
+            <div class="event-title">Coverage Purchased</div>
+            <div class="event-desc">TradeFlow Finance: $15,000 coverage, 696 bps premium, ProtectionCert #3</div>
+          </div>
+          <div class="event-time">5h ago</div>
+        </div>
+
+        <div class="clay-sub event-item ev-blue">
+          <div class="event-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect x="3" y="6" width="14" height="10" rx="2" stroke="#3b82f6" stroke-width="1.5" fill="none"/>
+              <path d="M7 6V4a3 3 0 016 0v2" stroke="#3b82f6" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <circle cx="10" cy="11" r="1.5" stroke="#3b82f6" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <div class="event-text">
+            <div class="event-title">Liquidity Deposited</div>
+            <div class="event-desc">Senior Tranche: $7,000 USDT, 7000 srCVR minted</div>
+          </div>
+          <div class="event-time">6h ago</div>
+        </div>
+
+        <div class="clay-sub event-item ev-green">
+          <div class="event-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6 10l3 3 5-6" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="10" cy="10" r="8" stroke="#22c55e" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <div class="event-text">
+            <div class="event-title">Issuer Activated</div>
+            <div class="event-desc">TradeFlow Finance: 2-of-3 attestations, 5 BNB bond, IRS 600</div>
+          </div>
+          <div class="event-time">8h ago</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════ RIGHT COLUMN ═══════════════════════════════════════════ -->
+  <div class="right-col">
+
+    <!-- ─────────────── D. IRS ORACLE WIDGET ─────────────── -->
+    <div class="clay card" id="irsOracle">
+      <div class="card-header">
+        <div class="card-title-group">
+          <!-- SVG:svg-irs-radar -->
+          <h3 class="card-title">IRS Oracle &mdash; TradeFlow Finance</h3>
+        </div>
+        <span class="badge badge-yellow">Live</span>
+      </div>
+      <div class="card-body">
+
+        <div class="gauge-section">
+          <svg class="gauge-svg" viewBox="0 0 200 110" width="200" height="110">
+            <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="14" stroke-linecap="round"/>
+            <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="100.48" id="gaugeArc"/>
+            <defs>
+              <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#ef4444"/>
+                <stop offset="40%" stop-color="#eab308"/>
+                <stop offset="100%" stop-color="#22c55e"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="gauge-value" id="irsValue">600</div>
+          <div class="gauge-label">Issuer Reputation Score (0 - 1000)</div>
+        </div>
+
+        <div class="dimension-grid">
+          <div class="dim-bar">
+            <div class="dim-label">
+              <span>NAV Stability</span>
+              <span class="dim-val">162 / 250</span>
+            </div>
+            <div class="progress-track clay-inset">
+              <div class="progress-fill fill-gold" style="width:65%"></div>
+            </div>
+          </div>
+          <div class="dim-bar">
+            <div class="dim-label">
+              <span>Attestation</span>
+              <span class="dim-val">200 / 250</span>
+            </div>
+            <div class="progress-track clay-inset">
+              <div class="progress-fill fill-green" style="width:80%"></div>
+            </div>
+          </div>
+          <div class="dim-bar">
+            <div class="dim-label">
+              <span>Repayment</span>
+              <span class="dim-val">162 / 300</span>
+            </div>
+            <div class="progress-track clay-inset">
+              <div class="progress-fill fill-gold" style="width:54%"></div>
+            </div>
+          </div>
+          <div class="dim-bar">
+            <div class="dim-label">
+              <span>Collateral</span>
+              <span class="dim-val">46 / 150</span>
+            </div>
+            <div class="progress-track clay-inset">
+              <div class="progress-fill fill-red" style="width:31%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="clay-sub premium-display">
+          <div class="premium-row">
+            <span class="premium-label">Annual Premium</span>
+            <span class="premium-value">696 bps</span>
+          </div>
+          <div class="premium-formula">
+            <code>1600 &times; e^(-0.001386 &times; 600)</code>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─────────────── E. INSURANCE POOL ─────────────── -->
+    <div class="clay card" id="pool">
+      <div class="card-header">
+        <div class="card-title-group">
+          <!-- SVG:svg-pool-vault -->
+          <h3 class="card-title">Insurance Pool</h3>
+        </div>
+        <span class="badge badge-green">Healthy</span>
+      </div>
+      <div class="card-body">
+
+        <div class="pool-legend">
+          <span class="legend-item"><span class="legend-dot dot-blue"></span> Senior (srCVR)</span>
+          <span class="legend-item"><span class="legend-dot dot-gold"></span> Junior (jrCVR)</span>
+        </div>
+
+        <div class="pool-ratio-bar">
+          <div class="ratio-segment ratio-senior" style="width:70%"></div>
+          <div class="ratio-segment ratio-junior" style="width:30%"></div>
+        </div>
+
+        <div class="pool-data">
+          <div class="data-row">
+            <span class="data-label">Senior TVL</span>
+            <span class="data-value">$87,150 <span class="data-pct">(70%)</span></span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Junior TVL</span>
+            <span class="data-value">$37,350 <span class="data-pct">(30%)</span></span>
+          </div>
+          <div class="data-row data-row-total">
+            <span class="data-label">Total</span>
+            <span class="data-value">$124,500</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Senior APY</span>
+            <span class="data-value apy-green">4.2%</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Junior APY</span>
+            <span class="data-value apy-gold">9.8%</span>
+          </div>
+          <div class="data-row">
+            <span class="data-label">Redemption Gate</span>
+            <span class="data-value">Open</span>
+          </div>
+        </div>
+
+        <div class="pool-actions">
+          <button class="btn-clay-primary" type="button">Deposit Senior</button>
+          <button class="btn-clay-outline" type="button">Deposit Junior</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─────────────── F. PURCHASE COVERAGE FORM ─────────────── -->
+    <div class="clay card" id="purchase">
+      <div class="card-header">
+        <div class="card-title-group">
+          <!-- SVG:svg-purchase-shield -->
+          <h3 class="card-title">Get Covered</h3>
+        </div>
+        <span class="badge badge-yellow">ERC-5192 Soulbound</span>
+      </div>
+      <div class="card-body">
+
+        <form class="purchase-form" onsubmit="return false;">
+
+          <div class="form-group">
+            <label class="form-label" for="issuerSelect">Select Issuer</label>
+            <select class="form-select clay-inset" id="issuerSelect" onchange="updatePremium()">
+              <option value="asiareit" data-irs="820">AsiaReit Capital (IRS 820)</option>
+              <option value="tradeflow" data-irs="600" selected>TradeFlow Finance (IRS 600)</option>
+              <option value="urbanbridge" data-irs="380">UrbanBridge Infra (IRS 380)</option>
+            </select>
+          </div>
+
+          <div class="form-row-2col">
+            <div class="form-group">
+              <label class="form-label" for="coverageAmount">Coverage Amount (USDT)</label>
+              <input class="form-input clay-inset" type="number" id="coverageAmount" value="15000" min="100" step="100" oninput="updatePremium()"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="coverageDuration">Duration (Days)</label>
+              <input class="form-input clay-inset" type="number" id="coverageDuration" value="365" min="30" max="730" step="1" oninput="updatePremium()"/>
+            </div>
+          </div>
+
+          <div class="clay-sub premium-summary">
+            <div class="premium-row">
+              <span class="premium-label">Annual Premium</span>
+              <span class="premium-value" id="premiumRate">696 bps</span>
+            </div>
+            <div class="premium-row">
+              <span class="premium-label">You Pay</span>
+              <span class="premium-value premium-total" id="premiumAmount">$1,044 USDT</span>
+            </div>
+          </div>
+
+          <button class="btn-clay-primary btn-full" type="button" onclick="purchaseCoverage()">Get Coverage</button>
+          <p class="form-subtext">You will receive a Soulbound ProtectionCert NFT &mdash; Non-transferable</p>
+
+        </form>
+
+      </div>
+    </div>
+
+    <!-- ─────────────── G. PROTECTION CERTIFICATE ─────────────── -->
+    <div class="clay cert-card" id="certCard">
+      <div class="cert-header">
+        <div class="cert-title-group">
+          <span class="cert-id">ProtectionCert #3 &middot; ERC-721 + ERC-5192</span>
+          <!-- SVG:svg-cert-ribbon -->
+        </div>
+      </div>
+      <div class="cert-body">
+        <h4 class="cert-title-gold">Coverage Certificate</h4>
+
+        <div class="cert-data">
+          <div class="cert-row">
+            <span class="cert-label">Issuer</span>
+            <span class="cert-value">TradeFlow Finance</span>
+          </div>
+          <div class="cert-row">
+            <span class="cert-label">Coverage</span>
+            <span class="cert-value">$15,000</span>
+          </div>
+          <div class="cert-row">
+            <span class="cert-label">Premium Paid</span>
+            <span class="cert-value">$1,044</span>
+          </div>
+          <div class="cert-row">
+            <span class="cert-label">Expires</span>
+            <span class="cert-value">Mar 25, 2027</span>
+          </div>
+          <div class="cert-row">
+            <span class="cert-label">Holder</span>
+            <span class="cert-value cert-addr">0xce22...42fb3</span>
+          </div>
+        </div>
+      </div>
+      <div class="cert-footer">
+        <span class="clay-pill pill-soulbound">SOULBOUND</span>
+        <span class="cert-lock-text">Non-transferable &middot; ERC-5192 locked()</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>

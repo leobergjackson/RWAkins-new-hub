@@ -1,0 +1,2994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoverFi — Pitch</title>
+<style>
+/* ==========================================================================
+   RESET + VARIABLES
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+button { background: none; border: none; color: inherit; cursor: pointer; font: inherit; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+:root {
+  --bg: #000000;
+  --surface: #0A0A0A;
+  --surface-2: #111111;
+  --surface-3: #1a1a1a;
+  --border: rgba(255,255,255,0.08);
+  --border-hov: rgba(255,255,255,0.14);
+  --text: #FFFFFF;
+  --muted: #A1A1AA;
+  --dim: #52525B;
+  --gold: #F0B90B;
+  --gold-2: #FFD443;
+  --gold-soft: rgba(240,185,11,0.12);
+  --gold-glow: rgba(240,185,11,0.25);
+  --green: #10B981;
+  --green-soft: rgba(16,185,129,0.12);
+  --red: #EF4444;
+  --red-soft: rgba(239,68,68,0.12);
+  --blue: #3B82F6;
+  --sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Monaco, 'Cascadia Code', 'Courier New', monospace;
+  --sidebar-w: 240px;
+  --sidebar-rail: 56px;
+  --topbar-h: 56px;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   APP SHELL
+   ========================================================================== */
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  height: 100vh;
+  transition: grid-template-columns 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.app.collapsed { grid-template-columns: var(--sidebar-rail) 1fr; }
+
+/* Sidebar */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+}
+.sb-head {
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.burger {
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border-radius: 6px;
+  color: var(--muted);
+  transition: background 120ms, color 120ms;
+}
+.burger:hover { background: var(--surface-2); color: var(--text); }
+.burger svg { width: 16px; height: 16px; }
+
+.sb-brand {
+  display: flex; align-items: center; gap: 8px;
+  opacity: 1; transition: opacity 200ms;
+}
+.app.collapsed .sb-brand { opacity: 0; pointer-events: none; }
+.sb-logo {
+  width: 28px; height: 24px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.sb-logo svg { width: 100%; height: 100%; display: block; }
+.sb-wordmark {
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.sb-plan {
+  margin-left: auto;
+  font-size: 10px; font-family: var(--mono);
+  color: var(--gold);
+  background: var(--gold-soft);
+  border: 1px solid rgba(240,185,11,0.25);
+  padding: 3px 8px; border-radius: 20px;
+  white-space: nowrap;
+}
+.app.collapsed .sb-plan { display: none; }
+
+.sb-search {
+  margin: 12px;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  color: var(--muted);
+  font-size: 12px;
+  transition: border-color 120ms;
+  cursor: pointer;
+}
+.sb-search:hover { border-color: var(--border-hov); color: var(--text); }
+.sb-search-icon { width: 14px; height: 14px; opacity: 0.6; }
+.sb-search-label { flex: 1; }
+.app.collapsed .sb-search-label,
+.app.collapsed .sb-search-kbd { display: none; }
+.app.collapsed .sb-search { padding: 8px; justify-content: center; }
+.sb-search-kbd {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--dim);
+  border: 1px solid var(--border);
+  padding: 1px 5px; border-radius: 3px;
+}
+
+.sb-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.sb-nav::-webkit-scrollbar { width: 0; }
+.sb-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: 13px;
+  position: relative;
+  transition: background 100ms, color 100ms;
+  white-space: nowrap;
+}
+.sb-item:hover { background: var(--surface-2); color: var(--text); }
+.sb-item.active { background: var(--surface-2); color: var(--text); }
+.sb-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 18px;
+  background: var(--gold);
+  border-radius: 0 2px 2px 0;
+}
+.sb-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.8; }
+.sb-item.active svg { opacity: 1; color: var(--gold); }
+.app.collapsed .sb-item { justify-content: center; padding: 8px; }
+.app.collapsed .sb-item span { display: none; }
+
+.sb-footer {
+  border-top: 1px solid var(--border);
+  padding: 8px;
+  display: flex; flex-direction: column; gap: 2px;
+  flex-shrink: 0;
+}
+.sb-foot-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: 12px;
+  transition: background 100ms, color 100ms;
+}
+.sb-foot-item:hover { background: var(--surface-2); color: var(--text); }
+.sb-foot-item svg { width: 14px; height: 14px; flex-shrink: 0; }
+.app.collapsed .sb-foot-item { justify-content: center; padding: 8px; }
+.app.collapsed .sb-foot-item span { display: none; }
+
+/* Main */
+.main {
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+.topbar {
+  height: var(--topbar-h);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.tb-crumb {
+  font-size: 13px; color: var(--muted);
+  display: flex; align-items: center; gap: 8px;
+}
+.tb-crumb strong { color: var(--text); font-weight: 500; }
+.tb-crumb-sep { color: var(--dim); }
+.tb-spacer { flex: 1; }
+.tb-status {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--text);
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+.tb-status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.page-wrap {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+.page-wrap::-webkit-scrollbar { width: 8px; }
+.page-wrap::-webkit-scrollbar-track { background: transparent; }
+.page-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.page-wrap::-webkit-scrollbar-thumb:hover { background: var(--border-hov); }
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 48px 32px 64px;
+  display: none;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: pageIn 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.page.active { display: block; }
+@keyframes pageIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-title {
+  font-size: 12px;
+  color: var(--gold);
+  font-family: var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.page-heading {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin-bottom: 8px;
+}
+.page-sub {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 48px;
+  max-width: 640px;
+}
+
+/* ==========================================================================
+   INFO ICONS, TOOLTIPS, MODALS
+   ========================================================================== */
+.info {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 11px;
+  font-family: var(--mono);
+  font-weight: 600;
+  margin-left: 8px;
+  vertical-align: middle;
+  transition: all 120ms;
+  cursor: pointer;
+}
+.info:hover {
+  background: var(--gold-soft);
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: scale(1.1);
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 100;
+  pointer-events: none;
+  background: var(--surface-2);
+  border: 1px solid var(--border-hov);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--text);
+  max-width: 280px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 120ms, transform 120ms;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.tooltip.show { opacity: 1; transform: translateY(0); }
+.tooltip strong { color: var(--gold); font-weight: 600; }
+
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 180ms;
+}
+.modal-backdrop.show { display: flex; opacity: 1; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border-hov);
+  border-radius: 16px;
+  max-width: 520px; width: 100%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transform: scale(0.96);
+  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+}
+.modal-backdrop.show .modal { transform: scale(1); }
+.modal-head {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.modal-title {
+  flex: 1;
+  font-size: 15px; font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.modal-close {
+  width: 28px; height: 28px; border-radius: 6px;
+  color: var(--muted);
+  display: grid; place-items: center;
+  transition: background 100ms, color 100ms;
+}
+.modal-close:hover { background: var(--surface-2); color: var(--text); }
+.modal-body {
+  padding: 20px 24px 24px;
+  overflow-y: auto;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.modal-body strong { color: var(--text); font-weight: 600; }
+.modal-body code {
+  font-family: var(--mono); font-size: 12px;
+  background: var(--surface-2);
+  padding: 2px 6px; border-radius: 4px;
+  color: var(--gold);
+}
+.modal-body .mb-formula {
+  display: block;
+  margin: 12px 0;
+  padding: 12px;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  font-family: var(--mono);
+  color: var(--gold);
+  text-align: center;
+  font-size: 13px;
+}
+
+/* Command Palette */
+.cmdk {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 300;
+  display: none;
+  align-items: flex-start; justify-content: center;
+  padding-top: 20vh;
+  opacity: 0;
+  transition: opacity 160ms;
+}
+.cmdk.show { display: flex; opacity: 1; }
+.cmdk-panel {
+  background: var(--surface);
+  border: 1px solid var(--border-hov);
+  border-radius: 12px;
+  width: 100%; max-width: 480px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+}
+.cmdk-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 15px;
+  font-family: var(--sans);
+  outline: none;
+  border-bottom: 1px solid var(--border);
+}
+.cmdk-input::placeholder { color: var(--dim); }
+.cmdk-list {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 8px;
+}
+.cmdk-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.cmdk-item.active,
+.cmdk-item:hover { background: var(--surface-2); color: var(--text); }
+.cmdk-item svg { width: 14px; height: 14px; opacity: 0.7; }
+.cmdk-kbd {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--dim);
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   PITCH QUOTE
+   ========================================================================== */
+.quote {
+  font-family: var(--mono);
+  font-size: clamp(14px, 1.4vw, 17px);
+  line-height: 1.55;
+  color: var(--text);
+  padding: 20px 24px;
+  margin: 32px 0;
+  border-left: 2px solid var(--gold);
+  background: linear-gradient(90deg, var(--gold-soft), transparent 75%);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  max-width: 680px;
+  font-weight: 500;
+}
+.quote::before {
+  content: '';
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--gold);
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   OVERVIEW PAGE
+   ========================================================================== */
+.hero-number {
+  font-family: var(--mono);
+  font-size: clamp(72px, 11vw, 140px);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+  background: linear-gradient(180deg, var(--text) 0%, var(--muted) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 32px 0 16px;
+}
+.hero-caption {
+  font-size: 14px;
+  color: var(--muted);
+  font-family: var(--mono);
+  letter-spacing: 0.02em;
+  margin-bottom: 56px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 48px;
+}
+@media (max-width: 720px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: border-color 150ms, background 150ms;
+}
+.stat-card:hover {
+  border-color: var(--border-hov);
+  background: var(--surface-2);
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  margin-bottom: 12px;
+  display: flex; align-items: center;
+}
+.stat-value {
+  font-family: var(--mono);
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+.stat-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   PROBLEM PAGE
+   ========================================================================== */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0;
+  margin: 32px 0;
+  min-height: 360px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.split-half {
+  padding: 64px 32px;
+  text-align: center;
+  cursor: default;
+  transition: background 300ms;
+  position: relative;
+}
+.split-half:hover { background: var(--surface-2); }
+.split-divider {
+  background: var(--border);
+  height: 60%;
+  align-self: center;
+}
+.split-num {
+  font-family: var(--mono);
+  font-size: clamp(28px, 4.5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 16px;
+  transition: color 200ms;
+}
+.split-half.problem .split-num { color: var(--text); }
+.split-half.void .split-num { color: var(--red); }
+.split-label {
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 240px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+.split-bar {
+  height: 2px; width: 0;
+  background: var(--gold);
+  margin: 24px auto 0;
+  transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.split-half:hover .split-bar { width: 80%; }
+
+/* ==========================================================================
+   SOLUTION PAGE
+   ========================================================================== */
+.inno-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+@media (max-width: 900px) { .inno-grid { grid-template-columns: 1fr; } }
+.inno-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: border-color 150ms, transform 150ms;
+  position: relative;
+  overflow: hidden;
+}
+.inno-card:hover {
+  border-color: var(--border-hov);
+  transform: translateY(-2px);
+}
+.inno-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 200ms;
+}
+.inno-card:hover::before { opacity: 1; }
+.inno-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+.inno-icon {
+  width: 40px; height: 40px;
+  background: var(--gold-soft);
+  border: 1px solid rgba(240,185,11,0.2);
+  border-radius: var(--radius-sm);
+  display: grid; place-items: center;
+  margin-bottom: 20px;
+  color: var(--gold);
+}
+.inno-icon svg { width: 20px; height: 20px; }
+.inno-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 8px;
+  display: flex; align-items: flex-start; gap: 4px;
+}
+.inno-summary {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* ==========================================================================
+   WATERFALL PAGE
+   ========================================================================== */
+.wf-controls {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 32px;
+}
+.wf-toggle {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--muted);
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: all 180ms;
+}
+.wf-toggle.active {
+  background: var(--gold);
+  color: #000;
+}
+.wf-toggle:not(.active):hover { color: var(--text); }
+
+.wf-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 32px;
+  margin-top: 16px;
+}
+@media (max-width: 900px) { .wf-layout { grid-template-columns: 1fr; } }
+
+.wf-diagram {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  position: relative;
+}
+.wf-diagram svg { width: 100%; height: auto; display: block; }
+
+.wf-side {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 16px;
+  height: fit-content;
+  position: sticky; top: 24px;
+}
+.wf-side-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.wf-side-scenario {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+}
+.wf-side-claim {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--text);
+}
+.wf-side-divider { height: 1px; background: var(--border); }
+.wf-side-outcome {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.wf-side-outcome strong { color: var(--text); font-weight: 600; }
+
+.wf-layer-btns {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-top: 8px;
+}
+.wf-layer-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text);
+  font-family: var(--mono);
+  transition: all 120ms;
+  text-align: left;
+}
+.wf-layer-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.wf-layer-btn .ar { color: var(--muted); font-size: 13px; }
+
+/* ==========================================================================
+   REVENUE PAGE
+   ========================================================================== */
+.rev-eq {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 48px 32px;
+  margin: 24px 0 32px;
+  text-align: center;
+  overflow-x: auto;
+}
+.rev-eq-row {
+  display: inline-flex; align-items: center; gap: 16px;
+  font-family: var(--mono);
+  font-size: clamp(18px, 2.4vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.rev-op { color: var(--muted); font-weight: 400; }
+.rev-tok {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  position: relative;
+  cursor: help;
+  transition: all 150ms;
+}
+.rev-tok:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-soft);
+}
+.rev-tok.final {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+  font-weight: 700;
+}
+.rev-tok.final:hover { background: var(--gold-2); color: #000; }
+
+.rev-proj {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 16px;
+}
+.rev-bar-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 150ms;
+}
+.rev-bar-row:hover { border-color: var(--border-hov); }
+.rev-bar-year {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.rev-bar-track {
+  position: relative;
+  height: 28px;
+  background: var(--surface-2);
+  border-radius: 4px;
+  overflow: visible;
+}
+.rev-bar-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-2) 100%);
+  border-radius: 4px;
+  transform-origin: left;
+  animation: barGrow 800ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  min-width: 4px;
+}
+.rev-bar-label {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  z-index: 2;
+  pointer-events: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.6);
+}
+@keyframes barGrow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.rev-bar-value {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+}
+
+/* ==========================================================================
+   MONEY FLOW PAGE
+   ========================================================================== */
+.mf-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-top: 16px;
+}
+.mf-wrap svg { width: 100%; height: auto; display: block; }
+.mf-legend {
+  display: flex; gap: 20px; margin-top: 24px;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.mf-leg-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--muted);
+}
+.mf-leg-line {
+  width: 24px; height: 2px; border-radius: 1px;
+}
+
+/* ==========================================================================
+   ECONOMICS / LOOPHOLES (FLIP CARDS)
+   ========================================================================== */
+.flip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.flip-card {
+  perspective: 1200px;
+  height: 240px;
+  cursor: pointer;
+}
+.flip-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+
+.flip-face {
+  position: absolute; inset: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex; flex-direction: column;
+  transition: border-color 150ms;
+}
+.flip-card:hover .flip-face { border-color: var(--border-hov); }
+.flip-back { transform: rotateY(180deg); }
+
+.flip-icon {
+  width: 32px; height: 32px;
+  background: var(--gold-soft);
+  border-radius: var(--radius-sm);
+  display: grid; place-items: center;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.flip-icon svg { width: 16px; height: 16px; }
+.flip-name {
+  font-size: 14px; font-weight: 600;
+  margin-bottom: 4px;
+}
+.flip-headline {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-top: auto;
+  letter-spacing: -0.02em;
+}
+.flip-hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 8px;
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+}
+
+.flip-back .flip-name { color: var(--gold); }
+.flip-back ul { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
+.flip-back li {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  padding-left: 12px;
+  position: relative;
+}
+.flip-back li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--gold);
+}
+
+/* Loopholes style variant */
+.flip-card.risk .flip-icon { background: var(--red-soft); color: var(--red); }
+.flip-card.risk .flip-headline { color: var(--red); font-size: 14px; line-height: 1.4; }
+.flip-card.risk .flip-back .flip-icon { background: var(--green-soft); color: var(--green); }
+.flip-card.risk .flip-back .flip-name { color: var(--green); }
+
+/* ==========================================================================
+   BUILT PAGE
+   ========================================================================== */
+.built-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+.built-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 48px 32px;
+  text-align: center;
+  transition: border-color 150ms, background 150ms;
+  position: relative;
+}
+.built-card:hover {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, var(--surface) 0%, var(--gold-soft) 120%);
+}
+.built-num {
+  font-family: var(--mono);
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  background: linear-gradient(180deg, var(--text) 0%, var(--muted) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+.built-lab {
+  font-size: 13px;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-weight: 500;
+}
+.built-strip {
+  margin-top: 32px;
+  padding: 16px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+.built-strip strong { color: var(--gold); font-weight: 600; }
+
+/* ==========================================================================
+   CLOSE PAGE
+   ========================================================================== */
+.close-wrap {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 48px 24px;
+}
+.close-quote-1 {
+  font-family: var(--mono);
+  font-size: clamp(20px, 3.5vw, 36px);
+  color: var(--muted);
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.close-quote-2 {
+  font-family: var(--mono);
+  font-size: clamp(32px, 6vw, 72px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: 48px;
+}
+.close-footer {
+  display: flex; gap: 24px;
+  font-size: 12px; color: var(--dim);
+  font-family: var(--mono);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.close-footer a { color: var(--muted); transition: color 120ms; }
+.close-footer a:hover { color: var(--gold); }
+.close-footer-sep { color: var(--dim); }
+
+/* ==========================================================================
+   COMPARISON TABLE (Solution page add-on)
+   ========================================================================== */
+.vs-table {
+  margin-top: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.vs-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1.5fr 0.8fr;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  transition: background 120ms;
+}
+.vs-row:last-child { border-bottom: none; }
+.vs-row.head {
+  background: var(--surface-2);
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--mono);
+}
+.vs-row.us {
+  background: var(--gold-soft);
+  font-weight: 600;
+}
+.vs-row.us .vs-cell { color: var(--text); }
+.vs-row.us .vs-yes { color: var(--gold); }
+.vs-cell { color: var(--muted); }
+.vs-yes, .vs-no {
+  font-family: var(--mono);
+  font-weight: 600;
+}
+.vs-yes { color: var(--green); }
+.vs-no { color: var(--red); }
+
+/* Print fallback */
+@media print {
+  body { background: white; color: black; }
+  .sidebar, .topbar { display: none; }
+}
+
+/* ==========================================================================
+   BUSINESS MODEL / ROI / SWOT
+   ========================================================================== */
+
+/* Business Model */
+.bm-hero {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 32px; align-items: center;
+  margin: 24px 0 40px;
+  padding: 28px;
+  background: linear-gradient(135deg, var(--gold-soft) 0%, transparent 70%);
+  border: 1px solid rgba(240,185,11,0.18);
+  border-radius: var(--radius);
+}
+@media (max-width: 720px) { .bm-hero { grid-template-columns: 1fr; } }
+.bm-hero-num {
+  font-family: var(--mono);
+  font-size: clamp(56px, 8vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--gold);
+}
+.bm-hero-label {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--gold); letter-spacing: 0.12em;
+  text-transform: uppercase; margin-top: 12px; font-weight: 600;
+}
+.bm-hero-body { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.bm-hero-body strong { color: var(--text); font-weight: 600; }
+
+.bm-streams {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px; margin: 28px 0;
+}
+@media (max-width: 720px) { .bm-streams { grid-template-columns: 1fr; } }
+.bm-stream {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: border-color 150ms, transform 150ms;
+}
+.bm-stream:hover { border-color: var(--border-hov); transform: translateY(-2px); }
+.bm-stream-num {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--gold); letter-spacing: 0.1em; font-weight: 700;
+}
+.bm-stream-name {
+  font-size: 16px; font-weight: 600; margin: 6px 0 10px; color: var(--text);
+}
+.bm-stream-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.bm-stream-body strong { color: var(--text); }
+.bm-stream-metric {
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono); font-size: 12px;
+  color: var(--gold);
+}
+
+.bm-unit {
+  margin: 32px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.bm-unit-head {
+  padding: 14px 20px;
+  background: var(--surface-2);
+  font-family: var(--mono); font-size: 11px;
+  color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+.bm-unit-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding: 14px 20px;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  align-items: baseline;
+}
+.bm-unit-row:last-child { border-bottom: none; background: var(--surface-2); }
+.bm-unit-row:last-child .bm-unit-val { color: var(--gold); font-weight: 600; }
+.bm-unit-label { color: var(--muted); }
+.bm-unit-formula { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+.bm-unit-val { font-family: var(--mono); color: var(--text); text-align: right; }
+
+/* ROI Calculator */
+.roi-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 28px;
+  margin-top: 24px;
+}
+@media (max-width: 900px) { .roi-layout { grid-template-columns: 1fr; } }
+.roi-inputs, .roi-outputs {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+.roi-section-title {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--gold); letter-spacing: 0.14em;
+  text-transform: uppercase; font-weight: 700;
+  margin-bottom: 18px;
+}
+.roi-field { margin-bottom: 20px; }
+.roi-field:last-child { margin-bottom: 0; }
+.roi-field-label {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 12px; color: var(--muted);
+  margin-bottom: 8px;
+}
+.roi-field-value {
+  font-family: var(--mono); color: var(--gold); font-weight: 600; font-size: 14px;
+}
+.roi-slider {
+  width: 100%;
+  -webkit-appearance: none; appearance: none;
+  height: 4px;
+  background: var(--surface-3);
+  border-radius: 2px;
+  outline: none;
+}
+.roi-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(240,185,11,0.15);
+  transition: box-shadow 150ms;
+}
+.roi-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 6px rgba(240,185,11,0.25);
+}
+.roi-slider::-moz-range-thumb {
+  width: 16px; height: 16px; border: none;
+  border-radius: 50%; background: var(--gold); cursor: pointer;
+}
+.roi-preset {
+  display: flex; gap: 8px; margin-top: 14px;
+}
+.roi-preset-btn {
+  flex: 1;
+  padding: 7px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--mono);
+  cursor: pointer;
+  transition: all 120ms;
+}
+.roi-preset-btn:hover, .roi-preset-btn.active {
+  border-color: var(--gold); color: var(--gold);
+  background: var(--gold-soft);
+}
+
+.roi-output-hero {
+  text-align: center;
+  padding: 24px 0 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 22px;
+}
+.roi-output-label {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--gold); letter-spacing: 0.14em;
+  text-transform: uppercase; font-weight: 700;
+}
+.roi-output-num {
+  font-family: var(--mono);
+  font-size: clamp(36px, 5.5vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, var(--text) 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 10px 0 6px;
+  line-height: 1;
+}
+.roi-output-sub {
+  font-size: 12px; color: var(--muted);
+}
+.roi-output-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.roi-output-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+}
+.roi-output-card .roi-k {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--dim); letter-spacing: 0.1em;
+  text-transform: uppercase; font-weight: 600;
+}
+.roi-output-card .roi-v {
+  font-family: var(--mono); font-size: 20px;
+  color: var(--text); font-weight: 600;
+  margin-top: 4px;
+}
+.roi-output-card .roi-d {
+  font-size: 11px; color: var(--muted); margin-top: 3px;
+}
+.roi-note {
+  margin-top: 18px; padding: 12px 14px;
+  background: var(--gold-soft);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  font-size: 11px; color: var(--muted); line-height: 1.55;
+  font-family: var(--mono);
+}
+
+/* SWOT */
+.swot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 28px;
+}
+@media (max-width: 720px) { .swot-grid { grid-template-columns: 1fr; } }
+.swot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 150ms, transform 150ms;
+}
+.swot-card:hover { border-color: var(--border-hov); transform: translateY(-2px); }
+.swot-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%;
+}
+.swot-card.s::before { background: var(--green); }
+.swot-card.w::before { background: var(--red); }
+.swot-card.o::before { background: var(--gold); }
+.swot-card.t::before { background: var(--blue); }
+.swot-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.swot-letter {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  font-family: var(--mono); font-size: 18px; font-weight: 700;
+}
+.swot-card.s .swot-letter { background: rgba(16,185,129,0.14); color: var(--green); }
+.swot-card.w .swot-letter { background: rgba(239,68,68,0.14); color: var(--red); }
+.swot-card.o .swot-letter { background: var(--gold-soft); color: var(--gold); }
+.swot-card.t .swot-letter { background: rgba(59,130,246,0.14); color: var(--blue); }
+.swot-title {
+  font-size: 14px; font-weight: 600; color: var(--text);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.swot-subtitle {
+  font-size: 11px; color: var(--muted);
+  font-family: var(--mono); margin-top: 2px;
+}
+.swot-list { list-style: none; padding: 0; }
+.swot-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px; color: var(--text); line-height: 1.55;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.swot-list li:last-child { border-bottom: none; }
+.swot-list li::before {
+  content: ''; display: inline-block;
+  flex-shrink: 0;
+  width: 5px; height: 5px; border-radius: 50%;
+  margin-top: 8px;
+  background: var(--muted);
+}
+.swot-card.s .swot-list li::before { background: var(--green); }
+.swot-card.w .swot-list li::before { background: var(--red); }
+.swot-card.o .swot-list li::before { background: var(--gold); }
+.swot-card.t .swot-list li::before { background: var(--blue); }
+
+.swot-matrix {
+  margin: 28px 0 0;
+  padding: 18px 22px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 12px; color: var(--muted);
+  font-family: var(--mono); line-height: 1.7;
+}
+.swot-matrix strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside class="sidebar">
+    <div class="sb-head">
+      <button class="burger" id="burger" aria-label="Toggle sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div class="sb-brand">
+        <div class="sb-logo">
+          <svg viewBox="0 0 70 60" xmlns="http://www.w3.org/2000/svg" fill="none" aria-label="CoverFi">
+            <polygon points="25,12 40.6,21 40.6,39 25,48 9.4,39 9.4,21" stroke="#A1A1AA" stroke-width="2.2" stroke-linejoin="round"/>
+            <polygon points="45,12 60.6,21 60.6,39 45,48 29.4,39 29.4,21" stroke="#10B981" stroke-width="2.2" stroke-linejoin="round"/>
+            <polygon points="35,18 41,30 35,42 29,30" fill="#F0B90B"/>
+            <circle cx="35" cy="30" r="1.4" fill="#0A0A0A"/>
+          </svg>
+        </div>
+        <span class="sb-wordmark">coverfi</span>
+        <span class="sb-plan">DEMO</span>
+      </div>
+    </div>
+
+    <button class="sb-search" id="cmdkBtn">
+      <svg class="sb-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <span class="sb-search-label">Search...</span>
+      <span class="sb-search-kbd">⌘K</span>
+    </button>
+
+    <nav class="sb-nav">
+      <a class="sb-item" href="#/overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Overview</span>
+      </a>
+      <a class="sb-item" href="#/problem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+        <span>The Problem</span>
+      </a>
+      <a class="sb-item" href="#/solution">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span>Solution</span>
+      </a>
+      <a class="sb-item" href="#/waterfall">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M5 10h14M7 14h10M9 18h6"/></svg>
+        <span>Waterfall</span>
+      </a>
+      <a class="sb-item" href="#/revenue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span>Revenue</span>
+      </a>
+      <a class="sb-item" href="#/money-flow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h6a3 3 0 0 1 3 3v6"/></svg>
+        <span>Money Flow</span>
+      </a>
+      <a class="sb-item" href="#/economics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2M16 3.13a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
+        <span>Economics</span>
+      </a>
+      <a class="sb-item" href="#/business-model">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+        <span>Business Model</span>
+      </a>
+      <a class="sb-item" href="#/roi">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
+        <span>ROI Calculator</span>
+      </a>
+      <a class="sb-item" href="#/swot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"/></svg>
+        <span>SWOT Analysis</span>
+      </a>
+      <a class="sb-item" href="#/built">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span>What We Built</span>
+      </a>
+      <a class="sb-item" href="#/close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span>The Close</span>
+      </a>
+    </nav>
+
+    <div class="sb-footer">
+      <a class="sb-foot-item" href="https://github.com/Sanjay-N23/coverfi-protocol" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.23c-3.34.73-4.04-1.42-4.04-1.42-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.08 1.83 2.81 1.3 3.5.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span>GitHub</span>
+      </a>
+      <a class="sb-foot-item" href="https://testnet-explorer.hsk.xyz/address/0x44944cB598A750Df4C4Bf9A7D3FdDDf7575F88F5" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Explorer</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN ==================== -->
+  <main class="main">
+    <div class="topbar">
+      <div class="tb-crumb">
+        <span>CoverFi</span>
+        <span class="tb-crumb-sep">/</span>
+        <strong id="crumbPage">Overview</strong>
+      </div>
+      <div class="tb-spacer"></div>
+      <div class="tb-status">
+        <span class="tb-status-dot"></span>
+        <span>Live · HashKey 133</span>
+      </div>
+    </div>
+
+    <div class="page-wrap" id="pageWrap">
+
+      <!-- ==================== 1. OVERVIEW ==================== -->
+      <div class="page active" data-route="overview">
+        <div class="page-title">OVERVIEW</div>
+        <div class="page-heading">The first CDS for ERC-3643 RWA</div>
+        <div class="page-sub">On-chain credit default swap equivalent. Live on HashKey Chain Testnet.</div>
+
+        <div style="text-align:center;">
+          <div class="hero-number">$26.6B</div>
+          <div class="hero-caption">tokenized RWA · zero automated default protection · until now</div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">Contracts <button class="info" data-modal="overview-contracts">i</button></div>
+            <div class="stat-value">12</div>
+            <div class="stat-sub">Solidity 0.8.19</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Tests <button class="info" data-modal="overview-tests">i</button></div>
+            <div class="stat-value">416+</div>
+            <div class="stat-sub">unit · integration · e2e</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Deploy <button class="info" data-modal="overview-chain">i</button></div>
+            <div class="stat-value">Chain 133</div>
+            <div class="stat-sub">HashKey Testnet</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Frontend <button class="info" data-modal="overview-frontend">i</button></div>
+            <div class="stat-value">10</div>
+            <div class="stat-sub">pages · 16k LoC</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 2. PROBLEM ==================== -->
+      <div class="page" data-route="problem">
+        <div class="page-title">THE PROBLEM</div>
+        <div class="page-heading">A $26.6 billion hole in on-chain finance</div>
+        <div class="page-sub">Every ERC-3643 RWA holder today bears 100% unhedged issuer default risk.</div>
+
+        <div class="split">
+          <div class="split-half problem">
+            <div class="split-num">$26,600,000,000</div>
+            <div class="split-label">tokenized real-world assets on public blockchains</div>
+            <div class="split-bar"></div>
+          </div>
+          <div class="split-divider"></div>
+          <div class="split-half void">
+            <div class="split-num">$0</div>
+            <div class="split-label">automated default protection available today</div>
+            <div class="split-bar"></div>
+          </div>
+        </div>
+
+        <div class="quote">
+          If any one of these issuers defaults tomorrow — every single holder loses everything.
+        </div>
+
+        <div class="vs-table" style="margin-top:32px;">
+          <div class="vs-row head">
+            <div>Protocol</div>
+            <div>Covers</div>
+            <div>Can pay ERC-3643?</div>
+          </div>
+          <div class="vs-row">
+            <div class="vs-cell">Nexus Mutual</div>
+            <div class="vs-cell">Smart contract bugs</div>
+            <div class="vs-no">✗ No</div>
+          </div>
+          <div class="vs-row">
+            <div class="vs-cell">Risk Harbor</div>
+            <div class="vs-cell">Exchange hacks</div>
+            <div class="vs-no">✗ No</div>
+          </div>
+          <div class="vs-row">
+            <div class="vs-cell">Neptune Mutual</div>
+            <div class="vs-cell">DeFi exploits</div>
+            <div class="vs-no">✗ No</div>
+          </div>
+          <div class="vs-row">
+            <div class="vs-cell">InsurAce</div>
+            <div class="vs-cell">Multi-chain DeFi</div>
+            <div class="vs-no">✗ No</div>
+          </div>
+          <div class="vs-row us">
+            <div class="vs-cell"><strong>CoverFi</strong></div>
+            <div class="vs-cell"><strong>RWA issuer default</strong></div>
+            <div class="vs-yes">✓ Yes</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 3. SOLUTION ==================== -->
+      <div class="page" data-route="solution">
+        <div class="page-title">SOLUTION</div>
+        <div class="page-heading">Three innovations, one protocol</div>
+        <div class="page-sub">Infrastructure, not an application. Built to be the category-defining primitive.</div>
+
+        <div class="inno-grid">
+          <div class="inno-card">
+            <div class="inno-num">01</div>
+            <div class="inno-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <div class="inno-title">Compliance-Native Payouts <button class="info" data-modal="inno-1">i</button></div>
+            <div class="inno-summary">Checks <code style="font-family:var(--mono);color:var(--gold);font-size:11px;">isVerified</code> + <code style="font-family:var(--mono);color:var(--gold);font-size:11px;">isFrozen</code> before USDT moves.</div>
+          </div>
+
+          <div class="inno-card">
+            <div class="inno-num">02</div>
+            <div class="inno-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v4M21 7h-4"/></svg>
+            </div>
+            <div class="inno-title">Behavioral Credit Scoring <button class="info" data-modal="inno-2">i</button></div>
+            <div class="inno-summary">On-chain IRS (0–1000) drives exponential premium curve. Continuous, transparent.</div>
+          </div>
+
+          <div class="inno-card">
+            <div class="inno-num">03</div>
+            <div class="inno-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>
+            </div>
+            <div class="inno-title">SubrogationNFT <button class="info" data-modal="inno-3">i</button></div>
+            <div class="inno-summary">Bridges on-chain insurance with off-chain legal recovery. An industry first.</div>
+          </div>
+        </div>
+
+        <div class="quote" style="margin-top:40px;">
+          Nexus Mutual cannot pay a regulated security token holder. We can. That is not a feature — that is a category.
+        </div>
+      </div>
+
+      <!-- ==================== 4. WATERFALL ==================== -->
+      <div class="page" data-route="waterfall">
+        <div class="page-title">WATERFALL ALGORITHM</div>
+        <div class="page-heading">Three layers of loss absorption</div>
+        <div class="page-sub">Claims cascade through layers. Issuer bond first. LPs absorb the rest.</div>
+
+        <div class="wf-controls">
+          <button class="wf-toggle active" data-scenario="happy">Happy Path · $400K</button>
+          <button class="wf-toggle" data-scenario="stress">Stress Path · $2M</button>
+        </div>
+
+        <div class="wf-layout">
+          <div class="wf-diagram">
+            <svg viewBox="0 0 600 750" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L7,4 L0,8 Z" fill="currentColor"/>
+                </marker>
+              </defs>
+
+              <!-- Claim (top) -->
+              <g transform="translate(150, 20)">
+                <rect width="300" height="64" rx="12" fill="#0A0A0A" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+                <text x="150" y="25" text-anchor="middle" fill="#A1A1AA" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="500">CUSTOMER CLAIM</text>
+                <text x="150" y="52" text-anchor="middle" id="wfClaim" fill="#fff" font-family="ui-monospace,monospace" font-size="22" font-weight="700">$400,000</text>
+              </g>
+
+              <!-- Arrow down to L1 -->
+              <g stroke="#F0B90B" stroke-width="2" fill="none" color="#F0B90B">
+                <path d="M300 84 L300 120" marker-end="url(#arr)"/>
+              </g>
+
+              <!-- Layer 1: Issuer Bond -->
+              <g id="wfL1" transform="translate(100, 128)" class="wf-l" style="cursor:pointer" data-layer="1">
+                <rect width="400" height="100" rx="12" fill="#0A0A0A" stroke="rgba(255,255,255,0.14)" stroke-width="1" class="wfRect"/>
+                <text x="20" y="28" fill="#71717A" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="500">LAYER 1 · FIRST-LOSS</text>
+                <text x="20" y="58" fill="#fff" font-family="system-ui" font-size="18" font-weight="600">Issuer Bond</text>
+                <text x="20" y="82" fill="#A1A1AA" font-family="system-ui" font-size="13">Forced capital · Issuer's own money</text>
+                <text x="380" y="58" text-anchor="end" fill="#fff" font-family="ui-monospace,monospace" font-size="24" font-weight="700" class="wfAmt">$500,000</text>
+                <text x="380" y="82" text-anchor="end" fill="#10B981" font-family="ui-monospace,monospace" font-size="13" font-weight="700" class="wfStatus">ABSORBS</text>
+              </g>
+
+              <!-- Connector L1→L2  (90px gap: badge top, arrowhead bottom) -->
+              <g stroke="#52525B" stroke-width="2" fill="none" color="#52525B" class="wfConn">
+                <path d="M300 228 L300 310" marker-end="url(#arr)"/>
+              </g>
+              <rect x="312" y="236" width="128" height="20" rx="4" fill="#111111" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+              <text x="320" y="250" fill="#71717A" font-family="ui-monospace,monospace" font-size="11" font-weight="500">if claim &gt; $500K</text>
+
+              <!-- Layer 2: Junior -->
+              <g id="wfL2" transform="translate(100, 318)" class="wf-l" style="cursor:pointer" data-layer="2">
+                <rect width="400" height="100" rx="12" fill="#0A0A0A" stroke="rgba(255,255,255,0.14)" stroke-width="1" class="wfRect"/>
+                <text x="20" y="28" fill="#71717A" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="500">LAYER 2 · MID-LOSS</text>
+                <text x="20" y="58" fill="#fff" font-family="system-ui" font-size="18" font-weight="600">Junior Tranche</text>
+                <text x="20" y="82" fill="#A1A1AA" font-family="system-ui" font-size="13">jrCVR · 20–28% APR</text>
+                <text x="380" y="58" text-anchor="end" fill="#fff" font-family="ui-monospace,monospace" font-size="24" font-weight="700" class="wfAmt">$300,000</text>
+                <text x="380" y="82" text-anchor="end" fill="#71717A" font-family="ui-monospace,monospace" font-size="13" font-weight="700" class="wfStatus">UNTOUCHED</text>
+              </g>
+
+              <!-- Connector L2→L3  (90px gap) -->
+              <g stroke="#52525B" stroke-width="2" fill="none" color="#52525B" class="wfConn">
+                <path d="M300 418 L300 500" marker-end="url(#arr)"/>
+              </g>
+              <rect x="312" y="426" width="128" height="20" rx="4" fill="#111111" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+              <text x="320" y="440" fill="#71717A" font-family="ui-monospace,monospace" font-size="11" font-weight="500">if claim &gt; $800K</text>
+
+              <!-- Layer 3: Senior -->
+              <g id="wfL3" transform="translate(100, 508)" class="wf-l" style="cursor:pointer" data-layer="3">
+                <rect width="400" height="100" rx="12" fill="#0A0A0A" stroke="rgba(255,255,255,0.14)" stroke-width="1" class="wfRect"/>
+                <text x="20" y="28" fill="#71717A" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="500">LAYER 3 · LAST-LINE</text>
+                <text x="20" y="58" fill="#fff" font-family="system-ui" font-size="18" font-weight="600">Senior Tranche</text>
+                <text x="20" y="82" fill="#A1A1AA" font-family="system-ui" font-size="13">srCVR · 8–12% APR</text>
+                <text x="380" y="58" text-anchor="end" fill="#fff" font-family="ui-monospace,monospace" font-size="24" font-weight="700" class="wfAmt">$700,000</text>
+                <text x="380" y="82" text-anchor="end" fill="#71717A" font-family="ui-monospace,monospace" font-size="13" font-weight="700" class="wfStatus">UNTOUCHED</text>
+              </g>
+
+              <!-- Arrow to Total -->
+              <g stroke="#52525B" stroke-width="2" fill="none" color="#52525B" class="wfConn">
+                <path d="M300 608 L300 650" marker-end="url(#arr)"/>
+              </g>
+
+              <!-- Total -->
+              <g transform="translate(150, 658)">
+                <rect width="300" height="70" rx="12" fill="#0A0A0A" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+                <text x="150" y="26" text-anchor="middle" fill="#A1A1AA" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="500">TOTAL CUSHION</text>
+                <text x="150" y="56" text-anchor="middle" fill="#F0B90B" font-family="ui-monospace,monospace" font-size="24" font-weight="700">$1,500,000</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="wf-side">
+            <div>
+              <div class="wf-side-label">SCENARIO</div>
+              <div class="wf-side-scenario" id="wfScenario">Happy Path</div>
+            </div>
+            <div>
+              <div class="wf-side-label">CLAIM</div>
+              <div class="wf-side-claim" id="wfClaimSide">$400,000</div>
+            </div>
+            <div class="wf-side-divider"></div>
+            <div>
+              <div class="wf-side-label">OUTCOME</div>
+              <div class="wf-side-outcome" id="wfOutcome">
+                <strong>Fully absorbed by Layer 1.</strong> Issuer bond covers 100% of claim. Customer gets full payout. LP capital untouched.
+              </div>
+            </div>
+            <div class="wf-side-divider"></div>
+            <div>
+              <div class="wf-side-label">EXPLORE LAYERS</div>
+              <div class="wf-layer-btns">
+                <button class="wf-layer-btn" data-modal="wf-layer-1">Issuer Bond <span class="ar">›</span></button>
+                <button class="wf-layer-btn" data-modal="wf-layer-2">Junior Tranche <span class="ar">›</span></button>
+                <button class="wf-layer-btn" data-modal="wf-layer-3">Senior Tranche <span class="ar">›</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote">
+          Three layers of protection before a policyholder loses a cent. The issuer's bond. Then junior. Then senior. In that order. Always.
+        </div>
+      </div>
+
+      <!-- ==================== 5. REVENUE ==================== -->
+      <div class="page" data-route="revenue">
+        <div class="page-title">REVENUE MATH</div>
+        <div class="page-heading">$9.3M ARR at 10% market penetration</div>
+        <div class="page-sub">Hover any token to see the math. Static projection — real market, real model.</div>
+
+        <div class="rev-eq">
+          <div class="rev-eq-row">
+            <span class="rev-tok" data-tip="<strong>$26.6B</strong><br/>Tokenized RWA on-chain · Q2 2026. Source: rwa.xyz">$26.6B</span>
+            <span class="rev-op">×</span>
+            <span class="rev-tok" data-tip="<strong>10% penetration</strong><br/>Year 3 realistic target. FDIC-style coverage cap applies.">10%</span>
+            <span class="rev-op">×</span>
+            <span class="rev-tok" data-tip="<strong>6.96% premium</strong><br/>Average annual rate · IRS 600 issuer · exponential formula">6.96%</span>
+            <span class="rev-op">×</span>
+            <span class="rev-tok" data-tip="<strong>5% protocol fee</strong><br/>Routed to CoverFi treasury on every premium payment">5%</span>
+            <span class="rev-op">=</span>
+            <span class="rev-tok final" data-tip="<strong>$9.3M ARR</strong><br/>Year 3 protocol revenue · no marginal cost · fully on-chain">$9.3M</span>
+          </div>
+        </div>
+
+        <div class="rev-proj">
+          <div class="rev-bar-row">
+            <div class="rev-bar-year">YEAR 1</div>
+            <div class="rev-bar-track">
+              <div class="rev-bar-fill" style="width:10%;"></div>
+              <span class="rev-bar-label">1% penetration · $18.5M premiums</span>
+            </div>
+            <div class="rev-bar-value">$925K</div>
+          </div>
+          <div class="rev-bar-row">
+            <div class="rev-bar-year">YEAR 2</div>
+            <div class="rev-bar-track">
+              <div class="rev-bar-fill" style="width:50%;animation-delay:200ms;"></div>
+              <span class="rev-bar-label">5% penetration · $92.5M premiums</span>
+            </div>
+            <div class="rev-bar-value">$4.6M</div>
+          </div>
+          <div class="rev-bar-row">
+            <div class="rev-bar-year">YEAR 3</div>
+            <div class="rev-bar-track">
+              <div class="rev-bar-fill" style="width:100%;animation-delay:400ms;"></div>
+              <span class="rev-bar-label">10% penetration · $185M premiums</span>
+            </div>
+            <div class="rev-bar-value">$9.3M</div>
+          </div>
+        </div>
+
+        <div class="quote">
+          We are not asking for permission to enter a market. We are the market.
+        </div>
+      </div>
+
+      <!-- ==================== 6. MONEY FLOW ==================== -->
+      <div class="page" data-route="money-flow">
+        <div class="page-title">MONEY FLOW</div>
+        <div class="page-heading">How capital moves through the protocol</div>
+        <div class="page-sub">Five actors. Premiums flow up. Bonds and LP capital flow in. Yield flows out.</div>
+
+        <div class="mf-wrap">
+          <svg viewBox="0 0 980 540" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrGold" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L7,4 L0,8 Z" fill="#F0B90B"/>
+              </marker>
+              <marker id="arrGreen" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L7,4 L0,8 Z" fill="#10B981"/>
+              </marker>
+              <marker id="arrMuted" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                <path d="M0,0 L7,4 L0,8 Z" fill="#A1A1AA"/>
+              </marker>
+            </defs>
+
+            <!-- TOP: Customer + Issuer -->
+            <g transform="translate(80, 30)">
+              <rect width="200" height="70" rx="12" fill="#0A0A0A" stroke="rgba(255,255,255,0.14)"/>
+              <text x="100" y="28" text-anchor="middle" fill="#A1A1AA" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="500">CUSTOMER</text>
+              <text x="100" y="52" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="15" font-weight="600">Token Holder</text>
+            </g>
+            <g transform="translate(620, 30)">
+              <rect width="200" height="70" rx="12" fill="#0A0A0A" stroke="rgba(255,255,255,0.14)"/>
+              <text x="100" y="28" text-anchor="middle" fill="#A1A1AA" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="500">ISSUER</text>
+              <text x="100" y="52" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="15" font-weight="600">RWA Company</text>
+            </g>
+
+            <!-- Capital IN (orthogonal routing, no crossings) -->
+            <path d="M180,100 L180,155 L300,155 L300,198" fill="none" stroke="#F0B90B" stroke-width="1.5" marker-end="url(#arrGold)"/>
+            <text x="194" y="142" fill="#F0B90B" font-family="ui-monospace,monospace" font-size="12" font-weight="600">Premium 6.96%</text>
+
+            <path d="M720,100 L720,155 L600,155 L600,198" fill="none" stroke="#F0B90B" stroke-width="1.5" marker-end="url(#arrGold)"/>
+            <text x="634" y="142" fill="#F0B90B" font-family="ui-monospace,monospace" font-size="12" font-weight="600">Bond 5%</text>
+
+            <!-- CENTER: Pool -->
+            <g transform="translate(200, 200)">
+              <rect width="500" height="140" rx="12" fill="#0A0A0A" stroke="#F0B90B" stroke-width="1.5"/>
+              <text x="250" y="28" text-anchor="middle" fill="#F0B90B" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="600">COVERFI INSURANCE POOL</text>
+              <line x1="250" y1="55" x2="250" y2="120" stroke="rgba(255,255,255,0.14)"/>
+              <text x="125" y="85" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="16" font-weight="600">Senior 70%</text>
+              <text x="125" y="110" text-anchor="middle" fill="#A1A1AA" font-family="ui-monospace,monospace" font-size="12">srCVR</text>
+              <text x="375" y="85" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="16" font-weight="600">Junior 30%</text>
+              <text x="375" y="110" text-anchor="middle" fill="#A1A1AA" font-family="ui-monospace,monospace" font-size="12">jrCVR</text>
+            </g>
+
+            <!-- FEE out to Treasury (right) -->
+            <path d="M700,270 L810,270" fill="none" stroke="#A1A1AA" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrMuted)"/>
+            <rect x="720" y="254" width="60" height="18" rx="4" fill="#111111" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+            <text x="750" y="267" text-anchor="middle" fill="#A1A1AA" font-family="ui-monospace,monospace" font-size="11" font-weight="600">5% fee</text>
+
+            <!-- TREASURY -->
+            <g transform="translate(810, 200)">
+              <rect width="148" height="140" rx="12" fill="#0A0A0A" stroke="rgba(255,255,255,0.14)" stroke-dasharray="4 4"/>
+              <text x="74" y="62" text-anchor="middle" fill="#A1A1AA" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="500">COVERFI</text>
+              <text x="74" y="86" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="15" font-weight="600">Treasury</text>
+            </g>
+
+            <!-- YIELD OUT (orthogonal, non-crossing) -->
+            <path d="M300,342 L300,395 L250,395 L250,428" fill="none" stroke="#10B981" stroke-width="1.5" marker-end="url(#arrGreen)"/>
+            <text x="156" y="384" fill="#10B981" font-family="ui-monospace,monospace" font-size="12" font-weight="600">Yield 8–12%</text>
+
+            <path d="M600,342 L600,395 L650,395 L650,428" fill="none" stroke="#10B981" stroke-width="1.5" marker-end="url(#arrGreen)"/>
+            <text x="658" y="384" fill="#10B981" font-family="ui-monospace,monospace" font-size="12" font-weight="600">Yield 20–28%</text>
+
+            <!-- BOTTOM: LPs -->
+            <g transform="translate(150, 430)">
+              <rect width="200" height="70" rx="12" fill="#0A0A0A" stroke="rgba(255,255,255,0.14)"/>
+              <text x="100" y="28" text-anchor="middle" fill="#A1A1AA" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="500">SENIOR LP</text>
+              <text x="100" y="52" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="15" font-weight="600">Low-risk capital</text>
+            </g>
+            <g transform="translate(550, 430)">
+              <rect width="200" height="70" rx="12" fill="#0A0A0A" stroke="rgba(255,255,255,0.14)"/>
+              <text x="100" y="28" text-anchor="middle" fill="#A1A1AA" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1.5" font-weight="500">JUNIOR LP</text>
+              <text x="100" y="52" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="15" font-weight="600">Risk-seeking</text>
+            </g>
+          </svg>
+
+          <div class="mf-legend">
+            <div class="mf-leg-item"><div class="mf-leg-line" style="background:#F0B90B;"></div>Capital in</div>
+            <div class="mf-leg-item"><div class="mf-leg-line" style="background:#10B981;"></div>Yield out</div>
+            <div class="mf-leg-item"><div class="mf-leg-line" style="background:#A1A1AA;border-top:2px dashed #A1A1AA;"></div>Protocol fee</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 7. ECONOMICS ==================== -->
+      <div class="page" data-route="economics">
+        <div class="page-title">ECONOMICS</div>
+        <div class="page-heading">Who earns what, who takes what risk</div>
+        <div class="page-sub">Click any card to flip and see the full economic profile.</div>
+
+        <div class="flip-grid">
+          <!-- Senior LP -->
+          <div class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/></svg></div>
+                <div class="flip-name">Senior LP</div>
+                <div style="font-size:12px;color:var(--muted);">Low-risk capital</div>
+                <div class="flip-headline">8–12% APR</div>
+                <div class="flip-hint">Click to flip →</div>
+              </div>
+              <div class="flip-face flip-back">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/></svg></div>
+                <div class="flip-name">Senior LP</div>
+                <ul>
+                  <li>Deposits USDT → receives srCVR (like cToken)</li>
+                  <li>Earns premium yield; exchange rate appreciates</li>
+                  <li>Loses only after Junior is fully exhausted</li>
+                  <li>30-day withdrawal lock</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Junior LP -->
+          <div class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                <div class="flip-name">Junior LP</div>
+                <div style="font-size:12px;color:var(--muted);">High-risk capital</div>
+                <div class="flip-headline">20–28% APR</div>
+                <div class="flip-hint">Click to flip →</div>
+              </div>
+              <div class="flip-face flip-back">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                <div class="flip-name">Junior LP</div>
+                <ul>
+                  <li>Deposits USDT → receives jrCVR</li>
+                  <li>Higher yield compensates for tail risk</li>
+                  <li>Absorbs first losses after issuer bond</li>
+                  <li>14-day withdrawal lock</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Issuer -->
+          <div class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div>
+                <div class="flip-name">Issuer</div>
+                <div style="font-size:12px;color:var(--muted);">RWA originator</div>
+                <div class="flip-headline">10× scale</div>
+                <div class="flip-hint">Click to flip →</div>
+              </div>
+              <div class="flip-face flip-back">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="13" rx="1"/></svg></div>
+                <div class="flip-name">Issuer</div>
+                <ul>
+                  <li>Posts 5% bond before issuing insurable tokens</li>
+                  <li>Insurance enables 10× institutional adoption</li>
+                  <li>Loses bond fully on confirmed default</li>
+                  <li>SubrogationNFT pursues recovery</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customer -->
+          <div class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg></div>
+                <div class="flip-name">Customer</div>
+                <div style="font-size:12px;color:var(--muted);">Token holder</div>
+                <div class="flip-headline">Protected</div>
+                <div class="flip-hint">Click to flip →</div>
+              </div>
+              <div class="flip-face flip-back">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/></svg></div>
+                <div class="flip-name">Customer</div>
+                <ul>
+                  <li>Pays premium based on issuer's IRS score</li>
+                  <li>Receives soulbound ProtectionCert (ERC-5192)</li>
+                  <li>Payout on 2-of-3 attestation confirmation</li>
+                  <li>Coverage up to pool capacity</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Protocol -->
+          <div class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 4v6c0 5-3 9-9 10-6-1-9-5-9-10V6l9-4z"/></svg></div>
+                <div class="flip-name">CoverFi Protocol</div>
+                <div style="font-size:12px;color:var(--muted);">The infrastructure</div>
+                <div class="flip-headline">5% fee</div>
+                <div class="flip-hint">Click to flip →</div>
+              </div>
+              <div class="flip-face flip-back">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 4v6c0 5-3 9-9 10-6-1-9-5-9-10V6l9-4z"/></svg></div>
+                <div class="flip-name">CoverFi Protocol</div>
+                <ul>
+                  <li>5% of all premiums → treasury</li>
+                  <li>No direct capital at risk</li>
+                  <li>Governance token captures subrogation upside</li>
+                  <li>Revenue scales linearly with TVL</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== LOOPHOLES (removed) ==================== -->
+      <div class="page" data-route="loopholes-hidden" hidden>
+        <div class="page-title">LOOPHOLES WE ACKNOWLEDGE</div>
+        <div class="page-heading">What could go wrong — and what we do about it</div>
+        <div class="page-sub">Click any risk to see our mitigation. We built the MVP honestly.</div>
+
+        <div class="flip-grid">
+          <div class="flip-card risk">
+            <div class="flip-inner">
+              <div class="flip-face">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div>
+                <div class="flip-name">Long-con IRS gaming</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:6px;">Issuer behaves 12 months, then absconds</div>
+                <div class="flip-headline">Probabilistic</div>
+                <div class="flip-hint">Click → mitigation</div>
+              </div>
+              <div class="flip-face flip-back">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="flip-name">Mitigation</div>
+                <ul>
+                  <li>5% bond seized on confirmed default</li>
+                  <li>SubrogationNFT enables legal recovery</li>
+                  <li>IRS drops to 0 — reputation destroyed</li>
+                  <li>Deterrent, not prevention</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip-card risk">
+            <div class="flip-inner">
+              <div class="flip-face">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                <div class="flip-name">Attestor collusion</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:6px;">2-of-3 TIR bribed by issuer</div>
+                <div class="flip-headline">Phase 1 fix</div>
+                <div class="flip-hint">Click → mitigation</div>
+              </div>
+              <div class="flip-face flip-back">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="flip-name">Mitigation</div>
+                <ul>
+                  <li>Phase 1: raise attestor bonds above bribery value</li>
+                  <li>On-chain timestamped evidence submission</li>
+                  <li>Public slashing of delay-confirmed attestors</li>
+                  <li>Multi-jurisdiction attestor pools</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip-card risk">
+            <div class="flip-inner">
+              <div class="flip-face">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+                <div class="flip-name">Unbounded coverage ratio</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:6px;">Pool could insure more than its capacity</div>
+                <div class="flip-headline">Phase 1 fix</div>
+                <div class="flip-hint">Click → mitigation</div>
+              </div>
+              <div class="flip-face flip-back">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="flip-name">Mitigation</div>
+                <ul>
+                  <li>Phase 1: governance-enforced 2× cap</li>
+                  <li>Insured notional cannot exceed 2× pool TVL</li>
+                  <li>Dynamic premium increase near cap</li>
+                  <li>FDIC-style per-holder insurance limit</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip-card risk">
+            <div class="flip-inner">
+              <div class="flip-face">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                <div class="flip-name">Owner key god-mode</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:6px;">Single key controls all admin functions</div>
+                <div class="flip-headline">Phase 1 fix</div>
+                <div class="flip-hint">Click → mitigation</div>
+              </div>
+              <div class="flip-face flip-back">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="flip-name">Mitigation</div>
+                <ul>
+                  <li>Phase 1: 3-of-5 multi-sig on admin</li>
+                  <li>24-hour timelock on all state changes</li>
+                  <li>OpenZeppelin Pausable with independent guardian</li>
+                  <li>External audit before mainnet</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="flip-card risk">
+            <div class="flip-inner">
+              <div class="flip-face">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></div>
+                <div class="flip-name">Pool death spiral</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:6px;">First default triggers LP exodus</div>
+                <div class="flip-headline">Built</div>
+                <div class="flip-hint">Click → mitigation</div>
+              </div>
+              <div class="flip-face flip-back">
+                <div class="flip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="flip-name">Mitigation</div>
+                <ul>
+                  <li>Redemption gate activates on monitoring status</li>
+                  <li>30-day senior lock prevents panic withdrawal</li>
+                  <li>Premium collection compounds during monitoring</li>
+                  <li>EWS fires 24–48h before formal default</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote" style="margin-top:40px;">
+          We built the MVP honestly. We didn't pretend these risks don't exist.
+        </div>
+      </div>
+
+      <!-- ==================== BUSINESS MODEL ==================== -->
+      <div class="page" data-route="business-model">
+        <div class="page-title">BUSINESS MODEL</div>
+        <div class="page-heading">Four revenue streams. One compounding flywheel.</div>
+        <div class="page-sub">Protocol fee today. Governance, licensing, and recovery capture at scale.</div>
+
+        <div class="bm-hero">
+          <div>
+            <div class="bm-hero-label">Primary Revenue Engine</div>
+            <div class="bm-hero-num">5%</div>
+            <div style="font-family:var(--mono);color:var(--muted);font-size:12px;letter-spacing:0.08em;margin-top:6px;">PROTOCOL FEE ON EVERY PREMIUM</div>
+          </div>
+          <div class="bm-hero-body">
+            Every policyholder pays a premium; every premium is split 95/5.
+            Ninety-five percent flows into the dual-tranche insurance pool —
+            where Senior and Junior LPs earn yield. <strong>Five percent
+            routes to the CoverFi treasury.</strong>
+            <br><br>
+            No capital raise required to turn on revenue. Day one of mainnet,
+            every coverage contract is a revenue event.
+          </div>
+        </div>
+
+        <div class="bm-streams">
+          <div class="bm-stream">
+            <div class="bm-stream-num">01 · LIVE</div>
+            <div class="bm-stream-name">Protocol Premium Fee</div>
+            <div class="bm-stream-body">
+              <strong>5% take rate</strong> on every premium payment. Routed
+              atomically from <code>PayoutEngine</code> into the treasury on
+              each policy purchase. Fully on-chain, fully automated, fully
+              auditable.
+            </div>
+            <div class="bm-stream-metric">→ Scales linearly with insured TVL</div>
+          </div>
+
+          <div class="bm-stream">
+            <div class="bm-stream-num">02 · PHASE 1</div>
+            <div class="bm-stream-name">Subrogation Recovery Share</div>
+            <div class="bm-stream-body">
+              Every confirmed default mints a <strong>SubrogationNFT</strong>
+              to the CoverFi Foundation — encoding the legal right to pursue
+              off-chain recovery from the defaulted issuer. Any recovered
+              capital is split between pool replenishment and the governance
+              treasury.
+            </div>
+            <div class="bm-stream-metric">→ Upside capture on adverse events</div>
+          </div>
+
+          <div class="bm-stream">
+            <div class="bm-stream-num">03 · PHASE 1</div>
+            <div class="bm-stream-name">IRS Scoring Licensing</div>
+            <div class="bm-stream-body">
+              The <strong>IRS credit score</strong> — 5 dimensions, updated
+              on-chain, continuous exponential premium curve — is already
+              consumed by <code>PayoutEngine</code>. It is also a standalone
+              data product for third-party underwriters, risk desks, and
+              lending protocols pricing RWA exposure.
+            </div>
+            <div class="bm-stream-metric">→ Data-layer monetization</div>
+          </div>
+
+          <div class="bm-stream">
+            <div class="bm-stream-num">04 · PHASE 2</div>
+            <div class="bm-stream-name">Attestor & Governance Capture</div>
+            <div class="bm-stream-body">
+              Bonded attestors stake the governance token to participate in
+              default confirmation. Slashing conditions and performance
+              incentives route value to the protocol. Governance holders
+              capture long-term recovery and fee upside.
+            </div>
+            <div class="bm-stream-metric">→ Token value accretion</div>
+          </div>
+        </div>
+
+        <div class="bm-unit">
+          <div class="bm-unit-head">Unit economics · illustrative (1% market penetration)</div>
+          <div class="bm-unit-row">
+            <div class="bm-unit-label">Addressable tokenized RWA on public chains</div>
+            <div class="bm-unit-formula">TAM</div>
+            <div class="bm-unit-val">$26.6B</div>
+          </div>
+          <div class="bm-unit-row">
+            <div class="bm-unit-label">Insured TVL at 1% penetration</div>
+            <div class="bm-unit-formula">TAM × 1%</div>
+            <div class="bm-unit-val">$266M</div>
+          </div>
+          <div class="bm-unit-row">
+            <div class="bm-unit-label">Gross annual premium volume</div>
+            <div class="bm-unit-formula">TVL × 6.96%</div>
+            <div class="bm-unit-val">$18.5M</div>
+          </div>
+          <div class="bm-unit-row">
+            <div class="bm-unit-label">Protocol fee share</div>
+            <div class="bm-unit-formula">× 5%</div>
+            <div class="bm-unit-val">$925K</div>
+          </div>
+          <div class="bm-unit-row">
+            <div class="bm-unit-label">Annual protocol revenue (1% penetration)</div>
+            <div class="bm-unit-formula">= TREASURY</div>
+            <div class="bm-unit-val">$925,000</div>
+          </div>
+        </div>
+
+        <div class="quote">
+          At 5% market penetration — still early — this becomes a
+          $4.6M annual revenue primitive. At 10% penetration, $9.3M.
+          Credit protection is not a product; it is a dependency of the
+          $26.6B market it serves.
+        </div>
+      </div>
+
+      <!-- ==================== ROI CALCULATOR ==================== -->
+      <div class="page" data-route="roi">
+        <div class="page-title">ROI CALCULATOR</div>
+        <div class="page-heading">Model the protocol at your assumptions.</div>
+        <div class="page-sub">Move the sliders. The numbers update on-chain-style, instantly.</div>
+
+        <div class="roi-layout">
+          <!-- INPUTS -->
+          <div class="roi-inputs">
+            <div class="roi-section-title">Assumptions</div>
+
+            <div class="roi-field">
+              <div class="roi-field-label">
+                <span>Insured TVL</span>
+                <span class="roi-field-value" id="roiTvlVal">$266,000,000</span>
+              </div>
+              <input type="range" class="roi-slider" id="roiTvl"
+                     min="10" max="5000" value="266" step="5">
+              <div style="font-size:10px;color:var(--dim);font-family:var(--mono);margin-top:6px;">
+                $10M minimum · $5B maximum
+              </div>
+            </div>
+
+            <div class="roi-field">
+              <div class="roi-field-label">
+                <span>Average Premium Rate</span>
+                <span class="roi-field-value" id="roiPremVal">6.96%</span>
+              </div>
+              <input type="range" class="roi-slider" id="roiPrem"
+                     min="400" max="1600" value="696" step="4">
+              <div style="font-size:10px;color:var(--dim);font-family:var(--mono);margin-top:6px;">
+                IRS 1000 = 4% · IRS 0 = 16%
+              </div>
+            </div>
+
+            <div class="roi-field">
+              <div class="roi-field-label">
+                <span>Protocol Fee</span>
+                <span class="roi-field-value" id="roiFeeVal">5%</span>
+              </div>
+              <input type="range" class="roi-slider" id="roiFee"
+                     min="1" max="20" value="5" step="1">
+              <div style="font-size:10px;color:var(--dim);font-family:var(--mono);margin-top:6px;">
+                5% base · governance adjustable up to 20%
+              </div>
+            </div>
+
+            <div class="roi-field">
+              <div class="roi-field-label">
+                <span>Pool Utilization</span>
+                <span class="roi-field-value" id="roiUtilVal">80%</span>
+              </div>
+              <input type="range" class="roi-slider" id="roiUtil"
+                     min="10" max="100" value="80" step="5">
+              <div style="font-size:10px;color:var(--dim);font-family:var(--mono);margin-top:6px;">
+                Fraction of TVL actively covering policies
+              </div>
+            </div>
+
+            <div class="roi-field">
+              <div style="font-size:11px;color:var(--muted);margin-bottom:8px;font-family:var(--mono);letter-spacing:0.08em;text-transform:uppercase;">Quick Presets</div>
+              <div class="roi-preset">
+                <button class="roi-preset-btn" data-preset="conservative">1% TAM</button>
+                <button class="roi-preset-btn active" data-preset="base">5% TAM</button>
+                <button class="roi-preset-btn" data-preset="bull">10% TAM</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- OUTPUTS -->
+          <div class="roi-outputs">
+            <div class="roi-output-hero">
+              <div class="roi-output-label">Annual Protocol Revenue</div>
+              <div class="roi-output-num" id="roiProtocol">$925,000</div>
+              <div class="roi-output-sub" id="roiProtocolSub">at 1% market penetration</div>
+            </div>
+
+            <div class="roi-output-grid">
+              <div class="roi-output-card">
+                <div class="roi-k">Gross Premium Volume</div>
+                <div class="roi-v" id="roiPremVol">$18.5M</div>
+                <div class="roi-d">Annualized, before protocol fee</div>
+              </div>
+              <div class="roi-output-card">
+                <div class="roi-k">LP Yield Pool</div>
+                <div class="roi-v" id="roiLp">$17.6M</div>
+                <div class="roi-d">95% of premium, Senior + Junior</div>
+              </div>
+              <div class="roi-output-card">
+                <div class="roi-k">Senior Tranche (70%)</div>
+                <div class="roi-v" id="roiSenior">$12.3M</div>
+                <div class="roi-d">Protected capital · 8–12% APR</div>
+              </div>
+              <div class="roi-output-card">
+                <div class="roi-k">Junior Tranche (30%)</div>
+                <div class="roi-v" id="roiJunior">$5.3M</div>
+                <div class="roi-d">First-loss · 20–28% APR</div>
+              </div>
+              <div class="roi-output-card">
+                <div class="roi-k">Issuer Bond at Stake</div>
+                <div class="roi-v" id="roiBond">$13.3M</div>
+                <div class="roi-d">5% of insured TVL, slashable first</div>
+              </div>
+              <div class="roi-output-card">
+                <div class="roi-k">Revenue / $100M Insured</div>
+                <div class="roi-v" id="roiPerHundred">$348K</div>
+                <div class="roi-d">Unit economics benchmark</div>
+              </div>
+            </div>
+
+            <div class="roi-note">
+              Model assumes continuous policy coverage for a full 12-month
+              period at the selected utilization. Default-event losses and
+              subrogation recoveries are excluded — treat these as the
+              steady-state treasury burn rate, not IRR. Senior/Junior split
+              is 70/30 per the on-chain pool configuration.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== SWOT ==================== -->
+      <div class="page" data-route="swot">
+        <div class="page-title">SWOT ANALYSIS</div>
+        <div class="page-heading">Where we are strong. Where we are honest.</div>
+        <div class="page-sub">Internal factors left · external factors right · favorable top · unfavorable bottom.</div>
+
+        <div class="swot-grid">
+          <!-- STRENGTHS -->
+          <div class="swot-card s">
+            <div class="swot-head">
+              <div class="swot-letter">S</div>
+              <div>
+                <div class="swot-title">Strengths</div>
+                <div class="swot-subtitle">Internal · Favorable</div>
+              </div>
+            </div>
+            <ul class="swot-list">
+              <li>First protocol with ERC-3643 compliance-native payouts — <code>isVerified()</code> + <code>isFrozen()</code> checked before USDT moves.</li>
+              <li>Continuous on-chain credit scoring (IRS) with ABDKMath fixed-point exponential premium curve — no competitor has this.</li>
+              <li>SubrogationNFT — first on-chain primitive bridging DeFi insurance to off-chain legal recovery.</li>
+              <li>12 contracts · 416 passing tests · full lifecycle integration verified on HashKey Chain 133.</li>
+              <li>Dual-tranche (srCVR / jrCVR) capital structure with atomic 4-contract waterfall — production-grade architecture, not MVP duct tape.</li>
+            </ul>
+          </div>
+
+          <!-- WEAKNESSES -->
+          <div class="swot-card w">
+            <div class="swot-head">
+              <div class="swot-letter">W</div>
+              <div>
+                <div class="swot-title">Weaknesses</div>
+                <div class="swot-subtitle">Internal · Unfavorable</div>
+              </div>
+            </div>
+            <ul class="swot-list">
+              <li>Pre-audit. External audit runway is Phase 1 (April–July). Current defense: OpenZeppelin base + CEI pattern + 416 tests.</li>
+              <li>Testnet TVL is intentionally small ($10) — mainnet economics are scale-invariant but not yet proven at size.</li>
+              <li>Attestor bonds currently sized for testnet demo — Phase 1 raises them to commercially material mainnet levels.</li>
+              <li>Chainlink PoR is mocked on testnet; live feed integration is part of mainnet deployment.</li>
+              <li>Pausable + 24h admin timelock deferred to post-audit by design — minimizes current attack surface, but requires governance maturity.</li>
+            </ul>
+          </div>
+
+          <!-- OPPORTUNITIES -->
+          <div class="swot-card o">
+            <div class="swot-head">
+              <div class="swot-letter">O</div>
+              <div>
+                <div class="swot-title">Opportunities</div>
+                <div class="swot-subtitle">External · Favorable</div>
+              </div>
+            </div>
+            <ul class="swot-list">
+              <li>$26.6B tokenized RWA on public chains today — zero automated credit protection available. Market is entirely unclaimed.</li>
+              <li>Institutional RWA issuance crossed credibility threshold in 2025 (BlackRock BUIDL, Franklin FOBXX, Ondo, Centrifuge, Maple).</li>
+              <li>ERC-3643 is now the de-facto standard for regulated tokenization — we are the only protocol natively compliant.</li>
+              <li>HashKey Chain explicitly prioritizes regulated on-chain finance — chain-native positioning with ecosystem support.</li>
+              <li>Global traditional CDS market is ~$8T notional. Even fractional migration on-chain creates a new category.</li>
+            </ul>
+          </div>
+
+          <!-- THREATS -->
+          <div class="swot-card t">
+            <div class="swot-head">
+              <div class="swot-letter">T</div>
+              <div>
+                <div class="swot-title">Threats</div>
+                <div class="swot-subtitle">External · Unfavorable</div>
+              </div>
+            </div>
+            <ul class="swot-list">
+              <li>Incumbent insurance protocols (Nexus, Risk Harbor, Neptune) could retrofit ERC-3643 compliance checks — but their payout logic is architecturally incompatible with jurisdictional enforcement.</li>
+              <li>A large issuer default before mainnet liquidity depth is built could stress the subrogation recovery narrative publicly.</li>
+              <li>Regulatory ambiguity across jurisdictions on the insurance wrapper — CoverFi is protocol infrastructure, but integrating issuers face per-market legal review.</li>
+              <li>Chainlink oracle disruption would affect PoR-based IRS inputs (mitigated by 5-dimension composite + time-weighted smoothing).</li>
+              <li>HashKey mainnet traction timing — category timing risk if institutional adoption lags the infrastructure buildout.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="swot-matrix">
+          <strong>Strategic posture:</strong> maximize Strengths × Opportunities (S-O) — the defensible combination of compliance-native payouts + ERC-3643 market alignment is where we win. Audit runway (W-O) is the explicit de-risking bridge. T-threats are addressed by architectural decisions already in the code, not by future roadmap promises.
+        </div>
+      </div>
+
+      <!-- ==================== 9. BUILT ==================== -->
+      <div class="page" data-route="built">
+        <div class="page-title">WHAT WE BUILT</div>
+        <div class="page-heading">A hackathon MVP — fully deployed, fully tested</div>
+        <div class="page-sub">Solo developer · 4 weeks · 416 passing tests · zero skipped scope.</div>
+
+        <div class="built-grid">
+          <div class="built-card">
+            <div class="built-num">12</div>
+            <div class="built-lab">Smart contracts</div>
+          </div>
+          <div class="built-card">
+            <div class="built-num">416+</div>
+            <div class="built-lab">Tests passing</div>
+          </div>
+          <div class="built-card">
+            <div class="built-num">10</div>
+            <div class="built-lab">Frontend pages</div>
+          </div>
+          <div class="built-card">
+            <div class="built-num">133</div>
+            <div class="built-lab">HashKey Chain ID</div>
+          </div>
+        </div>
+
+        <div class="built-strip">
+          <span><strong>2,300</strong> lines Solidity</span>
+          <span><strong>16,000+</strong> lines HTML/CSS/JS</span>
+          <span><strong>All 16</strong> contracts verified</span>
+          <span><strong>ABDKMath64x64</strong> fixed-point</span>
+          <span><strong>ERC-3643</strong> T-REX compliant</span>
+          <span><strong>ERC-5192</strong> soulbound</span>
+        </div>
+      </div>
+
+      <!-- ==================== 10. CLOSE ==================== -->
+      <div class="page" data-route="close">
+        <div class="close-wrap">
+          <div class="close-quote-1">This isn't a product.</div>
+          <div class="close-quote-2">It's infrastructure.</div>
+          <div class="close-footer">
+            <a href="https://testnet-explorer.hsk.xyz/address/0x44944cB598A750Df4C4Bf9A7D3FdDDf7575F88F5" target="_blank" rel="noopener">HashKey Explorer</a>
+            <span class="close-footer-sep">·</span>
+            <a href="https://github.com/Sanjay-N23/coverfi-protocol" target="_blank" rel="noopener">GitHub</a>
+            <span class="close-footer-sep">·</span>
+            <span>AWS Office · Hong Kong · 2026-04-22</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- ==================== TOOLTIP ==================== -->
+<div class="tooltip" id="tooltip"></div>
+
+<!-- ==================== MODAL ==================== -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" id="modalClose" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ==================== COMMAND PALETTE ==================== -->
+<div class="cmdk" id="cmdk">
+  <div class="cmdk-panel">
+    <input class="cmdk-input" id="cmdkInput" placeholder="Jump to a page..." autocomplete="off"/>
+    <div class="cmdk-list" id="cmdkList"></div>
+  </div>
+</div>
+
+<script>
+// ==========================================================================
+// DATA
+// ==========================================================================
+const PAGES = [
+  { route: 'overview', label: 'Overview' },
+  { route: 'problem', label: 'The Problem' },
+  { route: 'solution', label: 'Solution' },
+  { route: 'waterfall', label: 'Waterfall' },
+  { route: 'revenue', label: 'Revenue' },
+  { route: 'money-flow', label: 'Money Flow' },
+  { route: 'economics', label: 'Economics' },
+  { route: 'business-model', label: 'Business Model' },
+  { route: 'roi', label: 'ROI Calculator' },
+  { route: 'swot', label: 'SWOT Analysis' },
+  { route: 'built', label: 'What We Built' },
+  { route: 'close', label: 'The Close' }
+];
+
+const MODALS = {
+  'overview-contracts': {
+    title: '12 Smart Contracts',
+    body: 'The full protocol stack:<br><br><strong>Core:</strong> IssuerRegistry · IssuerBond · IRSOracle · TIR · DefaultOracle · InsurancePool · PayoutEngine · SubrogationNFT<br><br><strong>Tokens:</strong> srCVR · jrCVR · ProtectionCert<br><br><strong>Libraries:</strong> ABDKMath64x64 for fixed-point exponential premium curve.<br><br>All 16 contracts (including mocks) deployed and verified on HashKey Chain Testnet.'
+  },
+  'overview-tests': {
+    title: '416+ Tests Passing',
+    body: '<strong>Unit tests</strong> across every core contract.<br><br><strong>Integration test:</strong> Full lifecycle (register → deposit → buy coverage → default → payout → subrogation).<br><br><strong>Edge cases:</strong> Yield hardcore + yield edge cases covering exchange rate boundaries.<br><br><strong>Playwright E2E:</strong> 40 browser-based tests for Stats nav feature across 3 viewports.<br><br><strong>Static frontend:</strong> 52 HTML structural tests.'
+  },
+  'overview-chain': {
+    title: 'HashKey Chain Testnet',
+    body: '<strong>Chain ID:</strong> <code>133</code><br><br><strong>Deployed:</strong> 2026-04-13 by <code>0xce220d...42fb3</code><br><br><strong>Gas costs:</strong><br>• purchaseCoverage: ~611K gas<br>• executePayout: ~547K gas<br>• full deploy: ~15.1M gas<br><br><strong>Explorer:</strong> testnet-explorer.hsk.xyz'
+  },
+  'overview-frontend': {
+    title: '10 Frontend Pages',
+    body: '<strong>User-facing:</strong> index (landing) · dashboard · coverage · pool · stats · subrogation · issuers<br><br><strong>Role-specific:</strong> register · attestor · issuer-dashboard<br><br>Full claymorphism design system. Dark/light theme. WCAG AA accessibility. MetaMask integration with HashKey auto-switch. 16,000+ lines HTML/CSS/JS.'
+  },
+  'inno-1': {
+    title: 'Compliance-Native Payouts',
+    body: 'Every payout checks ERC-3643 compliance before releasing USDT.<br><br><span class="mb-formula">_checkCompliance() → isVerified() + !isFrozen()</span><br>If compliance fails, the payout is escrowed under a <code>REGULATORY_FREEZE</code> reason code and held for review instead of rejected outright.<br><br><strong>Why it matters:</strong> No other DeFi insurance protocol can legally pay out to a regulated security token holder. Nexus Mutual, Risk Harbor, Neptune, InsurAce — none of them check compliance. We are the only option.'
+  },
+  'inno-2': {
+    title: 'Behavioral Credit Scoring (IRS)',
+    body: 'A 0–1000 on-chain score driven by 5 dimensions:<br><br>• NAV punctuality (0–250)<br>• Attestation accuracy (0–250)<br>• Repayment history (0–300)<br>• Collateral health via Chainlink PoR (0–150)<br>• Protocol activity (0–50)<br><br>Premium rate is continuous and exponential:<br><span class="mb-formula">Premium = 1600 × e^(−0.001386 × IRS) bps</span>IRS 1000 → 4% APR &nbsp;·&nbsp; IRS 0 → 16% APR<br><br>Early Warning System fires alert on 50-point drop — 24 to 48 hours before human confirmation is possible.'
+  },
+  'inno-3': {
+    title: 'SubrogationNFT',
+    body: 'When a default is confirmed and payout executed, an ERC-721 NFT is minted to the <strong>CoverFi Foundation</strong>.<br><br>This NFT represents the legal right to pursue recovery against the defaulted issuer.<br><br><strong>What makes it novel:</strong> It is the first on-chain primitive that bridges DeFi insurance with off-chain legal proceedings. Any recovery obtained off-chain is returned to the insurance pool, replenishing capacity for future claims.<br><br>Not a concept — a deployed ERC-721 contract at <code>0xbBe8A2...2AB9</code>.'
+  },
+  'wf-layer-1': {
+    title: 'Layer 1 · Issuer Bond',
+    body: '<strong>Capital:</strong> $500,000 (5% of token market cap)<br><br><strong>Source:</strong> Posted by the issuer before they can issue insurable tokens. This is the issuer\'s own money — forced first-loss capital.<br><br><strong>Role in default:</strong> Liquidated to USDT immediately on confirmed default. Pays customer claims first, before any LP capital is touched.<br><br><strong>Why 5%:</strong> Industry benchmark (Basel Tier 1 equivalent). Large enough to deter casual rug pulls, small enough to not price out legitimate RWA issuers.'
+  },
+  'wf-layer-2': {
+    title: 'Layer 2 · Junior Tranche',
+    body: '<strong>Capital:</strong> $300,000 (30% of pool) in this scenario<br><br><strong>Token:</strong> jrCVR — ERC-20, 14-day withdrawal lock<br><br><strong>APR:</strong> 20–28% — the highest yield tier<br><br><strong>Risk position:</strong> Absorbs losses first after issuer bond is exhausted. Junior LPs explicitly take tail risk in exchange for outsized premium yield.<br><br><strong>Why LPs deposit here:</strong> Outperforms most DeFi vaults. Structurally similar to Centrifuge\'s TIN tranche.'
+  },
+  'wf-layer-3': {
+    title: 'Layer 3 · Senior Tranche',
+    body: '<strong>Capital:</strong> $700,000 (70% of pool) in this scenario<br><br><strong>Token:</strong> srCVR — Compound-style cToken exchange-rate model, 30-day withdrawal lock<br><br><strong>APR:</strong> 8–12% — protected yield<br><br><strong>Risk position:</strong> Only bleeds after both the issuer bond AND the junior tranche are fully exhausted. Structural protection for institutional capital.<br><br><strong>Why institutional LPs deposit here:</strong> Beats most fixed-income products. Equivalent to Centrifuge\'s DROP tranche.'
+  }
+};
+
+// ==========================================================================
+// ROUTER
+// ==========================================================================
+const pages = document.querySelectorAll('.page');
+const navItems = document.querySelectorAll('.sb-item');
+const crumb = document.getElementById('crumbPage');
+
+function navigate(route) {
+  if (!PAGES.find(p => p.route === route)) route = 'overview';
+  pages.forEach(p => {
+    const isActive = p.dataset.route === route;
+    p.classList.toggle('active', isActive);
+    if (isActive) {
+      // Restart animation by reflow
+      p.style.animation = 'none';
+      p.offsetHeight;
+      p.style.animation = '';
+    }
+  });
+  navItems.forEach(n => {
+    n.classList.toggle('active', n.getAttribute('href') === '#/' + route);
+  });
+  const p = PAGES.find(x => x.route === route);
+  if (p) crumb.textContent = p.label;
+  // Scroll to top
+  document.getElementById('pageWrap').scrollTop = 0;
+  // Re-trigger bar animations on revenue page
+  if (route === 'revenue') {
+    document.querySelectorAll('.rev-bar-fill').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+    });
+  }
+}
+
+function handleHash() {
+  const h = (location.hash || '#/overview').replace(/^#\//, '');
+  navigate(h);
+}
+window.addEventListener('hashchange', handleHash);
+// Initial
+if (!location.hash) location.hash = '#/overview';
+handleHash();
+
+// Keyboard nav
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  const currentRoute = (location.hash || '#/overview').replace(/^#\//, '');
+  const idx = PAGES.findIndex(p => p.route === currentRoute);
+  if (e.key === 'ArrowRight' && idx < PAGES.length - 1) {
+    location.hash = '#/' + PAGES[idx + 1].route;
+  }
+  if (e.key === 'ArrowLeft' && idx > 0) {
+    location.hash = '#/' + PAGES[idx - 1].route;
+  }
+});
+
+// ==========================================================================
+// BURGER (sidebar collapse)
+// ==========================================================================
+const app = document.getElementById('app');
+const burger = document.getElementById('burger');
+const stored = localStorage.getItem('sb-collapsed') === '1';
+if (stored) app.classList.add('collapsed');
+burger.addEventListener('click', () => {
+  app.classList.toggle('collapsed');
+  localStorage.setItem('sb-collapsed', app.classList.contains('collapsed') ? '1' : '0');
+});
+
+// ==========================================================================
+// TOOLTIPS
+// ==========================================================================
+const tooltip = document.getElementById('tooltip');
+document.querySelectorAll('[data-tip]').forEach(el => {
+  el.addEventListener('mouseenter', (e) => {
+    tooltip.innerHTML = el.dataset.tip;
+    tooltip.classList.add('show');
+    const rect = el.getBoundingClientRect();
+    let x = rect.left + rect.width / 2 - tooltip.offsetWidth / 2;
+    let y = rect.top - tooltip.offsetHeight - 8;
+    if (y < 10) y = rect.bottom + 8;
+    tooltip.style.left = Math.max(8, Math.min(window.innerWidth - tooltip.offsetWidth - 8, x)) + 'px';
+    tooltip.style.top = y + 'px';
+  });
+  el.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
+});
+
+// ==========================================================================
+// MODALS
+// ==========================================================================
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+const modalClose = document.getElementById('modalClose');
+
+function openModal(id) {
+  const m = MODALS[id];
+  if (!m) return;
+  modalTitle.textContent = m.title;
+  modalBody.innerHTML = m.body;
+  modalBackdrop.classList.add('show');
+}
+function closeModal() {
+  modalBackdrop.classList.remove('show');
+}
+document.querySelectorAll('[data-modal]').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openModal(el.dataset.modal);
+  });
+});
+modalClose.addEventListener('click', closeModal);
+modalBackdrop.addEventListener('click', (e) => {
+  if (e.target === modalBackdrop) closeModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeModal();
+    closeCmdk();
+  }
+});
+
+// ==========================================================================
+// FLIP CARDS
+// ==========================================================================
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('flipped'));
+});
+
+// ==========================================================================
+// WATERFALL SCENARIO TOGGLE
+// ==========================================================================
+const wfToggles = document.querySelectorAll('.wf-toggle');
+const wfScenarios = {
+  happy: {
+    name: 'Happy Path',
+    claim: '$400,000',
+    layers: [
+      { state: 'absorb', status: 'ABSORBS 100%' },
+      { state: 'idle', status: 'UNTOUCHED' },
+      { state: 'idle', status: 'UNTOUCHED' }
+    ],
+    outcome: '<strong>Fully absorbed by Layer 1.</strong> Issuer bond covers 100% of claim. Customer gets full payout. LP capital untouched.'
+  },
+  stress: {
+    name: 'Stress Path',
+    claim: '$2,000,000',
+    layers: [
+      { state: 'drain', status: 'DRAINED · $500K' },
+      { state: 'drain', status: 'DRAINED · $300K' },
+      { state: 'drain', status: 'BLEEDS · $700K' }
+    ],
+    outcome: '<strong>Claim exceeds $1.5M cushion.</strong> All layers drain. 25% haircut applied pro-rata. SubrogationNFT minted — Foundation pursues legal recovery to replenish pool.'
+  }
+};
+
+function applyScenario(key) {
+  const s = wfScenarios[key];
+  document.getElementById('wfScenario').textContent = s.name;
+  document.getElementById('wfClaimSide').textContent = s.claim;
+  document.getElementById('wfClaim').textContent = s.claim;
+  document.getElementById('wfOutcome').innerHTML = s.outcome;
+
+  [1, 2, 3].forEach((n, i) => {
+    const layer = document.getElementById('wfL' + n);
+    const rect = layer.querySelector('.wfRect');
+    const status = layer.querySelector('.wfStatus');
+    const st = s.layers[i].state;
+    status.textContent = s.layers[i].status;
+    if (st === 'absorb') {
+      rect.setAttribute('stroke', '#10B981');
+      rect.setAttribute('stroke-width', '2');
+      rect.setAttribute('fill', 'rgba(16,185,129,0.05)');
+      status.setAttribute('fill', '#10B981');
+    } else if (st === 'drain') {
+      rect.setAttribute('stroke', '#EF4444');
+      rect.setAttribute('stroke-width', '2');
+      rect.setAttribute('fill', 'rgba(239,68,68,0.05)');
+      status.setAttribute('fill', '#EF4444');
+    } else {
+      rect.setAttribute('stroke', 'rgba(255,255,255,0.14)');
+      rect.setAttribute('stroke-width', '1');
+      rect.setAttribute('fill', '#0A0A0A');
+      status.setAttribute('fill', '#71717A');
+    }
+  });
+}
+
+wfToggles.forEach(btn => {
+  btn.addEventListener('click', () => {
+    wfToggles.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyScenario(btn.dataset.scenario);
+  });
+});
+
+// ==========================================================================
+// COMMAND PALETTE (⌘K)
+// ==========================================================================
+const cmdk = document.getElementById('cmdk');
+const cmdkInput = document.getElementById('cmdkInput');
+const cmdkList = document.getElementById('cmdkList');
+const cmdkBtn = document.getElementById('cmdkBtn');
+let cmdkActive = 0;
+
+function renderCmdk(filter = '') {
+  const q = filter.toLowerCase();
+  const filtered = PAGES.filter(p => p.label.toLowerCase().includes(q) || p.route.includes(q));
+  cmdkList.innerHTML = filtered.map((p, i) => `
+    <div class="cmdk-item ${i === cmdkActive ? 'active' : ''}" data-route="${p.route}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      <span>${p.label}</span>
+      <span class="cmdk-kbd">↵</span>
+    </div>`).join('');
+  cmdkList.querySelectorAll('.cmdk-item').forEach(it => {
+    it.addEventListener('click', () => {
+      location.hash = '#/' + it.dataset.route;
+      closeCmdk();
+    });
+  });
+}
+function openCmdk() {
+  cmdk.classList.add('show');
+  cmdkInput.value = '';
+  cmdkActive = 0;
+  renderCmdk();
+  setTimeout(() => cmdkInput.focus(), 50);
+}
+function closeCmdk() { cmdk.classList.remove('show'); }
+cmdkBtn.addEventListener('click', openCmdk);
+cmdk.addEventListener('click', (e) => { if (e.target === cmdk) closeCmdk(); });
+cmdkInput.addEventListener('input', () => { cmdkActive = 0; renderCmdk(cmdkInput.value); });
+cmdkInput.addEventListener('keydown', (e) => {
+  const items = cmdkList.querySelectorAll('.cmdk-item');
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    cmdkActive = Math.min(items.length - 1, cmdkActive + 1);
+    renderCmdk(cmdkInput.value);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    cmdkActive = Math.max(0, cmdkActive - 1);
+    renderCmdk(cmdkInput.value);
+  } else if (e.key === 'Enter') {
+    const active = cmdkList.querySelector('.cmdk-item.active');
+    if (active) {
+      location.hash = '#/' + active.dataset.route;
+      closeCmdk();
+    }
+  }
+});
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    openCmdk();
+  }
+});
+
+// ==========================================================================
+// WATERFALL: click layer buttons open modals (already via data-modal)
+// ==========================================================================
+// (handled in global data-modal binding above)
+
+// ==========================================================================
+// ROI CALCULATOR
+// ==========================================================================
+(function initROI() {
+  const tvlEl   = document.getElementById('roiTvl');
+  const premEl  = document.getElementById('roiPrem');
+  const feeEl   = document.getElementById('roiFee');
+  const utilEl  = document.getElementById('roiUtil');
+  if (!tvlEl) return; // page not rendered
+
+  const fmtUSD = (n) => {
+    if (n >= 1e9) return '$' + (n / 1e9).toFixed(2) + 'B';
+    if (n >= 1e6) return '$' + (n / 1e6).toFixed(2) + 'M';
+    if (n >= 1e3) return '$' + (n / 1e3).toFixed(0) + 'K';
+    return '$' + Math.round(n).toLocaleString();
+  };
+  const fmtExact = (n) => '$' + Math.round(n).toLocaleString();
+
+  function recalc() {
+    // TVL slider is in $M
+    const tvl   = parseInt(tvlEl.value, 10) * 1e6;          // absolute $
+    const premBps = parseInt(premEl.value, 10);              // basis points
+    const fee   = parseInt(feeEl.value, 10) / 100;           // fraction
+    const util  = parseInt(utilEl.value, 10) / 100;          // fraction
+
+    // Insured exposure (pool utilized against coverage demand)
+    const insured = tvl * util;
+    // Gross annual premium
+    const gross   = insured * (premBps / 10000);
+    const protoR  = gross * fee;
+    const lpPool  = gross - protoR;
+    const senior  = lpPool * 0.70;
+    const junior  = lpPool * 0.30;
+    const bond    = insured * 0.05;
+    const per100M = protoR * (100e6 / insured || 0);
+
+    // TAM penetration computed dynamically
+    const TAM = 26.6e9;
+    const pen = (insured / TAM) * 100;
+
+    // Input value readouts
+    document.getElementById('roiTvlVal').textContent  = fmtExact(tvl);
+    document.getElementById('roiPremVal').textContent = (premBps / 100).toFixed(2) + '%';
+    document.getElementById('roiFeeVal').textContent  = (fee * 100).toFixed(0) + '%';
+    document.getElementById('roiUtilVal').textContent = (util * 100).toFixed(0) + '%';
+
+    // Output readouts
+    document.getElementById('roiProtocol').textContent  = fmtUSD(protoR);
+    document.getElementById('roiProtocolSub').textContent =
+      'at ' + pen.toFixed(2) + '% of $26.6B RWA market';
+    document.getElementById('roiPremVol').textContent = fmtUSD(gross);
+    document.getElementById('roiLp').textContent      = fmtUSD(lpPool);
+    document.getElementById('roiSenior').textContent  = fmtUSD(senior);
+    document.getElementById('roiJunior').textContent  = fmtUSD(junior);
+    document.getElementById('roiBond').textContent    = fmtUSD(bond);
+    document.getElementById('roiPerHundred').textContent = fmtUSD(per100M);
+
+    // Preset pill active state — based on TVL
+    const tvlM = parseInt(tvlEl.value, 10);
+    document.querySelectorAll('.roi-preset-btn').forEach(btn => btn.classList.remove('active'));
+    if (tvlM === 266)       document.querySelector('[data-preset="conservative"]')?.classList.add('active');
+    else if (tvlM === 1330) document.querySelector('[data-preset="base"]')?.classList.add('active');
+    else if (tvlM === 2660) document.querySelector('[data-preset="bull"]')?.classList.add('active');
+  }
+
+  [tvlEl, premEl, feeEl, utilEl].forEach(el => el.addEventListener('input', recalc));
+
+  document.querySelectorAll('.roi-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const preset = btn.dataset.preset;
+      if (preset === 'conservative') { tvlEl.value = 266;  premEl.value = 696; feeEl.value = 5; utilEl.value = 80; }
+      if (preset === 'base')         { tvlEl.value = 1330; premEl.value = 696; feeEl.value = 5; utilEl.value = 80; }
+      if (preset === 'bull')         { tvlEl.value = 2660; premEl.value = 696; feeEl.value = 5; utilEl.value = 80; }
+      recalc();
+    });
+  });
+
+  // Kick off
+  // Default to 5% TAM (base) so the opening frame is impressive
+  tvlEl.value = 1330;
+  premEl.value = 696;
+  feeEl.value = 5;
+  utilEl.value = 80;
+  recalc();
+})();
+
+</script>
+</body>
+</html>

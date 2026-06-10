@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CoverFi — Subrogation Claims</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='8,8 16,8 20,14 16,20 8,20 4,14' fill='none' stroke='%23333' stroke-width='1.5'/><polygon points='16,8 24,8 28,14 24,20 16,20 12,14' fill='none' stroke='%23333' stroke-width='1.5'/><polygon points='16,5 22,14 16,23 10,14' fill='%23F0B90B'/><circle cx='16' cy='13' r='1.5' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+/* ============================================================
+   CoverFi Subrogation Claims — Claymorphism Design
+   ============================================================ */
+
+:root {
+  --bg-primary: #FFF3E0;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f5f6f8;
+  --text-primary: #2D3436;
+  --text-secondary: #5C676B;
+  --text-muted: #5f6b70;
+  --border-color: rgba(0,0,0,0.08);
+  --shadow-clay: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-clay-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --shadow-clay-sm: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-clay-inset: inset 2px 2px 5px rgba(0,0,0,0.15), inset -2px -2px 5px rgba(255,255,255,0.02);
+  --nav-bg: rgba(255,255,255,0.8);
+  --form-bg: #f5f5f5;
+  --form-border: rgba(0,0,0,0.1);
+  --gold: #F0B90B;
+  --gold-light: #FFD443;
+  --gold-dim: rgba(240,185,11,0.12);
+  --accent-coral: #FF6B6B;
+  --accent-purple: #6C5CE7;
+  --color-pool: #3B8BFF;
+  --color-coverage: #E8760A;
+  --color-verify: #6C5CE7;
+  --color-payout: #00B894;
+  --color-success: #00B894;
+  --color-success-dim: rgba(0,184,148,0.12);
+  --color-danger: #EF4444;
+  --color-danger-dim: rgba(239,68,68,0.12);
+  --color-warning: #F0B90B;
+  --color-warning-dim: rgba(240,185,11,0.12);
+  --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 16px;
+  --radius-card: var(--radius-xl);
+  --radius-pill: 999px;
+  --spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.39, 0.575, 0.565, 1);
+  --motion: 1;
+  --nav-height: 68px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion: 0; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+::selection { background: rgba(255,152,0,0.25); color: #2D3436; }
+::-moz-selection { background: rgba(255,152,0,0.25); color: #2D3436; }
+
+body {
+  font-family: var(--font-main); font-size: 0.875rem; line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(240,185,11,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(240,185,11,0.5); }
+* { scrollbar-width: thin; scrollbar-color: rgba(240,185,11,0.3) transparent; }
+
+a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+a:hover { color: #e0a800; }
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--text-primary); }
+code, pre { font-family: var(--font-mono); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- ABSTRACT SVG BACKGROUND ---------- */
+.bg-blobs { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; display: none; }
+.bg-blob { position: absolute; opacity: 0.08; }
+.bg-blob:nth-child(1) { top: -5%; right: -5%; animation: blob-float-1 18s ease-in-out infinite; }
+.bg-blob:nth-child(2) { bottom: -10%; left: -5%; animation: blob-float-2 22s ease-in-out infinite; }
+.bg-blob:nth-child(3) { top: 40%; right: 10%; animation: blob-float-1 25s ease-in-out infinite reverse; }
+.bg-blob:nth-child(4) { bottom: 20%; left: 30%; animation: blob-float-2 20s ease-in-out infinite; }
+.bg-blob:nth-child(5) { top: 15%; left: 50%; animation: blob-float-1 23s ease-in-out infinite; animation-delay: -8s; }
+
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
+}
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 20px) scale(0.97); }
+  66% { transform: translate(15px, -25px) scale(1.03); }
+}
+
+/* ---------- NAV ---------- */
+.dash-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-height); background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  box-shadow: none;
+  display: flex; align-items: center; padding: 0 1.5rem;
+}
+.dash-nav-inner {
+  max-width: 1600px; width: 100%; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  position: relative;
+}
+.nav-logo { display: flex; align-items: center; gap: 0.625rem; text-decoration: none; }
+.nav-logo-text { font-size: 1.25rem; font-weight: 900; color: var(--text-primary); letter-spacing: -0.03em; }
+.nav-logo .accent { color: var(--gold); }
+
+.dash-nav-links { display: flex; align-items: center; justify-content: center; gap: 0.25rem; }
+.dash-nav-link {
+  padding: 0.4rem 0.75rem; border: none; background: none; border-radius: 0;
+  font-size: 0.8125rem; font-weight: 600; color: #636E72;
+  text-decoration: none; transition: color 0.2s;
+}
+.dash-nav-link:hover { color: #F0B90B; }
+.dash-nav-link.active { color: #F0B90B; }
+
+.nav-actions { display: flex; align-items: center; gap: 0.75rem; justify-content: flex-end; }
+.badge-testnet {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.25rem 0.6rem; border-radius: var(--radius-pill);
+  font-size: 0.625rem; font-weight: 600; letter-spacing: 0.03em; white-space: nowrap;
+  background: rgba(240,185,11,0.1); color: #8a6800;
+  border: 1px solid rgba(240,185,11,0.2);
+}
+.badge-testnet .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse-gold 1.5s ease-in-out infinite; }
+@keyframes pulse-gold {
+  0%,100% { box-shadow: 0 0 4px rgba(240,185,11,0.4); }
+  50% { box-shadow: 0 0 16px rgba(240,185,11,0.9); }
+}
+
+.btn-connect {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1.25rem; border-radius: var(--radius-pill); border: none;
+  background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);
+  color: #1a1d24; font-family: var(--font-main); font-size: 0.8125rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s var(--spring);
+  box-shadow: 4px 4px 12px rgba(255,152,0,0.3), -2px -2px 8px rgba(255,255,255,0.6);
+}
+.btn-connect:hover { transform: scale(1.04) translateY(-1px); box-shadow: 6px 6px 18px rgba(255,152,0,0.4), -3px -3px 10px rgba(255,255,255,0.7); }
+.btn-connect.connected {
+  background: var(--color-success-dim); color: var(--color-success);
+  box-shadow: var(--shadow-clay-sm); border: 1px solid rgba(0,184,148,0.2);
+}
+.btn-connect.connected:hover { background: rgba(0,184,148,0.18); }
+
+/* ---------- THEME TOGGLE ---------- */
+.theme-toggle {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);
+  background: transparent; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; position: relative; transition: all 0.3s;
+  color: #636E72;
+}
+.theme-toggle:hover { border-color: #F0B90B; color: #F0B90B; }
+.theme-toggle .icon-sun, .theme-toggle .icon-moon { position: absolute; transition: opacity 0.3s, transform 0.3s; }
+.icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+.icon-moon { opacity: 1; transform: scale(1); }
+[data-theme="dark"] .icon-sun { opacity: 1; transform: scale(1); }
+[data-theme="dark"] .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+[data-theme="dark"] .theme-toggle { border-color: rgba(255,255,255,0.15); color: #B2BEC3; }
+[data-theme="dark"] .theme-toggle:hover { border-color: #F0B90B; color: #F0B90B; }
+
+/* ---------- MAIN LAYOUT ---------- */
+.dash-main {
+  padding-top: var(--nav-height);
+  min-height: 100vh;
+  position: relative; z-index: 1;
+}
+.dash-container {
+  display: grid;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+}
+
+/* ---------- PAGE HEADER ---------- */
+.page-header {
+  margin-bottom: 0.5rem;
+}
+.page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+.page-header h1 .accent { color: #FF9800; }
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-top: 0.35rem;
+}
+
+/* ---------- METRICS BAR ---------- */
+.dash-row-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  position: relative; z-index: 1;
+}
+
+.metric-card {
+  background: #ffffff; color: #2D3436;
+  border-radius: 14px; padding: 1.25rem 1.25rem 1rem;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  display: flex; align-items: flex-start; gap: 1rem;
+  position: relative; overflow: hidden;
+}
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-clay-hover);
+}
+.metric-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.metric-icon-coral { background: rgba(255,107,107,0.2); color: #8B0000; }
+.metric-icon-purple { background: rgba(108,92,231,0.2); color: #3C2A8C; }
+.metric-icon-green { background: rgba(0,184,148,0.2); color: #006B4F; }
+.metric-icon-gold { background: rgba(240,185,11,0.2); color: #7A5C00; }
+.metric-label { font-size: 0.75rem; color: #636E72; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.25rem; }
+.metric-value {
+  font-size: 1.75rem; font-weight: 900; letter-spacing: -0.03em;
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  color: #2D3436;
+}
+
+/* ---------- CARDS ---------- */
+.dash-card {
+  color: #2D3436;
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-clay);
+  transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.dash-card:hover {
+  box-shadow: var(--shadow-clay-hover);
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+.card-header h3 {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ---------- CLAIMS GRID ---------- */
+.claims-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+.claim-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-clay-sm);
+  border: 1px solid rgba(255,152,0,0.2);
+  transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+}
+.claim-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-clay-hover);
+}
+
+.claim-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.claim-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+.claim-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.claim-badge-active {
+  background: #FFF8E1;
+  color: #F57F17;
+}
+.claim-badge-completed {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.claim-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0;
+  font-size: 0.8125rem;
+}
+.claim-row-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.claim-row-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+}
+.claim-row-value.mono-sm {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.claim-divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 0.75rem 0;
+}
+
+.claim-payout-section {
+  background: var(--form-bg);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  margin: 0.75rem -1.75rem;
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+  width: calc(100% + 3.5rem);
+}
+.claim-payout-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.claim-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0 0.25rem;
+  border-top: 1px dashed rgba(0,0,0,0.08);
+  margin-top: 0.35rem;
+}
+.claim-total-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.claim-total-value {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-success);
+}
+
+.claim-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.btn-claim {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s var(--spring);
+}
+.btn-claim-view {
+  background: transparent;
+  color: #E67E22;
+  border: 1px solid rgba(255,152,0,0.3);
+}
+.btn-claim-view:hover {
+  background: rgba(255,152,0,0.1);
+  transform: translateY(-1px);
+}
+.btn-claim-recover {
+  background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);
+  color: #1a1d24;
+  box-shadow: 2px 2px 8px rgba(255,152,0,0.25);
+}
+.btn-claim-recover:hover {
+  transform: translateY(-1px);
+  box-shadow: 4px 4px 14px rgba(255,152,0,0.35);
+}
+
+/* ---------- DEFAULT TYPE BADGE ---------- */
+.default-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: var(--color-danger-dim);
+  color: var(--color-danger);
+}
+
+/* ---------- RECOVERY PROCESS INFO ---------- */
+.recovery-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.recovery-step {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+.recovery-step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,152,0,0.12);
+  color: #E65100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.recovery-step-content h4 {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.recovery-step-content p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ---------- EMPTY STATE ---------- */
+.empty-state {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: var(--text-muted);
+}
+.empty-state svg {
+  margin-bottom: 1rem;
+  opacity: 0.4;
+}
+.empty-state h3 {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+.empty-state p {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* ---------- LOADING SKELETON ---------- */
+.skeleton {
+  background: linear-gradient(90deg, var(--form-bg) 25%, rgba(255,255,255,0.6) 50%, var(--form-bg) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton-card {
+  height: 280px;
+  border-radius: var(--radius-lg);
+}
+.skeleton-metric {
+  height: 90px;
+  border-radius: var(--radius-card);
+}
+
+/* ---------- CONTRACT ADDRESSES ---------- */
+.contract-addresses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.contract-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--form-bg);
+  border: 1px solid var(--form-border);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: background 0.2s;
+}
+.contract-pill:hover {
+  background: var(--gold-dim);
+}
+.contract-pill code {
+  font-size: 0.65rem;
+  color: var(--text-primary);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) {
+  .dash-container { padding: 1.25rem 1.25rem 2rem; }
+  .dash-row-metrics { grid-template-columns: repeat(3, 1fr); }
+  .claims-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .dash-nav-links { display: none; }
+  .dash-container { padding: 1rem; gap: 1rem; }
+  .dash-row-metrics { grid-template-columns: 1fr 1fr; gap: 0.625rem; }
+  .claims-grid { grid-template-columns: 1fr; }
+  .recovery-info { grid-template-columns: 1fr; }
+
+  .nav-logo-text { font-size: 1.05rem; }
+  .nav-actions { gap: 0.5rem; }
+  .badge-testnet { display: none; }
+  .btn-connect { padding: 0.45rem 0.9rem; font-size: 0.75rem; }
+  .page-header h1 { font-size: 1.35rem; }
+}
+
+@media (max-width: 480px) {
+  .dash-row-metrics { grid-template-columns: 1fr; }
+  .claim-actions { flex-direction: column; }
+  .contract-addresses { flex-direction: column; }
+}
+
+/* ---------- DARK MODE ---------- */
+[data-theme="dark"] body { background: #0f1118; }
+[data-theme="dark"] .bg-blobs { opacity: 0.3; }
+
+[data-theme="dark"] .dash-nav { background: rgba(15,17,24,0.95); border-bottom: 1px solid rgba(255,255,255,0.06); }
+[data-theme="dark"] .dash-nav .nav-logo-text { color: #ffffff; }
+[data-theme="dark"] .dash-nav-link { color: rgba(255,255,255,0.7); }
+[data-theme="dark"] .dash-nav-link:hover { color: #F0B90B; }
+[data-theme="dark"] .dash-nav-link.active { color: #F0B90B; }
+
+[data-theme="dark"] .badge-testnet { background: rgba(240,185,11,0.15); color: #FFD443; border-color: rgba(240,185,11,0.25); }
+
+[data-theme="dark"] .dash-card,
+[data-theme="dark"] .metric-card,
+[data-theme="dark"] .claim-card {
+  background: #1e2329;
+  color: #e8e8e8;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 8px 8px 16px rgba(0,0,0,0.3), -4px -4px 12px rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+[data-theme="dark"] .dash-card:hover,
+[data-theme="dark"] .metric-card:hover,
+[data-theme="dark"] .claim-card:hover {
+  box-shadow: 10px 10px 20px rgba(0,0,0,0.4), -5px -5px 15px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+[data-theme="dark"] .metric-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .metric-value { color: #ffffff; }
+[data-theme="dark"] .metric-card .metric-icon { opacity: 0.8; }
+[data-theme="dark"] .metric-icon-coral { background: rgba(255,107,107,0.15); color: #FF8A8A; }
+[data-theme="dark"] .metric-icon-purple { background: rgba(108,92,231,0.15); color: #A78BFA; }
+[data-theme="dark"] .metric-icon-green { background: rgba(0,184,148,0.15); color: #34D4A4; }
+[data-theme="dark"] .metric-icon-gold { background: rgba(240,185,11,0.15); color: #FFD443; }
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] .claim-card-title,
+[data-theme="dark"] .claim-total-label { color: #ffffff; }
+
+[data-theme="dark"] .page-header p,
+[data-theme="dark"] .claim-row-label,
+[data-theme="dark"] .recovery-step-content p { color: rgba(255,255,255,0.5); }
+
+[data-theme="dark"] .claim-row-value { color: rgba(255,255,255,0.9); }
+[data-theme="dark"] .claim-row-value.mono-sm { color: rgba(255,255,255,0.5); }
+
+[data-theme="dark"] .claim-payout-section {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+[data-theme="dark"] .claim-payout-title { color: rgba(255,255,255,0.4); }
+
+[data-theme="dark"] .claim-divider { border-top-color: rgba(255,255,255,0.06); }
+[data-theme="dark"] .claim-total-row { border-top-color: rgba(255,255,255,0.08); }
+
+[data-theme="dark"] .btn-claim-view {
+  background: transparent;
+  border-color: rgba(255,152,0,0.3);
+  color: #E67E22;
+}
+[data-theme="dark"] .btn-claim-view:hover {
+  background: rgba(255,152,0,0.12);
+}
+
+[data-theme="dark"] .recovery-step-num {
+  background: rgba(255,152,0,0.15);
+  color: #FFB74D;
+}
+
+[data-theme="dark"] .contract-pill {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.5);
+}
+[data-theme="dark"] .contract-pill code { color: rgba(255,255,255,0.8); }
+[data-theme="dark"] .contract-pill:hover { background: rgba(240,185,11,0.1); }
+
+[data-theme="dark"] .empty-state h3 { color: rgba(255,255,255,0.6); }
+[data-theme="dark"] .empty-state p { color: rgba(255,255,255,0.55); }
+
+[data-theme="dark"] .default-type-badge {
+  background: rgba(239,68,68,0.15);
+}
+
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+}
+  </style>
+</head>
+<body>
+
+<!-- Abstract SVG Background Blobs -->
+<div class="bg-blobs" aria-hidden="true">
+  <svg class="bg-blob" width="400" height="350" viewBox="0 0 400 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M320 50c60 40 90 120 60 200s-100 120-180 110S40 300 20 220s10-140 70-170S260 10 320 50z" fill="rgba(240,185,11,0.08)"/>
+  </svg>
+  <svg class="bg-blob" width="380" height="320" viewBox="0 0 380 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 80c40-60 140-90 220-60s130 100 100 180-80 120-160 120S30 280 10 200s0-60 40-120z" fill="rgba(255,107,107,0.06)"/>
+  </svg>
+  <svg class="bg-blob" width="300" height="280" viewBox="0 0 300 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M240 40c50 30 70 100 50 170s-70 90-140 80S30 240 15 170 40 60 100 30s90-20 140 10z" fill="rgba(108,92,231,0.05)"/>
+  </svg>
+  <svg class="bg-blob" width="280" height="260" viewBox="0 0 280 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M200 30c50 25 80 90 70 160s-60 80-130 70S20 210 10 140 30 40 90 15s60-10 110 15z" fill="rgba(0,184,148,0.05)"/>
+  </svg>
+  <svg class="bg-blob" width="220" height="200" viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M160 25c40 20 60 75 45 130s-55 65-110 55S15 170 8 115 25 30 75 12s45-7 85 13z" fill="rgba(240,185,11,0.06)"/>
+  </svg>
+</div>
+
+<!-- SVG Gradients -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F0B90B"/><stop offset="100%" stop-color="#FFD443"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav class="dash-nav" aria-label="Main navigation">
+  <div class="dash-nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="CoverFi home">
+      <svg width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <polygon points="10,9 16,9 19,13 16,17 10,17 7,13" fill="none" stroke="var(--logo-hex, #1a1a1a)" stroke-width="2"/>
+        <polygon points="16,9 22,9 25,13 22,17 16,17 13,13" fill="none" stroke="var(--logo-hex, #1a1a1a)" stroke-width="2"/>
+        <polygon points="16,7 20.5,13 16,19 11.5,13" fill="var(--logo-diamond, var(--gold, #F0B90B))"/><circle cx="16" cy="12.5" r="1" fill="white" opacity="0.85"/>
+      </svg>
+      <span class="nav-logo-text">Cover<span class="accent">Fi</span></span>
+    </a>
+
+    <div class="dash-nav-links">
+      <a href="dashboard.html" class="dash-nav-link">Dashboard</a>
+      <a href="issuers.html" class="dash-nav-link">Issuers</a>
+      <a href="pool.html" class="dash-nav-link">Pool</a>
+      <a href="coverage.html" class="dash-nav-link">Coverage</a>
+      <a href="subrogation.html" class="dash-nav-link active">Subrogation</a>
+      <a href="stats.html" class="dash-nav-link">Stats</a>
+    </div>
+
+    <div class="nav-actions">
+      <div class="badge-testnet"><span class="dot"></span> HashKey Testnet</div>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="18" aria-hidden="true" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" width="18" aria-hidden="true" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="btn-connect" id="btnConnect" onclick="connectWallet()" aria-label="Connect wallet">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="6" width="20" height="14" rx="3"/><path d="M16 14h.01"/><path d="M2 10h20"/></svg>
+        Connect Wallet
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main class="dash-main">
+  <div class="dash-container">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>Subrogation <span class="accent">Claims</span></h1>
+      <p>Manage SubrogationNFTs — post-default evidence containers for legal recovery against defaulted issuers.</p>
+      <div class="contract-addresses">
+        <span class="contract-pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12h6M12 9v6"/></svg>
+          SubrogationNFT: <code>0x9106...1e73</code>
+        </span>
+        <span class="contract-pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+          PayoutEngine: <code>0xD01e...cf6B</code>
+        </span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SECTION 1: OVERVIEW METRICS
+         ============================================================ -->
+    <div class="dash-row-metrics" id="metricsRow">
+      <!-- Total SubrogationNFTs Minted -->
+      <div class="metric-card">
+        <div class="metric-icon metric-icon-coral">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <path d="M8 12h8M12 8v8"/>
+          </svg>
+        </div>
+        <div>
+          <div class="metric-label">NFTs Minted</div>
+          <div class="metric-value" id="metricMinted">--</div>
+        </div>
+      </div>
+
+      <!-- Total Recovery Value Pending -->
+      <div class="metric-card">
+        <div class="metric-icon metric-icon-gold">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+          </svg>
+        </div>
+        <div>
+          <div class="metric-label">Recovery Pending</div>
+          <div class="metric-value" id="metricPending">--</div>
+        </div>
+      </div>
+
+      <!-- Active vs Completed -->
+      <div class="metric-card">
+        <div class="metric-icon metric-icon-green">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div>
+          <div class="metric-label">Active / Completed</div>
+          <div class="metric-value"><span id="metricActive">--</span> <span style="color:var(--text-muted);font-size:0.875rem;font-weight:500">/ <span id="metricCompleted">--</span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SECTION 2: CLAIMS LIST
+         ============================================================ -->
+    <div class="dash-card">
+      <div class="card-header">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="18" rx="3"/>
+            <path d="M2 9h20M8 3v6"/>
+          </svg>
+          SubrogationNFT Claims
+        </h3>
+        <button class="btn-claim btn-claim-view" onclick="loadClaims()" style="flex:0;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+          Refresh
+        </button>
+      </div>
+
+      <!-- Loading state -->
+      <div id="claimsLoading" class="claims-grid">
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+      </div>
+
+      <!-- Empty state -->
+      <div id="claimsEmpty" style="display:none;">
+        <div class="empty-state">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="20" height="18" rx="3"/>
+            <path d="M8 12h8M12 8v8"/>
+          </svg>
+          <h3>No SubrogationNFTs Found</h3>
+          <p>No default events have occurred yet. SubrogationNFTs are minted when the PayoutEngine processes a default.</p>
+        </div>
+      </div>
+
+      <!-- Claims container -->
+      <div id="claimsList" class="claims-grid" style="display:none;"></div>
+    </div>
+
+    <!-- ============================================================
+         SECTION 3: RECOVERY PROCESS INFO
+         ============================================================ -->
+    <div class="dash-card">
+      <div class="card-header">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 16v-4M12 8h.01"/>
+          </svg>
+          Recovery Process
+        </h3>
+      </div>
+
+      <div class="recovery-info">
+        <div class="recovery-step">
+          <div class="recovery-step-num">1</div>
+          <div class="recovery-step-content">
+            <h4>SubrogationNFT Minted</h4>
+            <p>When a default is processed by the PayoutEngine, a SubrogationNFT is automatically minted. It records the issuer token, default type, liquidation amounts, and payout block as immutable on-chain evidence.</p>
+          </div>
+        </div>
+
+        <div class="recovery-step">
+          <div class="recovery-step-num">2</div>
+          <div class="recovery-step-content">
+            <h4>Evidence Container</h4>
+            <p>The NFT serves as a portable, transferable evidence container. It captures the bond, junior tranche, and senior tranche amounts liquidated, along with the number of insured holders compensated.</p>
+          </div>
+        </div>
+
+        <div class="recovery-step">
+          <div class="recovery-step-num">3</div>
+          <div class="recovery-step-content">
+            <h4>Foundation Initiates Recovery</h4>
+            <p>The CoverFi Foundation, as the NFT holder, initiates legal recovery proceedings against the defaulted issuer. The SubrogationNFT provides cryptographic proof of the default event and amounts owed.</p>
+          </div>
+        </div>
+
+        <div class="recovery-step">
+          <div class="recovery-step-num">4</div>
+          <div class="recovery-step-content">
+            <h4>Timeline &amp; Resolution</h4>
+            <p>Legal recovery timelines vary by jurisdiction and default type. The Foundation pursues recovery through appropriate legal channels. Recovered funds are returned to the protocol treasury for redistribution.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<script src="contract-abis.js"></script>
+<script>
+// ---- Theme toggle ----
+function getTheme() { return localStorage.getItem('coverfi-theme') || 'light'; }
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('coverfi-theme', theme);
+}
+function toggleTheme() { setTheme(getTheme() === 'dark' ? 'light' : 'dark'); }
+(function() { setTheme(getTheme()); })();
+
+// ---- Constants ----
+var BSC_TESTNET_RPC = 'https://testnet.hsk.xyz';
+var BSC_TESTNET_CHAIN_ID = 133;
+var BSCSCAN_URL = 'https://testnet-explorer.hsk.xyz';
+
+var SUBROGATION_NFT_ADDR = '0xbBe8A2840E151cC8BF2B156e5d61a532eFCe2AB9';
+var PAYOUT_ENGINE_ADDR = '0x44944cB598A750Df4C4Bf9A7D3FdDDf7575F88F5';
+
+var DEFAULT_TYPES = [
+  'PAYMENT_DELAY',
+  'GHOST_ISSUER',
+  'COLLATERAL_SHORTFALL',
+  'MISAPPROPRIATION'
+];
+
+var provider = null;
+var signer = null;
+var subrogationContract = null;
+
+// ---- Provider Init ----
+function getReadProvider() {
+  return new ethers.JsonRpcProvider(BSC_TESTNET_RPC);
+}
+
+function getSubrogationContract(signerOrProvider) {
+  return new ethers.Contract(SUBROGATION_NFT_ADDR, COVERFI_ABIS.SubrogationNFT, signerOrProvider);
+}
+
+// ---- Wallet ----
+async function connectWallet() {
+  var btn = document.getElementById('btnConnect');
+  if (!window.ethereum) {
+    alert('Please install MetaMask or another Web3 wallet.');
+    return;
+  }
+  try {
+    var accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    provider = new ethers.BrowserProvider(window.ethereum);
+    signer = await provider.getSigner();
+    var addr = await signer.getAddress();
+    localStorage.setItem('coverfi-wallet-connected', 'true');
+    btn.textContent = addr.slice(0, 6) + '...' + addr.slice(-4);
+    btn.classList.add('connected');
+    subrogationContract = getSubrogationContract(signer);
+  } catch (e) {
+    console.error('Wallet connection failed:', e);
+  }
+}
+
+// ---- Format helpers ----
+function formatUSDT(wei) {
+  try {
+    var val = parseFloat(ethers.formatUnits(wei, 18));
+    return '$' + val.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' USDT';
+  } catch (e) {
+    return '$0 USDT';
+  }
+}
+
+function shortenAddr(addr) {
+  if (!addr) return '--';
+  return addr.slice(0, 6) + '...' + addr.slice(-4);
+}
+
+function getDefaultTypeName(typeIndex) {
+  return DEFAULT_TYPES[typeIndex] || 'UNKNOWN';
+}
+
+// ---- Load Claims ----
+async function loadClaims() {
+  var loadingEl = document.getElementById('claimsLoading');
+  var emptyEl = document.getElementById('claimsEmpty');
+  var listEl = document.getElementById('claimsList');
+
+  loadingEl.style.display = 'grid';
+  emptyEl.style.display = 'none';
+  listEl.style.display = 'none';
+
+  try {
+    var readProvider = getReadProvider();
+    var contract = getSubrogationContract(readProvider);
+
+    var nextTokenId = await contract.nextTokenId();
+    var totalMinted = Number(nextTokenId) - 1; // nextTokenId starts at 1, so minted = nextTokenId - 1
+
+    if (totalMinted <= 0) {
+      loadingEl.style.display = 'none';
+      emptyEl.style.display = 'block';
+      updateMetrics(0, BigInt(0), 0, 0);
+      return;
+    }
+
+    var claims = [];
+    var totalPendingValue = BigInt(0);
+    var activeClaims = 0;
+    var completedClaims = 0;
+
+    for (var i = 1; i <= totalMinted; i++) { // token IDs start at 1
+      try {
+        var data = await contract.getClaimData(i);
+        var claim = {
+          tokenId: i,
+          issuerToken: data.issuerToken || data[0],
+          defaultType: Number(data.defaultType !== undefined ? data.defaultType : data[1]),
+          totalPayoutAmount: data.totalPayoutAmount || data[2],
+          bondLiquidated: data.bondLiquidated || data[3],
+          juniorLiquidated: data.juniorLiquidated || data[4],
+          seniorLiquidated: data.seniorLiquidated || data[5],
+          insuredHolderCount: Number(data.insuredHolderCount !== undefined ? data.insuredHolderCount : data[6]),
+          payoutBlock: Number(data.payoutBlock !== undefined ? data.payoutBlock : data[7])
+        };
+
+        // For demo: treat all as active (no recovery status on-chain yet)
+        claim.status = 'active';
+        activeClaims++;
+        totalPendingValue += BigInt(claim.totalPayoutAmount);
+
+        claims.push(claim);
+      } catch (e) {
+        console.warn('Failed to load claim #' + i, e);
+      }
+    }
+
+    updateMetrics(totalMinted, totalPendingValue, activeClaims, completedClaims);
+    renderClaims(claims);
+
+    loadingEl.style.display = 'none';
+    listEl.style.display = 'grid';
+  } catch (e) {
+    console.error('Error loading claims:', e);
+    loadingEl.style.display = 'none';
+    emptyEl.style.display = 'block';
+    updateMetrics(0, BigInt(0), 0, 0);
+  }
+}
+
+// ---- Update Metrics ----
+function updateMetrics(minted, pendingValue, active, completed) {
+  document.getElementById('metricMinted').textContent = minted;
+  document.getElementById('metricPending').textContent = formatUSDT(pendingValue);
+  document.getElementById('metricActive').textContent = active;
+  document.getElementById('metricCompleted').textContent = completed;
+}
+
+// ---- Render Claims ----
+function renderClaims(claims) {
+  var listEl = document.getElementById('claimsList');
+
+  if (claims.length === 0) {
+    document.getElementById('claimsEmpty').style.display = 'block';
+    listEl.style.display = 'none';
+    return;
+  }
+
+  var html = '';
+  for (var i = 0; i < claims.length; i++) {
+    var c = claims[i];
+    var statusClass = c.status === 'active' ? 'claim-badge-active' : 'claim-badge-completed';
+    var statusText = c.status === 'active' ? 'Active' : 'Completed';
+
+    html += '<div class="claim-card">';
+    html += '  <div class="claim-card-header">';
+    html += '    <span class="claim-card-title">SubrogationNFT #' + c.tokenId + '</span>';
+    html += '    <span class="claim-badge ' + statusClass + '">' + statusText + '</span>';
+    html += '  </div>';
+
+    html += '  <div class="claim-row">';
+    html += '    <span class="claim-row-label">Issuer Token</span>';
+    html += '    <a class="claim-row-value mono-sm" href="https://testnet-explorer.hsk.xyz/address/' + c.issuerToken + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">' + shortenAddr(c.issuerToken) + '</a>';
+    html += '  </div>';
+
+    html += '  <div class="claim-row">';
+    html += '    <span class="claim-row-label">Default Type</span>';
+    html += '    <span class="default-type-badge">';
+    html += '      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg>';
+    html += '      ' + getDefaultTypeName(c.defaultType);
+    html += '    </span>';
+    html += '  </div>';
+
+    html += '  <div class="claim-payout-section">';
+    html += '    <div class="claim-payout-title">Payout Details</div>';
+    html += '    <div class="claim-row">';
+    html += '      <span class="claim-row-label">Bond Liquidated</span>';
+    html += '      <span class="claim-row-value">' + formatUSDT(c.bondLiquidated) + '</span>';
+    html += '    </div>';
+    html += '    <div class="claim-row">';
+    html += '      <span class="claim-row-label">Junior Liquidated</span>';
+    html += '      <span class="claim-row-value">' + formatUSDT(c.juniorLiquidated) + '</span>';
+    html += '    </div>';
+    html += '    <div class="claim-row">';
+    html += '      <span class="claim-row-label">Senior Liquidated</span>';
+    html += '      <span class="claim-row-value">' + formatUSDT(c.seniorLiquidated) + '</span>';
+    html += '    </div>';
+    html += '    <div class="claim-total-row">';
+    html += '      <span class="claim-total-label">Total Payout</span>';
+    html += '      <span class="claim-total-value">' + formatUSDT(c.totalPayoutAmount) + '</span>';
+    html += '    </div>';
+    html += '  </div>';
+
+    html += '  <div class="claim-row">';
+    html += '    <span class="claim-row-label">Holders Paid</span>';
+    html += '    <span class="claim-row-value">' + c.insuredHolderCount + '</span>';
+    html += '  </div>';
+
+    html += '  <div class="claim-row">';
+    html += '    <span class="claim-row-label">Minted</span>';
+    html += '    <span class="claim-row-value mono-sm">Block ' + c.payoutBlock.toLocaleString() + '</span>';
+    html += '  </div>';
+
+    html += '  <div class="claim-actions">';
+    html += '    <a class="btn-claim btn-claim-view" href="' + BSCSCAN_URL + '/token/' + SUBROGATION_NFT_ADDR + '?a=' + c.tokenId + '" target="_blank" rel="noopener">';
+    html += '      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
+    html += '      View on Explorer';
+    html += '    </a>';
+    html += '    <button class="btn-claim btn-claim-recover" onclick="startRecovery(' + c.tokenId + ')">';
+    html += '      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
+    html += '      Start Recovery';
+    html += '    </button>';
+    html += '  </div>';
+
+    html += '</div>';
+  }
+
+  listEl.innerHTML = html;
+}
+
+// ---- Start Recovery (placeholder) ----
+function startRecovery(tokenId) {
+  alert('Recovery process for SubrogationNFT #' + tokenId + ' would be initiated by the CoverFi Foundation. This triggers a legal recovery workflow against the defaulted issuer.\n\nThis feature requires Foundation multisig authorization.');
+}
+
+// ---- Auto-load on page ready ----
+document.addEventListener('DOMContentLoaded', async function() {
+  loadClaims();
+
+  // Auto-connect if previously connected
+  if (localStorage.getItem('coverfi-wallet-connected') === 'true' && typeof window.ethereum !== 'undefined') {
+    try {
+      var accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      if (accounts.length > 0) {
+        connectWallet();
+      }
+    } catch(e) {
+      console.log('Auto-reconnect failed:', e.message);
+    }
+  }
+});
+</script>
+</body>
+</html>

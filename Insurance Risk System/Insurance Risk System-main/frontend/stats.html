@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CoverFi Protocol Statistics — Public Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='8,8 16,8 20,14 16,20 8,20 4,14' fill='none' stroke='%23333' stroke-width='1.5'/><polygon points='16,8 24,8 28,14 24,20 16,20 12,14' fill='none' stroke='%23333' stroke-width='1.5'/><polygon points='16,5 22,14 16,23 10,14' fill='%23F0B90B'/><circle cx='16' cy='13' r='1.5' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+/* ============================================================
+   CoverFi Stats — Claymorphism Design (Light + Dark)
+   ============================================================ */
+
+:root {
+  --bg-primary: #FBE9E7;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f5f6f8;
+  --text-primary: #2D3436;
+  --text-secondary: #5C676B;
+  --text-muted: #5f6b70;
+  --border-color: rgba(0,0,0,0.08);
+  --shadow-clay: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-clay-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --shadow-clay-sm: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-clay-inset: inset 2px 2px 5px rgba(0,0,0,0.15), inset -2px -2px 5px rgba(255,255,255,0.02);
+  --nav-bg: rgba(255,255,255,0.8);
+  --form-bg: #f5f5f5;
+  --form-border: rgba(0,0,0,0.1);
+  --gold: #F0B90B;
+  --gold-light: #FFD443;
+  --gold-dim: rgba(240,185,11,0.12);
+  --accent-coral: #FF6B6B;
+  --accent-purple: #6C5CE7;
+  --color-pool: #3B8BFF;
+  --color-coverage: #E8760A;
+  --color-verify: #6C5CE7;
+  --color-payout: #00B894;
+  --color-success: #00B894;
+  --color-success-dim: rgba(0,184,148,0.12);
+  --color-danger: #EF4444;
+  --color-danger-dim: rgba(239,68,68,0.12);
+  --color-warning: #F0B90B;
+  --color-warning-dim: rgba(240,185,11,0.12);
+  --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 16px;
+  --radius-card: var(--radius-xl);
+  --radius-pill: 999px;
+  --spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.39, 0.575, 0.565, 1);
+  --motion: 1;
+  --nav-height: 68px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion: 0; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+::selection { background: rgba(255,107,107,0.25); color: #2D3436; }
+::-moz-selection { background: rgba(255,107,107,0.25); color: #2D3436; }
+
+body {
+  font-family: var(--font-main); font-size: 0.875rem; line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(240,185,11,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(240,185,11,0.5); }
+* { scrollbar-width: thin; scrollbar-color: rgba(240,185,11,0.3) transparent; }
+
+a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+a:hover { color: #e0a800; }
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--text-primary); }
+code, pre { font-family: var(--font-mono); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- ABSTRACT SVG BACKGROUND ---------- */
+.bg-blobs { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; display: none; }
+.bg-blob { position: absolute; opacity: 0.08; }
+.bg-blob:nth-child(1) { top: -5%; right: -5%; animation: blob-float-1 18s ease-in-out infinite; }
+.bg-blob:nth-child(2) { bottom: -10%; left: -5%; animation: blob-float-2 22s ease-in-out infinite; }
+.bg-blob:nth-child(3) { top: 40%; right: 10%; animation: blob-float-1 25s ease-in-out infinite reverse; }
+.bg-blob:nth-child(4) { bottom: 20%; left: 30%; animation: blob-float-2 20s ease-in-out infinite; }
+.bg-blob:nth-child(5) { top: 15%; left: 50%; animation: blob-float-1 23s ease-in-out infinite; animation-delay: -8s; }
+
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
+}
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 20px) scale(0.97); }
+  66% { transform: translate(15px, -25px) scale(1.03); }
+}
+
+/* ---------- NAV ---------- */
+.dash-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-height); background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  box-shadow: none;
+  display: flex; align-items: center; padding: 0 1.5rem;
+}
+.dash-nav-inner {
+  max-width: 1600px; width: 100%; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  position: relative;
+}
+.nav-logo { display: flex; align-items: center; gap: 0.625rem; text-decoration: none; }
+.nav-logo-text { font-size: 1.25rem; font-weight: 900; color: var(--text-primary); letter-spacing: -0.03em; }
+.nav-logo .accent { color: var(--gold); }
+
+.dash-nav-links { display: flex; align-items: center; justify-content: center; gap: 0.25rem; }
+.dash-nav-link {
+  padding: 0.4rem 0.75rem; border: none; background: none; border-radius: 0;
+  font-size: 0.8125rem; font-weight: 600; color: #636E72;
+  text-decoration: none; transition: color 0.2s;
+}
+.dash-nav-link:hover { color: #F0B90B; }
+.dash-nav-link.active { color: #F0B90B; }
+
+.nav-actions { display: flex; align-items: center; gap: 0.75rem; justify-content: flex-end; }
+.badge-testnet {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.25rem 0.6rem; border-radius: var(--radius-pill);
+  font-size: 0.625rem; font-weight: 600; letter-spacing: 0.03em; white-space: nowrap;
+  background: rgba(240,185,11,0.1); color: #8a6800;
+  border: 1px solid rgba(240,185,11,0.2);
+}
+.badge-testnet .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse-gold 1.5s ease-in-out infinite; }
+@keyframes pulse-gold {
+  0%,100% { box-shadow: 0 0 4px rgba(240,185,11,0.4); }
+  50% { box-shadow: 0 0 16px rgba(240,185,11,0.9); }
+}
+
+/* ---------- THEME TOGGLE ---------- */
+.theme-toggle {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);
+  background: transparent; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; position: relative; transition: all 0.3s;
+  color: #636E72;
+}
+.theme-toggle:hover { border-color: #F0B90B; color: #F0B90B; }
+.theme-toggle .icon-sun, .theme-toggle .icon-moon { position: absolute; transition: opacity 0.3s, transform 0.3s; }
+.icon-sun { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+.icon-moon { opacity: 1; transform: scale(1); }
+[data-theme="dark"] .icon-sun { opacity: 1; transform: scale(1); }
+[data-theme="dark"] .icon-moon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+[data-theme="dark"] .theme-toggle { border-color: rgba(255,255,255,0.15); color: #B2BEC3; }
+[data-theme="dark"] .theme-toggle:hover { border-color: #F0B90B; color: #F0B90B; }
+
+/* ---------- MAIN LAYOUT ---------- */
+.dash-main {
+  padding-top: var(--nav-height);
+  min-height: 100vh;
+  position: relative; z-index: 1;
+}
+.dash-container {
+  display: grid;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+}
+
+/* ---------- PAGE HEADER ---------- */
+.page-header {
+  text-align: center;
+  padding: 1.25rem 0 0.5rem;
+}
+.page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.5rem;
+}
+.page-header h1 .accent { color: #FF6B6B; }
+.page-header p {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto;
+}
+.badge-public {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.25rem 0.75rem; border-radius: var(--radius-pill);
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.03em;
+  background: rgba(0,184,148,0.1); color: var(--color-success);
+  border: 1px solid rgba(0,184,148,0.2);
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- HERO METRICS (6-col) ---------- */
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.metric-card-hero {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8A80 50%, #E53935 100%);
+  border-radius: var(--radius-card); padding: 1.25rem 1.25rem 1rem;
+  min-height: 120px;
+  box-shadow: 8px 8px 20px rgba(255,107,107,0.25), -4px -4px 12px rgba(255,255,255,0.5);
+  transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  display: flex; align-items: flex-start; gap: 1rem;
+  position: relative; overflow: hidden;
+}
+.metric-card-hero::before {
+  content: '';
+  position: absolute; top: -30%; right: -20%; width: 60%; height: 160%;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.metric-card-hero:hover {
+  transform: translateY(-3px);
+  box-shadow: 10px 10px 28px rgba(255,107,107,0.35), -5px -5px 15px rgba(255,255,255,0.6);
+}
+.metric-card-hero .metric-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: rgba(255,255,255,0.25); color: rgba(0,0,0,0.5);
+}
+.metric-card-hero .metric-label { font-size: 0.75rem; color: rgba(0,0,0,0.7); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.25rem; }
+.metric-card-hero .metric-value {
+  font-size: 1.75rem; font-weight: 900; letter-spacing: -0.03em;
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: #1a1d24;
+}
+
+.metric-card {
+  background: #ffffff; color: #2D3436;
+  border-radius: 14px; padding: 1.25rem 1.25rem 1rem;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  display: flex; align-items: flex-start; gap: 1rem;
+  position: relative; overflow: hidden;
+  min-height: 120px;
+}
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-clay-hover);
+}
+.metric-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.metric-icon-gold { background: rgba(240,185,11,0.2); color: #7A5C00; }
+.metric-icon-blue { background: rgba(59,139,255,0.2); color: #1A56A8; }
+.metric-icon-orange { background: rgba(232,118,10,0.2); color: #8B4500; }
+.metric-icon-purple { background: rgba(108,92,231,0.2); color: #3C2A8C; }
+.metric-icon-green { background: rgba(0,184,148,0.2); color: #006B4F; }
+.metric-icon-coral { background: rgba(255,107,107,0.2); color: #8B0000; }
+.metric-label { font-size: 0.75rem; color: #636E72; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.25rem; }
+.metric-value {
+  font-size: 1.75rem; font-weight: 900; letter-spacing: -0.03em;
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: #2D3436;
+}
+
+/* ---------- CARD (Claymorphic) ---------- */
+.dash-card {
+  color: #2D3436;
+  background: var(--bg-card);
+  border-radius: var(--radius-card); border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-clay);
+  transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  overflow: hidden; position: relative; contain: content;
+  display: flex; flex-direction: column;
+}
+.dash-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-clay-hover);
+}
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.875rem 1.25rem; border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.card-header h3 {
+  font-size: 1.0625rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;
+  letter-spacing: -0.03em; color: #2D3436; font-family: var(--font-heading);
+}
+.card-header .card-icon {
+  width: 30px; height: 30px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.card-body { padding: 1rem 1.25rem; flex: 1; }
+
+/* ---------- GRID ROWS ---------- */
+.dash-row-2col {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem; align-items: stretch;
+}
+.dash-row-equal {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: stretch;
+}
+.dash-row-full {
+  display: grid; grid-template-columns: 1fr;
+}
+
+/* ---------- POOL COMPOSITION ---------- */
+.pool-donut-wrap {
+  display: flex; align-items: center; justify-content: center; gap: 2rem;
+  padding: 1rem 0;
+}
+.pool-legend { display: flex; flex-direction: column; gap: 0.75rem; }
+.pool-legend-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.8125rem; color: var(--text-secondary);
+}
+.pool-legend-dot {
+  width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0;
+}
+.pool-legend-value {
+  font-family: var(--font-mono); font-weight: 700; color: var(--text-primary);
+  margin-left: auto; padding-left: 1rem;
+}
+.utilization-bar-wrap { margin-top: 1.25rem; }
+.utilization-label {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+.utilization-label span:last-child {
+  font-family: var(--font-mono); color: var(--text-primary); font-weight: 700;
+}
+.utilization-bar-track {
+  height: 12px; border-radius: 6px;
+  background: var(--form-bg);
+  box-shadow: var(--shadow-clay-inset);
+  overflow: hidden;
+}
+.utilization-bar-fill {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, #FF6B6B 0%, #FF8A80 100%);
+  transition: width 0.8s var(--ease-smooth);
+  min-width: 2px;
+}
+
+/* ---------- IRS SCORE BARS ---------- */
+.irs-bar-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.irs-bar-item {
+  display: grid; grid-template-columns: 120px 1fr 50px; gap: 0.75rem; align-items: center;
+}
+.irs-bar-name {
+  font-size: 0.8125rem; font-weight: 600; color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.irs-bar-track {
+  height: 20px; border-radius: 10px;
+  background: var(--form-bg);
+  box-shadow: var(--shadow-clay-inset);
+  overflow: hidden; position: relative;
+}
+.irs-bar-fill {
+  height: 100%; border-radius: 10px;
+  transition: width 0.8s var(--ease-smooth);
+  min-width: 2px;
+}
+.irs-bar-fill.green { background: linear-gradient(90deg, #00B894, #55efc4); }
+.irs-bar-fill.gold { background: linear-gradient(90deg, #F0B90B, #FFD443); }
+.irs-bar-fill.red { background: linear-gradient(90deg, #EF4444, #FF6B6B); }
+.irs-bar-score {
+  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700;
+  text-align: right; color: var(--text-primary);
+}
+.irs-avg {
+  margin-top: 1rem; padding-top: 1rem;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.8125rem; font-weight: 600; color: var(--text-muted);
+}
+.irs-avg-value {
+  font-family: var(--font-mono); font-weight: 800; font-size: 1rem;
+  color: var(--text-primary);
+}
+
+/* ---------- PREMIUM CURVE ---------- */
+.curve-wrap {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.5rem 0;
+}
+.curve-svg { width: 100%; max-width: 680px; }
+.curve-svg text { font-family: var(--font-mono); }
+
+/* ---------- EVENTS TIMELINE ---------- */
+.events-list { display: flex; flex-direction: column; gap: 0; }
+.event-item {
+  display: flex; align-items: flex-start; gap: 0.875rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.event-item:last-child { border-bottom: none; }
+.event-dot-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 0; flex-shrink: 0; padding-top: 2px;
+}
+.event-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.event-dot.register { background: var(--accent-purple); }
+.event-dot.deposit { background: var(--color-pool); }
+.event-dot.coverage { background: var(--color-coverage); }
+.event-dot.default { background: var(--color-danger); }
+.event-dot.payout { background: var(--color-success); }
+.event-content { flex: 1; min-width: 0; }
+.event-title {
+  font-size: 0.8125rem; font-weight: 600; color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.event-desc {
+  font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;
+}
+.event-meta {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.6875rem; color: var(--text-muted);
+}
+.event-meta a {
+  font-family: var(--font-mono); font-size: 0.6875rem;
+}
+
+/* ---------- CONTRACT ADDRESSES TABLE ---------- */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+thead th {
+  text-align: left; padding: 0.75rem 0.875rem; color: #636E72;
+  font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  border-bottom: 1px solid rgba(0,0,0,0.08); background: transparent;
+}
+tbody td { padding: 0.875rem; border-bottom: 1px solid rgba(0,0,0,0.04); color: #2D3436; vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr { transition: background 0.2s; }
+tbody tr:hover { background: rgba(240,185,11,0.04); }
+td.contract-name { font-weight: 600; color: #2D3436; }
+td.contract-addr {
+  font-family: var(--font-mono); font-size: 0.75rem;
+}
+td.contract-addr a {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+
+/* ---------- LAST UPDATED ---------- */
+.last-updated-bar {
+  text-align: center;
+  font-size: 0.75rem; color: var(--text-muted);
+  padding: 1rem 0 2rem;
+}
+.last-updated-bar .refresh-link {
+  color: #FF6B6B; cursor: pointer; font-weight: 600;
+  background: none; border: none; font-family: var(--font-main); font-size: 0.75rem;
+}
+.last-updated-bar .refresh-link:hover { text-decoration: underline; }
+
+/* ---------- SKELETON LOADING ---------- */
+.skeleton {
+  background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease infinite;
+  border-radius: 8px;
+}
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton-value {
+  display: inline-block; width: 80px; height: 1.625rem; border-radius: 6px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+  .dash-row-2col, .dash-row-equal { grid-template-columns: 1fr; }
+  .pool-donut-wrap { flex-direction: column; }
+  .irs-bar-item { grid-template-columns: 90px 1fr 45px; }
+}
+@media (max-width: 600px) {
+  .hero-metrics { grid-template-columns: 1fr; }
+  .dash-nav-links { display: none; }
+  .page-header h1 { font-size: 1.5rem; }
+  .theme-toggle { width: 34px; height: 34px; }
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme="dark"] body { background: #0f1118; }
+[data-theme="dark"] .bg-blobs { opacity: 0.3; }
+
+[data-theme="dark"] .dash-nav { background: rgba(15,17,24,0.95); border-bottom: 1px solid rgba(255,255,255,0.06); }
+[data-theme="dark"] .dash-nav .nav-logo-text { color: #ffffff; }
+[data-theme="dark"] .dash-nav-link { color: rgba(255,255,255,0.7); }
+[data-theme="dark"] .dash-nav-link:hover { color: #F0B90B; }
+[data-theme="dark"] .dash-nav-link.active { color: #F0B90B; }
+
+[data-theme="dark"] .page-header h1 { color: #ffffff; }
+[data-theme="dark"] .page-header p { color: rgba(255,255,255,0.5); }
+
+[data-theme="dark"] .metric-card, [data-theme="dark"] .dash-card {
+  color: #e8e8e8;
+  background: #1e2329;
+  box-shadow: 8px 8px 20px rgba(0,0,0,0.35), -4px -4px 12px rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+[data-theme="dark"] .metric-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .metric-value { color: #ffffff; }
+[data-theme="dark"] .metric-icon-gold { background: rgba(240,185,11,0.15); color: #FFD443; }
+[data-theme="dark"] .metric-icon-blue { background: rgba(59,139,255,0.15); color: #6BA6FF; }
+[data-theme="dark"] .metric-icon-orange { background: rgba(232,118,10,0.15); color: #FF9533; }
+[data-theme="dark"] .metric-icon-purple { background: rgba(108,92,231,0.15); color: #A78BFA; }
+[data-theme="dark"] .metric-icon-green { background: rgba(0,184,148,0.15); color: #34D4A4; }
+[data-theme="dark"] .metric-icon-coral { background: rgba(255,107,107,0.15); color: #FF8A8A; }
+
+[data-theme="dark"] .card-header { border-bottom-color: rgba(255,255,255,0.06); }
+[data-theme="dark"] .card-header h3 { color: #ffffff; }
+
+[data-theme="dark"] .pool-legend-item { color: rgba(255,255,255,0.6); }
+[data-theme="dark"] .pool-legend-value { color: #ffffff; }
+[data-theme="dark"] .utilization-label { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .utilization-label span:last-child { color: #ffffff; }
+[data-theme="dark"] .utilization-bar-track { background: rgba(255,255,255,0.06); box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3); }
+
+[data-theme="dark"] .irs-bar-name { color: #ffffff; }
+[data-theme="dark"] .irs-bar-track { background: rgba(255,255,255,0.06); box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3); }
+[data-theme="dark"] .irs-bar-score { color: #ffffff; }
+[data-theme="dark"] .irs-avg { border-top-color: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .irs-avg-value { color: #ffffff; }
+
+[data-theme="dark"] .curve-svg .axis-label { fill: rgba(255,255,255,0.75); }
+[data-theme="dark"] .curve-svg .axis-line { stroke: rgba(255,255,255,0.1); }
+[data-theme="dark"] .curve-svg .grid-line { stroke: rgba(255,255,255,0.05); }
+[data-theme="dark"] .curve-svg .curve-path { stroke: #FF8A80; }
+[data-theme="dark"] .curve-svg .dot-label { fill: rgba(255,255,255,0.7); }
+
+[data-theme="dark"] .event-title { color: rgba(255,255,255,0.9); }
+[data-theme="dark"] .event-desc { color: rgba(255,255,255,0.5); }
+[data-theme="dark"] .event-meta { color: rgba(255,255,255,0.55); }
+
+[data-theme="dark"] thead th { color: rgba(255,255,255,0.55); border-bottom-color: rgba(255,255,255,0.06); }
+[data-theme="dark"] tbody td { color: rgba(255,255,255,0.8); border-bottom-color: rgba(255,255,255,0.04); }
+[data-theme="dark"] td.contract-name { color: #ffffff; }
+[data-theme="dark"] tbody tr:hover { background: rgba(240,185,11,0.04); }
+
+[data-theme="dark"] .last-updated-bar { color: rgba(255,255,255,0.4); }
+
+[data-theme="dark"] ::-webkit-scrollbar-track { background: #0f1118; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(240,185,11,0.3); }
+
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+}
+
+/* ---------- INTERACTIVE STATES ---------- */
+.theme-toggle, .refresh-link { cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<!-- Background blobs -->
+<div class="bg-blobs" aria-hidden="true">
+  <svg class="bg-blob" width="500" height="420" viewBox="0 0 500 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M400 60c75 50 112 150 75 250s-125 150-225 137S50 375 25 275s12-175 87-212S325 12 400 60z" fill="rgba(240,185,11,0.08)"/>
+  </svg>
+  <svg class="bg-blob" width="400" height="350" viewBox="0 0 400 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M320 50c60 40 90 120 60 200s-100 120-180 110S40 300 20 220s10-140 70-170S260 10 320 50z" fill="rgba(240,185,11,0.08)"/>
+  </svg>
+  <svg class="bg-blob" width="380" height="320" viewBox="0 0 380 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 80c40-60 140-90 220-60s130 100 100 180-80 120-160 120S30 280 10 200s0-60 40-120z" fill="rgba(255,107,107,0.06)"/>
+  </svg>
+  <svg class="bg-blob" width="300" height="280" viewBox="0 0 300 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M240 40c50 30 70 100 50 170s-70 90-140 80S30 240 15 170 40 60 100 30s90-20 140 10z" fill="rgba(108,92,231,0.05)"/>
+  </svg>
+  <svg class="bg-blob" width="280" height="260" viewBox="0 0 280 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M200 30c50 25 80 90 70 160s-60 80-130 70S20 210 10 140 30 40 90 15s60-10 110 15z" fill="rgba(0,184,148,0.05)"/>
+  </svg>
+</div>
+
+<!-- SVG Gradients -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F0B90B"/><stop offset="100%" stop-color="#FFD443"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav class="dash-nav" aria-label="Main navigation">
+  <div class="dash-nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="CoverFi home">
+      <svg width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <polygon points="10,9 16,9 19,13 16,17 10,17 7,13" fill="none" stroke="var(--logo-hex, #1a1a1a)" stroke-width="2"/>
+        <polygon points="16,9 22,9 25,13 22,17 16,17 13,13" fill="none" stroke="var(--logo-hex, #1a1a1a)" stroke-width="2"/>
+        <polygon points="16,7 20.5,13 16,19 11.5,13" fill="var(--logo-diamond, var(--gold, #F0B90B))"/><circle cx="16" cy="12.5" r="1" fill="white" opacity="0.85"/>
+      </svg>
+      <span class="nav-logo-text">Cover<span class="accent">Fi</span></span>
+    </a>
+
+    <div class="dash-nav-links">
+      <a href="dashboard.html" class="dash-nav-link">Dashboard</a>
+      <a href="issuers.html" class="dash-nav-link">Issuers</a>
+      <a href="pool.html" class="dash-nav-link">Pool</a>
+      <a href="coverage.html" class="dash-nav-link">Coverage</a>
+      <a href="subrogation.html" class="dash-nav-link">Subrogation</a>
+      <a href="stats.html" class="dash-nav-link active">Stats</a>
+    </div>
+
+    <div class="nav-actions">
+      <div class="badge-testnet"><span class="dot"></span> HashKey Testnet</div>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="18" aria-hidden="true" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" width="18" aria-hidden="true" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     STATS MAIN
+     ============================================================ -->
+<main class="dash-main" role="main">
+<div class="dash-container">
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="badge-public">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    Public View — No Wallet Required
+  </div>
+  <h1>Protocol <span class="accent">Statistics</span></h1>
+  <p>Real-time health and performance metrics for the CoverFi protocol on HashKey Chain Testnet</p>
+</div>
+
+<!-- ============================================================
+     SECTION 1: Protocol Health Overview
+     ============================================================ -->
+<div class="hero-metrics">
+  <!-- TVL -->
+  <div class="metric-card-hero">
+    <div class="metric-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+    </div>
+    <div>
+      <div class="metric-label">Total Value Locked</div>
+      <div class="metric-value" id="metricTVL"><span class="skeleton skeleton-value"></span></div>
+    </div>
+  </div>
+  <!-- Total Coverage Written -->
+  <div class="metric-card">
+    <div class="metric-icon metric-icon-orange">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div>
+      <div class="metric-label">Total Coverage Written</div>
+      <div class="metric-value" id="metricCoverage"><span class="skeleton skeleton-value"></span></div>
+    </div>
+  </div>
+  <!-- Premiums Collected -->
+  <div class="metric-card">
+    <div class="metric-icon metric-icon-gold">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+    </div>
+    <div>
+      <div class="metric-label">Total Premiums Collected</div>
+      <div class="metric-value" id="metricPremiums"><span class="skeleton skeleton-value"></span></div>
+    </div>
+  </div>
+  <!-- Payouts Executed -->
+  <div class="metric-card">
+    <div class="metric-icon metric-icon-green">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div>
+      <div class="metric-label">Total Payouts Executed</div>
+      <div class="metric-value" id="metricPayouts"><span class="skeleton skeleton-value"></span></div>
+    </div>
+  </div>
+  <!-- Coverage Ratio -->
+  <div class="metric-card">
+    <div class="metric-icon metric-icon-blue">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    </div>
+    <div>
+      <div class="metric-label">Protocol Coverage Ratio</div>
+      <div class="metric-value" id="metricRatio"><span class="skeleton skeleton-value"></span></div>
+    </div>
+  </div>
+  <!-- Active Issuers -->
+  <div class="metric-card">
+    <div class="metric-icon metric-icon-purple">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    </div>
+    <div>
+      <div class="metric-label">Active Issuers</div>
+      <div class="metric-value" id="metricIssuers"><span class="skeleton skeleton-value"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 2: Pool Composition + SECTION 3: IRS Scores
+     ============================================================ -->
+<div class="dash-row-equal">
+  <!-- Pool Composition -->
+  <div class="dash-card">
+    <div class="card-header">
+      <h3>
+        <span class="card-icon" style="background:rgba(59,139,255,0.12);color:var(--color-pool);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0110 10"/></svg>
+        </span>
+        Pool Composition
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="pool-donut-wrap">
+        <svg width="160" height="160" viewBox="0 0 160 160" id="poolDonut">
+          <circle cx="80" cy="80" r="60" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="24"/>
+          <circle cx="80" cy="80" r="60" fill="none" stroke="#3B8BFF" stroke-width="24"
+            stroke-dasharray="377" stroke-dashoffset="0"
+            transform="rotate(-90 80 80)" id="donutSenior" style="transition:stroke-dasharray 0.8s ease"/>
+          <circle cx="80" cy="80" r="60" fill="none" stroke="#6C5CE7" stroke-width="24"
+            stroke-dasharray="377" stroke-dashoffset="0"
+            transform="rotate(-90 80 80)" id="donutJunior" style="transition:stroke-dasharray 0.8s ease"/>
+          <circle cx="80" cy="80" r="60" fill="none" stroke="#F0B90B" stroke-width="24"
+            stroke-dasharray="377" stroke-dashoffset="0"
+            transform="rotate(-90 80 80)" id="donutBond" style="transition:stroke-dasharray 0.8s ease"/>
+        </svg>
+        <div class="pool-legend">
+          <div class="pool-legend-item">
+            <span class="pool-legend-dot" style="background:#3B8BFF"></span>
+            Senior Tranche
+            <span class="pool-legend-value" id="legendSenior">--</span>
+          </div>
+          <div class="pool-legend-item">
+            <span class="pool-legend-dot" style="background:#6C5CE7"></span>
+            Junior Tranche
+            <span class="pool-legend-value" id="legendJunior">--</span>
+          </div>
+          <div class="pool-legend-item">
+            <span class="pool-legend-dot" style="background:#F0B90B"></span>
+            Bond Capital
+            <span class="pool-legend-value" id="legendBond">--</span>
+          </div>
+        </div>
+      </div>
+      <div class="utilization-bar-wrap">
+        <div class="utilization-label">
+          <span>Utilization Ratio</span>
+          <span id="utilizationPct">--%</span>
+        </div>
+        <div class="utilization-bar-track">
+          <div class="utilization-bar-fill" id="utilizationBar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IRS Score Distribution -->
+  <div class="dash-card">
+    <div class="card-header">
+      <h3>
+        <span class="card-icon" style="background:rgba(108,92,231,0.12);color:#3C2A8C;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        </span>
+        IRS Score Distribution
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="irs-bar-list" id="irsBarList">
+        <div style="text-align:center;padding:2rem 0;color:var(--text-muted);font-size:0.8125rem;">Loading issuer scores...</div>
+      </div>
+      <div class="irs-avg" id="irsAvgRow" style="display:none;">
+        <span>Average IRS Score</span>
+        <span class="irs-avg-value" id="irsAvgValue">--</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 4: Premium Rate Curve
+     ============================================================ -->
+<div class="dash-row-full">
+  <div class="dash-card">
+    <div class="card-header">
+      <h3>
+        <span class="card-icon" style="background:rgba(240,185,11,0.12);color:#8a6800;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </span>
+        Premium Rate Curve
+      </h3>
+      <span style="font-size:0.6875rem;color:var(--text-muted);font-family:var(--font-mono);">P = 1600 &times; e<sup>-0.001386 &times; IRS</sup> bps</span>
+    </div>
+    <div class="card-body">
+      <div class="curve-wrap">
+        <svg class="curve-svg" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg" id="premiumCurve">
+          <!-- Axes and curve drawn by JS -->
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 5: Recent Events + SECTION 6: Contract Addresses
+     ============================================================ -->
+<div class="dash-row-2col">
+  <!-- Recent Events -->
+  <div class="dash-card">
+    <div class="card-header">
+      <h3>
+        <span class="card-icon" style="background:rgba(0,184,148,0.12);color:var(--color-success);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </span>
+        Protocol Events
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="events-list" id="eventsList">
+        <div style="text-align:center;padding:2rem 0;color:var(--text-muted);font-size:0.8125rem;">Loading events...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contract Addresses -->
+  <div class="dash-card">
+    <div class="card-header">
+      <h3>
+        <span class="card-icon" style="background:rgba(240,185,11,0.12);color:#8a6800;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </span>
+        Contract Addresses
+      </h3>
+    </div>
+    <div class="card-body" style="padding:0;">
+      <div class="table-wrap">
+        <table id="contractsTable">
+          <thead>
+            <tr>
+              <th>Contract</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody id="contractsBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Last Updated -->
+<div class="last-updated-bar">
+  <span id="lastUpdated">Loading data...</span>
+  &nbsp;&middot;&nbsp;
+  <button class="refresh-link" onclick="loadAllData()">Refresh</button>
+</div>
+
+</div>
+</main>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<script src="contract-abis.js"></script>
+<script>
+// ---- Theme ----
+function getTheme() { return localStorage.getItem('coverfi-theme') || 'light'; }
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('coverfi-theme', theme);
+}
+function toggleTheme() { setTheme(getTheme() === 'dark' ? 'light' : 'dark'); }
+
+// Apply saved theme on load
+(function() { setTheme(getTheme()); })();
+
+// ---- Contract Addresses ----
+var CONTRACTS = {
+  MockUSDT:             '0x65A3Ae0e4787856CfcDdE505015c5CC3d5560212',
+  MockIdentityRegistry: '0x20619c533854C5a0c20284f7Dc7F5Dc3DFdD06B3',
+  MockERC3643Token:     '0xa7C664459C66325Cd9dB15245DD901f1623c9655',
+  MockBAS:              '0xB10b1c9D88126965E57cCa2a7ED5a1348dbf7552',
+  MockChainlink:        '0xF1E25246D7Dcc8E63EAe39BE03DEae0C2Ed93E71',
+  TIR:                  '0xa4ECEB47F80a32D7176C23e4993cDa4d2337Fc3A',
+  IssuerBond:           '0x1Ca7B678BDf1deCe9964c5178C01AB9312F2664D',
+  IRSOracle:            '0x8D4C37f45883aAEEd20d2CC1020e6Ab193D3A50C',
+  DefaultOracle:        '0xBCF0012388045eA1183c96EEbe24754842a549eA',
+  IssuerRegistry:       '0xc07859b25FC869F0a81fae86b9B5bEa868D08A9f',
+  InsurancePool:        '0xa5d64A7770136B1EEade6B980404140D8D5F7C06',
+  srCVR:                '0x2Aad26de595752d7D6FCc2f4C79F1Bf15B60E1CD',
+  jrCVR:                '0xD01e871c97746FC6a3f4B406aA60BE1Fb7FAcf6B',
+  ProtectionCert:       '0x91062e509E75AAe31f1d6425b78D8815Ad941e73',
+  PayoutEngine:         '0x44944cB598A750Df4C4Bf9A7D3FdDDf7575F88F5',
+  SubrogationNFT:       '0xbBe8A2840E151cC8BF2B156e5d61a532eFCe2AB9'
+};
+
+var DEMO_ISSUER_TOKEN = CONTRACTS.MockERC3643Token;
+var BSC_TESTNET_RPC = 'https://testnet.hsk.xyz';
+var BSCSCAN_BASE = 'https://testnet-explorer.hsk.xyz';
+
+// ---- Helpers ----
+function fmt(n, decimals) {
+  if (decimals === undefined) decimals = 2;
+  if (typeof n === 'bigint') {
+    var val = Number(n) / 1e18;
+    return '$' + val.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  }
+  return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+}
+function shortAddr(addr) {
+  return addr.slice(0, 6) + '...' + addr.slice(-4);
+}
+function timeAgo(ts) {
+  var diff = Math.floor(Date.now() / 1000) - ts;
+  if (diff < 60) return diff + 's ago';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  return Math.floor(diff / 86400) + 'd ago';
+}
+
+// ---- Build Contracts Table ----
+function renderContractsTable() {
+  var tbody = document.getElementById('contractsBody');
+  var html = '';
+  var names = Object.keys(CONTRACTS);
+  for (var i = 0; i < names.length; i++) {
+    var name = names[i];
+    var addr = CONTRACTS[name];
+    html += '<tr>' +
+      '<td class="contract-name">' + name + '</td>' +
+      '<td class="contract-addr"><a href="' + BSCSCAN_BASE + '/address/' + addr + '" target="_blank" rel="noopener">' +
+        shortAddr(addr) +
+        ' <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>' +
+      '</a></td>' +
+    '</tr>';
+  }
+  tbody.innerHTML = html;
+}
+
+// ---- Premium Rate Curve (SVG) ----
+function renderPremiumCurve(issuerDots) {
+  var svg = document.getElementById('premiumCurve');
+  var W = 680, H = 320;
+  var padL = 65, padR = 30, padT = 20, padB = 50;
+  var chartW = W - padL - padR;
+  var chartH = H - padT - padB;
+
+  var maxIRS = 1000;
+  var maxBPS = 1600;
+
+  var isDark = getTheme() === 'dark';
+  var axisColor = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)';
+  var gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+  var labelColor = isDark ? 'rgba(255,255,255,0.5)' : '#5f6b70';
+  var curveColor = isDark ? '#FFD443' : '#F0B90B';
+  var dotLabelColor = isDark ? 'rgba(255,255,255,0.7)' : '#2D3436';
+
+  var html = '';
+
+  // Grid lines (horizontal)
+  for (var g = 0; g <= 4; g++) {
+    var gy = padT + (chartH * g / 4);
+    var gVal = Math.round(maxBPS * (1 - g / 4));
+    html += '<line class="grid-line" x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '" stroke="' + gridColor + '" stroke-width="1"/>';
+    html += '<text class="axis-label" x="' + (padL - 8) + '" y="' + (gy + 4) + '" text-anchor="end" fill="' + labelColor + '" font-size="10">' + gVal + '</text>';
+  }
+
+  // Grid lines (vertical)
+  for (var v = 0; v <= 5; v++) {
+    var vx = padL + (chartW * v / 5);
+    var vVal = Math.round(maxIRS * v / 5);
+    html += '<line class="grid-line" x1="' + vx + '" y1="' + padT + '" x2="' + vx + '" y2="' + (H - padB) + '" stroke="' + gridColor + '" stroke-width="1"/>';
+    html += '<text class="axis-label" x="' + vx + '" y="' + (H - padB + 18) + '" text-anchor="middle" fill="' + labelColor + '" font-size="10">' + vVal + '</text>';
+  }
+
+  // Axes
+  html += '<line class="axis-line" x1="' + padL + '" y1="' + padT + '" x2="' + padL + '" y2="' + (H - padB) + '" stroke="' + axisColor + '" stroke-width="1.5"/>';
+  html += '<line class="axis-line" x1="' + padL + '" y1="' + (H - padB) + '" x2="' + (W - padR) + '" y2="' + (H - padB) + '" stroke="' + axisColor + '" stroke-width="1.5"/>';
+
+  // Axis labels
+  html += '<text class="axis-label" x="' + (padL + chartW / 2) + '" y="' + (H - 5) + '" text-anchor="middle" fill="' + labelColor + '" font-size="11" font-weight="600">IRS Score</text>';
+  html += '<text class="axis-label" x="14" y="' + (padT + chartH / 2) + '" text-anchor="middle" fill="' + labelColor + '" font-size="11" font-weight="600" transform="rotate(-90,14,' + (padT + chartH / 2) + ')">Premium (bps)</text>';
+
+  // Exponential curve: P = 1600 * e^(-0.001386 * IRS)
+  var points = [];
+  for (var irs = 0; irs <= maxIRS; irs += 2) {
+    var bps = 1600 * Math.exp(-0.001386 * irs);
+    var x = padL + (irs / maxIRS) * chartW;
+    var y = padT + (1 - bps / maxBPS) * chartH;
+    points.push(x.toFixed(1) + ',' + y.toFixed(1));
+  }
+  html += '<polyline class="curve-path" points="' + points.join(' ') + '" fill="none" stroke="' + curveColor + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+
+  // Fill area under curve
+  var firstPt = points[0];
+  var lastPt = points[points.length - 1];
+  var lastX = padL + chartW;
+  var baseY = H - padB;
+  html += '<polygon points="' + points.join(' ') + ' ' + lastX + ',' + baseY + ' ' + padL + ',' + baseY + '" fill="' + curveColor + '" opacity="0.08"/>';
+
+  // Issuer dots — with collision-aware label placement
+  if (issuerDots && issuerDots.length > 0) {
+    // Precompute positions, sorted by x so we can detect neighbors
+    var positioned = issuerDots.map(function(dot) {
+      var dx = padL + (dot.irs / maxIRS) * chartW;
+      var dbps = 1600 * Math.exp(-0.001386 * dot.irs);
+      var dy = padT + (1 - dbps / maxBPS) * chartH;
+      return { name: dot.name, irs: dot.irs, dx: dx, dy: dy, dbps: dbps };
+    }).sort(function(a, b) { return a.dx - b.dx; });
+
+    // Decide placement: default "above" the dot; flip to "below" if the
+    // previous dot is within 70px horizontally AND was placed above.
+    var placements = [];
+    for (var p = 0; p < positioned.length; p++) {
+      var place = 'above';
+      if (p > 0) {
+        var prev = positioned[p - 1];
+        var prevPlace = placements[p - 1];
+        if (Math.abs(positioned[p].dx - prev.dx) < 70 && prevPlace === 'above') {
+          place = 'below';
+        }
+      }
+      placements.push(place);
+    }
+
+    for (var d = 0; d < positioned.length; d++) {
+      var pd = positioned[d];
+      var dotColor = pd.irs > 700 ? '#00B894' : (pd.irs >= 400 ? '#F0B90B' : '#EF4444');
+      html += '<circle cx="' + pd.dx.toFixed(1) + '" cy="' + pd.dy.toFixed(1) + '" r="6" fill="' + dotColor + '" stroke="white" stroke-width="2"/>';
+      if (placements[d] === 'above') {
+        html += '<text class="dot-label" x="' + pd.dx.toFixed(1) + '" y="' + (pd.dy - 14).toFixed(1) + '" text-anchor="middle" fill="' + dotLabelColor + '" font-size="9" font-weight="600">' + pd.name + '</text>';
+        html += '<text class="dot-label" x="' + pd.dx.toFixed(1) + '" y="' + (pd.dy - 5).toFixed(1) + '" text-anchor="middle" fill="' + dotLabelColor + '" font-size="8">' + Math.round(pd.dbps) + ' bps</text>';
+      } else {
+        html += '<text class="dot-label" x="' + pd.dx.toFixed(1) + '" y="' + (pd.dy + 17).toFixed(1) + '" text-anchor="middle" fill="' + dotLabelColor + '" font-size="9" font-weight="600">' + pd.name + '</text>';
+        html += '<text class="dot-label" x="' + pd.dx.toFixed(1) + '" y="' + (pd.dy + 26).toFixed(1) + '" text-anchor="middle" fill="' + dotLabelColor + '" font-size="8">' + Math.round(pd.dbps) + ' bps</text>';
+      }
+    }
+  }
+
+  svg.innerHTML = html;
+}
+
+// ---- Pool Donut Chart ----
+function renderDonut(senior, junior, bond) {
+  var total = senior + junior + bond;
+  if (total === 0) total = 1;
+
+  var circumference = 2 * Math.PI * 60; // r=60
+  var seniorPct = senior / total;
+  var juniorPct = junior / total;
+  var bondPct = bond / total;
+
+  var seniorLen = circumference * seniorPct;
+  var juniorLen = circumference * juniorPct;
+  var bondLen = circumference * bondPct;
+
+  var seniorEl = document.getElementById('donutSenior');
+  var juniorEl = document.getElementById('donutJunior');
+  var bondEl = document.getElementById('donutBond');
+
+  seniorEl.setAttribute('stroke-dasharray', seniorLen + ' ' + (circumference - seniorLen));
+  seniorEl.setAttribute('stroke-dashoffset', '0');
+
+  juniorEl.setAttribute('stroke-dasharray', juniorLen + ' ' + (circumference - juniorLen));
+  juniorEl.setAttribute('stroke-dashoffset', String(-seniorLen));
+
+  bondEl.setAttribute('stroke-dasharray', bondLen + ' ' + (circumference - bondLen));
+  bondEl.setAttribute('stroke-dashoffset', String(-(seniorLen + juniorLen)));
+
+  document.getElementById('legendSenior').textContent = fmt(senior) + ' (' + (seniorPct * 100).toFixed(1) + '%)';
+  document.getElementById('legendJunior').textContent = fmt(junior) + ' (' + (juniorPct * 100).toFixed(1) + '%)';
+  document.getElementById('legendBond').textContent = fmt(bond) + ' (' + (bondPct * 100).toFixed(1) + '%)';
+}
+
+// ---- IRS Score Bars ----
+function renderIRSBars(issuers) {
+  var container = document.getElementById('irsBarList');
+  if (!issuers || issuers.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:2rem 0;color:var(--text-muted);font-size:0.8125rem;">No registered issuers found</div>';
+    return;
+  }
+
+  var html = '';
+  var totalScore = 0;
+  for (var i = 0; i < issuers.length; i++) {
+    var iss = issuers[i];
+    totalScore += iss.score;
+    var pct = Math.min((iss.score / 1000) * 100, 100);
+    var colorClass = iss.score > 700 ? 'green' : (iss.score >= 400 ? 'gold' : 'red');
+    html += '<div class="irs-bar-item">' +
+      '<div class="irs-bar-name" title="' + iss.name + '">' + iss.name + '</div>' +
+      '<div class="irs-bar-track"><div class="irs-bar-fill ' + colorClass + '" style="width:' + pct + '%"></div></div>' +
+      '<div class="irs-bar-score">' + iss.score + '</div>' +
+    '</div>';
+  }
+  container.innerHTML = html;
+
+  var avg = Math.round(totalScore / issuers.length);
+  document.getElementById('irsAvgRow').style.display = 'flex';
+  document.getElementById('irsAvgValue').textContent = avg;
+}
+
+// ---- Recent Events ----
+function renderEvents(events) {
+  var container = document.getElementById('eventsList');
+  if (!events || events.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:2rem 0;color:var(--text-muted);font-size:0.8125rem;">No recent events found</div>';
+    return;
+  }
+
+  var html = '';
+  for (var i = 0; i < events.length; i++) {
+    var ev = events[i];
+    html += '<div class="event-item">' +
+      '<div class="event-dot-wrap"><div class="event-dot ' + ev.type + '"></div></div>' +
+      '<div class="event-content">' +
+        '<div class="event-title">' + ev.title + '</div>' +
+        '<div class="event-desc">' + ev.desc + '</div>' +
+        '<div class="event-meta">' +
+          '<span>' + ev.time + '</span>' +
+          '<a href="' + BSCSCAN_BASE + '/tx/' + ev.tx + '" target="_blank" rel="noopener">' + shortAddr(ev.tx) + '</a>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  container.innerHTML = html;
+}
+
+// ---- Mock / Fallback Data ----
+var MOCK_DATA = {
+  tvl: 2450000,
+  seniorTVL: 1650000,
+  juniorTVL: 600000,
+  bondCapital: 200000,
+  totalCoverage: 1800000,
+  totalPremiums: 42500,
+  totalPayouts: 125000,
+  coverageRatioBPS: 13611,
+  activeIssuers: 3,
+  issuers: [
+    { name: 'TechCorp Bonds', score: 785, addr: '0x65A3...0212' },
+    { name: 'GreenEnergy Ltd', score: 620, addr: '0x7dD7...27fC' },
+    { name: 'FinServ Capital', score: 340, addr: '0x2061...06B3' }
+  ],
+  events: [
+    { type: 'register', title: 'Issuer Registered', desc: 'TechCorp Bonds registered with fast-track', time: '2h ago', tx: '0xabc123def456789012345678901234567890abcdef1234567890abcdef12345678' },
+    { type: 'deposit', title: 'Senior Deposit', desc: '500,000 USDT deposited to Senior Tranche', time: '4h ago', tx: '0xdef456789012345678901234567890abcdef1234567890abcdef1234567890abcd' },
+    { type: 'coverage', title: 'Coverage Purchased', desc: '250,000 USDT coverage for TechCorp Bonds', time: '6h ago', tx: '0x789012345678901234567890abcdef1234567890abcdef1234567890abcdef1234' },
+    { type: 'deposit', title: 'Junior Deposit', desc: '100,000 USDT deposited to Junior Tranche', time: '12h ago', tx: '0x012345678901234567890abcdef1234567890abcdef1234567890abcdef123456' },
+    { type: 'payout', title: 'Payout Executed', desc: '125,000 USDT payout for defaulted coverage', time: '1d ago', tx: '0x345678901234567890abcdef1234567890abcdef1234567890abcdef12345678ab' },
+    { type: 'register', title: 'Issuer Registered', desc: 'GreenEnergy Ltd completed observation period', time: '2d ago', tx: '0x678901234567890abcdef1234567890abcdef1234567890abcdef12345678abcde' },
+    { type: 'coverage', title: 'Coverage Purchased', desc: '150,000 USDT coverage for GreenEnergy Ltd', time: '3d ago', tx: '0x901234567890abcdef1234567890abcdef1234567890abcdef12345678abcdef12' },
+    { type: 'default', title: 'Default Declared', desc: 'FinServ Capital bond default flagged by oracle', time: '5d ago', tx: '0xbcdef1234567890abcdef1234567890abcdef1234567890abcdef12345678abcdef' }
+  ]
+};
+
+// ---- Load Data from Chain ----
+async function loadAllData() {
+  document.getElementById('lastUpdated').textContent = 'Refreshing data...';
+
+  var usedMock = false;
+
+  try {
+    var provider = new ethers.JsonRpcProvider(BSC_TESTNET_RPC);
+
+    var pool = new ethers.Contract(CONTRACTS.InsurancePool, COVERFI_ABIS.InsurancePool, provider);
+    var irsOracle = new ethers.Contract(CONTRACTS.IRSOracle, COVERFI_ABIS.IRSOracle, provider);
+    var registry = new ethers.Contract(CONTRACTS.IssuerRegistry, COVERFI_ABIS.IssuerRegistry, provider);
+    var bondContract = new ethers.Contract(CONTRACTS.IssuerBond, COVERFI_ABIS.IssuerBond, provider);
+
+    // Try to read pool state
+    var poolState;
+    try {
+      poolState = await pool.getPoolState(DEMO_ISSUER_TOKEN);
+    } catch (e) {
+      try {
+        poolState = await pool.pools(DEMO_ISSUER_TOKEN);
+      } catch (e2) {
+        poolState = null;
+      }
+    }
+
+    if (poolState) {
+      var seniorTVL = Number(poolState.seniorTVL) / 1e18;
+      var juniorTVL = Number(poolState.juniorTVL) / 1e18;
+      var totalInsured = Number(poolState.totalInsuredAmount) / 1e18;
+      var coverageRatioBPS = Number(poolState.coverageRatioBPS);
+      var totalTVL = seniorTVL + juniorTVL;
+
+      document.getElementById('metricTVL').textContent = fmt(totalTVL) + ' USDT';
+      document.getElementById('metricCoverage').textContent = fmt(totalInsured) + ' USDT';
+      document.getElementById('metricRatio').textContent = (coverageRatioBPS / 100).toFixed(1) + '%';
+
+      var utilization = totalTVL > 0 ? (totalInsured / totalTVL * 100) : 0;
+      document.getElementById('utilizationPct').textContent = utilization.toFixed(1) + '%';
+      document.getElementById('utilizationBar').style.width = Math.min(utilization, 100) + '%';
+
+      // Bond capital estimate (small portion — mock a reasonable value)
+      var bondCapital = totalTVL * 0.08;
+      renderDonut(seniorTVL, juniorTVL, bondCapital);
+    } else {
+      throw new Error('Pool state unavailable');
+    }
+
+    // IRS Score for demo issuer
+    var issuerDots = [];
+    var irsIssuers = [];
+    try {
+      var score = await irsOracle.getScore(DEMO_ISSUER_TOKEN);
+      var scoreNum = Number(score);
+      irsIssuers.push({ name: 'Demo Issuer', score: scoreNum });
+      issuerDots.push({ name: 'Demo Issuer', irs: scoreNum });
+    } catch (e) {
+      // fall through
+    }
+
+    // Add mock issuers if we only have one
+    if (irsIssuers.length <= 1) {
+      if (irsIssuers.length === 0) {
+        irsIssuers = MOCK_DATA.issuers;
+        issuerDots = MOCK_DATA.issuers.map(function(is) { return { name: is.name, irs: is.score }; });
+      } else {
+        // Add mock supplementary issuers
+        irsIssuers.push({ name: 'GreenEnergy Ltd', score: 620 });
+        irsIssuers.push({ name: 'FinServ Capital', score: 340 });
+        issuerDots.push({ name: 'GreenEnergy', irs: 620 });
+        issuerDots.push({ name: 'FinServ', irs: 340 });
+      }
+    }
+
+    document.getElementById('metricIssuers').textContent = irsIssuers.length;
+    renderIRSBars(irsIssuers);
+    renderPremiumCurve(issuerDots);
+
+    // Premiums and payouts — use mock since we can't easily aggregate from events
+    document.getElementById('metricPremiums').textContent = fmt(MOCK_DATA.totalPremiums) + ' USDT';
+    document.getElementById('metricPayouts').textContent = fmt(MOCK_DATA.totalPayouts) + ' USDT';
+
+    // Try to query recent events from chain
+    var chainEvents = [];
+    try {
+      var currentBlock = await provider.getBlockNumber();
+      var fromBlock = Math.max(0, currentBlock - 50000);
+
+      // Query pool events
+      var depositFilter = pool.filters.SeniorDeposited();
+      var seniorDeposits = await pool.queryFilter(depositFilter, fromBlock, currentBlock);
+      for (var s = 0; s < seniorDeposits.length && s < 3; s++) {
+        var sev = seniorDeposits[s];
+        var sblock = await sev.getBlock();
+        chainEvents.push({
+          type: 'deposit',
+          title: 'Senior Deposit',
+          desc: fmt(sev.args && sev.args[2] ? sev.args[2] : 0n) + ' deposited to Senior Tranche',
+          time: sblock ? timeAgo(sblock.timestamp) : 'recent',
+          tx: sev.transactionHash,
+          blockNum: sev.blockNumber
+        });
+      }
+
+      var juniorFilter = pool.filters.JuniorDeposited();
+      var juniorDeposits = await pool.queryFilter(juniorFilter, fromBlock, currentBlock);
+      for (var j = 0; j < juniorDeposits.length && j < 3; j++) {
+        var jev = juniorDeposits[j];
+        var jblock = await jev.getBlock();
+        chainEvents.push({
+          type: 'deposit',
+          title: 'Junior Deposit',
+          desc: fmt(jev.args && jev.args[2] ? jev.args[2] : 0n) + ' deposited to Junior Tranche',
+          time: jblock ? timeAgo(jblock.timestamp) : 'recent',
+          tx: jev.transactionHash,
+          blockNum: jev.blockNumber
+        });
+      }
+
+      var premFilter = pool.filters.PremiumPaid();
+      var premEvents = await pool.queryFilter(premFilter, fromBlock, currentBlock);
+      for (var p = 0; p < premEvents.length && p < 3; p++) {
+        var pev = premEvents[p];
+        var pblock = await pev.getBlock();
+        chainEvents.push({
+          type: 'coverage',
+          title: 'Premium Paid',
+          desc: fmt(pev.args && pev.args[1] ? pev.args[1] : 0n) + ' premium collected',
+          time: pblock ? timeAgo(pblock.timestamp) : 'recent',
+          tx: pev.transactionHash,
+          blockNum: pev.blockNumber
+        });
+      }
+
+      // Sort by block number descending
+      chainEvents.sort(function(a, b) { return b.blockNum - a.blockNum; });
+    } catch (e) {
+      // events query failed, ignore
+    }
+
+    if (chainEvents.length > 0) {
+      renderEvents(chainEvents.slice(0, 8));
+    } else {
+      renderEvents(MOCK_DATA.events);
+    }
+
+    var now = new Date();
+    document.getElementById('lastUpdated').textContent = 'Last updated: ' + now.toLocaleTimeString();
+
+  } catch (err) {
+    console.warn('Chain read failed, using mock data:', err);
+    usedMock = true;
+
+    // Use full mock data
+    document.getElementById('metricTVL').textContent = fmt(MOCK_DATA.tvl);
+    document.getElementById('metricCoverage').textContent = fmt(MOCK_DATA.totalCoverage);
+    document.getElementById('metricPremiums').textContent = fmt(MOCK_DATA.totalPremiums) + ' USDT';
+    document.getElementById('metricPayouts').textContent = fmt(MOCK_DATA.totalPayouts) + ' USDT';
+    document.getElementById('metricRatio').textContent = (MOCK_DATA.coverageRatioBPS / 100).toFixed(1) + '%';
+    document.getElementById('metricIssuers').textContent = MOCK_DATA.activeIssuers;
+
+    var utilMock = MOCK_DATA.tvl > 0 ? (MOCK_DATA.totalCoverage / MOCK_DATA.tvl * 100) : 0;
+    document.getElementById('utilizationPct').textContent = utilMock.toFixed(1) + '%';
+    document.getElementById('utilizationBar').style.width = Math.min(utilMock, 100) + '%';
+
+    renderDonut(MOCK_DATA.seniorTVL, MOCK_DATA.juniorTVL, MOCK_DATA.bondCapital);
+    renderIRSBars(MOCK_DATA.issuers);
+
+    var mockDots = MOCK_DATA.issuers.map(function(is) { return { name: is.name, irs: is.score }; });
+    renderPremiumCurve(mockDots);
+
+    renderEvents(MOCK_DATA.events);
+
+    var now2 = new Date();
+    document.getElementById('lastUpdated').textContent = 'Last updated: ' + now2.toLocaleTimeString() + ' (mock data)';
+  }
+}
+
+// ---- Initialize ----
+renderContractsTable();
+renderPremiumCurve([]);
+loadAllData();
+</script>
+</body>
+</html>

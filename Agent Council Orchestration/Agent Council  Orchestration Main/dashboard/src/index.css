@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 10% 96%;
+    --foreground: 240 6% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 6% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 6% 10%;
+    --primary: 18 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 6% 90%;
+    --secondary-foreground: 240 6% 20%;
+    --muted: 30 6% 92%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 30 6% 92%;
+    --accent-foreground: 240 6% 10%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 6% 86%;
+    --input: 30 6% 86%;
+    --ring: 18 100% 50%;
+    --radius: 0.5rem;
+    --success: 161 37% 42%;
+    --chart-1: 18 100% 50%;
+    --chart-2: 161 37% 42%;
+    --chart-3: 220 70% 50%;
+    --chart-4: 280 65% 55%;
+    --chart-5: 45 93% 50%;
+    --sidebar-background: 30 8% 97%;
+    --sidebar-foreground: 240 4% 40%;
+    --sidebar-primary: 18 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 30 6% 93%;
+    --sidebar-accent-foreground: 240 6% 10%;
+    --sidebar-border: 30 6% 88%;
+    --sidebar-ring: 18 100% 50%;
+  }
+
+  .dark {
+    --background: 240 6% 4%;
+    --foreground: 0 0% 95%;
+    --card: 240 4% 8%;
+    --card-foreground: 0 0% 95%;
+    --popover: 240 5% 9%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 18 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4% 14%;
+    --secondary-foreground: 0 0% 85%;
+    --muted: 240 4% 14%;
+    --muted-foreground: 240 5% 50%;
+    --accent: 240 4% 12%;
+    --accent-foreground: 0 0% 95%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 100% / 0.06;
+    --input: 0 0% 100% / 0.06;
+    --ring: 18 100% 50%;
+    --radius: 0.5rem;
+    --success: 161 37% 50%;
+    --chart-1: 18 100% 50%;
+    --chart-2: 161 37% 50%;
+    --chart-3: 220 70% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 45 93% 58%;
+    --sidebar-background: 240 6% 5%;
+    --sidebar-foreground: 240 5% 55%;
+    --sidebar-primary: 18 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 4% 10%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 240 4% 12%;
+    --sidebar-ring: 18 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Hide native cursor on desktop pointer devices */
+  @media (pointer: fine) {
+    *, *::before, *::after {
+      cursor: none !important;
+    }
+  }
+
+  /* Space Grotesk for all headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+  }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.4); }
+
+/* Global card hover glow */
+.rounded-lg[class*="border"],
+.rounded-xl[class*="border"] {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Global button micro-scale */
+button, [role="button"], a[class*="btn"] {
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+button:hover, [role="button"]:hover {
+  transform: scale(1.02);
+}
+button:active, [role="button"]:active {
+  transform: scale(0.97);
+}
+
+/* Table row hover */
+tr {
+  transition: background-color 0.15s ease;
+}
+tr:hover {
+  background-color: rgba(255, 78, 0, 0.03);
+}
+
+/* Page transition */
+main, [data-page] {
+  animation: page-enter 0.3s ease both;
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Shimmer skeleton animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--border)) 50%, hsl(var(--muted)) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Hero particles */
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-18px) translateX(8px); }
+  50% { transform: translateY(-8px) translateX(-6px); }
+  75% { transform: translateY(-22px) translateX(4px); }
+}
+
+/* Pulse glow for status indicators */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 6px hsl(var(--success) / 0.3); }
+  50% { box-shadow: 0 0 16px hsl(var(--success) / 0.6); }
+}
+
+/* Connecting line animation */
+@keyframes draw-line {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Landing page animations */
+@keyframes grid-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes orb-drift {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0) translateX(0); }
+  25% { transform: translate(-50%, -50%) translateY(-30px) translateX(15px); }
+  50% { transform: translate(-50%, -50%) translateY(-10px) translateX(-20px); }
+  75% { transform: translate(-50%, -50%) translateY(-40px) translateX(10px); }
+}
+
+@keyframes blink-caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes bounce-chevron {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 0 24px rgba(255,78,0,0.3); }
+  50% { box-shadow: 0 0 40px rgba(255,78,0,0.5); }
+}
+
+/* Hero text gradient shimmer */
+@keyframes hero-text-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* CRT scan-line effect */
+@keyframes scanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100vh; }
+}
+
+/* Status dot pulse */
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Sonner dark toast override */
+[data-sonner-toaster] [data-sonner-toast] {
+  --normal-bg: hsl(240 5% 10%);
+  --normal-border: rgba(255, 78, 0, 0.2);
+  border-left: 3px solid hsl(18 100% 50%);
+}
+
+/* Hero logo animations */
+@keyframes logo-entry {
+  0% { opacity: 0; transform: scale(0); }
+  70% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes logo-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes logo-glow-pulse {
+  0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.2; transform: translate(-50%, -50%) scale(1.2); }
+}

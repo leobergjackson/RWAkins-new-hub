@@ -1,0 +1,13 @@
+# Colibrí dashboard — static SPA deploy (Netlify)
+# The dashboard is a standalone Vite SPA: it falls back to demo data when the
+# backend is absent, so this static deploy is a complete, working /send demo.
+[build]
+  base = "dashboard"
+  command = "npm install && npm run build"
+  publish = "dist"
+
+# SPA fallback so client-side routes like /send resolve on direct load.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -1,11 +1,11 @@
-// Built by vsrupeshkumar
+﻿// Built by vsrupeshkumar
 'use client'
 
 import { useState, useEffect } from 'react'
 import { recordOSEvent } from './cross-tool-intelligence'
 import { toast } from './toast'
 
-export type KubryxEventType =
+export type RWAkinsEventType =
   | 'kubryx_global_update'
   | 'kubryx_region_outage'
   | 'kubryx_recovery_trigger'
@@ -26,7 +26,7 @@ export type KubryxEventType =
 
 export interface OperationalEvent {
   id: string
-  type: KubryxEventType
+  type: RWAkinsEventType
   timestamp: string
   payload: string
   description: string
@@ -103,7 +103,7 @@ let globalState: GlobalOperationsState = {
   stabilizationFactor: 99.4
 }
 
-const eventListeners = new Map<KubryxEventType, Set<(event: OperationalEvent) => void>>()
+const eventListeners = new Map<RWAkinsEventType, Set<(event: OperationalEvent) => void>>()
 const stateListeners = new Set<() => void>()
 
 function notifyStateListeners() {
@@ -127,7 +127,7 @@ if (typeof window !== 'undefined') {
 }
 
 // Global Event Bus Implementation
-export function publishEvent(type: KubryxEventType, payload: string, description: string) {
+export function publishEvent(type: RWAkinsEventType, payload: string, description: string) {
   const newEvent: OperationalEvent = {
     id: `evt-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
     type,
@@ -155,21 +155,21 @@ export function publishEvent(type: KubryxEventType, payload: string, description
   recordOSEvent('Global Operations Layer', `[${type}] ${description}`, 'Event Bus')
 }
 
-export function subscribeToEvent(type: KubryxEventType, callback: (event: OperationalEvent) => void) {
+export function subscribeToEvent(type: RWAkinsEventType, callback: (event: OperationalEvent) => void) {
   if (!eventListeners.has(type)) {
     eventListeners.set(type, new Set())
   }
   eventListeners.get(type)!.add(callback)
 }
 
-export function unsubscribeFromEvent(type: KubryxEventType, callback: (event: OperationalEvent) => void) {
+export function unsubscribeFromEvent(type: RWAkinsEventType, callback: (event: OperationalEvent) => void) {
   const listeners = eventListeners.get(type)
   if (listeners) {
     listeners.delete(callback)
   }
 }
 
-export function replayEvents(type?: KubryxEventType): OperationalEvent[] {
+export function replayEvents(type?: RWAkinsEventType): OperationalEvent[] {
   if (type) {
     return globalState.events.filter(e => e.type === type)
   }

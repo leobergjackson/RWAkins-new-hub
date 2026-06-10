@@ -1,8 +1,8 @@
-// Built by vsrupeshkumar
+﻿// Built by vsrupeshkumar
 // Real Mantle Sepolia job PDAs created 2026-05-23.
 // Owner wallet: ge6xBg6ScAVWyN1TK6WKk2DcPD46oemCjMcu6vXMWfX
 // Program:      66DXeSqBccWxWWw9S21vxe2Mvvqqkmw5KsK5jqA42quz
-// Seed key pattern: sha256("kubryx:trustmesh:job:<name>-v1")
+// Seed key pattern: sha256("rwakins:trustmesh:job:<name>-v1")
 // Re-run trustmesh-program/seed-devnet.ts to recreate (idempotent).
 
 export const TRUSTMESH_PROGRAM_ID = "66DXeSqBccWxWWw9S21vxe2Mvvqqkmw5KsK5jqA42quz"

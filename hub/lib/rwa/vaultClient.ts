@@ -1,5 +1,5 @@
-// Built by vsrupeshkumar
-// viem-based read/write client for the KubryxRWAVault on Mantle Sepolia.
+﻿// Built by vsrupeshkumar
+// viem-based read/write client for the RWAkinsRWAVault on Mantle Sepolia.
 // Reads go over a public HTTP RPC; writes go through the user's injected wallet
 // (the hub's raw EIP-1193 provider), matching the rest of the hub's on-chain layer.
 'use client'

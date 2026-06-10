@@ -16,7 +16,7 @@ type Cell = {
 }
 
 export default function LiveStatsStrip() {
-  const { prices } = usePrices(['ethereum', 'solana', 'stellar', 'arbitrum', 'bitcoin'])
+  const { prices } = usePrices(['ethereum', 'mantle', 'bitcoin'])
   const mesh = useTrustMesh()
   const [tick, setTick] = useState(0)
   useEffect(() => {
@@ -35,16 +35,14 @@ export default function LiveStatsStrip() {
   }
 
   const eth = prices.ethereum
-  const sol = prices.solana
-  const xlm = prices.stellar
-  const arb = prices.arbitrum
+  const mnt = prices.mantle
+  const btc = prices.bitcoin
 
   const cells: Cell[] = [
-    { label: 'Mantle Sepolia', value: mesh.currentSlot > 0 ? `slot ${mesh.currentSlot.toLocaleString()}` : 'connecting…', sub: mesh.isLive ? `${mesh.jobs.length} on-chain jobs` : 'reconnecting', swatch: '#9945FF' },
+    { label: 'Mantle Sepolia', value: mesh.currentSlot > 0 ? `block ${mesh.currentSlot.toLocaleString()}` : 'connecting…', sub: mesh.isLive ? `${mesh.jobs.length} on-chain jobs` : 'reconnecting', swatch: '#163b2c' },
+    { label: 'MNT',           value: fmt(mnt?.usd, 4), sub: change(mnt?.change24h).text, swatch: '#2f6b54' },
     { label: 'ETH',           value: fmt(eth?.usd, 0), sub: change(eth?.change24h).text, swatch: '#6366F1' },
-    { label: 'MNT',           value: fmt(sol?.usd, 2), sub: change(sol?.change24h).text, swatch: '#14F195' },
-    { label: 'MNT',           value: fmt(xlm?.usd, 4), sub: change(xlm?.change24h).text, swatch: '#3B82F6' },
-    { label: 'ARB',           value: fmt(arb?.usd, 3), sub: change(arb?.change24h).text, swatch: '#28A0F0' },
+    { label: 'BTC',           value: fmt(btc?.usd, 0), sub: change(btc?.change24h).text, swatch: '#F7931A' },
   ]
 
   return (

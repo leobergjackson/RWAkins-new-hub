@@ -1,6 +1,6 @@
-// Built by vsrupeshkumar
+﻿// Built by vsrupeshkumar
 // Cross-module platform state — persists across page navigations via localStorage.
-// Every Kubryx module writes its live data here; other modules read it.
+// Every RWAkins module writes its live data here; other modules read it.
 'use client'
 
 import { createContext, useCallback, useContext, useState, type ReactNode } from 'react'

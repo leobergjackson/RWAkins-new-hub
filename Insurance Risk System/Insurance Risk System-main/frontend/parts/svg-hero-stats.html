@@ -1,0 +1,411 @@
+<!-- ============================================
+     CoverFi — SVG Hero & Stat Icons
+     Claymorphism 3D style, dark-theme DeFi dashboard
+     Palette: Gold #F0B90B, Blue #1E9FFF, Gray #848E9C, Dark #181C21
+     ============================================ -->
+
+
+<!-- ============================================
+     1. svg-hero-shield (200x200)
+     Large protective shield + lock, gold gradient, clay 3D
+     Used behind hero text at ~15% opacity
+     ============================================ -->
+<svg id="svg-hero-shield" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- Main shield body gradient: lighter gold top, deeper gold bottom -->
+    <linearGradient id="hero-shield-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5D44A"/>
+      <stop offset="50%" stop-color="#F0B90B"/>
+      <stop offset="100%" stop-color="#C4960A"/>
+    </linearGradient>
+    <!-- Inner shield face gradient for depth -->
+    <linearGradient id="hero-shield-inner-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D4A20A"/>
+      <stop offset="100%" stop-color="#9B7508"/>
+    </linearGradient>
+    <!-- Lock body gradient -->
+    <linearGradient id="hero-lock-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#D0D5DD" stop-opacity="0.9"/>
+    </linearGradient>
+    <!-- Lock shackle gradient -->
+    <linearGradient id="hero-shackle-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8E8E8"/>
+      <stop offset="100%" stop-color="#B0B5BD"/>
+    </linearGradient>
+    <!-- Highlight gloss on shield -->
+    <linearGradient id="hero-shield-gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.25"/>
+      <stop offset="40%" stop-color="#FFFFFF" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Clay drop shadow filter -->
+    <filter id="hero-shield-shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <!-- Softer inner shadow for lock -->
+    <filter id="hero-lock-shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Shield outer shape — rounded pointed bottom -->
+  <path d="
+    M100 18
+    C68 18 38 28 28 38
+    L28 90
+    C28 130 58 162 100 185
+    C142 162 172 130 172 90
+    L172 38
+    C162 28 132 18 100 18
+    Z"
+    fill="url(#hero-shield-grad)"
+    filter="url(#hero-shield-shadow)"
+  />
+
+  <!-- Inner shield recessed face -->
+  <path d="
+    M100 32
+    C74 32 50 40 42 48
+    L42 88
+    C42 122 66 150 100 170
+    C134 150 158 122 158 88
+    L158 48
+    C150 40 126 32 100 32
+    Z"
+    fill="url(#hero-shield-inner-grad)"
+  />
+
+  <!-- Gloss overlay on outer shield -->
+  <path d="
+    M100 18
+    C68 18 38 28 28 38
+    L28 90
+    C28 100 32 110 38 120
+    L162 50
+    L172 38
+    C162 28 132 18 100 18
+    Z"
+    fill="url(#hero-shield-gloss)"
+  />
+
+  <!-- Lock shackle (U-shape) -->
+  <path d="
+    M85 88
+    L85 72
+    C85 60 90 54 100 54
+    C110 54 115 60 115 72
+    L115 88"
+    fill="none"
+    stroke="url(#hero-shackle-grad)"
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    filter="url(#hero-lock-shadow)"
+  />
+
+  <!-- Lock body (rounded rect) -->
+  <rect x="78" y="86" width="44" height="34" rx="6" ry="6"
+        fill="url(#hero-lock-grad)"
+        filter="url(#hero-lock-shadow)"
+  />
+
+  <!-- Keyhole -->
+  <circle cx="100" cy="99" r="5" fill="#9B7508"/>
+  <rect x="97.5" y="102" width="5" height="8" rx="1.5" fill="#9B7508"/>
+</svg>
+
+
+<!-- ============================================
+     2. svg-stat-tvl (40x40)
+     Stacked coins — 3 coins, gold tones, clay shadow
+     Represents "Total Value Locked"
+     ============================================ -->
+<svg id="svg-stat-tvl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <defs>
+    <!-- Coin face gradient -->
+    <linearGradient id="tvl-coin-face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5D44A"/>
+      <stop offset="100%" stop-color="#D4A20A"/>
+    </linearGradient>
+    <!-- Coin edge (side) gradient -->
+    <linearGradient id="tvl-coin-edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C4960A"/>
+      <stop offset="100%" stop-color="#9B7508"/>
+    </linearGradient>
+    <!-- Coin highlight -->
+    <linearGradient id="tvl-coin-gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Clay shadow -->
+    <filter id="tvl-shadow" x="-20%" y="-10%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#tvl-shadow)">
+    <!-- Bottom coin (3rd) — offset right & down -->
+    <g transform="translate(4, 4)">
+      <!-- Edge -->
+      <ellipse cx="18" cy="28" rx="13" ry="4.5" fill="url(#tvl-coin-edge)"/>
+      <rect x="5" y="25.5" width="26" height="2.5" fill="url(#tvl-coin-edge)"/>
+      <!-- Face -->
+      <ellipse cx="18" cy="25.5" rx="13" ry="4.5" fill="url(#tvl-coin-face)"/>
+      <ellipse cx="18" cy="25.5" rx="9" ry="3" fill="none" stroke="#C4960A" stroke-width="0.5" opacity="0.5"/>
+    </g>
+
+    <!-- Middle coin (2nd) -->
+    <g transform="translate(2, 0)">
+      <!-- Edge -->
+      <ellipse cx="18" cy="23" rx="13" ry="4.5" fill="url(#tvl-coin-edge)"/>
+      <rect x="5" y="20.5" width="26" height="2.5" fill="url(#tvl-coin-edge)"/>
+      <!-- Face -->
+      <ellipse cx="18" cy="20.5" rx="13" ry="4.5" fill="url(#tvl-coin-face)"/>
+      <ellipse cx="18" cy="20.5" rx="9" ry="3" fill="none" stroke="#C4960A" stroke-width="0.5" opacity="0.5"/>
+    </g>
+
+    <!-- Top coin (1st) -->
+    <g transform="translate(0, -4)">
+      <!-- Edge -->
+      <ellipse cx="18" cy="18" rx="13" ry="4.5" fill="url(#tvl-coin-edge)"/>
+      <rect x="5" y="15.5" width="26" height="2.5" fill="url(#tvl-coin-edge)"/>
+      <!-- Face -->
+      <ellipse cx="18" cy="15.5" rx="13" ry="4.5" fill="url(#tvl-coin-face)"/>
+      <!-- Inner ring detail -->
+      <ellipse cx="18" cy="15.5" rx="9" ry="3" fill="none" stroke="#C4960A" stroke-width="0.5" opacity="0.5"/>
+      <!-- Gloss -->
+      <ellipse cx="16" cy="14.5" rx="7" ry="2" fill="url(#tvl-coin-gloss)"/>
+    </g>
+  </g>
+</svg>
+
+
+<!-- ============================================
+     3. svg-stat-issuers (40x40)
+     Building/institution — columns facade, gray/blue, clay depth
+     Represents "Active Issuers"
+     ============================================ -->
+<svg id="svg-stat-issuers" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <defs>
+    <!-- Building body gradient — blue-gray tones -->
+    <linearGradient id="issuers-body-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A8B8CC"/>
+      <stop offset="100%" stop-color="#6B7A8E"/>
+    </linearGradient>
+    <!-- Pediment (top triangle) gradient -->
+    <linearGradient id="issuers-pediment-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B8CBDF"/>
+      <stop offset="100%" stop-color="#8A9DB5"/>
+    </linearGradient>
+    <!-- Column gradient -->
+    <linearGradient id="issuers-col-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C0CCDA"/>
+      <stop offset="30%" stop-color="#DCE4ED"/>
+      <stop offset="100%" stop-color="#97A7BA"/>
+    </linearGradient>
+    <!-- Accent blue strip -->
+    <linearGradient id="issuers-accent-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3AAFFF"/>
+      <stop offset="100%" stop-color="#1E9FFF"/>
+    </linearGradient>
+    <!-- Clay shadow -->
+    <filter id="issuers-shadow" x="-15%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#issuers-shadow)">
+    <!-- Base / steps -->
+    <rect x="5" y="32" width="30" height="3" rx="1" fill="#6B7A8E"/>
+    <rect x="7" y="30" width="26" height="2.5" rx="0.8" fill="#7D8C9E"/>
+
+    <!-- Building body -->
+    <rect x="8" y="15" width="24" height="15.5" rx="1" fill="url(#issuers-body-grad)"/>
+
+    <!-- Columns — 4 pillars -->
+    <rect x="10.5" y="16" width="2.8" height="13" rx="1.2" fill="url(#issuers-col-grad)"/>
+    <rect x="16.2" y="16" width="2.8" height="13" rx="1.2" fill="url(#issuers-col-grad)"/>
+    <rect x="21.8" y="16" width="2.8" height="13" rx="1.2" fill="url(#issuers-col-grad)"/>
+    <rect x="27.2" y="16" width="2.8" height="13" rx="1.2" fill="url(#issuers-col-grad)"/>
+
+    <!-- Lintel beam across top of columns -->
+    <rect x="8" y="14" width="24" height="2.5" rx="0.8" fill="url(#issuers-pediment-grad)"/>
+
+    <!-- Pediment (triangular roof) -->
+    <path d="M7 14.5 L20 5 L33 14.5 Z" fill="url(#issuers-pediment-grad)"/>
+
+    <!-- Pediment highlight edge -->
+    <path d="M9 14 L20 6.5 L31 14" fill="none" stroke="#D0DAEA" stroke-width="0.6" opacity="0.6"/>
+
+    <!-- Door opening (center) -->
+    <rect x="17" y="23" width="6" height="7.5" rx="3" fill="#3D4F63"/>
+
+    <!-- Blue accent line at base of pediment -->
+    <rect x="10" y="14" width="20" height="1" rx="0.4" fill="url(#issuers-accent-grad)" opacity="0.7"/>
+  </g>
+</svg>
+
+
+<!-- ============================================
+     4. svg-stat-coverage (40x40)
+     Shield + checkmark — gold/green, clay shadow
+     Represents "Coverage Written"
+     ============================================ -->
+<svg id="svg-stat-coverage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <defs>
+    <!-- Shield gradient: gold top to deeper gold bottom -->
+    <linearGradient id="coverage-shield-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5D44A"/>
+      <stop offset="50%" stop-color="#F0B90B"/>
+      <stop offset="100%" stop-color="#C4960A"/>
+    </linearGradient>
+    <!-- Inner shield face -->
+    <linearGradient id="coverage-inner-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D4A20A"/>
+      <stop offset="100%" stop-color="#9B7508"/>
+    </linearGradient>
+    <!-- Checkmark green gradient -->
+    <linearGradient id="coverage-check-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5BDE7E"/>
+      <stop offset="100%" stop-color="#2EAD50"/>
+    </linearGradient>
+    <!-- Gloss -->
+    <linearGradient id="coverage-gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Clay shadow -->
+    <filter id="coverage-shadow" x="-15%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#coverage-shadow)">
+    <!-- Shield outer shape -->
+    <path d="
+      M20 4
+      C14 4 8 7 6 9
+      L6 20
+      C6 28 12 34 20 37
+      C28 34 34 28 34 20
+      L34 9
+      C32 7 26 4 20 4
+      Z"
+      fill="url(#coverage-shield-grad)"
+    />
+
+    <!-- Inner recessed shield face -->
+    <path d="
+      M20 7.5
+      C15.5 7.5 10.5 10 9 11.5
+      L9 19.5
+      C9 26 13.5 31 20 33.5
+      C26.5 31 31 26 31 19.5
+      L31 11.5
+      C29.5 10 24.5 7.5 20 7.5
+      Z"
+      fill="url(#coverage-inner-grad)"
+    />
+
+    <!-- Gloss highlight on upper shield -->
+    <path d="
+      M20 4
+      C14 4 8 7 6 9
+      L6 16
+      C12 14 28 14 34 16
+      L34 9
+      C32 7 26 4 20 4
+      Z"
+      fill="url(#coverage-gloss)"
+    />
+
+    <!-- Checkmark -->
+    <path d="M13 20 L18 25.5 L27.5 14.5"
+      fill="none"
+      stroke="url(#coverage-check-grad)"
+      stroke-width="3.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </g>
+</svg>
+
+
+<!-- ============================================
+     5. svg-stat-payouts (40x40)
+     Arrow transfer + coin — gold/blue, clay shadow
+     Represents "Payouts Executed"
+     ============================================ -->
+<svg id="svg-stat-payouts" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <defs>
+    <!-- Arrow gradient: blue -->
+    <linearGradient id="payouts-arrow-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3AAFFF"/>
+      <stop offset="100%" stop-color="#1E9FFF"/>
+    </linearGradient>
+    <!-- Coin face gradient -->
+    <linearGradient id="payouts-coin-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5D44A"/>
+      <stop offset="100%" stop-color="#D4A20A"/>
+    </linearGradient>
+    <!-- Coin edge gradient -->
+    <linearGradient id="payouts-coin-edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C4960A"/>
+      <stop offset="100%" stop-color="#9B7508"/>
+    </linearGradient>
+    <!-- Arrow gloss -->
+    <linearGradient id="payouts-arrow-gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Clay shadow -->
+    <filter id="payouts-shadow" x="-15%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+    <!-- Smaller shadow for coin -->
+    <filter id="payouts-coin-shadow" x="-20%" y="-15%" width="140%" height="145%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#payouts-shadow)">
+    <!-- Curved arrow path (left to right arc) -->
+    <path d="M6 26 C6 12 20 8 32 14"
+      fill="none"
+      stroke="url(#payouts-arrow-grad)"
+      stroke-width="3.5"
+      stroke-linecap="round"
+    />
+
+    <!-- Arrowhead -->
+    <path d="M29 9 L33 14.5 L27 16"
+      fill="url(#payouts-arrow-grad)"
+      stroke="url(#payouts-arrow-grad)"
+      stroke-width="1"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+    />
+
+    <!-- Gloss on arrow -->
+    <path d="M8 24 C8 14 18 10 28 14"
+      fill="none"
+      stroke="url(#payouts-arrow-gloss)"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- Coin at bottom-right -->
+  <g filter="url(#payouts-coin-shadow)">
+    <!-- Coin edge -->
+    <ellipse cx="28" cy="31" rx="8.5" ry="3.2" fill="url(#payouts-coin-edge)"/>
+    <rect x="19.5" y="29" width="17" height="2" fill="url(#payouts-coin-edge)"/>
+    <!-- Coin face -->
+    <ellipse cx="28" cy="29" rx="8.5" ry="3.2" fill="url(#payouts-coin-grad)"/>
+    <!-- Inner ring -->
+    <ellipse cx="28" cy="29" rx="5.5" ry="2" fill="none" stroke="#C4960A" stroke-width="0.5" opacity="0.6"/>
+    <!-- Gloss on coin -->
+    <ellipse cx="26.5" cy="28.2" rx="4" ry="1.2" fill="url(#payouts-arrow-gloss)"/>
+  </g>
+</svg>

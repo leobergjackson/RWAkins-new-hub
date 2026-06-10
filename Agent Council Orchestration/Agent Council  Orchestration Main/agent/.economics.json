@@ -1,0 +1,76 @@
+{
+  "creatorScores": {
+    "test-creator": {
+      "creatorId": "test-creator",
+      "score": 87,
+      "tier": "high",
+      "breakdown": {
+        "viewScore": 100,
+        "likeScore": 80,
+        "commentScore": 100,
+        "watchTimeScore": 100,
+        "growthScore": 40
+      },
+      "tipMultiplier": 1.5,
+      "updatedAt": "2026-03-22T16:45:51.725Z"
+    },
+    "breakdown-test": {
+      "creatorId": "breakdown-test",
+      "score": 23,
+      "tier": "low",
+      "breakdown": {
+        "viewScore": 10,
+        "likeScore": 50,
+        "commentScore": 20,
+        "watchTimeScore": 20,
+        "growthScore": 20
+      },
+      "tipMultiplier": 0.5,
+      "updatedAt": "2026-03-22T16:45:51.738Z"
+    }
+  },
+  "scoreHistory": {
+    "test-creator": [
+      {
+        "date": "2026-03-22",
+        "score": 87,
+        "tier": "high"
+      }
+    ],
+    "breakdown-test": [
+      {
+        "date": "2026-03-22",
+        "score": 23,
+        "tier": "low"
+      }
+    ]
+  },
+  "yieldDeposited": 0,
+  "yieldEarned": 0,
+  "yieldApy": 4.5,
+  "lastYieldDepositAt": null,
+  "lastYieldWithdrawAt": null,
+  "splitTotals": {
+    "totalProcessed": 0,
+    "totalCreator": 0,
+    "totalPlatform": 0,
+    "totalCommunity": 0,
+    "tipCount": 0
+  },
+  "treasuryHoldings": {
+    "USDT": 0,
+    "XAUt": 0,
+    "native": 0
+  },
+  "lastRebalanceAt": null,
+  "creatorProfiles": {},
+  "communityPool": {
+    "balance": 0,
+    "totalContributed": 0,
+    "contributions": [],
+    "distributions": [],
+    "pendingVotes": []
+  },
+  "awardedBonuses": [],
+  "creatorGoals": []
+}

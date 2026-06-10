@@ -1,4 +1,4 @@
-// Built by vsrupeshkumar
+﻿// Built by vsrupeshkumar
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -50,16 +50,16 @@ export default function Navbar() {
               width: 32, height: 32, borderRadius: 10, overflow: 'hidden',
               background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6 55%, #EC4899)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 16, fontWeight: 900, color: '#fff', position: 'relative',
+              fontSize: 9, fontWeight: 900, color: '#fff', position: 'relative', letterSpacing: '-0.02em',
             }}>
               <span style={{
                 position: 'absolute', inset: 0, opacity: 0.6,
                 background: 'radial-gradient(60% 60% at 30% 25%, rgba(255,255,255,0.5) 0%, transparent 60%)',
               }} />
-              <span style={{ position: 'relative' }}>K</span>
+              <span style={{ position: 'relative' }}>RWA</span>
             </span>
             <span style={{ fontWeight: 800, fontSize: 18, color: '#0A0F2E', letterSpacing: '-0.02em' }}>
-              Kubryx
+              RWAkins
             </span>
           </Link>
 
@@ -85,7 +85,7 @@ export default function Navbar() {
             }}>
               Explore Tools <ArrowRight size={15} strokeWidth={2.2} />
             </Link>
-            <Link href="/invoice" className="btn-gradient" style={{
+            <Link href="/treasury" className="btn-gradient" style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               borderRadius: 999, padding: '8px 18px', fontSize: 14,
               fontWeight: 600, textDecoration: 'none', color: '#fff',
@@ -148,7 +148,7 @@ export default function Navbar() {
             }}>
               Explore Tools
             </Link>
-            <Link href="/invoice" onClick={() => setOpen(false)} className="btn-gradient" style={{
+            <Link href="/treasury" onClick={() => setOpen(false)} className="btn-gradient" style={{
               display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 6,
               borderRadius: 999, padding: '12px 20px', fontSize: 15, fontWeight: 600,
               textDecoration: 'none', color: '#fff',

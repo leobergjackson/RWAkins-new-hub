@@ -1,0 +1,6 @@
+{
+  "include": ["dist/services/**", "dist/routes/**", "dist/utils/**", "dist/middleware/**", "dist/core/**"],
+  "exclude": ["dist/__tests__/**", "dist/services/mcp-server*", "node_modules/**"],
+  "reporter": ["text-summary"],
+  "all": false
+}

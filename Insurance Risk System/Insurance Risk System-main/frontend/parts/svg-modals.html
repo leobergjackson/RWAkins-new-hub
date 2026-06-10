@@ -1,0 +1,449 @@
+<!-- ============================================================
+     SVG Modal Illustrations — CoverFi DeFi Dashboard
+     1. svg-modal-success  (120x120) — Minimalist line style
+     2. svg-modal-trophy   (120x120) — Clay 3D style
+     3. svg-empty-vault    (200x160) — Clay 3D style
+     Palette: Gold #F0B90B, Blue #1E9FFF, Gray #848E9C,
+              Green #0ECB81, Red #F6465D
+     ============================================================ -->
+
+
+<!-- ==================== 1. SUCCESS CHECKMARK ==================== -->
+<!-- Minimalist LINE style — strokes, not fills                     -->
+
+<svg id="svg-modal-success" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- Gold gradient for circle stroke -->
+    <linearGradient id="success-gold-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0B90B"/>
+      <stop offset="50%" stop-color="#FFD54F"/>
+      <stop offset="100%" stop-color="#F0B90B"/>
+    </linearGradient>
+
+    <!-- Lighter gold for rays -->
+    <linearGradient id="success-ray-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F0B90B" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#F0B90B" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <!-- Subtle outer glow -->
+    <filter id="success-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.94
+                0 0 0 0 0.73
+                0 0 0 0 0.04
+                0 0 0 0.25 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Radiating lines (8 rays) around the circle -->
+  <g filter="url(#success-glow)">
+    <!-- Ray top -->
+    <line x1="60" y1="8"  x2="60" y2="16" stroke="url(#success-ray-grad)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Ray top-right -->
+    <line x1="96.8" y1="23.2" x2="91.1" y2="28.9" stroke="url(#success-ray-grad)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Ray right -->
+    <line x1="112" y1="60" x2="104" y2="60" stroke="url(#success-ray-grad)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Ray bottom-right -->
+    <line x1="96.8" y1="96.8" x2="91.1" y2="91.1" stroke="url(#success-ray-grad)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Ray bottom -->
+    <line x1="60" y1="112" x2="60" y2="104" stroke="url(#success-ray-grad)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Ray bottom-left -->
+    <line x1="23.2" y1="96.8" x2="28.9" y2="91.1" stroke="url(#success-ray-grad)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Ray left -->
+    <line x1="8" y1="60"  x2="16" y2="60" stroke="url(#success-ray-grad)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Ray top-left -->
+    <line x1="23.2" y1="23.2" x2="28.9" y2="28.9" stroke="url(#success-ray-grad)" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Main circle — stroke only, no fill -->
+  <circle cx="60" cy="60" r="36"
+          fill="none"
+          stroke="url(#success-gold-stroke)"
+          stroke-width="3"
+          stroke-linecap="round"
+          filter="url(#success-glow)"/>
+
+  <!-- Checkmark — gold filled polyline -->
+  <polyline points="43,62 54,73 77,48"
+            fill="none"
+            stroke="#F0B90B"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            filter="url(#success-glow)"/>
+</svg>
+
+
+<!-- ==================== 2. TROPHY ==================== -->
+<!-- Clay 3D FILL style                                   -->
+
+<svg id="svg-modal-trophy" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <!-- Main gold body gradient -->
+    <linearGradient id="trophy-gold-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD54F"/>
+      <stop offset="35%" stop-color="#F0B90B"/>
+      <stop offset="70%" stop-color="#D4A200"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+
+    <!-- Highlight gold for 3D shine -->
+    <linearGradient id="trophy-gold-highlight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3B0"/>
+      <stop offset="100%" stop-color="#F0B90B"/>
+    </linearGradient>
+
+    <!-- Dark gold for shadow areas -->
+    <linearGradient id="trophy-gold-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D4A200"/>
+      <stop offset="100%" stop-color="#8B6914"/>
+    </linearGradient>
+
+    <!-- Base gradient -->
+    <linearGradient id="trophy-base-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F0B90B"/>
+      <stop offset="50%" stop-color="#D4A200"/>
+      <stop offset="100%" stop-color="#8B6914"/>
+    </linearGradient>
+
+    <!-- Sparkle gradient -->
+    <radialGradient id="trophy-sparkle" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#FFF3B0"/>
+      <stop offset="100%" stop-color="#F0B90B" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Clay 3D shadow filter -->
+    <filter id="trophy-shadow" x="-15%" y="-10%" width="130%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+      <feOffset in="blur" dx="2" dy="4" result="offset"/>
+      <feColorMatrix in="offset" type="matrix"
+        values="0 0 0 0 0.1
+                0 0 0 0 0.08
+                0 0 0 0 0.02
+                0 0 0 0.35 0" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Inner bevel highlight -->
+    <filter id="trophy-bevel" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="3" specularConstant="0.6"
+                          specularExponent="20" result="spec">
+        <fePointLight x="40" y="20" z="80"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specOut"/>
+      <feMerge>
+        <feMergeNode in="SourceGraphic"/>
+        <feMergeNode in="specOut"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#trophy-shadow)">
+    <!-- Trophy cup body -->
+    <path d="M42,28 L78,28 L74,68 Q72,78 60,80 Q48,78 46,68 Z"
+          fill="url(#trophy-gold-body)"
+          filter="url(#trophy-bevel)"/>
+
+    <!-- Cup highlight (left side shine) -->
+    <path d="M46,30 L54,30 L52,66 Q51,74 50,74 Q47,72 48,66 Z"
+          fill="url(#trophy-gold-highlight)" opacity="0.4"/>
+
+    <!-- Left handle -->
+    <path d="M42,34 Q26,34 26,50 Q26,62 38,64"
+          fill="none"
+          stroke="url(#trophy-gold-shadow)"
+          stroke-width="5"
+          stroke-linecap="round"/>
+    <!-- Left handle highlight -->
+    <path d="M42,34 Q28,34 28,49 Q28,60 38,62"
+          fill="none"
+          stroke="url(#trophy-gold-highlight)"
+          stroke-width="2"
+          stroke-linecap="round"
+          opacity="0.5"/>
+
+    <!-- Right handle -->
+    <path d="M78,34 Q94,34 94,50 Q94,62 82,64"
+          fill="none"
+          stroke="url(#trophy-gold-shadow)"
+          stroke-width="5"
+          stroke-linecap="round"/>
+    <!-- Right handle highlight -->
+    <path d="M78,34 Q92,34 92,49 Q92,60 82,62"
+          fill="none"
+          stroke="url(#trophy-gold-highlight)"
+          stroke-width="2"
+          stroke-linecap="round"
+          opacity="0.5"/>
+
+    <!-- Stem -->
+    <rect x="55" y="80" width="10" height="12" rx="2"
+          fill="url(#trophy-gold-shadow)"/>
+
+    <!-- Base platform -->
+    <rect x="40" y="92" width="40" height="8" rx="3"
+          fill="url(#trophy-base-grad)"
+          filter="url(#trophy-bevel)"/>
+
+    <!-- Base bottom shadow -->
+    <ellipse cx="60" cy="102" rx="22" ry="3"
+             fill="#8B6914" opacity="0.25"/>
+
+    <!-- Rim at top of cup -->
+    <rect x="40" y="26" width="40" height="5" rx="2.5"
+          fill="url(#trophy-gold-highlight)"
+          filter="url(#trophy-bevel)"/>
+  </g>
+
+  <!-- Sparkle above trophy -->
+  <g>
+    <!-- Main star sparkle -->
+    <path d="M60,8 L61.5,13 L67,14 L62,16.5 L63,22 L60,18 L57,22 L58,16.5 L53,14 L58.5,13 Z"
+          fill="url(#trophy-sparkle)"/>
+    <!-- Small sparkle left -->
+    <path d="M38,16 L39,19 L42,19.5 L39.5,21 L40,24 L38,21.5 L36,24 L36.5,21 L34,19.5 L37,19 Z"
+          fill="#FFF3B0" opacity="0.7" transform="scale(0.6) translate(30,10)"/>
+    <!-- Small sparkle right -->
+    <path d="M80,12 L81,15 L84,15.5 L81.5,17 L82,20 L80,17.5 L78,20 L78.5,17 L76,15.5 L79,15 Z"
+          fill="#FFF3B0" opacity="0.5" transform="scale(0.5) translate(82,10)"/>
+  </g>
+</svg>
+
+
+<!-- ==================== 3. EMPTY VAULT ==================== -->
+<!-- Clay 3D FILL style                                        -->
+
+<svg id="svg-empty-vault" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 200 160" width="200" height="160">
+  <defs>
+    <!-- Vault body gradient (gray-blue) -->
+    <linearGradient id="vault-body-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5A6577"/>
+      <stop offset="40%" stop-color="#4A5568"/>
+      <stop offset="100%" stop-color="#374151"/>
+    </linearGradient>
+
+    <!-- Vault door outer gradient -->
+    <linearGradient id="vault-door-outer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6B7A8D"/>
+      <stop offset="50%" stop-color="#5A6577"/>
+      <stop offset="100%" stop-color="#3D4A5C"/>
+    </linearGradient>
+
+    <!-- Vault door inner / opened panel gradient -->
+    <linearGradient id="vault-door-inner" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7B8A9D"/>
+      <stop offset="100%" stop-color="#4A5568"/>
+    </linearGradient>
+
+    <!-- Interior dark gradient -->
+    <linearGradient id="vault-interior" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2D3748"/>
+      <stop offset="100%" stop-color="#1A202C"/>
+    </linearGradient>
+
+    <!-- Shelf gradient -->
+    <linearGradient id="vault-shelf" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4A5568"/>
+      <stop offset="100%" stop-color="#374151"/>
+    </linearGradient>
+
+    <!-- Gold accent gradient for handle -->
+    <linearGradient id="vault-gold-accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD54F"/>
+      <stop offset="40%" stop-color="#F0B90B"/>
+      <stop offset="100%" stop-color="#D4A200"/>
+    </linearGradient>
+
+    <!-- Highlight for clay 3D feel -->
+    <linearGradient id="vault-highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Blue accent for subtle tint -->
+    <linearGradient id="vault-blue-tint" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E9FFF" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1E9FFF" stop-opacity="0.02"/>
+    </linearGradient>
+
+    <!-- Clay 3D drop shadow -->
+    <filter id="vault-shadow" x="-10%" y="-10%" width="130%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+      <feOffset in="blur" dx="3" dy="5" result="offset"/>
+      <feColorMatrix in="offset" type="matrix"
+        values="0 0 0 0 0.08
+                0 0 0 0 0.06
+                0 0 0 0 0.12
+                0 0 0 0.4 0" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle inner shadow for depth -->
+    <filter id="vault-inner-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+      <feOffset in="blur" dx="1" dy="2" result="offset"/>
+      <feColorMatrix in="offset" type="matrix"
+        values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0.3 0" result="shadow"/>
+      <feComposite in="shadow" in2="SourceGraphic" operator="atop"/>
+    </filter>
+
+    <!-- Bevel light for 3D surfaces -->
+    <filter id="vault-bevel" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="2" specularConstant="0.4"
+                          specularExponent="15" result="spec">
+        <fePointLight x="60" y="20" z="100"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specOut"/>
+      <feMerge>
+        <feMergeNode in="SourceGraphic"/>
+        <feMergeNode in="specOut"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Ground shadow (ellipse beneath vault) -->
+  <ellipse cx="100" cy="148" rx="70" ry="6"
+           fill="#2D3748" opacity="0.2"/>
+
+  <g filter="url(#vault-shadow)">
+
+    <!-- === VAULT BODY (main box) === -->
+    <rect x="40" y="24" width="120" height="120" rx="6"
+          fill="url(#vault-body-grad)"
+          filter="url(#vault-bevel)"/>
+
+    <!-- Body highlight strip (top edge shine) -->
+    <rect x="40" y="24" width="120" height="30" rx="6"
+          fill="url(#vault-highlight)"/>
+
+    <!-- Blue subtle tint overlay -->
+    <rect x="40" y="24" width="120" height="120" rx="6"
+          fill="url(#vault-blue-tint)"/>
+
+    <!-- === INTERIOR (visible through open door) === -->
+    <rect x="48" y="32" width="90" height="104" rx="3"
+          fill="url(#vault-interior)"/>
+
+    <!-- Shelves inside vault -->
+    <!-- Top shelf -->
+    <rect x="50" y="56" width="86" height="4" rx="1"
+          fill="url(#vault-shelf)"/>
+    <!-- Middle shelf -->
+    <rect x="50" y="84" width="86" height="4" rx="1"
+          fill="url(#vault-shelf)"/>
+    <!-- Bottom shelf -->
+    <rect x="50" y="112" width="86" height="4" rx="1"
+          fill="url(#vault-shelf)"/>
+
+    <!-- Emptiness indicators — subtle scattered lines -->
+    <!-- Dust line top shelf area -->
+    <line x1="62" y1="48" x2="74" y2="48"
+          stroke="#4A5568" stroke-width="1" stroke-linecap="round" stroke-dasharray="2,3" opacity="0.5"/>
+    <!-- Dust line mid shelf area -->
+    <line x1="80" y1="76" x2="90" y2="76"
+          stroke="#4A5568" stroke-width="1" stroke-linecap="round" stroke-dasharray="2,4" opacity="0.4"/>
+    <!-- Tiny dot (dust) -->
+    <circle cx="70" cy="98" r="1" fill="#4A5568" opacity="0.3"/>
+    <circle cx="110" cy="46" r="0.8" fill="#4A5568" opacity="0.25"/>
+    <circle cx="95" cy="100" r="1.2" fill="#4A5568" opacity="0.2"/>
+
+    <!-- === VAULT DOOR (open, angled via perspective transform) === -->
+    <!-- Door shown swung open to the right using a skew/perspective -->
+    <g transform="translate(138, 32)">
+      <!-- Door panel (perspective foreshortened) -->
+      <path d="M0,0 L28,-4 L28,108 L0,104 Z"
+            fill="url(#vault-door-outer)"
+            filter="url(#vault-bevel)"/>
+
+      <!-- Door inner face (dark side visible) -->
+      <path d="M0,0 L28,-4 L28,108 L0,104 Z"
+            fill="url(#vault-door-inner)" opacity="0.3"/>
+
+      <!-- Door thickness (edge) -->
+      <path d="M0,0 L0,104 L-6,100 L-6,4 Z"
+            fill="#3D4A5C"/>
+
+      <!-- Door frame highlight -->
+      <line x1="1" y1="2" x2="1" y2="102"
+            stroke="#7B8A9D" stroke-width="0.5" opacity="0.4"/>
+
+      <!-- Locking bolts on door edge -->
+      <rect x="-5" y="20" width="4" height="6" rx="1" fill="#4A5568"/>
+      <rect x="-5" y="48" width="4" height="6" rx="1" fill="#4A5568"/>
+      <rect x="-5" y="76" width="4" height="6" rx="1" fill="#4A5568"/>
+
+      <!-- Door hinge pins -->
+      <circle cx="27" cy="10" r="2.5" fill="#5A6577"/>
+      <circle cx="27" cy="10" r="1" fill="#7B8A9D"/>
+      <circle cx="27" cy="94" r="2.5" fill="#5A6577"/>
+      <circle cx="27" cy="94" r="1" fill="#7B8A9D"/>
+    </g>
+
+    <!-- === VAULT HANDLE (gold accent, on door) === -->
+    <g transform="translate(148, 68)">
+      <!-- Handle wheel base -->
+      <circle cx="8" cy="12" r="11"
+              fill="url(#vault-gold-accent)"
+              filter="url(#vault-bevel)"/>
+      <!-- Handle wheel inner -->
+      <circle cx="8" cy="12" r="7"
+              fill="none" stroke="#D4A200" stroke-width="1.5"/>
+      <!-- Handle spokes -->
+      <line x1="8" y1="5" x2="8" y2="19"
+            stroke="#D4A200" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="1" y1="12" x2="15" y2="12"
+            stroke="#D4A200" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Handle center nub -->
+      <circle cx="8" cy="12" r="2.5"
+              fill="#FFD54F"/>
+      <circle cx="7" cy="11" r="1"
+              fill="#FFFFFF" opacity="0.4"/>
+    </g>
+
+    <!-- === FRAME BORDER (rivets / bolts) === -->
+    <!-- Corner rivets -->
+    <circle cx="48" cy="32" r="2" fill="#5A6577"/>
+    <circle cx="48" cy="136" r="2" fill="#5A6577"/>
+    <circle cx="132" cy="32" r="2" fill="#4A5568"/>
+    <circle cx="132" cy="136" r="2" fill="#4A5568"/>
+    <!-- Mid-edge rivets -->
+    <circle cx="48" cy="84" r="1.5" fill="#5A6577" opacity="0.6"/>
+    <circle cx="90" cy="32" r="1.5" fill="#5A6577" opacity="0.6"/>
+
+  </g>
+
+  <!-- Floating emptiness lines (outside vault, decorative) -->
+  <line x1="18" y1="70" x2="28" y2="70"
+        stroke="#848E9C" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+  <line x1="22" y1="80" x2="30" y2="80"
+        stroke="#848E9C" stroke-width="1" stroke-linecap="round" opacity="0.2"/>
+  <line x1="174" y1="60" x2="184" y2="60"
+        stroke="#848E9C" stroke-width="1" stroke-linecap="round" opacity="0.25"/>
+  <line x1="178" y1="68" x2="186" y2="68"
+        stroke="#848E9C" stroke-width="1" stroke-linecap="round" opacity="0.15"/>
+  <!-- Small floating dots -->
+  <circle cx="24" cy="56" r="1.5" fill="#848E9C" opacity="0.2"/>
+  <circle cx="180" cy="50" r="1" fill="#848E9C" opacity="0.15"/>
+  <circle cx="16" cy="92" r="1" fill="#848E9C" opacity="0.15"/>
+</svg>

@@ -1,0 +1,264 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
+/**
+ * @title IssuerRegistry — Issuer Lifecycle State Machine
+ * @notice Central registry for RWA token issuers. Manages lifecycle:
+ *         OBSERVATION → ACTIVE → MONITORING → DEFAULTED → WIND_DOWN → CLOSED
+ *         Supports two-tier onboarding: Standard (60d) and Fast Track (14d).
+ */
+contract IssuerRegistry is Ownable, ReentrancyGuard {
+    using SafeERC20 for IERC20;
+
+    // ─── Enums ───────────────────────────────────────────────────────
+    enum IssuerStatus { OBSERVATION, ACTIVE, MONITORING, DEFAULTED, WIND_DOWN, CLOSED }
+
+    // ─── Structs ─────────────────────────────────────────────────────
+    struct IssuerProfile {
+        address tokenAddress;
+        IssuerStatus status;
+        uint256 registrationBlock;
+        uint256 observationEndBlock;
+        uint256 attestationCount;
+        bool fastTrack;
+        address issuerEOA;
+        address custodianAttestor;
+        address legalAttestor;
+        address auditorAttestor;
+        uint256 marketCapAtRegistration;
+        bytes32 legalEntityHash;
+    }
+
+    struct WindDownRecord {
+        uint256 deadline;
+        uint64 custodianAttestUID;
+        uint64 legalAttestUID;
+        bool challenged;
+        address challenger;
+        uint256 challengeBond;
+    }
+
+    // ─── Constants ───────────────────────────────────────────────────
+    uint256 public constant BLOCKS_PER_DAY = 28800;    // ~3s per block
+    uint256 public constant STANDARD_OBSERVATION = 60;  // days
+    uint256 public constant FAST_OBSERVATION = 14;      // days
+    uint256 public constant STANDARD_ATTESTATIONS = 3;
+    uint256 public constant FAST_ATTESTATIONS = 2;
+    uint256 public constant STANDARD_INITIAL_IRS = 600;
+    uint256 public constant FAST_INITIAL_IRS = 650;
+    uint256 public constant WIND_DOWN_PERIOD = 30 days;
+    uint256 public constant CHALLENGE_BOND_BPS = 200;   // 2%
+
+    // ─── State ───────────────────────────────────────────────────────
+    mapping(address => IssuerProfile) public issuers;       // tokenAddress => profile
+    mapping(address => WindDownRecord) public windDowns;
+    mapping(address => address) public issuerOfToken;       // tokenAddress => issuerEOA
+
+    address public tir;
+    address public issuerBond;
+    address public irsOracle;
+    address public defaultOracle;
+    address public insurancePool;
+    address public payoutEngine;
+
+    // ─── Events ──────────────────────────────────────────────────────
+    event IssuerRegistered(address indexed tokenAddress, address indexed issuerEOA, bool fastTrack, uint256 observationEndBlock);
+    event CoverageActivated(address indexed tokenAddress, uint256 initialIRS, uint256 activationBlock);
+    event StatusChanged(address indexed tokenAddress, IssuerStatus newStatus);
+    event WindDownInitiated(address indexed tokenAddress, uint256 deadline);
+    event WindDownChallenged(address indexed tokenAddress, address indexed challenger, uint256 challengeBond);
+    event WindDownComplete(address indexed tokenAddress, uint256 bondReturned, uint256 protocolFee);
+    event AttestationRecorded(address indexed tokenAddress, uint256 newAttestationCount);
+
+    // ─── Constructor ─────────────────────────────────────────────────
+    constructor(
+        address _tir,
+        address _issuerBond,
+        address _irsOracle,
+        address _defaultOracle
+    ) {
+        tir = _tir;
+        issuerBond = _issuerBond;
+        irsOracle = _irsOracle;
+        defaultOracle = _defaultOracle;
+    }
+
+    // ─── Admin Setters ───────────────────────────────────────────────
+    function setInsurancePool(address _pool) external onlyOwner {
+        insurancePool = _pool;
+    }
+
+    function setPayoutEngine(address _engine) external onlyOwner {
+        payoutEngine = _engine;
+    }
+
+    // ─── Registration ────────────────────────────────────────────────
+
+    /**
+     * @notice Register a new RWA token issuer. Starts observation period.
+     */
+    function register(
+        address tokenAddress,
+        uint64 basLegalAttestUID,
+        address custodian,
+        address legalRep,
+        address auditor,
+        uint256 marketCap,
+        bool useFastTrack
+    ) external {
+        require(issuers[tokenAddress].registrationBlock == 0, "IssuerRegistry: already registered");
+        require(tokenAddress != address(0), "IssuerRegistry: zero token");
+
+        uint256 observationDays = STANDARD_OBSERVATION;
+        if (useFastTrack) {
+            // Fast track eligibility check would call TIR here
+            observationDays = FAST_OBSERVATION;
+        }
+
+        uint256 observationEndBlock = block.number + (observationDays * BLOCKS_PER_DAY);
+
+        issuers[tokenAddress] = IssuerProfile({
+            tokenAddress: tokenAddress,
+            status: IssuerStatus.OBSERVATION,
+            registrationBlock: block.number,
+            observationEndBlock: observationEndBlock,
+            attestationCount: 0,
+            fastTrack: useFastTrack,
+            issuerEOA: msg.sender,
+            custodianAttestor: custodian,
+            legalAttestor: legalRep,
+            auditorAttestor: auditor,
+            marketCapAtRegistration: marketCap,
+            legalEntityHash: keccak256(abi.encodePacked(basLegalAttestUID))
+        });
+
+        issuerOfToken[tokenAddress] = msg.sender;
+
+        emit IssuerRegistered(tokenAddress, msg.sender, useFastTrack, observationEndBlock);
+    }
+
+    /**
+     * @notice Record an attestation during observation period.
+     */
+    function recordAttestation(address tokenAddress) external onlyOwner {
+        IssuerProfile storage profile = issuers[tokenAddress];
+        require(profile.status == IssuerStatus.OBSERVATION, "IssuerRegistry: not in observation");
+        profile.attestationCount++;
+        emit AttestationRecorded(tokenAddress, profile.attestationCount);
+    }
+
+    /**
+     * @notice Activate coverage after observation requirements are met.
+     */
+    function tryActivateCoverage(address tokenAddress) external {
+        IssuerProfile storage profile = issuers[tokenAddress];
+        require(profile.status == IssuerStatus.OBSERVATION, "IssuerRegistry: not in observation");
+        require(block.number >= profile.observationEndBlock, "IssuerRegistry: observation not ended");
+
+        uint256 requiredAttestations = profile.fastTrack ? FAST_ATTESTATIONS : STANDARD_ATTESTATIONS;
+        require(profile.attestationCount >= requiredAttestations, "IssuerRegistry: insufficient attestations");
+
+        profile.status = IssuerStatus.ACTIVE;
+        uint256 initialIRS = profile.fastTrack ? FAST_INITIAL_IRS : STANDARD_INITIAL_IRS;
+
+        emit CoverageActivated(tokenAddress, initialIRS, block.number);
+        emit StatusChanged(tokenAddress, IssuerStatus.ACTIVE);
+    }
+
+    // ─── Wind-Down ───────────────────────────────────────────────────
+
+    function initiateWindDown(
+        address tokenAddress,
+        uint64 custodianAttestUID,
+        uint64 legalAttestUID
+    ) external {
+        IssuerProfile storage profile = issuers[tokenAddress];
+        require(msg.sender == profile.issuerEOA, "IssuerRegistry: not issuer");
+        require(profile.status == IssuerStatus.ACTIVE, "IssuerRegistry: not active");
+
+        profile.status = IssuerStatus.WIND_DOWN;
+        windDowns[tokenAddress] = WindDownRecord({
+            deadline: block.timestamp + WIND_DOWN_PERIOD,
+            custodianAttestUID: custodianAttestUID,
+            legalAttestUID: legalAttestUID,
+            challenged: false,
+            challenger: address(0),
+            challengeBond: 0
+        });
+
+        emit WindDownInitiated(tokenAddress, block.timestamp + WIND_DOWN_PERIOD);
+        emit StatusChanged(tokenAddress, IssuerStatus.WIND_DOWN);
+    }
+
+    function finalizeWindDown(address tokenAddress) external nonReentrant {
+        IssuerProfile storage profile = issuers[tokenAddress];
+        require(profile.status == IssuerStatus.WIND_DOWN, "IssuerRegistry: not winding down");
+
+        WindDownRecord storage wd = windDowns[tokenAddress];
+        require(block.timestamp >= wd.deadline, "IssuerRegistry: challenge window open");
+        require(!wd.challenged, "IssuerRegistry: challenged");
+
+        profile.status = IssuerStatus.CLOSED;
+
+        // Interface to release bond
+        // IssuerBond(issuerBond).release(tokenAddress, profile.issuerEOA);
+
+        emit StatusChanged(tokenAddress, IssuerStatus.CLOSED);
+    }
+
+    // ─── Status Updates ──────────────────────────────────────────────
+
+    function setMonitoring(address tokenAddress) external {
+        require(msg.sender == defaultOracle || msg.sender == owner(), "IssuerRegistry: unauthorized");
+        IssuerProfile storage profile = issuers[tokenAddress];
+        require(profile.status == IssuerStatus.ACTIVE, "IssuerRegistry: not active");
+        profile.status = IssuerStatus.MONITORING;
+        emit StatusChanged(tokenAddress, IssuerStatus.MONITORING);
+    }
+
+    function setDefaulted(address tokenAddress) external {
+        require(msg.sender == defaultOracle || msg.sender == payoutEngine || msg.sender == owner(), "IssuerRegistry: unauthorized");
+        issuers[tokenAddress].status = IssuerStatus.DEFAULTED;
+        emit StatusChanged(tokenAddress, IssuerStatus.DEFAULTED);
+    }
+
+    // ─── Demo Helpers ────────────────────────────────────────────────
+
+    /**
+     * @notice DEMO ONLY — Force activate coverage skipping time/attestation checks
+     */
+    function forceActivateForDemo(address tokenAddress) external onlyOwner {
+        IssuerProfile storage profile = issuers[tokenAddress];
+        require(profile.registrationBlock > 0, "IssuerRegistry: not registered");
+        profile.status = IssuerStatus.ACTIVE;
+        emit CoverageActivated(tokenAddress, STANDARD_INITIAL_IRS, block.number);
+        emit StatusChanged(tokenAddress, IssuerStatus.ACTIVE);
+    }
+
+    // ─── View Functions ──────────────────────────────────────────────
+
+    function getProfile(address tokenAddress) external view returns (IssuerProfile memory) {
+        return issuers[tokenAddress];
+    }
+
+    function isActive(address tokenAddress) external view returns (bool) {
+        return issuers[tokenAddress].status == IssuerStatus.ACTIVE;
+    }
+
+    function isDefaulted(address tokenAddress) external view returns (bool) {
+        return issuers[tokenAddress].status == IssuerStatus.DEFAULTED;
+    }
+
+    function getStatus(address tokenAddress) external view returns (IssuerStatus) {
+        return issuers[tokenAddress].status;
+    }
+
+    function getIssuerEOA(address tokenAddress) external view returns (address) {
+        return issuers[tokenAddress].issuerEOA;
+    }
+}

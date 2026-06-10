@@ -1,0 +1,59 @@
+{
+  "swaps": [
+    {
+      "id": "swap_1_1774197948957",
+      "status": "initiated",
+      "initiator": {
+        "address": "0xAliceAddress1234567890abcdef",
+        "chain": "ethereum-sepolia",
+        "amount": "0.01",
+        "token": "native"
+      },
+      "counterparty": {
+        "address": "0xBobAddress1234567890abcdef",
+        "chain": "ton-testnet",
+        "amount": "5.0",
+        "token": "native"
+      },
+      "hashLock": "3e738f76ef5fe008807048ffa8200f0b08e5ac75bfa2732554fadcb9db61f8ab",
+      "initiatorTimelock": 1774284348957,
+      "counterpartyTimelock": 1774241148957,
+      "createdAt": "2026-03-22T16:45:48.957Z",
+      "events": [
+        {
+          "timestamp": "2026-03-22T16:45:48.957Z",
+          "event": "swap_initiated",
+          "chain": "ethereum-sepolia"
+        }
+      ]
+    },
+    {
+      "id": "swap_2_1774197948958",
+      "status": "initiated",
+      "initiator": {
+        "address": "0xAliceAddress1234567890abcdef",
+        "chain": "ethereum-sepolia",
+        "amount": "0.01",
+        "token": "native"
+      },
+      "counterparty": {
+        "address": "0xBobAddress1234567890abcdef",
+        "chain": "ton-testnet",
+        "amount": "5.0",
+        "token": "native"
+      },
+      "hashLock": "a7c7163f67cc5f9e438b8689058d9ef633d62aa2e4c52151af90c31a8fb62529",
+      "initiatorTimelock": 1774284348958,
+      "counterpartyTimelock": 1774241148958,
+      "createdAt": "2026-03-22T16:45:48.958Z",
+      "events": [
+        {
+          "timestamp": "2026-03-22T16:45:48.958Z",
+          "event": "swap_initiated",
+          "chain": "ethereum-sepolia"
+        }
+      ]
+    }
+  ],
+  "counter": 2
+}

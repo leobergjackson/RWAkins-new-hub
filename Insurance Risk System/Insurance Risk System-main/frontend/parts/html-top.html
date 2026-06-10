@@ -1,0 +1,97 @@
+<!-- ===================== NAVIGATION ===================== -->
+<nav class="glass">
+  <div class="logo">
+    <div class="logo-icon"><!-- SVG:svg-logo-shield --></div>
+    CoverFi
+  </div>
+  <div class="nav-links">
+    <a href="#" class="active">Dashboard</a>
+    <a href="#issuers">Issuers</a>
+    <a href="#pool">Pool</a>
+    <a href="#how">How It Works</a>
+  </div>
+  <div class="nav-right">
+    <span class="badge-testnet">BSC Testnet</span>
+    <button class="btn-clay-primary" id="connectBtn" onclick="connectWallet()">Connect Wallet</button>
+  </div>
+</nav>
+
+<!-- ===================== HERO SECTION ===================== -->
+<section class="hero" style="position: relative; overflow: hidden;">
+  <div class="orb orb-gold"></div>
+  <div class="orb orb-blue"></div>
+
+  <div class="hero-illustration"><!-- SVG:svg-hero-shield --></div>
+
+  <div class="hero-content">
+    <div class="tag-pill glass">
+      <!-- SVG:svg-lightning-bolt --> Built on BNB Chain | ERC-3643 Compliant
+    </div>
+
+    <h1>On-Chain Credit Protection for <span class="text-gold">RWA Tokens</span></h1>
+
+    <p class="hero-subtitle">
+      CoverFi is a decentralized credit protection protocol that lets RWA token issuers
+      purchase coverage against default risk, backed by a community-funded liquidity pool
+      on BNB Chain.
+    </p>
+
+    <div class="hero-cta">
+      <button class="btn-clay-primary" onclick="scrollTo('#issuers')">Get Coverage</button>
+      <button class="btn-clay-outline" onclick="scrollTo('#pool')">Provide Liquidity</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATS BAR ===================== -->
+<section class="stats-bar">
+  <div class="clay stat-card reveal">
+    <div class="stat-icon"><!-- SVG:svg-stat-tvl --></div>
+    <div class="stat-label">Total Value Locked</div>
+    <div class="stat-value" data-target="124500">$0</div>
+    <div class="stat-sub stat-up">
+      <!-- SVG:svg-arrow-up --> +12.4% this week
+    </div>
+  </div>
+
+  <div class="clay stat-card reveal">
+    <div class="stat-icon"><!-- SVG:svg-stat-issuers --></div>
+    <div class="stat-label">Active Issuers</div>
+    <div class="stat-value" data-target="3">0</div>
+    <div class="stat-sub stat-up">
+      <!-- SVG:svg-arrow-up --> +1 this month
+    </div>
+  </div>
+
+  <div class="clay stat-card reveal">
+    <div class="stat-icon"><!-- SVG:svg-stat-coverage --></div>
+    <div class="stat-label">Coverage Written</div>
+    <div class="stat-value" data-target="89200">$0</div>
+    <div class="stat-sub stat-up">
+      <!-- SVG:svg-arrow-up --> +8.7% this week
+    </div>
+  </div>
+
+  <div class="clay stat-card reveal">
+    <div class="stat-icon"><!-- SVG:svg-stat-payouts --></div>
+    <div class="stat-label">Payouts Executed</div>
+    <div class="stat-value" data-target="15000">$0</div>
+    <div class="stat-sub stat-down">
+      <!-- SVG:svg-arrow-down --> -3.2% this week
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DEMO BANNER ===================== -->
+<div class="container">
+  <div class="clay demo-banner">
+    <div class="demo-banner-content">
+      <div class="demo-banner-icon"><!-- SVG:svg-test-tube --></div>
+      <p>
+        <strong>Demo Mode</strong> — Using mock USDT on BSC Testnet.
+        All transactions are simulated with real smart contracts.
+      </p>
+    </div>
+    <button class="btn-clay-outline" onclick="runFullDemo()">Run Full Demo</button>
+  </div>
+</div>
