@@ -16,13 +16,14 @@ Every number the agent reasons over and shows is sourced live; the on-chain stat
 | System | How it's live |
 |---|---|
 | **Wealth-rule parsing** | An LLM (Groq, OpenAI-compatible) extracts *signals* from your plain-English goal; a deterministic priority-chain turns them into the allocation. No-key fallback is a regex parser. |
-| **mETH price** | Fetched live from CoinGecko and pushed **on-chain** via `vault.setMethPrice()` by the agent owner key ([lib/rwa/oracleSync.ts](lib/rwa/oracleSync.ts)). The vault values the mETH leg at this live price — the dashboard reads it back, so `$` and `%` always reconcile. |
+| **Real DEX swaps** | Every rebalance is a **real on-chain swap** through `RWAkinsAMM` — a constant-product (x·y=k) pool with a 0.3% fee ([contracts/src/RWAkinsAMM.sol](contracts/src/RWAkinsAMM.sol)). The vault routes USDY↔mETH through it, so rebalances take **real slippage + price impact** (a 70% target lands at ~69.96%, not a clean number). No mint-at-fixed-price. |
+| **mETH price** | The pool's **on-chain spot price** (`reserveUsdy/reserveMeth`) — real price discovery. The agent owner key anchors it to the live CoinGecko price via `amm.syncToPrice()` ([lib/rwa/oracleSync.ts](lib/rwa/oracleSync.ts)), exactly the job arbitrageurs do on a real DEX. The dashboard reads the pool price back, so `$` and `%` reconcile. |
 | **USDY & mETH yields** | Real reference APYs from DefiLlama, written on-chain via `token.setYield()` each sync; the dashboard reads `currentYield()`. |
 | **Volatility** | Annualized **realized volatility** computed from CoinGecko's 7-day hourly ETH series ([lib/api/coingecko.ts](lib/api/coingecko.ts)) — not a formula. |
 | **Risk council** | 4 agents (Market Analyst, Risk Guardian, Yield Optimizer, Execution Planner) are **real LLM personas** debating the live numbers ([lib/aiCouncil/council.ts](lib/aiCouncil/council.ts)). The mETH ≤ 70% cap veto is enforced in code, never delegated to the model. Deterministic per-agent fallback when the LLM is unavailable. |
-| **Execution** | Real `vault.rebalance()` / `rebalanceFor()` on Mantle Sepolia → real tx hashes. Gas-gated oracle writes only fire when the live value actually drifted. |
+| **Execution** | Real `vault.rebalance()` / `rebalanceFor()` on Mantle Sepolia → real tx hashes + real AMM swaps. Gas-gated oracle writes only fire when the live value actually drifted. |
 
-> **On the assets:** USDY/mETH are deployed as testnet `MockRWAToken` contracts (real Ondo USDY / Mantle mETH aren't available on testnet). Their **price and yield are driven live from real-world market data**, so the economics the agent reasons over are real even though the tokens are stand-ins.
+> **On the assets:** USDY/mETH are deployed as testnet `MockRWAToken` contracts (real Ondo USDY / Mantle mETH are mainnet-only + KYC-gated). The **swap mechanics, price discovery, yields, and volatility are all real** — only the tokens are stand-ins. Mainnet is an address swap (real USDY/mETH + a real Mantle DEX router) plus Ondo KYC away; the agent/vault logic is unchanged.
 
 ---
 

@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import {MockRWAToken} from "../src/MockRWAToken.sol";
 import {RWAkinsVault} from "../src/RWAkinsVault.sol";
+import {RWAkinsAMM} from "../src/RWAkinsAMM.sol";
 
 /// Minimal Foundry cheatcode interface — avoids a forge-std dependency so the
 /// project deploys with zero `forge install` / network steps.
@@ -34,7 +35,7 @@ contract Deploy {
 
     function run() external {
         uint256 pk = vm.envUint("DEPLOYER_PRIVATE_KEY");
-        uint256 methPriceUsd = vm.envOr("METH_PRICE_USD", uint256(3000));
+        uint256 methPriceUsd = vm.envOr("METH_PRICE_USD", uint256(1800));
         address deployer = vm.addr(pk);
 
         vm.startBroadcast(pk);
@@ -44,7 +45,19 @@ contract Deploy {
         // mETH: Mantle staked ETH (growth leg) — ~3.60% staking APY.
         MockRWAToken meth = new MockRWAToken("Mantle Staked ETH (mock)", "mETH", 360);
 
-        RWAkinsVault vault = new RWAkinsVault(address(usdy), address(meth), methPriceUsd * 1e18);
+        // Real constant-product AMM the vault swaps through during a rebalance.
+        RWAkinsAMM amm = new RWAkinsAMM(address(usdy), address(meth));
+        RWAkinsVault vault = new RWAkinsVault(address(usdy), address(meth), address(amm));
+
+        // Seed DEEP liquidity at the initial price so rebalance swaps take only a
+        // small, realistic slippage. price = reserveUsdy / reserveMeth = methPriceUsd.
+        uint256 seedMeth = 2000 ether;
+        uint256 seedUsdy = methPriceUsd * seedMeth; // methPriceUsd USDY per mETH
+        usdy.mint(deployer, seedUsdy);
+        meth.mint(deployer, seedMeth);
+        usdy.approve(address(amm), seedUsdy);
+        meth.approve(address(amm), seedMeth);
+        amm.addLiquidity(seedUsdy, seedMeth);
 
         // Seed the deployer so the deposit/rebalance flow is testable immediately.
         usdy.mint(deployer, 10_000 ether);
@@ -52,13 +65,14 @@ contract Deploy {
 
         vm.stopBroadcast();
 
-        _writeDeployment(address(usdy), address(meth), address(vault));
+        _writeDeployment(address(usdy), address(meth), address(vault), address(amm));
     }
 
-    function _writeDeployment(address usdy, address meth, address vault) internal {
+    function _writeDeployment(address usdy, address meth, address vault, address amm) internal {
         string memory obj = "rwakins";
         vm.serializeAddress(obj, "usdy", usdy);
         vm.serializeAddress(obj, "meth", meth);
+        vm.serializeAddress(obj, "amm", amm);
         vm.serializeUint(obj, "chainId", block.chainid);
         vm.serializeUint(obj, "deployedAt", block.timestamp);
         string memory out = vm.serializeAddress(obj, "vault", vault);

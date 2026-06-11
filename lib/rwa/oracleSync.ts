@@ -11,7 +11,7 @@
 // costs nothing. Server-only (needs AGENT_PRIVATE_KEY); safe to call from the
 // heartbeat cron and the manual rebalance trigger.
 import { parseEther, formatEther, type Address } from 'viem'
-import { RWA_TOKEN_ABI, VAULT_ABI } from './abi'
+import { RWA_TOKEN_ABI, VAULT_ABI, AMM_ABI } from './abi'
 import { getAgentWallet, publicClient } from './serverVault'
 import deployed from '@/lib/rwa-deployed.json'
 import { fetchPrices } from '@/lib/api/coingecko'
@@ -62,6 +62,7 @@ export async function syncOracles(): Promise<OracleSyncResult> {
   const { wallet, account } = signer
 
   const vault = deployed.vault as Address
+  const amm = deployed.amm as Address
   const usdyToken = deployed.usdy as Address
   const methToken = deployed.meth as Address
 
@@ -79,13 +80,14 @@ export async function syncOracles(): Promise<OracleSyncResult> {
 
   // Decide which writes are actually needed (drift-gated, plausibility-guarded).
   const plausibleYield = (apy: number) => apy > 0 && apy <= 30
-  const writes: { what: OracleSyncResult['txs'][number]['what']; address: Address; abi: readonly unknown[]; fn: 'setMethPrice' | 'setYield'; arg: bigint }[] = []
+  const writes: { what: OracleSyncResult['txs'][number]['what']; address: Address; abi: readonly unknown[]; fn: 'syncToPrice' | 'setYield'; arg: bigint }[] = []
 
   if (priceUsd != null) {
     result.methPriceUsd = priceUsd
     const curr = Number(formatEther(onchainPriceE18))
     if (curr <= 0 || Math.abs(priceUsd - curr) / curr > PRICE_DRIFT_FRAC) {
-      writes.push({ what: 'methPrice', address: vault, abi: VAULT_ABI, fn: 'setMethPrice', arg: parseEther(priceUsd.toFixed(6)) })
+      // Anchor the AMM pool spot price to the live market (real arbitrage stand-in).
+      writes.push({ what: 'methPrice', address: amm, abi: AMM_ABI, fn: 'syncToPrice', arg: parseEther(priceUsd.toFixed(6)) })
     }
   }
   if (yields.usdyApy != null && plausibleYield(yields.usdyApy)) {

@@ -1,7 +1,8 @@
 {
+  "amm": "0xf5b9806E801206f1812d98fbBdfC93bae9073f27",
   "chainId": 5003,
-  "deployedAt": 1781156511,
-  "meth": "0x9AaDbA327499dBc9e01700EddfE5d319A47f9E0E",
-  "usdy": "0xebeCDE075DE61CFA3279D44aed790FA9C98c031a",
-  "vault": "0x932214547276EE07c77206270c121449cB419922"
+  "deployedAt": 1781207649,
+  "meth": "0x04f2EB2B407f5ffa8366b59cCf79DDc4C05fd9aa",
+  "usdy": "0x4d05328eb6DDaA2d5bD3fef959180cD67b71d6De",
+  "vault": "0x528C4c70DC67cc90A4364f2bfb846a750d1eff21"
 }

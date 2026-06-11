@@ -27,13 +27,20 @@ export const VAULT_ABI = [
   { type: 'function', name: 'usdy', stateMutability: 'view', inputs: [], outputs: [{ type: 'address' }] },
   { type: 'function', name: 'meth', stateMutability: 'view', inputs: [], outputs: [{ type: 'address' }] },
   { type: 'function', name: 'MAX_RISK_BPS', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint256' }] },
-  // Live mETH price (USDY units, 1e18) the vault values the mETH leg at. The agent
-  // keeps this in sync with the real market via setMethPrice (lib/rwa/oracleSync).
+  // Live mETH price (USDY units, 1e18) — read straight from the AMM pool reserves.
   { type: 'function', name: 'methPriceE18', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint256' }] },
   { type: 'function', name: 'owner', stateMutability: 'view', inputs: [], outputs: [{ type: 'address' }] },
-  // Owner-only: push the live mETH/USD price on-chain so vault math tracks reality.
-  { type: 'function', name: 'setMethPrice', stateMutability: 'nonpayable', inputs: [{ name: 'methPriceE18', type: 'uint256' }], outputs: [] },
   { type: 'event', name: 'Deposited', inputs: [{ name: 'user', type: 'address', indexed: true }, { name: 'asset', type: 'address', indexed: false }, { name: 'amount', type: 'uint256', indexed: false }] },
   { type: 'event', name: 'Withdrawn', inputs: [{ name: 'user', type: 'address', indexed: true }, { name: 'asset', type: 'address', indexed: false }, { name: 'amount', type: 'uint256', indexed: false }] },
   { type: 'event', name: 'Rebalanced', inputs: [{ name: 'user', type: 'address', indexed: true }, { name: 'usdyBps', type: 'uint256', indexed: false }, { name: 'methBps', type: 'uint256', indexed: false }, { name: 'timestamp', type: 'uint256', indexed: false }] },
+] as const
+
+// The constant-product AMM the vault swaps through during a rebalance. The agent
+// owner key keeps its spot price anchored to the live market via syncToPrice.
+export const AMM_ABI = [
+  { type: 'function', name: 'spotPriceE18', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint256' }] },
+  { type: 'function', name: 'getReserves', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint256' }, { type: 'uint256' }] },
+  { type: 'function', name: 'getAmountOut', stateMutability: 'view', inputs: [{ name: 'tokenIn', type: 'address' }, { name: 'amountIn', type: 'uint256' }], outputs: [{ type: 'uint256' }] },
+  // Owner-only: anchor the pool spot price to the live market (arbitrage stand-in).
+  { type: 'function', name: 'syncToPrice', stateMutability: 'nonpayable', inputs: [{ name: 'targetPriceE18', type: 'uint256' }], outputs: [] },
 ] as const
