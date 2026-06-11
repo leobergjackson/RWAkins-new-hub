@@ -47,11 +47,19 @@ function shortTime(iso: string): string {
 
 interface WalletResult {
   wallet: string
-  action: 'rebalanced' | 'decided' | 'held' | 'skipped'
+  action: 'rebalanced' | 'recommended' | 'held' | 'skipped'
   direction?: string
   txHash?: string | null
   narrative?: string
   error?: string
+}
+
+/** Live, number-citing phrase for the move the agent wants to make. */
+function movePhrase(direction: string, before: { meth: number }, after: { meth: number }): string {
+  const d = Math.abs(after.meth - before.meth)
+  return direction === 'de-risk'
+    ? `rotate ${d}% from mETH into USDY (down to ${after.meth}% mETH)`
+    : `rotate ${d}% from USDY into mETH (up to ${after.meth}% mETH)`
 }
 
 async function runHeartbeat() {
@@ -71,12 +79,9 @@ async function runHeartbeat() {
 
   for (const [wallet, rules] of active) {
     try {
-      if (!rules.autoRebalance) {
-        results.push({ wallet, action: 'skipped' })
-        continue
-      }
-
-      // Read the user's live on-chain position.
+      // Read the user's live on-chain position. We evaluate EVERY funded wallet —
+      // even manual-rebalance ones — so we can still REMIND them when action is
+      // warranted (we just won't execute on their behalf).
       const pos = await readPortfolioServer(wallet as Address)
       const { methPct, funded } = methPctFromPortfolio(pos)
       if (!funded) {
@@ -110,33 +115,46 @@ async function runHeartbeat() {
       const assetFrom = direction === 'de-risk' ? 'mETH' : 'USDY'
       const assetTo = direction === 'de-risk' ? 'USDY' : 'mETH'
 
-      // Execute on-chain when the agent signer is configured → REAL tx hash.
-      let txHash: string | null = null
-      if (canExecute) {
-        txHash = await executeRebalanceFor(wallet as Address, usdyBps, methBps)
+      // Execute on-chain ONLY for auto-rebalance wallets with a configured signer.
+      // Manual-mode wallets are evaluated but never executed — they get a reminder.
+      const willExecute = canExecute && rules.autoRebalance
+
+      if (willExecute) {
+        const txHash = await executeRebalanceFor(wallet as Address, usdyBps, methBps)
+        const entry: StoredActivity = {
+          id: `hb-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+          timestamp: new Date().toISOString(),
+          actionType: 'rebalance',
+          narrative,
+          assetFrom, assetTo,
+          amountFrom: null, amountTo: null,
+          txHash,
+          allocationBefore: before,
+          allocationAfter: after,
+        }
+        await logActivity(wallet, entry)
+
+        const verb = direction === 'de-risk'
+          ? `rotated ${Math.abs(after.meth - before.meth)}% into USDY`
+          : `rotated ${Math.abs(after.meth - before.meth)}% into mETH`
+        // Executed = a real, distinct on-chain event → no dedupe.
+        await addNotification(wallet, {
+          message: `Your AI CFO rebalanced your portfolio at ${shortTime(entry.timestamp)} — ${verb}. ${signal.reason}.`,
+          txHash,
+          type: 'rebalance',
+          timestamp: entry.timestamp,
+        })
+        results.push({ wallet, action: 'rebalanced', direction, txHash, narrative })
+      } else {
+        // Manual mode, or no agent signer → a deduped "action needed" reminder so
+        // the user can apply it themselves with Run Rebalance. No execution.
+        await addNotification(wallet, {
+          message: `Action needed — your AI CFO suggests you ${movePhrase(direction, before, after)}. ${signal.reason}. Open RWAkins and hit Run Rebalance to apply.`,
+          type: 'recommendation',
+          dedupeKey: `rec:${direction}:${after.meth}`,
+        })
+        results.push({ wallet, action: 'recommended', direction, narrative })
       }
-
-      const entry: StoredActivity = {
-        id: `hb-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
-        timestamp: new Date().toISOString(),
-        actionType: 'rebalance',
-        narrative: canExecute ? narrative : `${narrative} (autonomous decision — execution pending agent signer config)`,
-        assetFrom, assetTo,
-        amountFrom: null, amountTo: null,
-        txHash,
-        allocationBefore: before,
-        allocationAfter: after,
-      }
-      await logActivity(wallet, entry)
-
-      const verb = direction === 'de-risk' ? `rotated ${Math.abs(after.meth - before.meth)}% into USDY` : `rotated ${Math.abs(after.meth - before.meth)}% into mETH`
-      await addNotification(wallet, {
-        message: `Your AI CFO ${canExecute ? 'rebalanced' : 'recommended rebalancing'} your portfolio at ${shortTime(entry.timestamp)} — ${verb}. ${signal.reason}.`,
-        txHash,
-        timestamp: entry.timestamp,
-      })
-
-      results.push({ wallet, action: canExecute ? 'rebalanced' : 'decided', direction, txHash, narrative })
     } catch (e) {
       results.push({ wallet, action: 'skipped', error: e instanceof Error ? e.message : 'failed' })
     }
@@ -151,7 +169,7 @@ async function runHeartbeat() {
     finishedAt: new Date().toISOString(),
     canExecuteOnChain: canExecute,
     evaluated: active.length,
-    acted: results.filter((r) => r.action === 'rebalanced' || r.action === 'decided').length,
+    acted: results.filter((r) => r.action === 'rebalanced' || r.action === 'recommended').length,
     market: {
       usdyApy: Math.round(market.usdyApy * 100) / 100,
       methApy: Math.round(market.methApy * 100) / 100,

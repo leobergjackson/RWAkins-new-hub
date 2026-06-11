@@ -11,7 +11,8 @@ import { Bell, ExternalLink } from 'lucide-react'
 import { useWallet } from '@/context/WalletContext'
 
 const TEAL = '#2dd4bf'
-const POLL_MS = 30_000
+const POLL_MS = 30_000 // refresh the unread list
+const CHECK_MS = 120_000 // ask the agent whether a live reminder is warranted
 
 interface AgentNotification {
   id: string
@@ -19,6 +20,13 @@ interface AgentNotification {
   message: string
   txHash: string | null
   read: boolean
+  type?: 'rebalance' | 'recommendation' | 'info'
+}
+
+const TYPE_TAG: Record<string, { label: string; color: string }> = {
+  rebalance: { label: 'Rebalanced', color: '#2dd4bf' },
+  recommendation: { label: 'Action needed', color: '#a78bfa' },
+  info: { label: 'Update', color: 'rgba(255,255,255,0.4)' },
 }
 
 export function NotificationBell() {
@@ -45,6 +53,29 @@ export function NotificationBell() {
     const id = setInterval(load, POLL_MS)
     return () => clearInterval(id)
   }, [load])
+
+  // While the app is open, periodically ask the agent to evaluate THIS wallet's
+  // live position against its policy. If a rebalance is warranted it drops a
+  // deduped "action needed" reminder server-side; we then refresh the list so the
+  // bell lights up — no Vercel cron required for the connected user.
+  useEffect(() => {
+    if (!wallet) return
+    let active = true
+    const check = async () => {
+      try {
+        const r = await fetch('/api/agent/check', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ wallet }),
+        })
+        const j = (await r.json()) as { notified?: boolean }
+        if (active && j?.notified) load() // a new reminder was created → surface it now
+      } catch { /* non-fatal */ }
+    }
+    check()
+    const id = setInterval(check, CHECK_MS)
+    return () => { active = false; clearInterval(id) }
+  }, [wallet, load])
 
   // Close on outside click.
   useEffect(() => {
@@ -118,6 +149,16 @@ export function NotificationBell() {
                   border: `1px solid ${n.read ? 'rgba(255,255,255,0.05)' : 'rgba(45,212,191,0.18)'}`,
                 }}
               >
+                {(() => {
+                  const tag = TYPE_TAG[n.type ?? 'info']
+                  return (
+                    <span style={{
+                      display: 'inline-block', marginBottom: 6, padding: '1px 7px', borderRadius: 6,
+                      fontSize: 10, fontWeight: 800, letterSpacing: 0.4, textTransform: 'uppercase',
+                      color: tag.color, background: `${tag.color}1f`, border: `1px solid ${tag.color}3a`,
+                    }}>{tag.label}</span>
+                  )
+                })()}
                 <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: 'rgba(255,255,255,0.85)' }}>{n.message}</p>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 6 }}>
                   <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>
