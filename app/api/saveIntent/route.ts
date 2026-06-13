@@ -17,8 +17,8 @@ import { setIntent, getIntent } from '@/lib/intentStore'
 import { chatJson } from '@/lib/openai'
 
 // PHASE-2 architecture (signal → code → narrative):
-//   1. SIGNAL-EXTRACTION LLM (below, temperature 0) — reports ONLY what the user
-//      literally expressed. It makes NO allocation decision.
+//   1. SIGNAL-EXTRACTION LLM (below, temperature 0) — resolves user language into numeric
+//      percentages (e.g. explicitMethPct) using semantic understanding and mathematical reasoning.
 //   2. DETERMINISTIC PRIORITY CHAIN (lib/intent rulesFromSignals) — turns signals
 //      into the actual numbers; risk level is derived from the final number here,
 //      never from the model. This is the single source of allocation truth.
@@ -27,15 +27,18 @@ import { chatJson } from '@/lib/openai'
 const SIGNAL_PROMPT =
   'You extract structured SIGNALS from a user\'s plain-English treasury goal for a ' +
   'two-asset RWA portfolio (USDY = stable yield, mETH = staked-ETH, higher risk). ' +
-  'Do NOT decide an allocation, do NOT do any math, do NOT invent numbers — only ' +
-  'report what the user LITERALLY stated. Return ONLY this JSON object: ' +
+  'Return ONLY this JSON object: ' +
   '{"splitMethPct":number|null,"explicitMethPct":number|null,"explicitUsdyPct":number|null,' +
   '"riskKeyword":"low"|"medium"|"high"|null,"autoRebalance":boolean,"rebalanceThresholdPct":number|null}. ' +
   'splitMethPct = the mETH side of a bare "A/B" USDY/mETH split (e.g. "50/50" → 50, "60/40" → 40), else null. ' +
-  'explicitMethPct = a percent the user explicitly tied to mETH (e.g. "10% mETH" → 10), else null. ' +
+  'explicitMethPct = What percentage of mETH is the user asking for? If they used a ratio, metaphor, or qualitative description, calculate or estimate the number. ' +
+  'If the user expresses a ratio (e.g. double, twice, half), calculate the resulting percentage mathematically. ' +
+  'If the user uses qualitative language (e.g. mostly, a little, heavy, light), estimate a reasonable percentage. ' +
+  'If the user uses slang or informal language, infer the intent. ' +
+  'Always try to produce a numeric estimate for explicitMethPct rather than returning null. ' +
+  'Only return null if the input contains absolutely no signal about allocation preference. ' +
   'explicitUsdyPct = a percent the user explicitly tied to USDY, else null. ' +
-  'riskKeyword = their risk tone if any, else null. ' +
-  'Set any field you cannot ground in the user\'s words to null. Never guess.'
+  'riskKeyword = their risk tone if any, else null.'
 
 // Durable copy lives in the client's localStorage; this lets a same-instance GET read back.
 
@@ -115,4 +118,3 @@ export async function GET(req: Request) {
   const address = new URL(req.url).searchParams.get('address') ?? ''
   if (!address) return NextResponse.json({ error: 'MISSING_ADDRESS' }, { status: 400 })
   return NextResponse.json({ rules: await getIntent(address) })
-}
