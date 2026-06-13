@@ -63,11 +63,10 @@ export function ActivityCard({ action }: { action: AgentActivity }) {
   const hasMovement = action.assetFrom && action.assetTo && action.amountFrom && action.amountTo
   return (
     <div
+      className="glass"
       style={{
         padding: 18,
         borderRadius: 16,
-        background: 'var(--rwa-surface)',
-        border: '1px solid rgba(255,255,255,0.07)',
       }}
     >
       {/* Header: badge + timestamp */}

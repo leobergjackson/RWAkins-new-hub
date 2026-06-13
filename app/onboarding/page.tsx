@@ -76,11 +76,10 @@ export default function OnboardingPage() {
 
         {!connected ? (
           <div
+            className="glass"
             style={{
               padding: 32,
               borderRadius: 20,
-              background: 'var(--rwa-surface)',
-              border: '1px solid var(--rwa-border)',
               textAlign: 'center',
             }}
           >

@@ -69,15 +69,18 @@ export function WalletButton() {
           gap: 8,
           padding: '8px 12px',
           borderRadius: 999,
-          background: 'rgba(255,255,255,0.06)',
-          border: '1px solid rgba(47,107,84,0.25)',
-          color: '#fff',
+          background: 'var(--rwa-surface-2)',
+          border: '1px solid rgba(47,107,84,0.3)',
+          color: 'var(--rwa-text)',
+          backdropFilter: 'blur(12px) saturate(150%)',
+          cursor: 'pointer',
+          boxShadow: '0 4px 14px -8px rgba(15,23,42,0.25)',
         }}
       >
         <span style={{ width: 8, height: 8, borderRadius: 999, background: '#10b981' }} className="animate-pulse" />
-        <span style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: 12 }}>{truncate(evm.address)}</span>
+        <span style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: 12, color: 'var(--rwa-text)' }}>{truncate(evm.address)}</span>
         {evm.balance && (
-          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)' }}>
+          <span style={{ fontSize: 12, color: 'var(--rwa-text-muted)' }}>
             {parseFloat(evm.balance).toFixed(3)} MNT
           </span>
         )}

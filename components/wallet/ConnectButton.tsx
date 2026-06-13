@@ -72,7 +72,7 @@ export function ConnectButton({
               ${isDefaultColor ? 'bg-[#3B5BFA] text-[#ffffff] hover:bg-[#e6b800]' : 'hover:opacity-90'}
               ${sizeMap[size]} ${className}
             `}
-            style={!isDefaultColor ? { backgroundColor: toolColor, color: '#0A0F2E' } : undefined}
+            style={!isDefaultColor ? { backgroundColor: toolColor, color: '#fff', boxShadow: `0 8px 22px -8px ${toolColor}99` } : undefined}
           >
             <Wallet size={13} />
             {isConnecting ? 'Connecting…' : error ? 'Retry Connect' : 'Connect Wallet'}

@@ -292,9 +292,9 @@ body { background: var(--cloud-bg); background-attachment: fixed; color: #0A0F2E
 [data-theme="light"] {
   /* Cloud-sky light theme — matches the Turing Test hackathon banner + hero */
   --rwa-bg: var(--hero-sky);
-  --rwa-surface: rgba(255,255,255,0.72);
-  --rwa-surface-2: rgba(255,255,255,0.92);
-  --rwa-border: rgba(15,23,42,0.1);
+  --rwa-surface: rgba(255,255,255,0.55);
+  --rwa-surface-2: rgba(255,255,255,0.8);
+  --rwa-border: rgba(15,23,42,0.08);
   --rwa-text: #0A0F2E;
   --rwa-text-muted: rgba(10,15,46,0.62);
   --rwa-text-faint: rgba(10,15,46,0.4);
@@ -426,4 +426,36 @@ html.dark-mode .no-invert {
 .agent-shell h1, .agent-shell h2, .agent-shell h3 {
   font-family: 'Clash Display', 'Plus Jakarta Sans', sans-serif;
   letter-spacing: -0.02em;
+}
+
+/* Native <select> dropdown options render in the OS popup (a white surface).
+   The select inherits the theme text color (white in dark mode), which makes
+   the options white-on-white / invisible. Force readable dark-on-white items. */
+select option {
+  color: #0A0F2E;
+  background-color: #ffffff;
+}
+
+/* ── Frosted-glass + glow ─────────────────────────────────────────────────────
+   Reusable glassmorphism for every card/panel: translucent surface, heavy
+   backdrop blur + saturation (frost), a luminous inner top edge, and a soft
+   green-tinted glow. Theme-aware via --rwa-surface / --rwa-border. */
+.glass {
+  background: var(--rwa-surface);
+  border: 1px solid var(--rwa-border);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  box-shadow:
+    0 16px 48px -20px rgba(47,107,84,0.22),
+    0 2px 10px -6px rgba(15,23,42,0.16),
+    inset 0 1px 0 rgba(255,255,255,0.55);
+}
+.glass-hover { transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s; }
+.glass-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(47,107,84,0.4);
+  box-shadow:
+    0 26px 60px -22px rgba(47,107,84,0.32),
+    0 4px 14px -6px rgba(15,23,42,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.7);
 }

@@ -12,7 +12,6 @@ import type { Address } from 'viem'
 import { useWallet } from '@/context/WalletContext'
 import { StandaloneNavbar } from '@/components/shell/StandaloneNavbar'
 import { AgentNav } from '@/components/shell/AgentNav'
-import { ToolDock } from '@/components/shell/ToolDock'
 import { WalletButton } from '@/components/onboarding/WalletButton'
 
 const TEAL = '#2f6b54'
@@ -21,7 +20,8 @@ const PURPLE = '#3f9a73'
 export const suiteCard: React.CSSProperties = {
   padding: 22, borderRadius: 18,
   background: 'var(--rwa-surface)', border: '1px solid var(--rwa-border)',
-  boxShadow: '0 8px 30px -18px rgba(15,23,42,0.16)', backdropFilter: 'blur(8px)',
+  boxShadow: '0 16px 48px -20px rgba(47,107,84,0.22), 0 2px 10px -6px rgba(15,23,42,0.16), inset 0 1px 0 rgba(255,255,255,0.55)',
+  backdropFilter: 'blur(16px) saturate(160%)',
 }
 
 export function Pill({ children, color = TEAL }: { children: ReactNode; color?: string }) {
@@ -60,8 +60,6 @@ export function SuiteShell({
       <StandaloneNavbar showBell subtitle="AI × RWA" />
       <AgentNav />
       <main style={{ maxWidth: 1000, margin: '0 auto', padding: '20px 18px 60px' }}>
-        <ToolDock />
-
         <header style={{ margin: '6px 0 22px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 12 }}>
             <Pill color={PURPLE}>{eyebrow}</Pill>

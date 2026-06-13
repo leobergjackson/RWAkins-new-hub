@@ -6,7 +6,6 @@ import { Moon, Sun, Bot, Wallet, ExternalLink, ShieldCheck, ChevronRight } from 
 import { useWallet } from '@/context/WalletContext'
 import { StandaloneNavbar } from '@/components/shell/StandaloneNavbar'
 import { AgentNav } from '@/components/shell/AgentNav'
-import { ToolDock } from '@/components/shell/ToolDock'
 import { WalletButton } from '@/components/onboarding/WalletButton'
 
 const TEAL = '#2f6b54'
@@ -49,8 +48,6 @@ export default function SettingsPage() {
       <StandaloneNavbar subtitle="Settings" showBell />
 
       <main style={{ maxWidth: 640, margin: '0 auto', padding: '24px 20px 80px' }}>
-        <ToolDock />
-
         <header style={{ margin: '6px 0 28px' }}>
           <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.02em', margin: '0 0 6px' }}>Settings</h1>
           <p style={{ fontSize: 14, color: 'var(--rwa-text-muted)', margin: 0 }}>
@@ -161,7 +158,7 @@ export default function SettingsPage() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: 24, padding: 22, borderRadius: 18, background: 'var(--rwa-surface)', border: '1px solid var(--rwa-border)' }}>
+    <div className="glass" style={{ marginBottom: 24, padding: 22, borderRadius: 18 }}>
       <h2 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--rwa-text-faint)', margin: '0 0 16px' }}>
         {title}
       </h2>

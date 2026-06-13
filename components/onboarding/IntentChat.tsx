@@ -112,12 +112,11 @@ export function IntentChat() {
       {/* Parsed answer / agent reply */}
       {phase !== 'idle' && (
         <div
+          className="glass"
           style={{
             marginBottom: 16,
             padding: 18,
             borderRadius: 16,
-            background: 'var(--rwa-surface)',
-            border: '1px solid var(--rwa-border)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
@@ -159,11 +158,10 @@ export function IntentChat() {
 
       {/* Input */}
       <div
+        className="glass"
         style={{
           position: 'relative',
           borderRadius: 16,
-          background: 'var(--rwa-surface)',
-          border: '1px solid var(--rwa-border)',
           padding: 14,
         }}
       >

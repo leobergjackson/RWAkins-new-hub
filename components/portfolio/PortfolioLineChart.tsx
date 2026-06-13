@@ -26,7 +26,7 @@ function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: 
 export function PortfolioLineChart({ data }: { data: ActivityPoint[] }) {
   if (!data?.length) {
     return (
-      <div style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.35)', fontSize: 13 }}>
+      <div style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', fontSize: 13 }}>
         No performance history yet.
       </div>
     )
@@ -41,17 +41,17 @@ export function PortfolioLineChart({ data }: { data: ActivityPoint[] }) {
               <stop offset="100%" stopColor="#2f6b54" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(100,116,139,0.18)" vertical={false} />
           <XAxis
             dataKey="t"
-            tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 11 }}
+            tick={{ fill: '#64748b', fontSize: 11 }}
             tickLine={false}
             axisLine={false}
             minTickGap={32}
             tickFormatter={(v: string) => v.slice(5)} // MM-DD
           />
           <YAxis
-            tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 11 }}
+            tick={{ fill: '#64748b', fontSize: 11 }}
             tickLine={false}
             axisLine={false}
             width={56}

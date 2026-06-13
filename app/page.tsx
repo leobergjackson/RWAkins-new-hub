@@ -9,9 +9,10 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { motion, type Variants } from 'framer-motion'
 import {
-  ArrowRight, Bot, ShieldCheck, Play,
+  ArrowRight, Bot, ShieldCheck, Play, ExternalLink, CheckCircle2,
   Coins, TrendingUp, ScrollText, Vote, Gauge, Sparkles, MessagesSquare,
 } from 'lucide-react'
+import deployed from '@/lib/rwa-deployed.json'
 
 // Cloud-sky palette (matches the hackathon banner)
 const NAVY = '#0A0F2E'
@@ -289,6 +290,20 @@ const SUITE = [
   { href: '/compliance', Icon: ShieldCheck, t: 'Compliance + Audit', d: 'On-chain KYC gate, investment mandate, and a tamper-evident audit trail.' },
 ]
 
+// Real deployed contracts — read straight from lib/rwa-deployed.json (no hardcoding).
+const EXPLORER = 'https://sepolia.mantlescan.xyz/address/'
+const deployedMap = deployed as unknown as Record<string, string>
+const CONTRACTS: { label: string; key: string; tag: string }[] = [
+  { label: 'AI CFO Vault', key: 'vault', tag: 'rebalances USDY/mETH' },
+  { label: 'AMM (DEX)', key: 'amm', tag: 'x·y=k price discovery' },
+  { label: 'USDY', key: 'usdy', tag: 'tokenized treasuries' },
+  { label: 'mETH', key: 'meth', tag: 'liquid-staked ETH' },
+  { label: 'Compliance / KYC', key: 'compliance', tag: 'on-chain KYC + audit' },
+  { label: 'Credit Passport', key: 'creditPassport', tag: 'soulbound ERC-721' },
+  { label: 'Lending', key: 'lending', tag: 'credit-gated borrow' },
+]
+const truncAddr = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`
+
 export default function LandingPage() {
   return (
     <div style={{ background: 'var(--cloud-bg)', backgroundAttachment: 'fixed', color: NAVY, minHeight: '100vh', overflowX: 'hidden', fontFamily: BODY }}>
@@ -377,6 +392,37 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Deployed contracts (proof, dynamic from rwa-deployed.json) ── */}
+      <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 20px 100px' }}>
+        <SectionHeader eyebrow="Live & verifiable" title="Deployed on Mantle Sepolia" />
+        <p style={{ textAlign: 'center', color: SLATE, maxWidth: 640, margin: '18px auto 0', lineHeight: 1.6 }}>
+          Not a mockup — {CONTRACTS.filter((c) => typeof deployedMap[c.key] === 'string' && deployedMap[c.key].length === 42).length} live smart contracts on Mantle Sepolia
+          (chain {String(deployedMap.chainId ?? '5003')}). Every address is real and inspectable on the explorer.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14, marginTop: 40 }}>
+          {CONTRACTS.filter((c) => typeof deployedMap[c.key] === 'string' && deployedMap[c.key].length === 42).map((c) => (
+            <a
+              key={c.key}
+              href={`${EXPLORER}${deployedMap[c.key]}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cb-card-light"
+              style={{ ...card, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 14 }}
+            >
+              <span style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(47,107,84,0.1)', border: '1px solid rgba(47,107,84,0.25)' }}>
+                <CheckCircle2 size={17} color={FOREST} />
+              </span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: NAVY }}>{c.label}</div>
+                <div style={{ fontFamily: MONO, fontSize: 12, color: FOREST }}>{truncAddr(deployedMap[c.key])}</div>
+                <div style={{ fontSize: 11.5, color: SLATE, marginTop: 2 }}>{c.tag}</div>
+              </div>
+              <ExternalLink size={15} color={SLATE} />
+            </a>
+          ))}
+        </div>
+      </section>
+
       {/* ── Final CTA ── */}
       <section style={{ maxWidth: 780, margin: '0 auto', padding: '0 20px 110px', textAlign: 'center' }}>
         <div style={{ padding: '52px 32px', borderRadius: 24, border: '1px solid rgba(47,107,84,0.2)', background: 'radial-gradient(120% 100% at 50% 0%, rgba(47,107,84,0.08), transparent 60%), rgba(255,255,255,0.7)', boxShadow: '0 20px 60px -28px rgba(15,23,42,0.2)' }}>
@@ -402,7 +448,7 @@ export default function LandingPage() {
           <span style={{ fontFamily: DISPLAY, fontWeight: 700, color: NAVY }}>RWAkins</span>
         </div>
         <p style={{ fontSize: 13, color: SLATE, margin: 0 }}>
-          Hackathon prototype on Mantle Sepolia testnet — not a production financial product. AI × RWA · Turing Test Hackathon 2026.
+          Hackathon prototype on Mantle Sepolia testnet. AI × RWA · Turing Test Hackathon 2026.
         </p>
       </footer>
     </div>
@@ -424,8 +470,9 @@ function SectionHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
 
 const card: React.CSSProperties = {
   padding: 24, borderRadius: 18,
-  background: 'rgba(255,255,255,0.7)', border: '1px solid rgba(15,23,42,0.08)',
-  boxShadow: '0 8px 30px -18px rgba(15,23,42,0.16)', backdropFilter: 'blur(8px)',
+  background: 'rgba(255,255,255,0.55)', border: '1px solid rgba(15,23,42,0.08)',
+  boxShadow: '0 16px 48px -20px rgba(47,107,84,0.22), 0 2px 10px -6px rgba(15,23,42,0.16), inset 0 1px 0 rgba(255,255,255,0.6)',
+  backdropFilter: 'blur(16px) saturate(160%)',
 }
 
 const iconBadge: React.CSSProperties = {

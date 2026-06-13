@@ -8,7 +8,6 @@ import { Wallet } from 'lucide-react'
 import { useWallet } from '@/context/WalletContext'
 import { StandaloneNavbar } from '@/components/shell/StandaloneNavbar'
 import { AgentNav } from '@/components/shell/AgentNav'
-import { ToolDock } from '@/components/shell/ToolDock'
 import { SwitchToMantleBanner, WalletButton } from '@/components/onboarding/WalletButton'
 import { ActivityFeed } from '@/components/activity/ActivityFeed'
 
@@ -24,7 +23,6 @@ export default function ActivityPage() {
       <StandaloneNavbar subtitle="Activity" showBell />
 
       <main style={{ maxWidth: 760, margin: '0 auto', padding: '24px 20px 80px' }}>
-        <ToolDock />
         <div style={{ marginBottom: 16 }}>
           <SwitchToMantleBanner />
         </div>

@@ -18,7 +18,6 @@ import { rwaRebalanceSkill } from '@/lib/skills/rwaRebalanceSkill'
 import { loadIntent, summarizeRules, type WealthRules } from '@/lib/intent'
 import { StandaloneNavbar } from '@/components/shell/StandaloneNavbar'
 import { AgentNav } from '@/components/shell/AgentNav'
-import { ToolDock } from '@/components/shell/ToolDock'
 import { WalletButton, SwitchToMantleBanner } from '@/components/onboarding/WalletButton'
 import { MetricCard } from '@/components/portfolio/MetricCard'
 import { RiskBadge } from '@/components/portfolio/RiskBadge'
@@ -26,8 +25,8 @@ import { PortfolioChart } from '@/components/portfolio/PortfolioChart'
 import { PortfolioLineChart } from '@/components/portfolio/PortfolioLineChart'
 import type { ActivityPoint } from '@/app/api/activity/route'
 
-const TEAL = '#2f6b54'
-const PURPLE = '#3f9a73'
+const TEAL = '#2f6b54'   // USDY / brand green
+const PURPLE = '#3B5BFA' // mETH / sky-blue (on-brand duotone with the banner)
 const USDY_PRICE = 1.0 // USDY is a ~$1 stable yield token (testnet mock pegged for the demo)
 const ETH_FALLBACK = 3200
 
@@ -41,8 +40,9 @@ interface MarketSnapshot {
   marketLive: boolean
 }
 
-// Demo position shown before the vault is deployed (token units, 18-dec).
-const DEMO = { usdyTokens: 6800, methTokens: 1.15, usdyApyBps: 480, methApyBps: 360 }
+// Empty-position seed used only before a live read / when disconnected. Zeroed
+// so nothing fabricated ever renders — all shown numbers come from on-chain reads.
+const DEMO = { usdyTokens: 0, methTokens: 0, usdyApyBps: 0, methApyBps: 0 }
 
 const toNum = (b: bigint) => Number(formatEther(b))
 
@@ -312,7 +312,6 @@ export default function PortfolioPage() {
       <StandaloneNavbar subtitle="Portfolio" showBell />
 
       <main style={{ maxWidth: 1120, margin: '0 auto', padding: '24px 20px 80px' }}>
-        <ToolDock />
         <div style={{ marginBottom: 16 }}>
           <SwitchToMantleBanner />
         </div>
@@ -393,7 +392,7 @@ export default function PortfolioPage() {
                 label="Total Portfolio Value"
                 value={fmtUsd(m.total)}
                 sub={`USDY $1.00 · mETH ${fmtUsd(methPrice)}`}
-                accent="green"
+                accent="emerald"
                 icon={<Wallet size={16} />}
                 loading={loading}
               />
@@ -409,7 +408,7 @@ export default function PortfolioPage() {
                 label="USDY Allocation"
                 value={fmtPct(m.usdyFrac * 100)}
                 sub={fmtUsd(m.usdyUsd)}
-                accent="teal"
+                accent="green"
                 icon={<Coins size={16} />}
                 loading={loading}
               />
@@ -417,7 +416,7 @@ export default function PortfolioPage() {
                 label="mETH Allocation"
                 value={fmtPct(m.methFrac * 100)}
                 sub={fmtUsd(m.methUsd)}
-                accent="purple"
+                accent="blue"
                 icon={<PieIcon size={16} />}
                 loading={loading}
               />
@@ -492,9 +491,9 @@ function WealthRulesPanel({ rules }: { rules: WealthRules | null }) {
 function LiveDataBadge({ market, methPrice }: { market: MarketSnapshot | null; methPrice: number | null }) {
   const fmtUsd0 = (n: number) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
   const pill = (label: string, value: string, accent?: string) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '6px 12px', borderRadius: 10, background: 'var(--rwa-surface)', border: '1px solid rgba(255,255,255,0.07)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '6px 12px', borderRadius: 10, background: 'var(--rwa-surface)', border: '1px solid var(--rwa-border)' }}>
       <span style={{ fontSize: 10, color: 'var(--rwa-text-muted)', textTransform: 'uppercase', letterSpacing: 0.4 }}>{label}</span>
-      <span style={{ fontSize: 13, fontWeight: 700, color: accent ?? '#fff' }}>{value}</span>
+      <span style={{ fontSize: 13, fontWeight: 700, color: accent ?? 'var(--rwa-text)' }}>{value}</span>
     </div>
   )
   const up = market ? market.eth24hChange >= 0 : true
@@ -555,8 +554,11 @@ function ConnectPrompt() {
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section style={{ padding: 20, borderRadius: 18, background: 'var(--rwa-surface)', border: '1px solid rgba(255,255,255,0.07)' }}>
-      <h3 style={{ fontSize: 13, fontWeight: 700, color: 'var(--rwa-text-muted)', letterSpacing: '0.04em', margin: '0 0 16px' }}>{title}</h3>
+    <section style={{ padding: 22, borderRadius: 18, background: 'var(--rwa-surface)', border: '1px solid var(--rwa-border)', boxShadow: '0 16px 48px -20px rgba(47,107,84,0.22), 0 2px 10px -6px rgba(15,23,42,0.16), inset 0 1px 0 rgba(255,255,255,0.55)', backdropFilter: 'blur(16px) saturate(160%)' }}>
+      <h3 style={{ display: 'flex', alignItems: 'center', gap: 9, fontSize: 13, fontWeight: 700, color: 'var(--rwa-text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase', margin: '0 0 16px' }}>
+        <span style={{ width: 14, height: 3, borderRadius: 999, background: 'linear-gradient(90deg, #2f6b54, #3f9a73)' }} />
+        {title}
+      </h3>
       {children}
     </section>
   )
@@ -652,15 +654,31 @@ function RebalanceTrigger({ loading, triggering, result, onTrigger }: TriggerPro
   return (
     <div
       style={{
-        marginBottom: 20, padding: '14px 20px', borderRadius: 14,
-        background: 'var(--rwa-surface)', border: '1px solid rgba(255,255,255,0.08)',
+        position: 'relative', overflow: 'hidden',
+        marginBottom: 20, padding: '18px 22px', borderRadius: 18,
+        background: 'radial-gradient(120% 140% at 0% 0%, rgba(47,107,84,0.14), transparent 55%), var(--rwa-surface)',
+        border: '1px solid rgba(47,107,84,0.28)',
+        boxShadow: '0 20px 54px -22px rgba(47,107,84,0.3), 0 2px 10px -6px rgba(15,23,42,0.16), inset 0 1px 0 rgba(255,255,255,0.6)',
+        backdropFilter: 'blur(16px) saturate(160%)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap',
       }}
     >
-      <div>
-        <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 2 }}>AI CFO Agent</div>
-        <div style={{ fontSize: 12, color: 'var(--rwa-text-muted)' }}>
-          Fetches live market data, evaluates your wealth rules, and executes a rebalance on Mantle.
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 240, flex: 1 }}>
+        <span
+          style={{
+            width: 44, height: 44, borderRadius: 13, flexShrink: 0,
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            background: 'linear-gradient(135deg, #163b2c, #2f6b54 55%, #3f9a73)', color: '#fff',
+            boxShadow: '0 6px 18px -6px rgba(22,59,44,0.6)',
+          }}
+        >
+          <Sparkles size={20} />
+        </span>
+        <div>
+          <div style={{ fontSize: 15, fontWeight: 800, marginBottom: 2, letterSpacing: '-0.01em' }}>AI CFO Agent</div>
+          <div style={{ fontSize: 12.5, color: 'var(--rwa-text-muted)', lineHeight: 1.5, maxWidth: 460 }}>
+            Fetches live market data, evaluates your wealth rules, and executes a rebalance on Mantle.
+          </div>
         </div>
       </div>
       <button
@@ -668,14 +686,15 @@ function RebalanceTrigger({ loading, triggering, result, onTrigger }: TriggerPro
         disabled={loading || triggering}
         style={{
           display: 'inline-flex', alignItems: 'center', gap: 8,
-          padding: '10px 20px', borderRadius: 10, border: 'none', cursor: loading || triggering ? 'not-allowed' : 'pointer',
-          background: loading || triggering ? 'rgba(47,107,84,0.3)' : '#2f6b54',
-          color: '#080808', fontWeight: 800, fontSize: 13, whiteSpace: 'nowrap',
-          transition: 'opacity 0.15s',
-          opacity: loading || triggering ? 0.7 : 1,
+          padding: '13px 24px', borderRadius: 999, border: 'none', cursor: loading || triggering ? 'not-allowed' : 'pointer',
+          background: 'linear-gradient(135deg, #163b2c, #2f6b54 55%, #3f9a73)',
+          color: '#fff', fontWeight: 700, fontSize: 13.5, letterSpacing: '0.02em', whiteSpace: 'nowrap',
+          boxShadow: loading || triggering ? 'none' : '0 10px 26px -8px rgba(47,107,84,0.6)',
+          transition: 'transform 0.15s, box-shadow 0.15s, opacity 0.15s',
+          opacity: loading || triggering ? 0.65 : 1,
         }}
       >
-        <Zap size={14} />
+        {triggering ? <Loader2 size={15} className="animate-spin" /> : <Zap size={15} />}
         {triggering ? 'AI CFO evaluating…' : 'Run Rebalance'}
       </button>
     </div>

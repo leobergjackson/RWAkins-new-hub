@@ -95,7 +95,7 @@ export function AgentNav() {
           padding: 20px 0;
           background: var(--rwa-rail-bg, rgba(8,8,8,0.95));
           border-right: 1px solid var(--rwa-rail-border, rgba(255,255,255,0.06));
-          backdrop-filter: blur(12px); overflow-y: auto;
+          backdrop-filter: blur(18px) saturate(160%); overflow-y: auto;
           transition: background 0.25s, border-color 0.25s;
         }
         .kbx-bottom {
@@ -104,7 +104,7 @@ export function AgentNav() {
           padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
           background: var(--rwa-rail-bg, rgba(8,8,8,0.95));
           border-top: 1px solid var(--rwa-rail-border, rgba(255,255,255,0.08));
-          backdrop-filter: blur(12px); overflow-x: auto; gap: 2px;
+          backdrop-filter: blur(18px) saturate(160%); overflow-x: auto; gap: 2px;
           transition: background 0.25s, border-color 0.25s;
         }
         .agent-shell { padding-bottom: 72px; }

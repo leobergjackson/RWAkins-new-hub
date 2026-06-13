@@ -44,7 +44,7 @@ export function StandaloneNavbar({ subtitle, showBell = false }: { subtitle?: st
         justifyContent: 'space-between',
         padding: '14px 24px',
         background: 'var(--rwa-rail-bg)',
-        backdropFilter: 'blur(12px)',
+        backdropFilter: 'blur(18px) saturate(160%)',
         borderBottom: '1px solid var(--rwa-rail-border)',
         transition: 'background 0.25s, border-color 0.25s',
       }}

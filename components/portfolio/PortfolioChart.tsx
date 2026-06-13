@@ -3,8 +3,8 @@
 
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'
 
-const USDY_COLOR = '#2f6b54' // teal
-const METH_COLOR = '#3f9a73' // purple
+const USDY_COLOR = '#2f6b54' // brand green
+const METH_COLOR = '#3B5BFA' // sky-blue (duotone with the banner)
 
 export interface AllocationSlice {
   name: 'USDY' | 'mETH'
@@ -79,8 +79,15 @@ export function PortfolioChart({ data }: { data: AllocationSlice[] }) {
           pointerEvents: 'none',
         }}
       >
-        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.04em' }}>TOTAL</span>
-        <span style={{ fontSize: 22, fontWeight: 800, color: '#fff', fontVariantNumeric: 'tabular-nums' }}>
+        <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--rwa-text-muted)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Total</span>
+        <span
+          style={{
+            fontFamily: "'Clash Display', 'Plus Jakarta Sans', sans-serif",
+            fontSize: 24, fontWeight: 700, fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em',
+            background: 'linear-gradient(135deg, #2f6b54, #3f9a73)',
+            WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent',
+          }}
+        >
           {fmtUsd(total)}
         </span>
       </div>
